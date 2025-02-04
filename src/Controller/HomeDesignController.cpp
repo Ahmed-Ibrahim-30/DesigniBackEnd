@@ -1344,7 +1344,7 @@ void HomeDesignController::getUserInput() {
         return finalRes;
     });
 
-    CROW_ROUTE(app , "/Template").methods(crow::HTTPMethod::POST)([&](const crow::request&req)
+    CROW_ROUTE(app , "/Template").methods("OPTIONS"_method)([&](const crow::request&req)
     {
         auto jsonData = crow::json::load(req.body);
         std::cout << "Request Body: " << req.body << std::endl;
