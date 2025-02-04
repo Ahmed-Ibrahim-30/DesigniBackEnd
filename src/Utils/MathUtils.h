@@ -4,7 +4,7 @@
 
 #ifndef DESIGNI_MATHUTILS_H
 #define DESIGNI_MATHUTILS_H
-
+#include <cmath> 
 
 class MathUtils {
 public:
