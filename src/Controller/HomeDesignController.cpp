@@ -1484,14 +1484,14 @@ void HomeDesignController::getUserInput() {
                     });
 
     // Handle CORS preflight requests (OPTIONS request)
-    CROW_ROUTE(app, "/TestApi")
-            .methods(crow::HTTPMethod::OPTIONS)
-                    ([](const crow::request& req, crow::response& res) {
-                        res.set_header("Access-Control-Allow-Origin", "*");
-                        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
-                        res.end();
-                    });
+//    CROW_ROUTE(app, "/TestApi")
+//            .methods(crow::HTTPMethod::OPTIONS)
+//                    ([](const crow::request& req, crow::response& res) {
+//                        res.set_header("Access-Control-Allow-Origin", "*");
+//                        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+//                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+//                        res.end();
+//                    });
     app.port(8080).multithreaded().run();
 }
 
