@@ -1344,7 +1344,7 @@ void HomeDesignController::getUserInput() {
         return finalRes;
     });
 
-    CROW_ROUTE(app , "/Template").methods("OPTIONS"_method, "POST"_method)([&](const crow::request&req)
+    CROW_ROUTE(app , "/Template").methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)([&](const crow::request&req)
     {
         crow::response finalRes ;
         // Handle OPTIONS request (preflight)
@@ -1472,6 +1472,26 @@ void HomeDesignController::getUserInput() {
     finalRes.write("CORS enabled!");
     return finalRes;});
 
+
+    CROW_ROUTE(app, "/TestApi")
+            .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
+                    ([](const crow::request& req, crow::response& res) {
+                        res.set_header("Access-Control-Allow-Origin", "*");  // Allow all domains
+                        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                        res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+                        res.write("Hello from Crow with CORS enabled!");
+                        res.end();
+                    });
+
+    // Handle CORS preflight requests (OPTIONS request)
+    CROW_ROUTE(app, "/TestApi")
+            .methods(crow::HTTPMethod::OPTIONS)
+                    ([](const crow::request& req, crow::response& res) {
+                        res.set_header("Access-Control-Allow-Origin", "*");
+                        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                        res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+                        res.end();
+                    });
     app.port(8080).multithreaded().run();
 }
 
