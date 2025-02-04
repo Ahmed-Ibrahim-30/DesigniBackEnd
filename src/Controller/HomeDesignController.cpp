@@ -386,7 +386,7 @@ void HomeDesignController::getUserInput() {
                 );
         crow::response finalRes (200 , response);
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
         return finalRes;
@@ -538,7 +538,7 @@ void HomeDesignController::getUserInput() {
                 );
         crow::response finalRes (200 , response);
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
         return finalRes;
@@ -725,7 +725,7 @@ void HomeDesignController::getUserInput() {
                 );
         crow::response finalRes (200 , response);
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
         return finalRes;
@@ -814,7 +814,7 @@ void HomeDesignController::getUserInput() {
                 );
         crow::response finalRes (200 , response);
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
         return finalRes;
@@ -975,7 +975,7 @@ void HomeDesignController::getUserInput() {
 
         crow::response finalRes (200 , response);
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
         return finalRes;
@@ -1119,7 +1119,7 @@ void HomeDesignController::getUserInput() {
         crow::response finalRes (200 , response);
 
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
         return finalRes;
@@ -1338,7 +1338,7 @@ void HomeDesignController::getUserInput() {
         crow::response finalRes (200 , response);
 
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
         return finalRes;
@@ -1432,7 +1432,7 @@ void HomeDesignController::getUserInput() {
 
         crow::response finalRes (200 , response);
         finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
         finalRes.write("CORS enabled!");
 
@@ -1456,7 +1456,7 @@ void HomeDesignController::getUserInput() {
     response["Name"] = "Your name = " + name;
     crow::response finalRes (200 , response);
     finalRes.add_header("Access-Control-Allow-Origin", "*");
-    finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
     finalRes.write("CORS enabled!");
     return finalRes;});
