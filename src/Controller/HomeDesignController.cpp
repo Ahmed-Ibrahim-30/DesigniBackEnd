@@ -1476,7 +1476,7 @@ void HomeDesignController::getUserInput() {
     CROW_ROUTE(app, "/TestApi")
             .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
                     ([](const crow::request& req, crow::response& res) {
-                        res.set_header("Access-Control-Allow-Origin", "*");  // Allow all domains
+                        res.set_header("Access-Control-Allow-Origin", "https://designi2.vercel.app/");  // Allow all domains
                         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
                         res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
                         res.write("Hello from Crow with CORS enabled!");
@@ -1487,7 +1487,7 @@ void HomeDesignController::getUserInput() {
     CROW_ROUTE(app, "/TestApi")
             .methods(crow::HTTPMethod::OPTIONS)
                     ([](const crow::request& req, crow::response& res) {
-                        res.set_header("Access-Control-Allow-Origin", "*");
+                        res.set_header("Access-Control-Allow-Origin", "https://designi2.vercel.app/");
                         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
                         res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
                         res.end();
