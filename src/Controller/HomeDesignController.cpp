@@ -1474,7 +1474,7 @@ void HomeDesignController::getUserInput() {
 
 
     CROW_ROUTE(app, "/TestApi")
-            .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
+            .methods(crow::HTTPMethod::OPTIONS,crow::HTTPMethod::GET, crow::HTTPMethod::POST)
                     ([](const crow::request& req, crow::response& res) {
                         res.set_header("Access-Control-Allow-Origin", "*");  // Allow all domains
                         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
