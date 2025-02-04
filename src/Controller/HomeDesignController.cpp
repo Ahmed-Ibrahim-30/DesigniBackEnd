@@ -1344,8 +1344,18 @@ void HomeDesignController::getUserInput() {
         return finalRes;
     });
 
-    CROW_ROUTE(app , "/Template").methods("OPTIONS"_method)([&](const crow::request&req)
+    CROW_ROUTE(app , "/Template").methods("OPTIONS"_method, "POST"_method)([&](const crow::request&req)
     {
+        crow::response finalRes ;
+        // Handle OPTIONS request (preflight)
+        if (req.method == "OPTIONS"_method) {
+            finalRes.add_header("Access-Control-Allow-Origin", "*");
+            finalRes.add_header("Access-Control-Allow-Methods", "POST, OPTIONS");
+            finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
+            finalRes.code = 200; // HTTP OK
+            return finalRes;
+        }
+
         auto jsonData = crow::json::load(req.body);
         std::cout << "Request Body: " << req.body << std::endl;
         if (!jsonData) {
@@ -1430,13 +1440,14 @@ void HomeDesignController::getUserInput() {
             room3DPrinting
         );
 
-        crow::response finalRes (200 , response);
-        finalRes.add_header("Access-Control-Allow-Origin", "*");
-        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
+        crow::response res (200 , response);
 
-        return finalRes;
+        res.add_header("Access-Control-Allow-Origin", "*");
+        res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res.add_header("Access-Control-Allow-Headers", "Content-Type");
+        res.write("CORS enabled!");
+
+        return res;
     });
 
     CROW_ROUTE(app , "/GETFirstName").methods(crow::HTTPMethod::POST)([&](const crow::request&req)
