@@ -16,19 +16,19 @@ public:
     Window(const Line &wLine)
     {
         windowLine = wLine;
-        windowLine.setX1( round(windowLine.getX1() *10) / 10);
-        windowLine.setY1( round(windowLine.getY1() *10) / 10);
-        windowLine.setX2( round(windowLine.getX2() *10) / 10);
-        windowLine.setY2( round(windowLine.getY2() *10) / 10);
+        windowLine.setX1( std::round(windowLine.getX1() *10) / 10);
+        windowLine.setY1( std::round(windowLine.getY1() *10) / 10);
+        windowLine.setX2( std::round(windowLine.getX2() *10) / 10);
+        windowLine.setY2( std::round(windowLine.getY2() *10) / 10);
     }
     Line getWindow()const {return windowLine;}
     void setWindow(const Line& line)
     {
         windowLine = line;
-        windowLine.setX1( round(windowLine.getX1() *10) / 10);
-        windowLine.setY1( round(windowLine.getY1() *10) / 10);
-        windowLine.setX2( round(windowLine.getX2() *10) / 10);
-        windowLine.setY2( round(windowLine.getY2() *10) / 10);
+        windowLine.setX1( std::round(windowLine.getX1() *10) / 10);
+        windowLine.setY1( std::round(windowLine.getY1() *10) / 10);
+        windowLine.setX2( std::round(windowLine.getX2() *10) / 10);
+        windowLine.setY2( std::round(windowLine.getY2() *10) / 10);
     }
     void mirrorX(){
         windowLine.setY1(- windowLine.getY1());

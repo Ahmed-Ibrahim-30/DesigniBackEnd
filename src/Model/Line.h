@@ -5,6 +5,7 @@
 #ifndef DESIGNI_LINE_H
 #define DESIGNI_LINE_H
 #include "Point.h"
+#include <cmath>
 
 class Line {
 private:

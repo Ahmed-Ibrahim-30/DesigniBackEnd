@@ -7,6 +7,7 @@
 #include "RoomTypes.h"
 #include "RoomDefaults.h"
 #include "src/Utils/RoomTypeUtils.h"
+#include <cmath>
 // Responsible for convert Area To Width and Height
 class AreaToDimensionsCalculator {
 public:
