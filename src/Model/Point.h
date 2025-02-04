@@ -7,7 +7,6 @@
 #include "RoomTypes.h"
 
 
-
 class Point {
 private:
     double x , y , z;

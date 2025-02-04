@@ -15,6 +15,8 @@
 #include "mutex"
 #include "algorithm"
 #include "regex"
+#include <cmath>
+#include <climits>
 
 using namespace std;
 
