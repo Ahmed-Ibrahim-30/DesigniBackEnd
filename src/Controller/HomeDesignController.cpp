@@ -1450,13 +1450,7 @@ void HomeDesignController::getUserInput() {
     finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
     return finalRes;});
-
-    app.port(8080).multithreaded().run();
-
-    cout << "Hello, World!" << std::endl;
-    return 0;
-}
-
+    
     app.port(8080).multithreaded().run();
 }
 
