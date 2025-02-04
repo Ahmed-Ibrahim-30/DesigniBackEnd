@@ -1498,7 +1498,7 @@ void HomeDesignController::getUserInput() {
 //                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
 //                        res.end();
 //                    });
-    app.port(8080).multithreaded().run();
+    app.port(8080).bindaddr("0.0.0.0").multithreaded().run();
 }
 
 
