@@ -163,7 +163,7 @@ DesignRepository HomeDesignController::extractRealTemplateDesign()
     for(auto &template1 : templatesDesignsData)
     {
         index++;
-        if(index > 8)continue;
+        if(index > 1)continue;
         DesignGenerator designGenerator1;
         vector<Design>ds = designGenerator1.generateDesign(template1);
 
@@ -1450,7 +1450,7 @@ void HomeDesignController::getUserInput() {
     finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
     return finalRes;});
-    
+
     app.port(8080).multithreaded().run();
 }
 
