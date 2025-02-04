@@ -163,7 +163,7 @@ DesignRepository HomeDesignController::extractRealTemplateDesign()
     for(auto &template1 : templatesDesignsData)
     {
         index++;
-        if(index > 1)continue;
+        if(index > 2)continue;
         DesignGenerator designGenerator1;
         vector<Design>ds = designGenerator1.generateDesign(template1);
 
