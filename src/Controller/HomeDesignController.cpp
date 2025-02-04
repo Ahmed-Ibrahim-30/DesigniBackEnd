@@ -1351,7 +1351,7 @@ void HomeDesignController::getUserInput() {
         if (req.method == "OPTIONS"_method) {
             finalRes.add_header("Access-Control-Allow-Origin", "*");
             finalRes.add_header("Access-Control-Allow-Methods", "POST, OPTIONS");
-            finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
+            finalRes.add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
             finalRes.code = 200; // HTTP OK
             return finalRes;
         }
@@ -1444,7 +1444,7 @@ void HomeDesignController::getUserInput() {
 
         res.add_header("Access-Control-Allow-Origin", "*");
         res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        res.add_header("Access-Control-Allow-Headers", "Content-Type");
+        res.add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
         res.write("CORS enabled!");
 
         return res;
