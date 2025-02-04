@@ -1474,14 +1474,20 @@ void HomeDesignController::getUserInput() {
 
 
     CROW_ROUTE(app, "/TestApi")
-            .methods(crow::HTTPMethod::OPTIONS,crow::HTTPMethod::GET, crow::HTTPMethod::POST)
+            .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST, crow::HTTPMethod::OPTIONS)
                     ([](const crow::request& req, crow::response& res) {
-                        res.set_header("Access-Control-Allow-Origin", "*");  // Allow all domains
+                        res.set_header("Access-Control-Allow-Origin", "*");
                         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
                         res.set_header("Access-Control-Allow-Headers", "Content-Type");
+
+                        if (req.method == crow::HTTPMethod::OPTIONS) {
+                            res.end();
+                            return;
+                        }
+
                         res.write("Hello from Crow with CORS enabled!");
                         res.end();
-                    });
+                        });
 
     // Handle CORS preflight requests (OPTIONS request)
 //    CROW_ROUTE(app, "/TestApi")
