@@ -1351,7 +1351,7 @@ void HomeDesignController::getUserInput() {
         if (req.method == "OPTIONS"_method) {
             finalRes.add_header("Access-Control-Allow-Origin", "*");
             finalRes.add_header("Access-Control-Allow-Methods", "POST, OPTIONS");
-            finalRes.add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
             finalRes.code = 200; // HTTP OK
             return finalRes;
         }
@@ -1444,7 +1444,7 @@ void HomeDesignController::getUserInput() {
 
         res.add_header("Access-Control-Allow-Origin", "*");
         res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        res.add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        res.add_header("Access-Control-Allow-Headers", "Content-Type");
         res.write("CORS enabled!");
 
         return res;
@@ -1476,9 +1476,9 @@ void HomeDesignController::getUserInput() {
     CROW_ROUTE(app, "/TestApi")
             .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
                     ([](const crow::request& req, crow::response& res) {
-                        res.set_header("Access-Control-Allow-Origin", "https://designi2.vercel.app");  // Allow all domains
+                        res.set_header("Access-Control-Allow-Origin", "*");  // Allow all domains
                         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                        res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
                         res.write("Hello from Crow with CORS enabled!");
                         res.end();
                     });
@@ -1487,9 +1487,9 @@ void HomeDesignController::getUserInput() {
     CROW_ROUTE(app, "/TestApi")
             .methods(crow::HTTPMethod::OPTIONS)
                     ([](const crow::request& req, crow::response& res) {
-                        res.set_header("Access-Control-Allow-Origin", "https://designi2.vercel.app");
+                        res.set_header("Access-Control-Allow-Origin", "*");
                         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                        res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
                         res.end();
                     });
     app.port(8080).multithreaded().run();
