@@ -388,7 +388,6 @@ void HomeDesignController::getUserInput() {
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
         return finalRes;
     });
 
@@ -540,7 +539,6 @@ void HomeDesignController::getUserInput() {
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
         return finalRes;
     });
 
@@ -727,7 +725,6 @@ void HomeDesignController::getUserInput() {
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
         return finalRes;
     });
 
@@ -816,7 +813,6 @@ void HomeDesignController::getUserInput() {
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
         return finalRes;
     });
 
@@ -977,7 +973,6 @@ void HomeDesignController::getUserInput() {
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
         return finalRes;
     });
 
@@ -1121,7 +1116,6 @@ void HomeDesignController::getUserInput() {
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
         return finalRes;
     });
 
@@ -1340,7 +1334,6 @@ void HomeDesignController::getUserInput() {
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-        finalRes.write("CORS enabled!");
         return finalRes;
     });
 
@@ -1445,7 +1438,6 @@ void HomeDesignController::getUserInput() {
         res.add_header("Access-Control-Allow-Origin", "*");
         res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         res.add_header("Access-Control-Allow-Headers", "Content-Type");
-        res.write("CORS enabled!");
 
         return res;
     });
@@ -1469,7 +1461,6 @@ void HomeDesignController::getUserInput() {
     finalRes.add_header("Access-Control-Allow-Origin", "*");
     finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-    finalRes.write("CORS enabled!");
     return finalRes;});
 
 
@@ -1498,7 +1489,11 @@ void HomeDesignController::getUserInput() {
 //                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
 //                        res.end();
 //                    });
+//    app.port(8080).bindaddr("0.0.0.0").multithreaded().run();
+    std::string cert_path = "/path/to/your/certificate.crt";
+    std::string key_path = "/path/to/your/private.key";
     app.port(8080).bindaddr("0.0.0.0").multithreaded().run();
+
 }
 
 
