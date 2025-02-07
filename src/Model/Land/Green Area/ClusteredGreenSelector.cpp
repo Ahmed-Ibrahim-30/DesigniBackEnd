@@ -10,7 +10,7 @@
 void ClusteredGreenSelector::select(Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage) {
     int n = (int)lands.size();
     int greenAreas = n*greenAreaPercentage;
-    cout<<"GREEN AREA = "<<greenAreas<<"\n";
+//    cout<<"GREEN AREA = "<<greenAreas<<"\n";
 
     Point outerCentroid = outerLand.calculateCentroid();
     vector<Line> outerLine = outerLand.getLines();
@@ -47,8 +47,15 @@ void ClusteredGreenSelector::select(Polygon1 &outerLand ,vector<Polygon1> &lands
                 Point l1 (line.getX1() , line.getY1());
                 Point l2 (line.getX2() , line.getY2());
 
-                if(DesignGeometryManager::doSegmentsIntersect(a1 , a2 , l1 , l2)||
-                        a1 == l1 || a1 == l2 || a2 == l1 || a2 == l2)
+//                if(DesignGeometryManager::doSegmentsIntersect(a1 , a2 , l1 , l2)||
+//                        a1 == l1 || a1 == l2 || a2 == l1 || a2 == l2)
+//                {
+//                    inBoundry = true;
+//                    break;
+//                }
+
+                if(PolygonHelper::isPointOnLine(a1 , line) || PolygonHelper::isPointOnLine(a2 , line)||
+                   a1 == l1 || a1 == l2 || a2 == l1 || a2 == l2)
                 {
                     inBoundry = true;
                     break;
@@ -56,7 +63,6 @@ void ClusteredGreenSelector::select(Polygon1 &outerLand ,vector<Polygon1> &lands
             }
             if(inBoundry)break;
         }
-        // if(inBoundry)cout<<"outerLand = "<<i+1<<"\n";
 
         diffCentroid.emplace_back(diff + (inBoundry*area), i);
     }

@@ -99,12 +99,13 @@ bool PolygonHelper::isPointInSegment(const Point &p, const Line &line)
     return true;
 }
 
-bool PolygonHelper::isPointOnLine(Point p, Line line) {
+bool PolygonHelper::isPointOnLine(const Point& p, const Line& line) {
     // Calculate the cross product to check if the point is collinear with the line
     double crossProduct = (p.getY() - line.getY1()) * (line.getX2() - line.getX1()) - (p.getX() - line.getX1()) * (line.getY2() - line.getY1());
 
-    // If the cross product is not zero, the point is not on the line
-    if (abs(crossProduct) > 0.1) {
+    // Normalize the cross product with line length
+    double length = std::hypot(line.getX2() - line.getX1(), line.getY2() - line.getY1());
+    if (std::abs(crossProduct) > 0.1 * length) {
         return false;
     }
 

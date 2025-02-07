@@ -43,7 +43,7 @@ public:
      * @param line
      * @return
      */
-    static bool isPointOnLine(Point p, Line line);
+    static bool isPointOnLine(const Point& p, const Line& line);
 
     /**
      * Get Slope
