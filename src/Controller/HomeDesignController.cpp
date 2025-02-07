@@ -1337,17 +1337,9 @@ void HomeDesignController::getUserInput() {
         return finalRes;
     });
 
-    CROW_ROUTE(app , "/Template").methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)([&](const crow::request&req)
+    CROW_ROUTE(app , "/Template").methods( crow::HTTPMethod::POST)([&](const crow::request&req)
     {
         crow::response finalRes ;
-        // Handle OPTIONS request (preflight)
-        if (req.method == "OPTIONS"_method) {
-            finalRes.add_header("Access-Control-Allow-Origin", "*");
-            finalRes.add_header("Access-Control-Allow-Methods", "POST, OPTIONS");
-            finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-            finalRes.code = 200; // HTTP OK
-            return finalRes;
-        }
 
         auto jsonData = crow::json::load(req.body);
         std::cout << "Request Body: " << req.body << std::endl;
@@ -1436,63 +1428,13 @@ void HomeDesignController::getUserInput() {
         crow::response res (200 , response);
 
         res.add_header("Access-Control-Allow-Origin", "*");
-        res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         res.add_header("Access-Control-Allow-Headers", "Content-Type");
 
         return res;
     });
 
-    CROW_ROUTE(app , "/GETFirstName").methods(crow::HTTPMethod::POST)([&](const crow::request&req)
-    {
-        auto jsonData = crow::json::load(req.body);
-//        std::cout << "Request Body: " << req.body << std::endl;
-    if (!jsonData) {
-        return crow::response(400, "Invalid JSON format");
-    }
-
-    string name;
-    if(jsonData.has("name"))
-    {
-        name = jsonData["name"].s();
-    }
-    crow::json::wvalue response;
-    response["Name"] = "Your name = " + name;
-    crow::response finalRes (200 , response);
-    finalRes.add_header("Access-Control-Allow-Origin", "*");
-    finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
-    return finalRes;});
-
-
-    CROW_ROUTE(app, "/TestApi")
-            .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST, crow::HTTPMethod::OPTIONS)
-                    ([](const crow::request& req, crow::response& res) {
-                        res.set_header("Access-Control-Allow-Origin", "*");
-                        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
-
-                        if (req.method == crow::HTTPMethod::OPTIONS) {
-                            res.end();
-                            return;
-                        }
-
-                        res.write("Hello from Crow with CORS enabled!");
-                        res.end();
-                        });
-
-    // Handle CORS preflight requests (OPTIONS request)
-//    CROW_ROUTE(app, "/TestApi")
-//            .methods(crow::HTTPMethod::OPTIONS)
-//                    ([](const crow::request& req, crow::response& res) {
-//                        res.set_header("Access-Control-Allow-Origin", "*");
-//                        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-//                        res.set_header("Access-Control-Allow-Headers", "Content-Type");
-//                        res.end();
-//                    });
-//    app.port(8080).bindaddr("0.0.0.0").multithreaded().run();
-    std::string cert_path = "/path/to/your/certificate.crt";
-    std::string key_path = "/path/to/your/private.key";
-    app.port(8080).bindaddr("0.0.0.0").multithreaded().run();
+    app.port(8080).multithreaded().run();
 
 }
 

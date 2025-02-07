@@ -11,6 +11,7 @@ include_directories(${CMAKE_SOURCE_DIR}/"src")
 include_directories(${CMAKE_SOURCE_DIR}/"src"/"View")
 include_directories(${CMAKE_SOURCE_DIR}/"src"/"Utils")
 include_directories(${CMAKE_SOURCE_DIR}/"src"/"Model")
+include_directories(${CMAKE_SOURCE_DIR}/"src"/"Controller")
 
 
 file(GLOB_RECURSE SRC_FILES

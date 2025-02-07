@@ -7,7 +7,6 @@
 //////////////////////////////////////////
 
 #include "src/Model/TemplateRepository.h"
-
 #include "src/View/ConstInputView.h"
 #include "src/View/JsonInputView.h"
 #include "src/View/DesignResultView.h"
@@ -81,8 +80,6 @@ public:
      * showDesignResult
      */
     void showDesignResult();
-
-
 };
 
 
