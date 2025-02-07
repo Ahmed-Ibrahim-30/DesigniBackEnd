@@ -46,6 +46,9 @@ string RoomTypeUtils::parseRoomTypeToString(RoomType roomType) {
         case RoomType::Corridor:
             roomTypeStr = "Corridor";
             break;
+        case RoomType::Foyer:
+            roomTypeStr = "Foyer";
+            break;
         case RoomType::Other:
             roomTypeStr = "Other";
             break;
@@ -80,6 +83,7 @@ RoomType RoomTypeUtils::parseStringToRoomType(const string &type) {
     regex theaterMatch(".*theater.*" , regex_constants::icase);
     regex playRoomMatch(".*play.*" , regex_constants::icase);
     regex corridorMatch(".*corridor.*" , regex_constants::icase);
+    regex foyerMatch(".*foyer.*" , regex_constants::icase);
 
     if(regex_match(normalizedRoomType , livingMatch))
     {
@@ -132,6 +136,10 @@ RoomType RoomTypeUtils::parseStringToRoomType(const string &type) {
     else if(regex_match(normalizedRoomType , playRoomMatch))
     {
         return RoomType::PlayRoom;
+    }
+    else if(regex_match(normalizedRoomType , foyerMatch))
+    {
+        return RoomType::Foyer;
     }
     else{
         return RoomType::Other;

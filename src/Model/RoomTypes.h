@@ -34,6 +34,7 @@ enum class RoomType{
     SunRoom,
     HomeTheater,
     Corridor,
+    Foyer,
     Other
 };
 #endif //DESIGNI_ROOMTYPES_H

@@ -31,6 +31,12 @@ file(GLOB_RECURSE SRC_FILES
 add_executable(Designi_BackEnd
         main.cpp
         ${SRC_FILES}
+        src/Model/Template/TemplateDesigns.cpp
+        src/Model/Template/TemplateDesigns.h
+        src/Model/Template/LivingRoomShapeStrategy.h
+        src/Model/Template/FamilyRoomShapeStrategy.h
+        src/Model/Template/BedroomRoomShapeStrategy.h
+        src/Model/Template/RoomShapeStrategy.h
 )
 
 find_package(Threads REQUIRED)
