@@ -1259,7 +1259,7 @@ void HomeDesignController::getUserInput() {
             GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
 
             percGreenArea = (greenAreasCount / landSlots ) * 100;
-            greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
+//            greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
         else if(jsonData.count("slots"))
         {
@@ -1278,7 +1278,7 @@ void HomeDesignController::getUserInput() {
             GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
 
             percGreenArea = (greenAreasCount / landSlots ) * 100;
-            greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
+//            greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
 
         else if(jsonData.count("home_area") )
