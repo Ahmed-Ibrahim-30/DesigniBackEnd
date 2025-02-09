@@ -18,7 +18,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
     for (int startAngle = 5; startAngle < 90; ++startAngle)
     {
         vector<double> linesAngle {startAngle * 1.0};
-        for (int i = 1; i < greenAreas - 1; ++i)
+        for (int i = 1; i < greenAreas ; ++i)
         {
             double angle = (linesAngle.back() + counterAngle);
             if (angle > 360) angle -=360;
@@ -63,6 +63,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
                     sortLands.emplace_back(distance , i);
                 }
             }
+            if (sortLands.empty()) continue;
             std::sort(sortLands.begin(), sortLands.end());
             int index = sortLands[0].second;
             greenAreaIndex.push_back(index);
@@ -75,6 +76,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
         allGreenAreasOptions.emplace_back(area , greenAreaIndex);
     }
 
+    if (allGreenAreasOptions.empty()) return;
     std::sort(allGreenAreasOptions.begin(), allGreenAreasOptions.end());
 
     int solIndex = lower_bound(allGreenAreasOptions.begin(), allGreenAreasOptions.end(),totalGreenAreas ,
