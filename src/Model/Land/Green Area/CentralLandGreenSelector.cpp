@@ -92,6 +92,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
                                {
         return elem.first < value;
                                })-allGreenAreasOptions.begin();
+    if (solIndex == allGreenAreasOptions.size())solIndex--;
 
     vector<int> greenAreaSelected = allGreenAreasOptions[solIndex].second;
 
