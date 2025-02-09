@@ -9,8 +9,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
     int n = (int)lands.size();
     int greenAreas = n*greenAreaPercentage;
     cout<<"greenAreas = "<<greenAreas<<"\n";
-    cout<<"lands = "<<n<<"\n";
-    cout<<"greenAreaPercentage = "<<greenAreaPercentage<<"\n";
+
     if (greenAreas == 0)return;
 
     Point outerCentroid = outerLand.calculateCentroid();
@@ -19,14 +18,16 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
 
     vector<pair<double , vector<int>>> allGreenAreasOptions;
 
-    for (int startAngle = 5; startAngle < 90; ++startAngle)
+    for (int startAngle = 0; startAngle < 90; ++startAngle)
     {
-        vector<double> linesAngle {startAngle * 1.0};
+        vector<double> linesAngle ;
+        int tmp = startAngle;
         for (int i = 1; i < greenAreas ; ++i)
         {
-            double angle = (linesAngle.back() + counterAngle);
+            double angle = (tmp + counterAngle);
             if (angle > 360) angle -=360;
             linesAngle.push_back(angle);
+            tmp = angle;
         }
 
         vector<Line> lines;
@@ -78,10 +79,13 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
             area += lands[greenIndex].getArea();
         }
         allGreenAreasOptions.emplace_back(area , greenAreaIndex);
+        break;
     }
 
     if (allGreenAreasOptions.empty()) return;
     std::sort(allGreenAreasOptions.begin(), allGreenAreasOptions.end());
+
+    cout<<"allGreenAreasOptions = "<<allGreenAreasOptions.size()<<"\n";
 
     int solIndex = lower_bound(allGreenAreasOptions.begin(), allGreenAreasOptions.end(),totalGreenAreas ,
                                [](pair<double, vector<int>> &elem , double value)
@@ -89,7 +93,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
         return elem.first < value;
                                })-allGreenAreasOptions.begin();
 
-    vector<int> greenAreaSelected = allGreenAreasOptions[0].second;
+    vector<int> greenAreaSelected = allGreenAreasOptions[solIndex].second;
 
     for(auto &green : greenAreaSelected)
     {
