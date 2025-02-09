@@ -80,19 +80,19 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
         allGreenAreasOptions.emplace_back(area , greenAreaIndex);
     }
 
-//    if (allGreenAreasOptions.empty()) return;
-//    std::sort(allGreenAreasOptions.begin(), allGreenAreasOptions.end());
+    if (allGreenAreasOptions.empty()) return;
+    std::sort(allGreenAreasOptions.begin(), allGreenAreasOptions.end());
 
-//    int solIndex = lower_bound(allGreenAreasOptions.begin(), allGreenAreasOptions.end(),totalGreenAreas ,
-//                               [](pair<double, vector<int>> &elem , double value)
-//                               {
-//        return elem.first < value;
-//                               })-allGreenAreasOptions.begin();
+    int solIndex = lower_bound(allGreenAreasOptions.begin(), allGreenAreasOptions.end(),totalGreenAreas ,
+                               [](pair<double, vector<int>> &elem , double value)
+                               {
+        return elem.first < value;
+                               })-allGreenAreasOptions.begin();
 
-//    vector<int> greenAreaSelected = allGreenAreasOptions[0].second;
-//
-//    for(auto &green : greenAreaSelected)
-//    {
-//        lands[green].setDivisible(false);
-//    }
+    vector<int> greenAreaSelected = allGreenAreasOptions[0].second;
+
+    for(auto &green : greenAreaSelected)
+    {
+        lands[green].setDivisible(false);
+    }
 }
