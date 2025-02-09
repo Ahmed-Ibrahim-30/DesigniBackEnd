@@ -90,12 +90,14 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
 
     cout<<"allGreenAreasOptions = "<<allGreenAreasOptions.size()<<"\n";
 
-    int solIndex = lower_bound(allGreenAreasOptions.begin(), allGreenAreasOptions.end(),totalGreenAreas ,
-                               [](pair<double, vector<int>> &elem , double value)
-                               {
-        return elem.first < value;
-                               })-allGreenAreasOptions.begin();
-    if (solIndex == allGreenAreasOptions.size())solIndex--;
+    int solIndex = upper_bound(allGreenAreasOptions.begin(), allGreenAreasOptions.end(), totalGreenAreas,
+                                    [](double value, const std::pair<double, std::vector<int>>& elem) {
+                                        return value < elem.first;  // Compare value with element's first (double)
+                                    }) - allGreenAreasOptions.begin();
+
+
+
+    solIndex--;
 
     vector<int> greenAreaSelected = allGreenAreasOptions[solIndex].second;
 
