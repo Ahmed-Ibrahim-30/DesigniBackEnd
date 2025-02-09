@@ -9,6 +9,9 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
     int n = (int)lands.size();
     int greenAreas = n*greenAreaPercentage;
     cout<<"greenAreas = "<<greenAreas<<"\n";
+    cout<<"lands = "<<n<<"\n";
+    cout<<"greenAreaPercentage = "<<greenAreaPercentage<<"\n";
+    if (greenAreas == 0)return;
 
     Point outerCentroid = outerLand.calculateCentroid();
     int counterAngle = 360 / greenAreas;
