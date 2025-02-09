@@ -18,14 +18,13 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
 
     vector<pair<double , vector<int>>> allGreenAreasOptions;
 
-    for (int startAngle = 0; startAngle < 90; startAngle += 5)
+    for (int startAngle = 0; startAngle <= 90; startAngle += 5)
     {
         vector<double> linesAngle ;
         int tmp = startAngle;
         for (int i = 0; i < greenAreas ; ++i)
         {
             double angle = (tmp + counterAngle);
-            if (angle > 360) angle -=360;
             linesAngle.push_back(angle);
             tmp = angle;
         }
@@ -54,6 +53,8 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
         }
         vector<int> greenAreaIndex;
         int lineIndex = 1;
+
+        cout<<"Green Areas Lines = "<<lines.size()<<"\n";
 
         for(auto &line : lines)
         {
