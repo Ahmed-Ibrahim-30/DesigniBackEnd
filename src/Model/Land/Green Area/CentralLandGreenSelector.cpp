@@ -18,7 +18,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
 
     vector<pair<double , vector<int>>> allGreenAreasOptions;
 
-    for (int startAngle = 0; startAngle < 90; ++startAngle)
+    for (int startAngle = 0; startAngle < 90; startAngle += 5)
     {
         vector<double> linesAngle ;
         int tmp = startAngle;
@@ -59,6 +59,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
             vector<pair<double , int>> sortLands;
             Point center ((line.getX2() + line.getX1()) / 2 , (line.getY2() + line.getY1()) / 2);
 
+                cout<<"Line -- ";
             for (int i = 0; i < lands.size(); ++i)
             {
                 Point centerLand = lands[i].calculateCentroid();
@@ -66,8 +67,10 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
                 {
                     double distance = PolygonHelper::getLineLength(center ,centerLand );
                     sortLands.emplace_back(distance , i);
+                    cout<<i+1 <<" ";
                 }
             }
+            cout<<"\n";
             if (sortLands.empty()) continue;
             std::sort(sortLands.begin(), sortLands.end());
             int index = sortLands[0].second;
