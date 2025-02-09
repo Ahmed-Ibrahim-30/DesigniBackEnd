@@ -52,6 +52,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
 
         }
         vector<int> greenAreaIndex;
+        set<int> visited;
         int lineIndex = 1;
 
         cout<<"Green Areas Lines = "<<lines.size()<<"\n";
@@ -65,7 +66,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
             for (int i = 0; i < lands.size(); ++i)
             {
                 Point centerLand = lands[i].calculateCentroid();
-                if(PolygonHelper::isLineIntersectWithPolygon(lands[i] , line))
+                if(!visited.count(i) &&PolygonHelper::isLineIntersectWithPolygon(lands[i] , line))
                 {
                     double distance = PolygonHelper::getLineLength(center ,centerLand );
                     sortLands.emplace_back(distance , i);
@@ -78,6 +79,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
             std::sort(sortLands.begin(), sortLands.end());
             int index = sortLands[0].second;
             greenAreaIndex.push_back(index);
+            visited.insert(index);
         }
         double area = 0.0;
         for(auto &greenIndex : greenAreaIndex)
