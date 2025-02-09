@@ -1258,6 +1258,8 @@ void HomeDesignController::getUserInput() {
 //            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
             GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
 
+            cout << "greenAreasCount = "<<greenAreasCount<<"\n";
+            cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount / landSlots ) * 100;
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
@@ -1277,6 +1279,8 @@ void HomeDesignController::getUserInput() {
 
             GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
 
+            cout << "greenAreasCount = "<<greenAreasCount<<"\n";
+            cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount / landSlots ) * 100;
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
