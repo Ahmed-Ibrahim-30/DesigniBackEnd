@@ -53,12 +53,17 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
 
         }
         vector<int> greenAreaIndex;
+        int lineIndex = 1;
 
         for(auto &line : lines)
         {
             vector<pair<double , int>> sortLands;
-            Point center ((line.getX2() + line.getX1()) / 2 , (line.getY2() + line.getY1()) / 2);
+            Point center ((line.getX2() + line.getX1()) / 2.0 , (line.getY2() + line.getY1()) / 2.0);
 
+            if (lineIndex == 3)
+            {
+                cout<<"centerLine = "<<center.getX()<<" "<<center.getY()<<"\n";
+            }
                 cout<<"Line -- ";
             for (int i = 0; i < lands.size(); ++i)
             {
@@ -67,10 +72,11 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
                 {
                     double distance = PolygonHelper::getLineLength(center ,centerLand );
                     sortLands.emplace_back(distance , i);
-                    cout<<i+1 <<" ";
+                    cout<<i+1 <<"( "<<distance<<")  ";
                 }
             }
             cout<<"\n";
+            lineIndex++;
             if (sortLands.empty()) continue;
             std::sort(sortLands.begin(), sortLands.end());
             int index = sortLands[0].second;
