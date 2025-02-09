@@ -151,12 +151,12 @@ bool PolygonHelper::isLineIntersectWithPolygon(Polygon1 &pol, const Line &line) 
     return false;
 }
 
-double PolygonHelper::getLineLength(const Point &first , const Point &second )
-{
-    double x1 = first.getX() , y1 = first.getY();
-    double x2 = second.getX() , y2 = second.getY();
+double PolygonHelper::getLineLength(const Point &first, const Point &second) {
+    double x1 = first.getX(), y1 = first.getY();
+    double x2 = second.getX(), y2 = second.getY();
 
-    return sqrt((x1 - x2) * (x1 * x2) + (y1 - y2) * (y1 * y2));
+    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
+
 
 
