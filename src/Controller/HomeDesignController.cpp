@@ -1250,13 +1250,15 @@ void HomeDesignController::getUserInput() {
             int landSlots = jsonData["lots"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
 
-            landSlots += (landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100);
+            int greenAreasCount = (int)((landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100));
+            landSlots += greenAreasCount;
             ans = land.SplitLand(landSlots , 1 , 1);
 
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
 //            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
             GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
 
+            percGreenArea = (greenAreasCount / landSlots ) * 100;
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
         else if(jsonData.count("slots"))
@@ -1264,7 +1266,8 @@ void HomeDesignController::getUserInput() {
             int landSlots = jsonData["slots"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
 
-            landSlots += (landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100);
+            int greenAreasCount = (int)((landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100));
+            landSlots += greenAreasCount;
             ans = land.SplitLand(landSlots , 1 , 1);
 
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
@@ -1274,6 +1277,7 @@ void HomeDesignController::getUserInput() {
 
             GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
 
+            percGreenArea = (greenAreasCount / landSlots ) * 100;
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
 
