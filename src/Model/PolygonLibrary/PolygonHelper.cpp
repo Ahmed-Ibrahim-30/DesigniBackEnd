@@ -158,5 +158,45 @@ double PolygonHelper::getLineLength(const Point &first, const Point &second) {
     return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
+set<int> PolygonHelper::getBoundaryLands(Polygon1 &outerLand ,vector<Polygon1> &lands)
+{
+    set<int> boundary;
+
+    Point outerCentroid = outerLand.calculateCentroid();
+    vector<Line> outerLine = outerLand.getLines();
+
+    for (int i = 0; i < lands.size(); ++i)
+    {
+        Point centerLand = lands[i].calculateCentroid();
+
+        bool isBoundary = false;
+
+        for (int j = 0; j < lands[i].getPoints().size(); ++j)
+        {
+            Point a1 = lands[i].getPoints()[j];
+            Point a2 = lands[i].getPoints()[(j+1) % lands[i].getPoints().size()];
+
+            for(auto &line : outerLine)
+            {
+                Point l1 (line.getX1() , line.getY1());
+                Point l2 (line.getX2() , line.getY2());
+
+                if(PolygonHelper::isPointOnLine(a1 , line) || PolygonHelper::isPointOnLine(a2 , line)||
+                   a1 == l1 || a1 == l2 || a2 == l1 || a2 == l2)
+                {
+                    isBoundary = true;
+                    break;
+                }
+            }
+
+            if(isBoundary)break;
+        }
+
+        if(isBoundary)boundary.insert(i);
+    }
+    return boundary;
+}
+
+
 
 

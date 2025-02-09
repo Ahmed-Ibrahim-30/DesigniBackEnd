@@ -73,6 +73,14 @@ public:
     static bool isLineIntersectWithPolygon(Polygon1 &pol , const Line &line);
 
     static double getLineLength(const Point &first, const Point &second);
+
+    /**
+     *
+     * @param outerLand
+     * @param lands
+     * @return
+     */
+    static set<int> getBoundaryLands(Polygon1 &outerLand ,vector<Polygon1> &lands) ;
 };
 
 

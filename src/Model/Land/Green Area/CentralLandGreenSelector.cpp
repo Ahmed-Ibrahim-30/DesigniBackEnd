@@ -16,6 +16,8 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
     int counterAngle = 360 / greenAreas;
     vector<Line> outerLines = outerLand.getLines();
 
+    set<int> boundaryLands = PolygonHelper::getBoundaryLands(outerLand , lands);
+
     vector<pair<double , vector<int>>> allGreenAreasOptions;
 
     for (int startAngle = 0; startAngle <= 90; startAngle += 5)
@@ -69,6 +71,9 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
                 if(!visited.count(i) &&PolygonHelper::isLineIntersectWithPolygon(lands[i] , line))
                 {
                     double distance = PolygonHelper::getLineLength(center ,centerLand );
+
+                    if(boundaryLands.count(i)) distance *= 10000;
+
                     sortLands.emplace_back(distance , i);
 //                    cout<<i+1 <<"( "<<distance<<")  ";
                 }

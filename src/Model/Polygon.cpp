@@ -282,3 +282,7 @@ bool Polygon1::isDivisible() const {
 void Polygon1::setDivisible(bool divisible) {
     Polygon1::divisible = divisible;
 }
+
+
+
+
