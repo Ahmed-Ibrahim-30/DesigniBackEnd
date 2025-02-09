@@ -54,6 +54,25 @@ public:
      * @return
      */
     static double getSlope(double x1, double x2, double y1, double y2);
+
+    /**
+     * Get Second Point of Line Using Angle
+     * @param x
+     * @param y
+     * @param angle
+     * @return
+     */
+    static Point getSecondPointOfLineByAngle(double x , double y , double angle , double distance = 1000000);
+
+    /**
+     * isLineIntersectWithPolygon
+     * @param pol
+     * @param line
+     * @return
+     */
+    static bool isLineIntersectWithPolygon(Polygon1 &pol , const Line &line);
+
+    static double getLineLength(const Point &first, const Point &second);
 };
 
 

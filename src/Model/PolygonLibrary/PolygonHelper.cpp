@@ -3,6 +3,7 @@
 //
 
 #include "PolygonHelper.h"
+#include <cmath>  // For cos, sin, and M_PI
 
 Line PolygonHelper::extendLine(const Line &line, bool extendFromSecondPoint , double scale) {
     Line line1 (0 , 0 , 0 , 0);
@@ -122,6 +123,40 @@ double PolygonHelper::getSlope(double x1, double x2, double y1, double y2) {
     if(x2 == x1) return 0;
 
     return (y2-y1) / (x2 - x1);
+}
+
+Point PolygonHelper::getSecondPointOfLineByAngle(double x, double y, double angle , double dist)
+{
+    double angle_rad = angle * 3.14159 / 180.0;
+    double x2 = x + cos(angle_rad ) * dist ;
+    double y2 = y + sin(angle_rad ) * dist ;
+
+    x2 = MathUtils::roundingToDecimal(x2);
+    y2 = MathUtils::roundingToDecimal(y2);
+    return {x2 , y2};
+}
+
+bool PolygonHelper::isLineIntersectWithPolygon(Polygon1 &pol, const Line &line) {
+    vector<Line> polLines = pol.getLines();
+
+    for(auto &l : polLines)
+    {
+        Point intersectionPoint = getIntersectionPoint(l , line);
+
+        if(intersectionPoint.getY() != INT_MAX)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+double PolygonHelper::getLineLength(const Point &first , const Point &second )
+{
+    double x1 = first.getX() , y1 = first.getY();
+    double x2 = second.getX() , y2 = second.getY();
+
+    return sqrt((x1 - x2) * (x1 * x2) + (y1 - y2) * (y1 * y2));
 }
 
 

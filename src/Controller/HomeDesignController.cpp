@@ -11,7 +11,7 @@
 #include "src/Model/PolygonLibrary/PolygonsSubtraction.h"
 #include "src/Model/Land/Green Area/UniformGreenDistributor.h"
 #include "src/Model/Land/Green Area/ClusteredGreenSelector.h"
-#include "crow/middlewares/cors.h"
+#include "src/Model/Land/Green Area/CentralLandGreenSelector.h"
 
 HomeDesignController::HomeDesignController()
 {
@@ -1254,9 +1254,10 @@ void HomeDesignController::getUserInput() {
             ans = land.SplitLand(landSlots , 1 , 1);
 
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
-            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
+//            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
+            GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
 
-            greenSelector->select(polygon1 , ans , percGreenArea/100);
+            greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
         else if(jsonData.count("slots"))
         {
@@ -1267,9 +1268,13 @@ void HomeDesignController::getUserInput() {
             ans = land.SplitLand(landSlots , 1 , 1);
 
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
-            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
+//            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
+//
+//            greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
-            greenSelector->select(polygon1,ans , percGreenArea/100);
+            GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
+
+            greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
         }
 
         else if(jsonData.count("home_area") )
@@ -1280,7 +1285,7 @@ void HomeDesignController::getUserInput() {
 
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
 
-            greenSelector->select(polygon1,ans , percGreenArea/100);
+            greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
         }
         else if(jsonData.count("slot_area") )
         {
@@ -1290,7 +1295,7 @@ void HomeDesignController::getUserInput() {
 
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
 
-            greenSelector->select(polygon1,ans , percGreenArea/100);
+            greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
         }
         else if(jsonData.count("bedroom_count"))
         {
@@ -1301,7 +1306,7 @@ void HomeDesignController::getUserInput() {
 
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
 
-            greenSelector->select(polygon1 , ans , percGreenArea/100);
+            greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
         }
 
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)

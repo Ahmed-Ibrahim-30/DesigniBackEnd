@@ -8,7 +8,7 @@
 
 class ClusteredGreenSelector : public GreenAreaSelector{
 public:
-    void select(Polygon1 &outerLand ,vector<Polygon1> &lands , double greenAreaPercentage) override;
+    void select(Polygon1 &outerLand ,vector<Polygon1> &lands , double greenAreaPercentage , double totalGreenAreas) override;
 };
 
 

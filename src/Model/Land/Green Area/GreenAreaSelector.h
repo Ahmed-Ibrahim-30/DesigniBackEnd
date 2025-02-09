@@ -9,7 +9,7 @@
 
 class GreenAreaSelector {
 public:
-    virtual void select(Polygon1 &outerLand , vector<Polygon1> &lands , double greenAreaPercentage) = 0;
+    virtual void select(Polygon1 &outerLand , vector<Polygon1> &lands , double greenAreaPercentage , double totalGreenAreas ) = 0;
 };
 
 

@@ -7,7 +7,8 @@
 #include "queue"
 #include "src/Model/DesignGeometryManager.h"
 
-void ClusteredGreenSelector::select(Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage) {
+void ClusteredGreenSelector::select(Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage , double totalGreenAreas )
+{
     int n = (int)lands.size();
     int greenAreas = n*greenAreaPercentage;
 //    cout<<"GREEN AREA = "<<greenAreas<<"\n";

@@ -6,7 +6,7 @@
 #include "src/Model/PolygonLibrary/PolygonHelper.h"
 #include "src/Model/DesignGeometryManager.h"
 
-void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage) {
+void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage, double totalGreenAreas ) {
     int n = (int)lands.size();
     int greenAreas = n*greenAreaPercentage;
     cout<<"GREEN AREA = "<<greenAreas<<"\n";
@@ -35,10 +35,6 @@ void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lan
             Point a1 = lands[i].getPoints()[j];
             Point a2 = lands[i].getPoints()[(j+1) % lands[i].getPoints().size()];
 
-            if(i == 25)
-            {
-                cout<< "Land 26 <<"<<a1.getX()<<","<<a1.getY()<<"\n";
-            }
 
             for(auto &line : outerLine)
             {

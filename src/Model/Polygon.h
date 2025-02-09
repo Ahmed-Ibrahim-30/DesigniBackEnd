@@ -73,6 +73,7 @@ public:
     vector<Point> scalePolygon(double scale);
 
     void setDivisible(bool divisible);
+
 };
 
 
