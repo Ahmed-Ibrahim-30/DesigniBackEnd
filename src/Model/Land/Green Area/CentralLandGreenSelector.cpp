@@ -22,7 +22,7 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
     {
         vector<double> linesAngle ;
         int tmp = startAngle;
-        for (int i = 1; i < greenAreas ; ++i)
+        for (int i = 0; i < greenAreas ; ++i)
         {
             double angle = (tmp + counterAngle);
             if (angle > 360) angle -=360;
