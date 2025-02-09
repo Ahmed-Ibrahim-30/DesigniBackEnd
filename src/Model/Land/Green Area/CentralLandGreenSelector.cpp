@@ -90,6 +90,8 @@ void CentralLandGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lan
         for(auto &greenIndex : greenAreaIndex)
         {
             area += lands[greenIndex].getArea();
+
+            if (boundaryLands.count(greenIndex)) area += 100000;
         }
         allGreenAreasOptions.emplace_back(area , greenAreaIndex);
 //        break;
