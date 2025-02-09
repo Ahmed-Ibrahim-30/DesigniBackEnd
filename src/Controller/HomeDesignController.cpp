@@ -1260,8 +1260,8 @@ void HomeDesignController::getUserInput() {
 
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
-            percGreenArea = (greenAreasCount / landSlots ) * 100;
-            greenSelector->select(polygon1 , ans , percGreenArea/100 , 50000);
+            percGreenArea = (greenAreasCount*1.0 / landSlots*1.0 ) * 100.0;
+            greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 50000);
         }
         else if(jsonData.count("slots"))
         {
