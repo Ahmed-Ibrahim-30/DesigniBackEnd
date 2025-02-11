@@ -76,6 +76,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
             if(!templates.empty()) design1 = templates[0];
         }
 
+        design1.scaleDesign(100);
+
 
         Room room1("Bedroom" , 0 , 0 , 525 , 420);
         Room room2("Kitchen" , 525 , 0 , 735 , 210);
