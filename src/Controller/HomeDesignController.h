@@ -56,13 +56,6 @@ private:
      */
     vector<Design> storeTemplateDesigns();
 
-    /**
-     *
-     * @return
-     */
-    DesignRepository extractRealTemplateDesign();
-
-    void getUserInput();
 public:
     explicit HomeDesignController();
 
@@ -80,6 +73,12 @@ public:
      * showDesignResult
      */
     void showDesignResult();
+
+    /**
+     *
+     * @return
+     */
+    DesignRepository extractRealTemplateDesign();
 };
 
 

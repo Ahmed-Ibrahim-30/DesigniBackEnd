@@ -31,6 +31,8 @@ file(GLOB_RECURSE SRC_FILES
 add_executable(Designi_BackEnd
         main.cpp
         ${SRC_FILES}
+        src/Controller/APIController.cpp
+        src/Controller/APIController.h
 )
 
 find_package(Threads REQUIRED)
