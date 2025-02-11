@@ -25,12 +25,11 @@ APIController::APIController(crow::SimpleApp &app)
     modifyDesignRoutes(app);
     requestDesignRoutes(app);
     requestDesign2Routes(app);
-
-    cout<<"HERE\n";
 }
 
 void APIController::preProcessing() {
     templatesDesigns = homeDesignController.extractRealTemplateDesign();
+//    model1Templates.attachRooms();
 }
 
 void APIController::templateRoutes(crow::SimpleApp &app)
@@ -45,27 +44,39 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         }
         crow::json::wvalue response;
         int bedrooms = -1 , rooms = -1 , spaces = -1 , home = -1; double area = - 1;
+        Design design1;
+        vector<Design> templates = model1Templates.designs;
         if(jsonData.has("Bedrooms"))
         {
             bedrooms = (int)jsonData["Bedrooms"].i();
+            vector<Design> ds = model1Templates.bedroomsInput(bedrooms , templates);
+            if(!ds.empty()) design1 = ds[0];
         }
         if(jsonData.has("Rooms"))
         {
             rooms = (int)jsonData["Rooms"].i();
+            vector<Design> ds = model1Templates.roomsInput(rooms , templates);
+            if(!ds.empty()) design1 = ds[0];
         }
         if(jsonData.has("Area"))
         {
             area = jsonData["Area"].d();
+            vector<Design> ds = model1Templates.areaInput(area , templates);
+            if(!ds.empty()) design1 = ds[0];
         }
         if(jsonData.has("Spaces"))
         {
             spaces = (int)jsonData["Spaces"].i();
+            vector<Design> ds = model1Templates.spacesInput(spaces , templates);
+            if(!ds.empty()) design1 = ds[0];
         }
         if(jsonData.has("Home"))
         {
             home = (int)jsonData["Home"].i();
+            if(!templates.empty()) design1 = templates[0];
         }
-        Design design1;
+
+
         Room room1("Bedroom" , 0 , 0 , 525 , 420);
         Room room2("Kitchen" , 525 , 0 , 735 , 210);
         Room room3("Bath"    , 525 , 210 , 735 , 420);
@@ -74,9 +85,9 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         room3.addWindow(735 , 225 , 735 , 330);
         room1.addDoor(240 , 420 , 345 , 420);
         room3.addDoor(525 , 225 , 525 , 330);
-        design1.addRoom(room1);
-        design1.addRoom(room2);
-        design1.addRoom(room3);
+//        design1.addRoom(room1);
+//        design1.addRoom(room2);
+//        design1.addRoom(room3);
         // design1.scaleDesign(100);
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();

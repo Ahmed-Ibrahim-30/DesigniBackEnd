@@ -166,6 +166,12 @@ void Room::updateRoomType(const string &roomName) {
     roomType = RoomTypeUtils::parseStringToRoomType(roomName);
 }
 
+void Room::updateRoomType(RoomType newRoomType) {
+    roomType = newRoomType;
+    string id = RoomTypeUtils::parseRoomTypeToString(roomType);
+    roomId = UniqueIdGenerator::getInstance()->generateId( id);
+}
+
 void Room::printDetails() const{
     cout<<"Room : "<<roomId <<" Room Type : ["<<RoomTypeUtils::parseRoomTypeToString(roomType)<<
     "] - Area = "<<area <<" - Width = "<<width << " - Height = "<<height <<"\nDimensions = "<<
@@ -456,6 +462,14 @@ double Room::getZ2() const {
 
 void Room::setZ2(double _z2) {
     Room::z2 =  MathUtils::roundingToDecimal(_z2);
+}
+
+const string &Room::getImagePath() const {
+    return imagePath;
+}
+
+void Room::setImagePath(const string &_imagePath) {
+    Room::imagePath = _imagePath;
 }
 
 

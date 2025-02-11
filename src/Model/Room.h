@@ -20,21 +20,15 @@ private:
      * For 3d Rooms
      */
     double z1 , z2;
-public:
-    double getZ1() const;
-
-    void setZ1(double z1);
-
-    double getZ2() const;
-
-    void setZ2(double z2);
-
-private:
     double width , height;
     RoomType roomType;
     string roomId;
     vector<char> requiredView;
 
+    /**
+     * Image For Furniture If Founded
+     */
+    string imagePath;
     /**
      * Room Windows
      */
@@ -81,6 +75,7 @@ public:
         setY2(y2);
         setZ1(z1);
         setZ2(z2);
+        imagePath = "";
     }
 
     Room(const string &id1, double x1,double y1,double x2,double y2 )
@@ -93,7 +88,23 @@ public:
         setWidth(x2 - x1);
         setHeight(y2 - y1);
         changeArea(getWidth() * getHeight());
+        imagePath = "";
     }
+
+    Room(RoomType roomType , double x1,double y1,double x2,double y2,int roomCounter=1,const string &_imagePath = "")
+    {
+        updateRoomType(roomType);
+        changeId(roomId + to_string(roomCounter));
+        setX1(x1);
+        setX2(x2);
+        setY1(y1);
+        setY2(y2);
+        setWidth(x2 - x1);
+        setHeight(y2 - y1);
+        changeArea(getWidth() * getHeight());
+        setImagePath(_imagePath);
+    }
+
     /**
      * Empty Constructor
      */
@@ -248,6 +259,20 @@ public:
     void mirrorX();
 
     void mirrorY();
+
+    void updateRoomType(RoomType newRoomType);
+
+    double getZ1() const;
+
+    void setZ1(double z1);
+
+    double getZ2() const;
+
+    void setZ2(double z2);
+
+    const string &getImagePath() const;
+
+    void setImagePath(const string &imagePath);
 };
 
 

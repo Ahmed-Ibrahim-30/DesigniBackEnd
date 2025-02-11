@@ -61,13 +61,43 @@ private:
      */
     double area;
 
+    /**
+     *
+     */
     Room mainDesign;
 
+    /**
+     * rotatedDegree
+     */
+    double rotatedDegree;
+
+    double minArea = 0.0;
+    double maxArea = 0.0;
+
+    /**
+     * Design id
+     */
+    string designId;
 public:
     /**
      * Empty Constructor
      */
     Design();
+
+    /**
+     *
+     * @param myId
+     * @param _rooms
+     * @param roomsNumber
+     * @param bedroomsNumber
+     * @param currentArea
+     * @param minArea
+     * @param maxArea
+     */
+    Design(const string &myId ,const vector<Room>&_rooms,int roomsNumber , int bedroomsNumber , double currentArea , double minArea , double maxArea);
+
+
+    Design(const string &myId ,const vector<Room>&_rooms);
 
     /**
      * Add Room To Design
@@ -141,6 +171,12 @@ public:
      * change Room Name
      */
     void changeRoomName(RoomType roomType , const string & newName);
+
+    void changeRoomName(RoomType roomType , RoomType roomType2 , int previousRoomCnt = 1 , int newRoomCnt = 1);
+
+    double getRotatedDegree() const;
+
+    void setRotatedDegree(double rotatedDegree);
 
     /**
      * Update Main Design after added new Room
@@ -217,6 +253,46 @@ public:
     void addOpenings();
 
     /**
+     * addFurnitureImage
+     * @param roomType
+     * @param roomCnt
+     * @param imagePath
+     */
+    void addFurnitureImage(RoomType roomType , int roomCnt = 1, const string &imagePath = "");
+
+    /**
+     * Add Window to Specific Room
+     * @param roomType
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param roomCnt
+     */
+    void addWindow(RoomType roomType,double x1,double y1,double x2,double y2 , int roomCnt = 1);
+
+    /**
+     * Add Door To Specific Room
+     * @param roomType
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param roomCnt
+     */
+    void addDoor(RoomType roomType,double x1,double y1,double x2,double y2 , int roomCnt = 1);
+
+    /**
+     * Add Opening To Specific Room
+     * @param roomType
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param roomCnt
+     */
+    void addOpening(RoomType roomType,double x1,double y1,double x2,double y2 , int roomCnt = 1);
+    /**
      * @brief getWallFraming
      * @return
      */
@@ -259,6 +335,21 @@ public:
     const map<string, char> &getRoomsIdsFaces() const;
 
     void setRoomsIdsFaces(const map<string, char> &roomsIdsFaces);
+
+    double getMinArea() const;
+
+    void setMinArea(double minArea);
+
+    double getMaxArea() const;
+
+    void setMaxArea(double maxArea);
+
+    const string &getId() const;
+
+    void setId(const string &id);
+
+
+
 };
 
 

@@ -7,11 +7,41 @@
 
 Design::Design()
 {
+    setId("Design");
     setSpacesCount(0);
     setBedroomsCount(0);
     setRoomsCount(0);
     setArea(0);
+    setMinArea(0);
+    setMaxArea(10000000000);
     initializeMainDesign();
+}
+
+Design::Design(const string &myId, const vector<Room> &_rooms, int roomsNumber, int bedroomsNumber, double currentArea, double minArea, double maxArea)
+{
+    setId(myId);
+    setSpacesCount(rooms.size());
+    setBedroomsCount(bedroomsNumber);
+    setRoomsCount(roomsNumber);
+    setArea(currentArea);
+    setMinArea(minArea);
+    setMaxArea(maxArea);
+    initializeMainDesign();
+    setRooms(_rooms);
+    updateMainDesign();
+}
+
+Design::Design(const string &myId, const vector<Room> &_rooms) {
+    setId(myId);
+    setSpacesCount(_rooms.size());
+    setBedroomsCount(0);
+    setRoomsCount(0);
+    setArea(0);
+    setMinArea(0);
+    setMaxArea(100000);
+    initializeMainDesign();
+    setRooms(_rooms);
+    updateMainDesign();
 }
 
 void Design::addRoom(const Room &room) {
@@ -39,6 +69,27 @@ void Design::setRooms(const vector<Room> &_rooms) {
     {
         addRoom(room);
     }
+}
+
+void Design::addFurnitureImage(RoomType roomType , int roomCnt , const string &imagePath )
+{
+    string roomId = RoomTypeUtils::parseRoomTypeToString(roomType) + to_string(roomCnt);
+    int roomIndex = -1;
+    for (int i = 0; i < rooms.size(); ++i)
+    {
+        if (rooms[i].getRoomId() == roomId)
+        {
+            roomIndex = i;
+            break;
+        }
+    }
+
+    if(roomIndex == -1){
+        LOG(LogLevel::Warning, "Design:: addFurnitureImage - roomType Not Found -- RoomID = " + roomId);
+        return;
+    }
+
+    rooms[roomIndex].setImagePath(imagePath);
 }
 
 void Design::deleteRoom(const Room &room) {
@@ -138,6 +189,44 @@ void Design::changeRoomName(RoomType roomType, const string &newName) {
         {
            conn.second.erase(oldId);
            conn.second.insert(newName);
+        }
+    }
+}
+
+void Design::changeRoomName(RoomType roomType, RoomType roomType2 , int previousRoomCnt , int newRoomCnt ) {
+    string oldId = RoomTypeUtils::parseRoomTypeToString(roomType) + to_string(previousRoomCnt);
+
+    int roomIndex = -1;
+    for (int i = 0; i < rooms.size(); ++i)
+    {
+        if(rooms[i].getRoomId() == oldId)
+        {
+            roomIndex= i;
+            break;
+        }
+    }
+
+    if(roomIndex == -1)
+    {
+        LOG(LogLevel::Warning , "Room : " + RoomTypeUtils::parseRoomTypeToString(roomType) + " doesnt exist");
+        return;
+    }
+
+    string newName = RoomTypeUtils::parseRoomTypeToString(roomType2) + to_string(newRoomCnt);
+
+
+    rooms[roomIndex].changeId(newName);
+
+    set<string> oldConn = connections[oldId];
+    connections.erase(oldId);
+    connections[newName] = oldConn;
+
+    for(auto &conn : connections)
+    {
+        if(conn.second.count(oldId))
+        {
+            conn.second.erase(oldId);
+            conn.second.insert(newName);
         }
     }
 }
@@ -816,5 +905,102 @@ vector<Wall> Design::getWallFraming()
     Design newD = *this;
     return DesignWallGenerator::generateWalls(newD);
 }
+
+double Design::getRotatedDegree() const {
+    return rotatedDegree;
+}
+
+void Design::setRotatedDegree(double rotatedDegree) {
+    Design::rotatedDegree = rotatedDegree;
+}
+
+double Design::getMinArea() const {
+    return minArea;
+}
+
+void Design::setMinArea(double _minArea) {
+    Design::minArea = MathUtils::roundingToDecimal(_minArea);
+}
+
+double Design::getMaxArea() const {
+    return maxArea;
+}
+
+void Design::setMaxArea(double _maxArea) {
+    Design::maxArea = MathUtils::roundingToDecimal(_maxArea);
+}
+
+const string &Design::getId() const {
+    return designId;
+}
+
+void Design::setId(const string &id) {
+    Design::designId = id;
+}
+
+void Design::addWindow(RoomType roomType,double x1,double y1,double x2,double y2 , int roomCnt)
+{
+    string roomId = RoomTypeUtils::parseRoomTypeToString(roomType) + to_string(roomCnt);
+    int roomIndex = -1;
+    for (int i = 0; i < rooms.size(); ++i)
+    {
+        if (rooms[i].getRoomId() == roomId)
+        {
+            roomIndex = i;
+            break;
+        }
+    }
+
+    if(roomIndex == -1){
+        LOG(LogLevel::Warning, "Design:: addWindow - roomType Not Found -- RoomID = " + roomId);
+        return;
+    }
+
+    rooms[roomIndex].addWindow(x1,y1,x2,y2);
+}
+void Design::addDoor(RoomType roomType , double x1,double y1,double x2,double y2 , int roomCnt ){
+    string roomId = RoomTypeUtils::parseRoomTypeToString(roomType) + to_string(roomCnt);
+    int roomIndex = -1;
+    for (int i = 0; i < rooms.size(); ++i)
+    {
+        if (rooms[i].getRoomId() == roomId)
+        {
+            roomIndex = i;
+            break;
+        }
+    }
+
+    if(roomIndex == -1){
+        LOG(LogLevel::Warning, "Design:: addDoor - roomType Not Found -- RoomID = " + roomId);
+        return;
+    }
+
+    rooms[roomIndex].addDoor(x1,y1,x2,y2);
+}
+void Design::addOpening(RoomType roomType,double x1,double y1,double x2,double y2, int roomCnt){
+    string roomId = RoomTypeUtils::parseRoomTypeToString(roomType) + to_string(roomCnt);
+    int roomIndex = -1;
+    for (int i = 0; i < rooms.size(); ++i)
+    {
+        if (rooms[i].getRoomId() == roomId)
+        {
+            roomIndex = i;
+            break;
+        }
+    }
+
+    if(roomIndex == -1){
+        LOG(LogLevel::Warning, "Design:: addOpening - roomType Not Found -- RoomID = " + roomId);
+        return;
+    }
+
+    rooms[roomIndex].addOpening(x1,y1,x2,y2);
+}
+
+
+
+
+
+
 
 
