@@ -68,7 +68,8 @@ vector<Polygon1> Land::SplitLand(const Design &design) {
 }
 
 vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB) {
-    landDivision = new LandDivisionBasedOnSidesConvergence();
+//    landDivision = new LandDivisionBasedOnSidesConvergence();
+    landDivision = new LandDivisionBasedOnMinimizeSmallDimensions();
 
     vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratioA , ratioB , divisions);
 

@@ -33,6 +33,12 @@ add_executable(Designi_BackEnd
         ${SRC_FILES}
         src/Controller/APIController.cpp
         src/Controller/APIController.h
+        src/Model/Land/LandDivisionBasedOnMinimizeSmallDimensions.cpp
+        src/Model/Land/LandDivisionBasedOnMinimizeSmallDimensions.h
+        src/Model/Land/LandDivisionBasedOnMinimizeAcuteAngles.cpp
+        src/Model/Land/LandDivisionBasedOnMinimizeAcuteAngles.h
+        src/Model/Land/LandDivisionBasedOnMaximizeConnections.cpp
+        src/Model/Land/LandDivisionBasedOnMaximizeConnections.h
 )
 
 find_package(Threads REQUIRED)

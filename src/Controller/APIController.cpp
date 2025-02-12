@@ -13,7 +13,7 @@
 #include "src/Model/Land/Green Area/UniformGreenDistributor.h"
 #include "src/Model/Land/Green Area/ClusteredGreenSelector.h"
 #include "src/Model/Land/Green Area/CentralLandGreenSelector.h"
-
+#include "src/Model/Land/LandDivisionBasedOnMinimizeSmallDimensions.h"
 
 APIController::APIController(crow::SimpleApp &app)
 {
@@ -109,18 +109,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
             general[0]++;
         }
         design1.scaleDesign(105);
-        Room room1("Bedroom" , 0 , 0 , 525 , 420);
-        Room room2("Kitchen" , 525 , 0 , 735 , 210);
-        Room room3("Bath"    , 525 , 210 , 735 , 420);
-        room2.addOpening(525 , 30 , 525 , 135);
-        room1.addWindow(0 , 105 , 0 , 210);
-        room3.addWindow(735 , 225 , 735 , 330);
-        room1.addDoor(240 , 420 , 345 , 420);
-        room3.addDoor(525 , 225 , 525 , 330);
-//        design1.addRoom(room1);
-//        design1.addRoom(room2);
-//        design1.addRoom(room3);
-        // design1.scaleDesign(100);
+
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();
         vector<Line>innerLines = drawing.getInnerLines();

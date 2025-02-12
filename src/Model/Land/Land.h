@@ -6,6 +6,7 @@
 #define DESIGNI_LAND_H
 #include "src/Model/Polygon.h"
 #include "LandDivisionBasedOnSidesConvergence.h"
+#include "LandDivisionBasedOnMinimizeSmallDimensions.h"
 #include "LandDivisionBasedOnLandArea.h"
 #include "src/Model/DesignGeometryManager.h"
 #include "LandNetworkByScaling.h"
