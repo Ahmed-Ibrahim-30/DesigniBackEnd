@@ -19,6 +19,8 @@ private :
      * 18 templates designs
      */
     DesignRepository templatesDesigns;
+
+    map<int , int> roomsRequest , bedroomRequest , spacesRequest , general;
 public:
     explicit APIController(crow::SimpleApp& app);
 

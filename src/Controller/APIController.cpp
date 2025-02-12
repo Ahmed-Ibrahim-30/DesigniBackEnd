@@ -34,7 +34,7 @@ void APIController::preProcessing() {
 
 void APIController::templateRoutes(crow::SimpleApp &app)
 {
-    map<int , int> roomsRequest , bedroomRequest , spacesRequest , general;
+
     CROW_ROUTE(app , "/Template").methods( crow::HTTPMethod::POST)([&](const crow::request&req)
     {
         crow::response finalRes ;
@@ -73,6 +73,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         if(bedrooms != -1)
         {
             designs = model1Templates.bedroomsInput(bedrooms , templates);
+
+            cout<<"tst = "<<designs.size()<<"\n";
 
             int index = bedroomRequest[bedrooms]%designs.size();
 
