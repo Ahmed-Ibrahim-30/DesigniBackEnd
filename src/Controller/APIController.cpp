@@ -501,7 +501,6 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
             return crow::response(400, "Invalid JSON format");
         }
         crow::json::wvalue response;
-        Design outputDesign ;
         double degree = jsonData["rotation"].d();
         auto designJson =  jsonData["Design"];
         Design mainDesign;
@@ -602,7 +601,6 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
 
         mainDesign.scaleDesign(100);
 
-        cout<<"After Rotations = "<<mainDesign.getRooms().size()<<"\n";
 
         DesignToDoublyLines drawing(mainDesign);
         vector<Line>oldLines = drawing.getRecLines();
@@ -612,12 +610,12 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
         vector<Line> drawingLines = drawing.getNewLines();
         vector<Room>newRectangle = drawing.getNewRectangles();
         vector<Room>oldRectangle = drawing.getRectangles();
-        map < string , vector<double> >dimensions = drawing.calculateHomeDimensions(outputDesign);
+        map < string , vector<double> >dimensions = drawing.calculateHomeDimensions(mainDesign);
         vector<Room> room3DPrinting = drawing.getRoom3DPrinting();
         JsonExtraction::outputJsonFile
         (
                 response,
-                outputDesign,
+                mainDesign,
                 0,
                 oldRectangle,
                 newRectangle,
