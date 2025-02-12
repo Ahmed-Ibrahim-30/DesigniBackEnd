@@ -547,7 +547,9 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
                 newRoom.addOpening(_x1 , _y1 , _x2 , _y2);
             }
 
-            string imagePath = room.count("image") ? room["image"].s(): "";
+            string imagePath =  "";
+
+            if(room.count("image")) imagePath = room["image"].s();
             newRoom.setImagePath(imagePath);
 
             mainDesign.addRoom(newRoom);
