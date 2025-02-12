@@ -74,8 +74,6 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         {
             designs = model1Templates.bedroomsInput(bedrooms , templates);
 
-            cout<<"tst = "<<designs.size()<<"\n";
-
             int index = bedroomRequest[bedrooms]%designs.size();
 
             if(!designs.empty()) design1 = designs[index];
@@ -517,22 +515,93 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
             double y2 = room["y2"].d();
             double width = (x2 - x1) / 100;
             double height = (y2 - y1) / 100;
-            mainDesign.addRoom(roomBuilder.createRoom(id , x1/100 , y1/100 , x2/100 , y2/100));
+
+            Room newRoom(id , x1/100 , y1/100 , x2/100 , y2/100);
+
+            for(auto &door : room["Door"])
+            {
+                double _x1 = door["x1"].d();
+                double _y1 = door["y1"].d();
+                double _x2 = door["x2"].d();
+                double _y2 = door["y2"].d();
+
+                _x1/=100;
+                _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                _y1/=100;
+                _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                _x2/=100;
+                _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                _y2/=100;
+                _y2 = (std::round(_y2*10) / 10) * 1.0;
+
+                newRoom.addDoor(_x1 , _y1 , _x2 , _y2);
+            }
+
+            for(auto &door : room["Window"])
+            {
+                double _x1 = door["x1"].d();
+                double _y1 = door["y1"].d();
+                double _x2 = door["x2"].d();
+                double _y2 = door["y2"].d();
+
+                _x1/=100;
+                _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                _y1/=100;
+                _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                _x2/=100;
+                _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                _y2/=100;
+                _y2 = (std::round(_y2*10) / 10) * 1.0;
+                newRoom.addWindow(_x1 , _y1 , _x2 , _y2);
+            }
+
+            for(auto &door : room["Opening"])
+            {
+                double _x1 = door["x1"].d();
+                double _y1 = door["y1"].d();
+                double _x2 = door["x2"].d();
+                double _y2 = door["y2"].d();
+
+                _x1/=100;
+                _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                _y1/=100;
+                _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                _x2/=100;
+                _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                _y2/=100;
+                _y2 = (std::round(_y2*10) / 10) * 1.0;
+
+                newRoom.addOpening(_x1 , _y1 , _x2 , _y2);
+            }
+
+            string imagePath = room["image"].s();
+            newRoom.setImagePath(imagePath);
+
+            mainDesign.addRoom(newRoom);
         }
-        for(auto &room : designJson["connections"])
-        {
-            string first = room["first"].s();
-            string second = room["second"].s();
-            mainDesign.addConnection(first , second);
-        }
+//        for(auto &room : designJson["connections"])
+//        {
+//            string first = room["first"].s();
+//            string second = room["second"].s();
+//            mainDesign.addConnection(first , second);
+//        }
         if(degree < 360)mainDesign.rotate(degree);
         else if(degree == 450)mainDesign.mirrorRecX();
         else if(degree == 540)mainDesign.mirrorRecY();
-        DesignRepository designRepo;
-        designRepo.addDesign(mainDesign);
-        outputDesign = designRepo.getDesigns()[0];
-        outputDesign.scaleDesign(100);
-        DesignToDoublyLines drawing(outputDesign);
+
+
+        mainDesign.scaleDesign(100);
+        
+        DesignToDoublyLines drawing(mainDesign);
         vector<Line>oldLines = drawing.getRecLines();
         vector<Line>innerLines = drawing.getInnerLines();
         vector<Room>surface3D = drawing.getNewSurfaces();
