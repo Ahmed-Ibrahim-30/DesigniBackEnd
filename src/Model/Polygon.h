@@ -56,7 +56,16 @@ public:
 
     void rotate(double angle);
 
+    /**
+     * Shift On X axis
+     * @param dx
+     */
     void shiftX(double dx);
+
+    /**
+     * Shift On Y Axis
+     * @param dx
+     */
     void shiftY(double dx);
 
     /**
@@ -72,7 +81,18 @@ public:
      */
     vector<Point> scalePolygon(double scale);
 
+    /**
+     * Is Polygon valid to Divisible or Not
+     * Is Green Area Or Not for lands
+     * @param divisible
+     */
     void setDivisible(bool divisible);
+
+    /**
+     * Count Acute Angles Lines
+     * @return
+     */
+    int countAcuteAnglesLines();
 };
 
 

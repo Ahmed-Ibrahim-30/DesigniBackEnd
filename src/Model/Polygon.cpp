@@ -279,8 +279,21 @@ bool Polygon1::isDivisible() const {
     return divisible;
 }
 
-void Polygon1::setDivisible(bool divisible) {
-    Polygon1::divisible = divisible;
+void Polygon1::setDivisible(bool _divisible) {
+    Polygon1::divisible = _divisible;
+}
+
+int Polygon1::countAcuteAnglesLines() {
+    int acuteLines = 0;
+
+    vector<Line> polygonLines = getLines();
+
+    for(auto &line : polygonLines)
+    {
+        double angle = line.getAngle();
+        if (angle < 90 && angle > 0) acuteLines++;
+    }
+    return acuteLines;
 }
 
 

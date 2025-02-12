@@ -80,8 +80,10 @@ vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB) {
     return pols[0];
 }
 
-vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubArea) {
-    landDivision = new LandDivisionBasedOnLandArea();
+vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubArea)
+{
+//    landDivision = new LandDivisionBasedOnLandArea();
+    landDivision = new LandDivisionBasedOnMinimizeAcuteAngles();
 
     vector<vector<Polygon1>>pols = landDivision->divideLands(curPolygons , minSubArea);
 

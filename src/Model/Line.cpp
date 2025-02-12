@@ -272,3 +272,9 @@ const Point &Line::getAnEnd() const {
 void Line::printJsonFormat() {
     cout << "{ x1:" << x1 << ", y1:" << y1 << ", x2:" << x2 << ", y2:" << y2<< "},\n";
 }
+
+double Line::getAngle() const
+{
+    double angle = atan2(y2 - y1 , x2 - x1) * 180 / 3.14159;
+    return angle < 0 ? angle + 360 : angle;
+}

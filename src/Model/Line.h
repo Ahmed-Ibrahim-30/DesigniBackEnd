@@ -58,6 +58,12 @@ public:
     Line(double x1, double x2, double y1, double y2,double z1,double z2);
     [[nodiscard]] const string &getId() const;
 
+    /**
+     * Get Line Angle
+     * @return
+     */
+    double getAngle() const;
+
     [[nodiscard]] double getCenterX1() const;
     void setDir(char d);
     void setDir();

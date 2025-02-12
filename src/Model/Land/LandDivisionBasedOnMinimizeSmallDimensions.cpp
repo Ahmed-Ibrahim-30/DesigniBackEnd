@@ -14,22 +14,6 @@ void LandDivisionBasedOnMinimizeSmallDimensions::divideLand(double ratioA, doubl
 
     int polygonIndex = -1;
 
-    vector<pair<double , int>> sortPolygons;
-    for (int i = 0; i < pols.size(); ++i)
-    {
-        double area = pols[i].getArea();
-
-        sortPolygons.emplace_back(area , i);
-    }
-
-    sort(sortPolygons.begin() , sortPolygons.end() , greater<>());
-
-    vector<Polygon1> polsTemp = pols;
-
-    pols.clear();
-
-    for(auto &p : sortPolygons)pols.push_back(polsTemp[p.second]);
-
     vector<tuple<double , int , int >> sortSolutions;
     vector<vector<pair<Polygon1 , Polygon1>>> solutions(pols.size());
     for (int i = 0; i < pols.size(); ++i)
@@ -65,7 +49,6 @@ void LandDivisionBasedOnMinimizeSmallDimensions::divideLand(double ratioA, doubl
             newPolygons.pop_back();
             newPolygons.pop_back();
         }
-        if(!paiPoly.empty())break;
     }
 
     int  second;  double t;

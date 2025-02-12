@@ -7,6 +7,7 @@
 #include "src/Model/Polygon.h"
 #include "LandDivisionBasedOnSidesConvergence.h"
 #include "LandDivisionBasedOnMinimizeSmallDimensions.h"
+#include "LandDivisionBasedOnMinimizeAcuteAngles.h"
 #include "LandDivisionBasedOnLandArea.h"
 #include "src/Model/DesignGeometryManager.h"
 #include "LandNetworkByScaling.h"
