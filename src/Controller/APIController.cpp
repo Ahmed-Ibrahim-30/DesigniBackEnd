@@ -29,7 +29,7 @@ APIController::APIController(crow::SimpleApp &app)
 
 void APIController::preProcessing() {
     templatesDesigns = homeDesignController.extractRealTemplateDesign();
-//    model1Templates.attachRooms();
+    model1Templates.attachRooms();
 }
 
 void APIController::templateRoutes(crow::SimpleApp &app)
@@ -47,6 +47,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         Design design1;
         vector<Design> designs;
         vector<Design> templates = model1Templates.designs;
+
         if(jsonData.has("Bedrooms"))
         {
             bedrooms = (int)jsonData["Bedrooms"].i();

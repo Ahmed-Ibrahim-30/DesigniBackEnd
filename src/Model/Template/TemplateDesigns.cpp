@@ -29,6 +29,7 @@ void TemplateDesigns::attachRooms()
     B6L5A5(livingShapes,bedroomShapes,familyShapes);
     B6L5A6(livingShapes,bedroomShapes,familyShapes);
 
+    cout<<"designs = = "<<designs.size()<<"\n";
     for ( auto &collection : designs){
         double X = collection.getMainDesign().getX2() - collection.getMainDesign().getX1();
         double Y = collection.getMainDesign().getY2() - collection.getMainDesign().getY1();
