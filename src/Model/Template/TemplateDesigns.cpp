@@ -275,6 +275,18 @@ void TemplateDesigns::B(const vector<Design> &livingShapes, const vector<Design>
 
     //bRoom.resizeRoom(36);
     designs.push_back(bRoom);
+
+
+    Room room1("Bedroom" , 0 , 0 , 525 , 420);
+    Room room2("Kitchen" , 525 , 0 , 735 , 210);
+    Room room3("Bath"    , 525 , 210 , 735 , 420);
+
+
+    room2.addOpening(525 , 30 , 525 , 135);
+    room1.addWindow(0 , 105 , 0 , 210);
+    room3.addWindow(735 , 225 , 735 , 330);
+    room1.addDoor(240 , 420 , 345 , 420);
+    room3.addDoor(525 , 225 , 525 , 330);
 }
 
 void TemplateDesigns::B2L1(const vector<Design>&livingShapes,const vector<Design>&bedroomShapes,const vector<Design>&familyShapes)

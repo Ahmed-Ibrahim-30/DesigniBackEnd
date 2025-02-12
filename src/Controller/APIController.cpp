@@ -74,7 +74,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         {
             designs = model1Templates.bedroomsInput(bedrooms , templates);
 
-            int index = bedroomRequest[bedrooms]%designs.size();
+            int index = (int)bedroomRequest[bedrooms]%(int)designs.size();
 
             if(!designs.empty()) design1 = designs[index];
             bedroomRequest[bedrooms]++;
@@ -108,9 +108,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
             design1 = templates[index];
             general[0]++;
         }
-        design1.scaleDesign(100);
-
-
+        design1.scaleDesign(105);
         Room room1("Bedroom" , 0 , 0 , 525 , 420);
         Room room2("Kitchen" , 525 , 0 , 735 , 210);
         Room room3("Bath"    , 525 , 210 , 735 , 420);
