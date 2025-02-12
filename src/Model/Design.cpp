@@ -50,7 +50,7 @@ void Design::addRoom(const Room &room) {
     if(mapIdToIndex.count(id))
     {
         LOG(LogLevel::Warning , "Room : " + id + " Already added");
-        return;
+//        return;
     }
 
     int index = (int)rooms.size();
