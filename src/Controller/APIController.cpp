@@ -34,6 +34,7 @@ void APIController::preProcessing() {
 
 void APIController::templateRoutes(crow::SimpleApp &app)
 {
+    map<int , int> roomsRequest , bedroomRequest , spacesRequest , general;
     CROW_ROUTE(app , "/Template").methods( crow::HTTPMethod::POST)([&](const crow::request&req)
     {
         crow::response finalRes ;
@@ -72,12 +73,19 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         if(bedrooms != -1)
         {
             designs = model1Templates.bedroomsInput(bedrooms , templates);
-            if(!designs.empty()) design1 = designs[0];
+
+            int index = bedroomRequest[bedrooms]%designs.size();
+
+            if(!designs.empty()) design1 = designs[index];
+            bedroomRequest[bedrooms]++;
         }
         else if(rooms != -1)
         {
             designs = model1Templates.roomsInput(rooms , templates);
-            if(!designs.empty()) design1 = designs[0];
+            int index = roomsRequest[rooms]%designs.size();
+
+            if(!designs.empty()) design1 = designs[index];
+            roomsRequest[rooms]++;
         }
         else if(area != -1)
         {
@@ -87,11 +95,18 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         else if(spaces != -1)
         {
             designs = model1Templates.spacesInput(spaces , templates);
-            if(!designs.empty()) design1 = designs[0];
+            int index = spacesRequest[spaces]%designs.size();
+
+            if(!designs.empty()) design1 = designs[index];
+            spacesRequest[spaces]++;
         }
         else
         {
             if(!templates.empty()) design1 = templates[0];
+
+            int index = general[0]%templates.size();
+            design1 = templates[index];
+            general[0]++;
         }
         design1.scaleDesign(100);
 
