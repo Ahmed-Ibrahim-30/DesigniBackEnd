@@ -37,11 +37,7 @@ void LandDivisionBasedOnMinimizeSmallDimensions::divideLand(double ratioA, doubl
             newPolygons.push_back(div.second);
             vector<Polygon1> pps = {div.first , div.second};
 
-            double minLength = 10000000000;
-            for(auto &p : pps)
-            {
-                minLength = min(minLength , p.getMINSideLength());
-            }
+            double minLength = min(div.first.getMINSideLength() , div.second.getMINSideLength());
 
             sortSolutions.emplace_back(minLength , i , j);
             solutions[i].push_back(paiPoly[j]);
