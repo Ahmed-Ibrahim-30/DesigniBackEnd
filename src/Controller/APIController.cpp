@@ -513,10 +513,9 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
             double y1 = room["y1"].d();
             double x2 = room["x2"].d();
             double y2 = room["y2"].d();
-            double width = (x2 - x1) ;
-            double height = (y2 - y1) ;
-
-            Room newRoom(id , x1 , y1 , x2 , y2);
+            double width = (x2 - x1) / 100;
+            double height = (y2 - y1) / 100;
+            Room newRoom(id , x1/100 , y1/100 , x2/100 , y2/100);
 
             for(auto &door : room["Door"])
             {
@@ -524,6 +523,18 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
                 double _y1 = door["y1"].d();
                 double _x2 = door["x2"].d();
                 double _y2 = door["y2"].d();
+
+                _x1/=100;
+                _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                _y1/=100;
+                _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                _x2/=100;
+                _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                _y2/=100;
+                _y2 = (std::round(_y2*10) / 10) * 1.0;
 
                 newRoom.addDoor(_x1 , _y1 , _x2 , _y2);
             }
@@ -534,6 +545,18 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
                 double _y1 = door["y1"].d();
                 double _x2 = door["x2"].d();
                 double _y2 = door["y2"].d();
+
+                _x1/=100;
+                _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                _y1/=100;
+                _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                _x2/=100;
+                _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                _y2/=100;
+                _y2 = (std::round(_y2*10) / 10) * 1.0;
                 newRoom.addWindow(_x1 , _y1 , _x2 , _y2);
             }
 
@@ -543,6 +566,18 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
                 double _y1 = door["y1"].d();
                 double _x2 = door["x2"].d();
                 double _y2 = door["y2"].d();
+
+                _x1/=100;
+                _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                _y1/=100;
+                _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                _x2/=100;
+                _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                _y2/=100;
+                _y2 = (std::round(_y2*10) / 10) * 1.0;
 
                 newRoom.addOpening(_x1 , _y1 , _x2 , _y2);
             }
@@ -565,7 +600,7 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
         else if(degree == 540)mainDesign.mirrorRecY();
 
 
-//        mainDesign.scaleDesign(100);
+        mainDesign.scaleDesign(100);
 
         DesignToDoublyLines drawing(mainDesign);
         vector<Line>oldLines = drawing.getRecLines();
