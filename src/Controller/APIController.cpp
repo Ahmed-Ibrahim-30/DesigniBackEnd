@@ -602,6 +602,8 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
 
         mainDesign.scaleDesign(100);
 
+        cout<<"After Rotations = "<<mainDesign.getRooms().size()<<"\n";
+
         DesignToDoublyLines drawing(mainDesign);
         vector<Line>oldLines = drawing.getRecLines();
         vector<Line>innerLines = drawing.getInnerLines();
