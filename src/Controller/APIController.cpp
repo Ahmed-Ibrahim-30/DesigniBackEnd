@@ -347,21 +347,21 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         vector<Polygon1> streets = land.buildRoads(ans);
 
 
-//        for(int i = 0 ; i < streets.size() ; i++)
-//        {
-//            auto pol = streets[i];
-//            int index = 0;
-//            response["streets"][i]["id"] = i + 1;
-//            response["streets"][i]["area"] = pol.getArea();
-//            response["streets"][i]["green_area"] = !pol.isDivisible();
-//            for(auto &p : pol.getPoints())
-//            {
-//                response["streets"][i]["Points"][index++] = {
-//                        {"x" , p.getX()} ,
-//                        {"y" , p.getY()}
-//                };
-//            }
-//        }
+        for(int i = 0 ; i < streets.size() ; i++)
+        {
+            auto pol = streets[i];
+            int index = 0;
+            response["streets"][i]["id"] = i + 1;
+            response["streets"][i]["area"] = pol.getArea();
+            response["streets"][i]["green_area"] = !pol.isDivisible();
+            for(auto &p : pol.getPoints())
+            {
+                response["streets"][i]["Points"][index++] = {
+                        {"x" , p.getX()} ,
+                        {"y" , p.getY()}
+                };
+            }
+        }
 
         crow::response finalRes (200 , response);
 
