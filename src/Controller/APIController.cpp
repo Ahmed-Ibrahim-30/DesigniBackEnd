@@ -320,6 +320,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
         }
+
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)
         {
             response["outerLand"][i] = {
@@ -337,6 +338,25 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             for(auto &p : pol.getPoints())
             {
                 response["Inner"][i]["Points"][index++] = {
+                        {"x" , p.getX()} ,
+                        {"y" , p.getY()}
+                };
+            }
+        }
+
+        vector<Polygon1> streets = land.buildRoads(ans);
+
+
+        for(int i = 0 ; i < streets.size() ; i++)
+        {
+            auto pol = streets[i];
+            int index = 0;
+            response["streets"][i]["id"] = i + 1;
+            response["streets"][i]["area"] = pol.getArea();
+            response["streets"][i]["green_area"] = !pol.isDivisible();
+            for(auto &p : pol.getPoints())
+            {
+                response["streets"][i]["Points"][index++] = {
                         {"x" , p.getX()} ,
                         {"y" , p.getY()}
                 };

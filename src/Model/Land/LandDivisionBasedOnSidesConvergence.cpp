@@ -36,12 +36,12 @@ LandDivisionBasedOnSidesConvergence::divideLands(vector<Polygon1> &lands, double
     int index = 0;
     if(!ans.empty())
     {
-        for(auto &pol : ans[0])
-        {
-            index++;
-            // if(index != 5) continue;
-            pol.print();
-        }
+//        for(auto &pol : ans[0])
+//        {
+//            index++;
+//            // if(index != 5) continue;
+//            pol.print();
+//        }
     }
 
     return ans;
