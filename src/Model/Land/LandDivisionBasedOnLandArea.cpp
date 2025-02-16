@@ -50,8 +50,28 @@ void LandDivisionBasedOnLandArea::divideLand(double area , vector<Polygon1> &pol
         ans.push_back(pols);
         return;
     }
-
     cout<<sol++<<"\n";
+
+    SortLandDivisions *sortLandDivisions ;
+    switch (landDivisionStrategy)
+    {
+        case MinimizingLengthVariance:
+            sortLandDivisions = new SortLandDivisionsByMinimizingLengthVariance();
+            break;
+        case MinimizeSmallDimensions:
+            sortLandDivisions = new SortLandDivisionsByMinimizedDimensions();
+            break;
+        case MinimizeAcuteAngles:
+            sortLandDivisions = new SortLandDivisionsByMinimizedAcuteAngles();
+            break;
+        case MinimizeLandConnections:
+            sortLandDivisions = new SortLandDivisionsByMinimizedConnections();
+            break;
+        case MaximizeLandConnections:
+            sortLandDivisions = new SortLandDivisionsByMaximizedConnections();
+            break;
+    }
+
 
     pols = PolygonHelper::sortPolygonByArea(pols);
 
@@ -72,10 +92,8 @@ void LandDivisionBasedOnLandArea::divideLand(double area , vector<Polygon1> &pol
 
         vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
 
-        for (int j = 0; j < paiPoly.size(); ++j)
+        for (auto div : paiPoly)
         {
-            auto div = paiPoly[j];
-
             double area1 = div.first.getArea();
             double area2 = div.second.getArea();
             if(area1 < area || area2 < area)
@@ -95,25 +113,6 @@ void LandDivisionBasedOnLandArea::divideLand(double area , vector<Polygon1> &pol
     }
 
     if(possibleDivisions.empty())return;
-
-    SortLandDivisions *sortLandDivisions ;
-
-    switch (landDivisionStrategy)
-    {
-        case MinimizingLengthVariance:
-            sortLandDivisions = new SortLandDivisionsByMinimizingLengthVariance();
-            break;
-        case MinimizeSmallDimensions:
-            sortLandDivisions = new SortLandDivisionsByMinimizedDimensions();
-            break;
-        case MinimizeAcuteAngles:
-            sortLandDivisions = new SortLandDivisionsByMinimizedAcuteAngles();
-            break;
-        case MinimizeLandConnections:
-            break;
-        case MaximizeLandConnections:
-            break;
-    }
 
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions);
 

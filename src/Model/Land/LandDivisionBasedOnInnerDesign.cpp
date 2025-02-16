@@ -59,7 +59,6 @@ void LandDivisionBasedOnInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
     if(sol >= 80) { ans.push_back(pols); return; }
 
     SortLandDivisions *sortLandDivisions ;
-
     switch (landDivisionStrategy)
     {
         case MinimizingLengthVariance:
@@ -72,8 +71,10 @@ void LandDivisionBasedOnInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
             sortLandDivisions = new SortLandDivisionsByMinimizedAcuteAngles();
             break;
         case MinimizeLandConnections:
+            sortLandDivisions = new SortLandDivisionsByMinimizedConnections();
             break;
         case MaximizeLandConnections:
+            sortLandDivisions = new SortLandDivisionsByMaximizedConnections();
             break;
     }
 

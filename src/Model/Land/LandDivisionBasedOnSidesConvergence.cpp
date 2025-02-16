@@ -51,9 +51,30 @@ void
 LandDivisionBasedOnSidesConvergence::divideLand(double ratioA, double ratioB, int maxDivisions,
                                                 vector<Polygon1> &pols,
                                                 vector<vector<Polygon1>> &ans , LandDivisionSortingStrategy  landDivisionStrategy) {
-    if(pols.size() >= maxDivisions){
+    if(pols.size() >= maxDivisions)
+    {
         ans.push_back(pols);
         return;
+    }
+
+    SortLandDivisions *sortLandDivisions ;
+    switch (landDivisionStrategy)
+    {
+        case MinimizingLengthVariance:
+            sortLandDivisions = new SortLandDivisionsByMinimizingLengthVariance();
+            break;
+        case MinimizeSmallDimensions:
+            sortLandDivisions = new SortLandDivisionsByMinimizedDimensions();
+            break;
+        case MinimizeAcuteAngles:
+            sortLandDivisions = new SortLandDivisionsByMinimizedAcuteAngles();
+            break;
+        case MinimizeLandConnections:
+            sortLandDivisions = new SortLandDivisionsByMinimizedConnections();
+            break;
+        case MaximizeLandConnections:
+            sortLandDivisions = new SortLandDivisionsByMaximizedConnections();
+            break;
     }
 
     pols = PolygonHelper::sortPolygonByArea(pols);
@@ -74,10 +95,8 @@ LandDivisionBasedOnSidesConvergence::divideLand(double ratioA, double ratioB, in
 
         vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
 
-        for (int j = 0; j < paiPoly.size(); ++j)
+        for (const auto& div : paiPoly)
         {
-            auto div = paiPoly[j];
-
             newPolygons.push_back(div.first);
             newPolygons.push_back(div.second);
 
@@ -90,24 +109,6 @@ LandDivisionBasedOnSidesConvergence::divideLand(double ratioA, double ratioB, in
     }
 
     if(possibleDivisions.empty())return;
-
-    SortLandDivisions *sortLandDivisions ;
-    switch (landDivisionStrategy) {
-
-        case MinimizingLengthVariance:
-            sortLandDivisions = new SortLandDivisionsByMinimizingLengthVariance();
-            break;
-        case MinimizeSmallDimensions:
-            sortLandDivisions = new SortLandDivisionsByMinimizedDimensions();
-            break;
-        case MinimizeAcuteAngles:
-            sortLandDivisions = new SortLandDivisionsByMinimizedAcuteAngles();
-            break;
-        case MinimizeLandConnections:
-            break;
-        case MaximizeLandConnections:
-            break;
-    }
 
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions);
 

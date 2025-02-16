@@ -72,6 +72,12 @@ public:
      */
     static bool isLineIntersectWithPolygon(Polygon1 &pol , const Line &line);
 
+    /**
+     * Get Line Length
+     * @param first
+     * @param second
+     * @return
+     */
     static double getLineLength(const Point &first, const Point &second);
 
     /**

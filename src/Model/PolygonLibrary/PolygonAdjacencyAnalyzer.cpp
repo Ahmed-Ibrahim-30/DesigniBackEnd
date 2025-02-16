@@ -5,7 +5,8 @@
 #include "PolygonAdjacencyAnalyzer.h"
 #include "PolygonHelper.h"
 #include "src/Model/DesignGeometryManager.h"
-vector<vector<int>> PolygonAdjacencyAnalyzer::getAdj(vector<Polygon1> &polygons) {
+vector<vector<int>> PolygonAdjacencyAnalyzer::getAdj(vector<Polygon1> &polygons)
+{
     vector<vector<int>> adj(polygons.size());
 
     map<Line , vector<int>> lineCnt;
@@ -43,12 +44,6 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdj(vector<Polygon1> &polygons)
                                             (p3 != p1 && p3 != p2 && PolygonHelper::isPointInSegment(p3 , {p1.getX() , p1.getY() , p2.getX() , p2.getY() })) ||
                                             (p4 != p1 && p4 != p2 && PolygonHelper::isPointInSegment(p4 , {p1.getX() , p1.getY() , p2.getX() , p2.getY() }));
 
-                    if(i == 4 && w == 6)
-                    {
-                        cout<<"isLineInsideLine = "<<isLineInsideLine<<"\n";
-                        l1.print();
-                        l3.print();
-                    }
                     if (isLineInsideLine)
                     {
                         adjSet[i].insert(w);
