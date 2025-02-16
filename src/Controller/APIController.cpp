@@ -351,7 +351,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         {
             auto pol = streets[i];
             int index = 0;
-            response["streets"][i]["id"] = i + 1;
+            if(i < streets.size()-1)response["streets"][i]["id"] = i + 1;
             response["streets"][i]["area"] = pol.getArea();
             response["streets"][i]["green_area"] = !pol.isDivisible();
             for(auto &p : pol.getPoints())
