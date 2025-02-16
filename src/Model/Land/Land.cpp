@@ -127,8 +127,8 @@ vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, int divisions, 
 }
 
 vector<Polygon1> Land::buildRoads(vector<Polygon1> &subLands) {
-    // landNetwork = new LandNetworkByScaling();
-    landNetwork = new LandNetworkBySpacing();
+     landNetwork = new LandNetworkByScaling();
+//    landNetwork = new LandNetworkBySpacing();
 
     vector<Polygon1> lands = landNetwork->buildLandNetwork(land , subLands);
 
