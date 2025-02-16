@@ -8,16 +8,14 @@
 
 class LandDivisionBasedOnLandArea : public LandDivision{
 private:
-
     int sol = 0;
 
-    void divideLand(double area, vector<Polygon1> &pols , vector<vector<Polygon1>> &ans);
+    void divideLand(double area, vector<Polygon1> &pols , vector<vector<Polygon1>> &ans , LandDivisionSortingStrategy  landDivisionStrategy);
 
 public:
-    vector<vector<Polygon1>> divideLands(vector<Polygon1> &lands, double area) override;
+    vector<vector<Polygon1>> divideLands(vector<Polygon1> &lands, double area,LandDivisionSortingStrategy  landDivisionStrategy ) override;
 
-public:
-    vector<vector<Polygon1>> divideLand(const Polygon1 &land ,double area) override;
+    vector<vector<Polygon1>> divideLand(const Polygon1 &land ,double area,LandDivisionSortingStrategy  landDivisionStrategy) override;
 
 };
 

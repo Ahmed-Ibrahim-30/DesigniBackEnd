@@ -33,11 +33,12 @@ Land::Land(const Polygon1 &land) : land(land) {
 
 }
 
-vector<Polygon1> Land::SplitLand(double minSubArea)
+vector<Polygon1> Land::SplitLand(double minSubArea, LandDivisionSortingStrategy  landDivisionStrategy)
 {
     landDivision = new LandDivisionBasedOnLandArea();
 
-    vector<vector<Polygon1>>pols = landDivision->divideLand(land , minSubArea);
+
+    vector<vector<Polygon1>>pols = landDivision->divideLand(land , minSubArea , landDivisionStrategy);
 
     // subLand = buildRoads(pols[0]);
 
@@ -46,16 +47,17 @@ vector<Polygon1> Land::SplitLand(double minSubArea)
     return pols[0];
 }
 
-vector<Polygon1> Land::SplitLand(const Design &design) {
-    LOG(LogLevel::Debug , "Entry");
+vector<Polygon1> Land::SplitLand(const Design &design,LandDivisionSortingStrategy  landDivisionStrategy)
+{
     landDivision = new LandDivisionBasedOnInnerDesign();
+
     Design newDesign = design;
     // newDesign.scaleDesign(100);
     Polygon1 innerHome (DesignOutlines::getRoofPoints(newDesign));
     // innerHome.setPoints(innerHome.scalePolygon(5));
     // innerHome.print();
 
-   vector<vector<Polygon1>>pols = landDivision->divideLand(land , innerHome);
+   vector<vector<Polygon1>>pols = landDivision->divideLand(land , innerHome , landDivisionStrategy);
 
    // subLand = buildRoads(pols[0]);
    subLand = pols[0];
@@ -67,11 +69,10 @@ vector<Polygon1> Land::SplitLand(const Design &design) {
    return subLand;
 }
 
-vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB) {
-//    landDivision = new LandDivisionBasedOnSidesConvergence();
-    landDivision = new LandDivisionBasedOnMinimizeSmallDimensions();
+vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivisionSortingStrategy  landDivisionStrategy) {
+    landDivision = new LandDivisionBasedOnSidesConvergence();
 
-    vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratioA , ratioB , divisions);
+    vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratioA , ratioB , divisions , landDivisionStrategy);
 
     // subLand = buildRoads(pols[0]);
 
@@ -80,12 +81,11 @@ vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB) {
     return pols[0];
 }
 
-vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubArea)
+vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubArea,LandDivisionSortingStrategy  landDivisionStrategy)
 {
-//    landDivision = new LandDivisionBasedOnLandArea();
-    landDivision = new LandDivisionBasedOnMinimizeAcuteAngles();
+    landDivision = new LandDivisionBasedOnLandArea();
 
-    vector<vector<Polygon1>>pols = landDivision->divideLands(curPolygons , minSubArea);
+    vector<vector<Polygon1>>pols = landDivision->divideLands(curPolygons , minSubArea , landDivisionStrategy);
 
     // subLand = buildRoads(pols[0]);
 
@@ -94,7 +94,7 @@ vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubAr
     return pols[0];
 }
 
-vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, const Design &design) {
+vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, const Design &design,LandDivisionSortingStrategy  landDivisionStrategy) {
     landDivision = new LandDivisionBasedOnInnerDesign();
     Design newDesign = design;
     // newDesign.scaleDesign(100);
@@ -102,7 +102,7 @@ vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, const Design &d
     // innerHome.setPoints(innerHome.scalePolygon(5));
     // innerHome.print();
 
-    vector<vector<Polygon1>>pols = landDivision->divideLands(curPolygons , innerHome);
+    vector<vector<Polygon1>>pols = landDivision->divideLands(curPolygons , innerHome, landDivisionStrategy);
 
     // subLand = buildRoads(pols[0]);
     subLand = pols[0];
@@ -114,10 +114,10 @@ vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, const Design &d
     return ans;
 }
 
-vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, int divisions, int ratioA, int ratioB) {
+vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, int divisions, int ratioA, int ratioB,LandDivisionSortingStrategy  landDivisionStrategy) {
     landDivision = new LandDivisionBasedOnSidesConvergence();
 
-    vector<vector<Polygon1>> pols = landDivision->divideLands(curPolygons , ratioA , ratioB , divisions);
+    vector<vector<Polygon1>> pols = landDivision->divideLands(curPolygons , ratioA , ratioB , divisions, landDivisionStrategy);
 
     // subLand = buildRoads(pols[0]);
 

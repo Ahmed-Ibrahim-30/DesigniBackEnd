@@ -197,6 +197,27 @@ set<int> PolygonHelper::getBoundaryLands(Polygon1 &outerLand ,vector<Polygon1> &
     return boundary;
 }
 
+vector<Polygon1> PolygonHelper::sortPolygonByArea(vector<Polygon1> &polygons)
+{
+    vector<pair<double , int>> sortPolygons;
+    for (int i = 0; i < polygons.size(); ++i)
+    {
+        double cArea = polygons[i].getArea();
+
+        sortPolygons.emplace_back(cArea , i);
+    }
+
+    sort(sortPolygons.begin() , sortPolygons.end() , greater<>());
+
+    vector<Polygon1> polsTemp = polygons;
+
+    polygons.clear();
+
+    for(auto &p : sortPolygons)polygons.push_back(polsTemp[p.second]);
+
+    return polygons;
+}
+
 
 
 

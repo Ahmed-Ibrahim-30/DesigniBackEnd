@@ -81,6 +81,13 @@ public:
      * @return
      */
     static set<int> getBoundaryLands(Polygon1 &outerLand ,vector<Polygon1> &lands) ;
+
+    /**
+     * Sort Polygons By Areas
+     * @param polygons
+     * @return
+     */
+    static vector<Polygon1> sortPolygonByArea(vector<Polygon1> &polygons);
 };
 
 

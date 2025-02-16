@@ -13,7 +13,6 @@
 #include "src/Model/Land/Green Area/UniformGreenDistributor.h"
 #include "src/Model/Land/Green Area/ClusteredGreenSelector.h"
 #include "src/Model/Land/Green Area/CentralLandGreenSelector.h"
-#include "src/Model/Land/LandDivisionBasedOnMinimizeSmallDimensions.h"
 
 APIController::APIController(crow::SimpleApp &app)
 {
@@ -160,6 +159,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
         crow::json::wvalue response;
         Design design1 ;
+        int strategy = (int)jsonData["strategy"].i();
         auto polygon = jsonData["polygon"];
         vector<Point> points;
         for(auto &point : polygon)
@@ -267,7 +267,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             int greenAreasCount = (int)((landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100));
             landSlots += greenAreasCount;
-            ans = land.SplitLand(landSlots , 1 , 1);
+            ans = land.SplitLand(landSlots , 1 , 1 , static_cast<LandDivisionSortingStrategy>(strategy));
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             //  GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
             GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
@@ -283,7 +283,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             int greenAreasCount = (int)((landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100));
             landSlots += greenAreasCount;
-            ans = land.SplitLand(landSlots , 1 , 1);
+            ans = land.SplitLand(landSlots , 1 , 1 , static_cast<LandDivisionSortingStrategy>(strategy));
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
 //            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
 //            greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
@@ -299,7 +299,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         {
             double homeArea = jsonData["home_area"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
-            ans = land.SplitLand(homeArea);
+            ans = land.SplitLand(homeArea , static_cast<LandDivisionSortingStrategy>(strategy));
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
         }
@@ -307,7 +307,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         {
             double homeArea = jsonData["slot_area"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
-            ans = land.SplitLand(homeArea);
+            ans = land.SplitLand(homeArea , static_cast<LandDivisionSortingStrategy>(strategy)) ;
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
         }
@@ -316,7 +316,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             int bedrooms = jsonData["bedroom_count"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             if(bedrooms != -1)design1 = templatesDesigns.getDesignByBedrooms(bedrooms);
-            ans = land.SplitLand(design1);
+            ans = land.SplitLand(design1 , static_cast<LandDivisionSortingStrategy>(strategy));
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
         }

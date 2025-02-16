@@ -8,14 +8,13 @@
 
 class LandDivisionBasedOnSidesConvergence :public LandDivision{
 private:
-    void divideLand(double ratioA, double ratioB, int maxDivisions, vector<Polygon1> &pols , vector<vector<Polygon1>> &ans);
+    void divideLand(double ratioA, double ratioB, int maxDivisions, vector<Polygon1> &pols , vector<vector<Polygon1>> &ans, LandDivisionSortingStrategy  landDivisionStrategy);
 
-    vector<double> getPolygonsDiffLength(const vector<Polygon1> &pol);
 public:
-    vector<vector<Polygon1>> divideLand(const Polygon1 &land ,double ratioA, double ratioB, int maxDivisions) override;
+    vector<vector<Polygon1>> divideLand(const Polygon1 &land ,double ratioA, double ratioB, int maxDivisions,LandDivisionSortingStrategy  landDivisionStrategy ) override;
 
     vector<vector<Polygon1>>
-    divideLands(vector<Polygon1> &lands, double ratioA, double ratioB, int maxDivisions) override;
+    divideLands(vector<Polygon1> &lands, double ratioA, double ratioB, int maxDivisions,LandDivisionSortingStrategy  landDivisionStrategy) override;
 };
 
 

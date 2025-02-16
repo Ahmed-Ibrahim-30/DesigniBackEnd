@@ -6,8 +6,6 @@
 #define DESIGNI_LAND_H
 #include "src/Model/Polygon.h"
 #include "LandDivisionBasedOnSidesConvergence.h"
-#include "LandDivisionBasedOnMinimizeSmallDimensions.h"
-#include "LandDivisionBasedOnMinimizeAcuteAngles.h"
 #include "LandDivisionBasedOnLandArea.h"
 #include "src/Model/DesignGeometryManager.h"
 #include "LandNetworkByScaling.h"
@@ -55,13 +53,13 @@ public:
      *
      * @param minSubArea
      */
-    vector<Polygon1> SplitLand(double minSubArea);
+    vector<Polygon1> SplitLand(double minSubArea,LandDivisionSortingStrategy  landDivisionStrategy = LandDivisionSortingStrategy::MinimizingLengthVariance);
 
     /**
      *
      * @param design
      */
-    vector<Polygon1> SplitLand(const Design &design);
+    vector<Polygon1> SplitLand(const Design &design, LandDivisionSortingStrategy landDivisionStrategy= LandDivisionSortingStrategy::MinimizingLengthVariance);
 
     /**
      * Split Land Based On Max Divisions
@@ -69,19 +67,19 @@ public:
      * @param ratioA
      * @param ratioB
      */
-    vector<Polygon1> SplitLand(int divisions , int ratioA , int ratioB);
+    vector<Polygon1> SplitLand(int divisions , int ratioA , int ratioB, LandDivisionSortingStrategy landDivisionStrategy= LandDivisionSortingStrategy::MinimizingLengthVariance);
 
     /**
      *
      * @param minSubArea
      */
-    vector<Polygon1> SplitLands(vector<Polygon1> &pols ,double minSubArea);
+    vector<Polygon1> SplitLands(vector<Polygon1> &pols ,double minSubArea, LandDivisionSortingStrategy landDivisionStrategy= LandDivisionSortingStrategy::MinimizingLengthVariance);
 
     /**
      *
      * @param design
      */
-    vector<Polygon1> SplitLands(vector<Polygon1> &pols ,const Design &design);
+    vector<Polygon1> SplitLands(vector<Polygon1> &pols ,const Design &design, LandDivisionSortingStrategy landDivisionStrategy= LandDivisionSortingStrategy::MinimizingLengthVariance);
 
     /**
      * Split Land Based On Max Divisions
@@ -89,7 +87,7 @@ public:
      * @param ratioA
      * @param ratioB
      */
-    vector<Polygon1> SplitLands(vector<Polygon1> &pols ,int divisions , int ratioA , int ratioB);
+    vector<Polygon1> SplitLands(vector<Polygon1> &pols ,int divisions , int ratioA , int ratioB, LandDivisionSortingStrategy landDivisionStrategy= LandDivisionSortingStrategy::MinimizingLengthVariance);
 
     /**
      * Build Roads Between Sub Lands
