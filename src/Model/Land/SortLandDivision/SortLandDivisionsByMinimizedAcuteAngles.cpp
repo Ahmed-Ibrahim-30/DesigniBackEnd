@@ -20,7 +20,7 @@ vector<vector<Polygon1>> SortLandDivisionsByMinimizedAcuteAngles::sortDivisions(
     {
         int n = (int)divisions[i].size();
         int acuteLinesCount = divisions[i][n-2].countAcuteAnglesLines() ;
-        acuteLinesCount += divisions[i][n-1].getMINSideLength();
+        acuteLinesCount += divisions[i][n-1].countAcuteAnglesLines();
         sortSolutions.emplace_back(acuteLinesCount , i);
     }
 
