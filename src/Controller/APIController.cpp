@@ -321,6 +321,11 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
         }
 
+        vector<Polygon1> streets = land.buildRoads(ans);
+
+
+        polygon1 = streets.back();
+
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)
         {
             response["outerLand"][i] = {
@@ -328,6 +333,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                     {"y" , polygon1.getPoints()[i].getY()}
             };
         }
+
         for(int i = 0 ; i < ans.size() ; i++)
         {
             auto pol = ans[i];
@@ -344,14 +350,14 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             }
         }
 
-        vector<Polygon1> streets = land.buildRoads(ans);
 
 
-        for(int i = 0 ; i < streets.size() ; i++)
+
+        for(int i = 0 ; i < streets.size() -1; i++)
         {
             auto pol = streets[i];
             int index = 0;
-            if(i < streets.size()-1)response["streets"][i]["id"] = i + 1;
+            response["streets"][i]["id"] = i + 1;
             response["streets"][i]["area"] = pol.getArea();
             response["streets"][i]["green_area"] = !pol.isDivisible();
             for(auto &p : pol.getPoints())
