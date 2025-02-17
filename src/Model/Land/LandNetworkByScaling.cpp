@@ -7,7 +7,7 @@
 vector<Polygon1> LandNetworkByScaling::buildLandNetwork(const Polygon1 &mainPolygon, const vector<Polygon1> &polys) {
     vector<Polygon1> pol = polys;
 
-    double scaleFactorLands = 0.95 , scaleFactorMainLand = 1.1;
+    double scaleFactorLands = 0.90 , scaleFactorMainLand = 1.1;
 
     Polygon1 mainPol = mainPolygon;
     vector<Point> points3 =mainPol.scalePolygon(scaleFactorMainLand);
