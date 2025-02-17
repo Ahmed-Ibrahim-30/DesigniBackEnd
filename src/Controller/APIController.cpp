@@ -369,7 +369,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
 
 
-        for(int i = 0 ; i < streets.size() ; i++)
+        for(int i = 0 ; i < streets.size() -1; i++)
         {
             auto pol = streets[i];
             int index = 0;
