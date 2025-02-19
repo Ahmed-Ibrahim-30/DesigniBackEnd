@@ -179,7 +179,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         if(jsonData.count("Design") || jsonData.count("design"))
         {
-            const auto& designJson =  jsonData["Design"];
+            const auto& designJson =  jsonData.count("design")?jsonData["design"] : jsonData["Design"];
             for(auto &room : designJson["Rooms"])
             {
                 string id = room["id"].s();
