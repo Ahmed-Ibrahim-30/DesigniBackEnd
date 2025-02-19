@@ -334,25 +334,9 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             };
         }
 
-        for(int i = 0 ; i < streets.size() -1; i++)
-        {
-            auto pol = streets[i];
-            int index = 0;
-            response["Inner"][i]["id"] = i + 1;
-            response["Inner"][i]["area"] = pol.getArea();
-            response["Inner"][i]["green_area"] = !pol.isDivisible();
-            for(auto &p : pol.getPoints())
-            {
-                response["Inner"][i]["Points"][index++] = {
-                        {"x" , p.getX()} ,
-                        {"y" , p.getY()}
-                };
-            }
-        }
-
-//        for(int i = 0 ; i < ans.size() ; i++)
+//        for(int i = 0 ; i < streets.size() -1; i++)
 //        {
-//            auto pol = ans[i];
+//            auto pol = streets[i];
 //            int index = 0;
 //            response["Inner"][i]["id"] = i + 1;
 //            response["Inner"][i]["area"] = pol.getArea();
@@ -365,6 +349,22 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 //                };
 //            }
 //        }
+
+        for(int i = 0 ; i < ans.size() ; i++)
+        {
+            auto pol = ans[i];
+            int index = 0;
+            response["Inner"][i]["id"] = i + 1;
+            response["Inner"][i]["area"] = pol.getArea();
+            response["Inner"][i]["green_area"] = !pol.isDivisible();
+            for(auto &p : pol.getPoints())
+            {
+                response["Inner"][i]["Points"][index++] = {
+                        {"x" , p.getX()} ,
+                        {"y" , p.getY()}
+                };
+            }
+        }
 
 
 
