@@ -66,7 +66,7 @@ vector<Polygon1> Land::SplitLand(const Design &design,LandDivisionSortingStrateg
     vector<Polygon1> ans = setHomesInsideSubLands(inner , 0);
 
    // cout<<"Sizes = "<<pols[0].size()<<"\n";
-   return subLand;
+   return ans;
 }
 
 vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivisionSortingStrategy  landDivisionStrategy) {
