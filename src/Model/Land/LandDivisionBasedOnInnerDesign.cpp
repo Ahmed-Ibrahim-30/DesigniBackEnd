@@ -56,7 +56,7 @@ LandDivisionBasedOnInnerDesign::divideLands(vector<Polygon1> &lands, const Polyg
 void LandDivisionBasedOnInnerDesign::divideLand(const Polygon1 &innerHome1 , vector<Polygon1> &pols , vector<vector<Polygon1>> &ans ,LandDivisionSortingStrategy  landDivisionStrategy)
 {
 
-    if(sol >= 80) { ans.push_back(pols); return; }
+    if(sol >= 80 || sol == -1) { ans.push_back(pols); return; }
 
     SortLandDivisions *sortLandDivisions ;
     switch (landDivisionStrategy)
@@ -149,6 +149,7 @@ void LandDivisionBasedOnInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
     if(! foundedSol)
     {
         ans.push_back(pols);
+        sol = -1;
         return;
     }
 }
