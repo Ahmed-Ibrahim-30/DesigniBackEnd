@@ -177,7 +177,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         Design design1 ;
 
-        if(jsonData.count("Design"))
+        if(jsonData.count("Design") || jsonData.count("design"))
         {
             const auto& designJson =  jsonData["Design"];
             for(auto &room : designJson["Rooms"])
