@@ -175,10 +175,11 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         vector<Polygon1> ans;
         Land land(polygon1);
+        auto oldDesign =jsonData.count("design")? jsonData["design"] : jsonData;
 
         Design design1 ;
 
-        if( (jsonData.count("design") && jsonData["design"]))
+        if( (jsonData.count("design") && oldDesign.count("Rooms")))
         {
             const auto& designJson =  jsonData.count("design")?jsonData["design"] : jsonData["Design"];
             for(auto &room : designJson["Rooms"])
