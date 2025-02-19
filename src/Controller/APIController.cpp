@@ -179,7 +179,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         Design design1 ;
 
-        if( (jsonData.count("design") && oldDesign.count("Rooms")))
+        if( (jsonData.count("design") && jsonData["design"].t() != crow::json::type::Null))
         {
             const auto& designJson =  jsonData.count("design")?jsonData["design"] : jsonData["Design"];
             for(auto &room : designJson["Rooms"])
