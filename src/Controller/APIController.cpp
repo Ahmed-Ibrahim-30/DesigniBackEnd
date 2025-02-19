@@ -81,7 +81,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         else if(rooms != -1)
         {
             designs = model1Templates.roomsInput(rooms , templates);
-            int index = roomsRequest[rooms]%designs.size();
+            int index = roomsRequest[rooms]%(int)designs.size();
 
             if(!designs.empty()) design1 = designs[index];
             roomsRequest[rooms]++;
@@ -94,7 +94,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         else if(spaces != -1)
         {
             designs = model1Templates.spacesInput(spaces , templates);
-            int index = spacesRequest[spaces]%designs.size();
+            int index = spacesRequest[spaces]%(int)designs.size();
 
             if(!designs.empty()) design1 = designs[index];
             spacesRequest[spaces]++;
@@ -103,7 +103,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         {
             if(!templates.empty()) design1 = templates[0];
 
-            int index = general[0]%templates.size();
+            int index = general[0]%(int)templates.size();
             design1 = templates[index];
             general[0]++;
         }
@@ -158,7 +158,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             return crow::response(400, "Invalid JSON format");
         }
         crow::json::wvalue response;
-        Design design1 ;
         int strategy = (int)jsonData["strategy"].i();
         auto polygon = jsonData["polygon"];
         vector<Point> points;
@@ -170,14 +169,108 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
 
         Polygon1 polygon1(points);
-        // polygon1.shiftX(300);
-        // polygon1.shiftY(300);
-        // polygon1.print();
+
         cout<<"Area = "<<polygon1.getArea() <<" \n";
+
         vector<Polygon1> ans;
         Land land(polygon1);
 
-        if(jsonData.count("green_area") && !jsonData.count("length"))
+        Design design1 ;
+
+        if(jsonData.count("Design"))
+        {
+            const auto& designJson =  jsonData["Design"];
+            for(auto &room : designJson["Rooms"])
+            {
+                string id = room["id"].s();
+                double x1 = room["x1"].d();
+                double y1 = room["y1"].d();
+                double x2 = room["x2"].d();
+                double y2 = room["y2"].d();
+                double width = (x2 - x1) / 100;
+                double height = (y2 - y1) / 100;
+                Room newRoom(id , x1/100 , y1/100 , x2/100 , y2/100);
+
+                for(auto &door : room["Door"])
+                {
+                    double _x1 = door["x1"].d();
+                    double _y1 = door["y1"].d();
+                    double _x2 = door["x2"].d();
+                    double _y2 = door["y2"].d();
+
+                    _x1/=100;
+                    _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                    _y1/=100;
+                    _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                    _x2/=100;
+                    _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                    _y2/=100;
+                    _y2 = (std::round(_y2*10) / 10) * 1.0;
+
+                    newRoom.addDoor(_x1 , _y1 , _x2 , _y2);
+                }
+
+                for(auto &door : room["Window"])
+                {
+                    double _x1 = door["x1"].d();
+                    double _y1 = door["y1"].d();
+                    double _x2 = door["x2"].d();
+                    double _y2 = door["y2"].d();
+
+                    _x1/=100;
+                    _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                    _y1/=100;
+                    _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                    _x2/=100;
+                    _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                    _y2/=100;
+                    _y2 = (std::round(_y2*10) / 10) * 1.0;
+                    newRoom.addWindow(_x1 , _y1 , _x2 , _y2);
+                }
+
+                for(auto &door : room["Opening"])
+                {
+                    double _x1 = door["x1"].d();
+                    double _y1 = door["y1"].d();
+                    double _x2 = door["x2"].d();
+                    double _y2 = door["y2"].d();
+
+                    _x1/=100;
+                    _x1 = (std::round(_x1*10) / 10) * 1.0;
+
+                    _y1/=100;
+                    _y1 = (std::round(_y1*10) / 10) * 1.0;
+
+                    _x2/=100;
+                    _x2 = (std::round(_x2*10) / 10) * 1.0;
+
+                    _y2/=100;
+                    _y2 = (std::round(_y2*10) / 10) * 1.0;
+
+                    newRoom.addOpening(_x1 , _y1 , _x2 , _y2);
+                }
+
+                if(room.count("image")) newRoom.setImagePath(room["image"].s());
+
+                design1.addRoom(newRoom);
+            }
+
+            double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
+
+
+            ans = land.SplitLand(design1 , static_cast<LandDivisionSortingStrategy>(strategy));
+
+            GreenAreaSelector *greenSelector = new UniformGreenDistributor();
+            greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
+        }
+
+        else if(jsonData.count("green_area") && !jsonData.count("length"))
         {
             double greenArea = jsonData["green_area"].d();
             double side = sqrt(greenArea);
@@ -194,27 +287,27 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             cout<<"new Polygons after Green Area = "<<ans.size()<<"\n";
             if(jsonData.count("lots"))
             {
-                int landSlots = jsonData["lots"].i();
+                int landSlots = (int)jsonData["lots"].i();
                 ans = land.SplitLands(ans , landSlots , 1 , 1);
             }
             else if(jsonData.count("slots"))
             {
-                int landSlots = jsonData["slots"].i();
+                int landSlots = (int)jsonData["slots"].i();
                 ans = land.SplitLands(ans , landSlots , 1 , 1);
             }
             else if(jsonData.count("home_area") )
             {
-                double homeArea = jsonData["home_area"].i();
+                double homeArea = jsonData["home_area"].d();
                 ans = land.SplitLands(ans ,homeArea);
             }
             else if(jsonData.count("slot_area") )
             {
-                double homeArea = jsonData["slot_area"].i();
+                double homeArea = jsonData["slot_area"].d();
                 ans = land.SplitLands(ans ,homeArea);
             }
             else if(jsonData.count("bedroom_count"))
             {
-                int bedrooms = jsonData["bedroom_count"].i();
+                int bedrooms = (int)jsonData["bedroom_count"].i();
                 if(bedrooms != -1)design1 = templatesDesigns.getDesignByBedrooms(bedrooms);
                 ans = land.SplitLands(ans , design1);
             }
@@ -235,27 +328,27 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             ans = PolygonsSubtraction1.getNewPolygons();
             if(jsonData.count("lots"))
             {
-                int landSlots = jsonData["lots"].i();
+                int landSlots = (int)jsonData["lots"].i();
                 ans = land.SplitLands(ans , landSlots , 1 , 1);
             }
             else if(jsonData.count("slots"))
             {
-                int landSlots = jsonData["slots"].i();
+                int landSlots = (int)jsonData["slots"].i();
                 ans = land.SplitLands(ans , landSlots , 1 , 1);
             }
             else if(jsonData.count("home_area") )
             {
-                double homeArea = jsonData["home_area"].i();
+                double homeArea = jsonData["home_area"].d();
                 ans = land.SplitLands(ans ,homeArea);
             }
             else if(jsonData.count("slot_area") )
             {
-                double homeArea = jsonData["slot_area"].i();
+                double homeArea = jsonData["slot_area"].d();
                 ans = land.SplitLands(ans ,homeArea);
             }
             else if(jsonData.count("bedroom_count"))
             {
-                int bedrooms = jsonData["bedroom_count"].i();
+                int bedrooms = (int)jsonData["bedroom_count"].i();
                 if(bedrooms != -1)design1 = templatesDesigns.getDesignByBedrooms(bedrooms);
                 ans = land.SplitLands(ans , design1);
             }
@@ -263,7 +356,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         else if(jsonData.count("lots"))
         {
-            int landSlots = jsonData["lots"].i();
+            int landSlots = (int)jsonData["lots"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             int greenAreasCount = (int)((landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100));
             landSlots += greenAreasCount;
@@ -277,9 +370,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             percGreenArea = (greenAreasCount*1.0 / landSlots*1.0 ) * 100.0;
             greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 900000);
         }
+
         else if(jsonData.count("slots"))
         {
-            int landSlots = jsonData["slots"].i();
+            int landSlots = (int)jsonData["slots"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             int greenAreasCount = (int)((landSlots * (percGreenArea/100)) / ((100 - percGreenArea)/100));
             landSlots += greenAreasCount;
@@ -297,23 +391,25 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         else if(jsonData.count("home_area") )
         {
-            double homeArea = jsonData["home_area"].i();
+            double homeArea = jsonData["home_area"].d();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             ans = land.SplitLand(homeArea , static_cast<LandDivisionSortingStrategy>(strategy));
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
         }
+
         else if(jsonData.count("slot_area") )
         {
-            double homeArea = jsonData["slot_area"].i();
+            double homeArea = jsonData["slot_area"].d();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             ans = land.SplitLand(homeArea , static_cast<LandDivisionSortingStrategy>(strategy)) ;
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
         }
+
         else if(jsonData.count("bedroom_count"))
         {
-            int bedrooms = jsonData["bedroom_count"].i();
+            int bedrooms = (int)jsonData["bedroom_count"].i();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
             if(bedrooms != -1)design1 = templatesDesigns.getDesignByBedrooms(bedrooms);
             ans = land.SplitLand(design1 , static_cast<LandDivisionSortingStrategy>(strategy));
@@ -333,22 +429,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                     {"y" , polygon1.getPoints()[i].getY()}
             };
         }
-
-//        for(int i = 0 ; i < streets.size() -1; i++)
-//        {
-//            auto pol = streets[i];
-//            int index = 0;
-//            response["Inner"][i]["id"] = i + 1;
-//            response["Inner"][i]["area"] = pol.getArea();
-//            response["Inner"][i]["green_area"] = !pol.isDivisible();
-//            for(auto &p : pol.getPoints())
-//            {
-//                response["Inner"][i]["Points"][index++] = {
-//                        {"x" , p.getX()} ,
-//                        {"y" , p.getY()}
-//                };
-//            }
-//        }
 
         for(int i = 0 ; i < ans.size() ; i++)
         {
@@ -531,7 +611,7 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
         }
         crow::json::wvalue response;
         double degree = jsonData["rotation"].d();
-        auto designJson =  jsonData["Design"];
+        const auto& designJson =  jsonData["Design"];
         Design mainDesign;
         RoomBuilder roomBuilder;
         for(auto &room : designJson["Rooms"])
@@ -617,12 +697,7 @@ void APIController::rotateDesignRoutes(SimpleApp &app)
 
             mainDesign.addRoom(newRoom);
         }
-//        for(auto &room : designJson["connections"])
-//        {
-//            string first = room["first"].s();
-//            string second = room["second"].s();
-//            mainDesign.addConnection(first , second);
-//        }
+
         if(degree < 360)mainDesign.rotate(degree);
         else if(degree == 450)mainDesign.mirrorRecX();
         else if(degree == 540)mainDesign.mirrorRecY();
