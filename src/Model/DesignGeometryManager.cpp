@@ -1392,7 +1392,7 @@ bool DesignGeometryManager::isLeft(const Point& a, const Point& b, const Point& 
 
 // Check if a point is inside a polygon
 bool DesignGeometryManager::isPointInsidePolygon(const vector<Point>& polygon, const Point& point) {
-    int n = polygon.size();
+    int n = (int)polygon.size();
     bool inside = false;
     for (int i = 0, j = n - 1; i < n; j = i++) {
         if (((polygon[i].getY() > point.getY()) != (polygon[j].getY() > point.getY())) &&
@@ -1431,6 +1431,12 @@ DesignGeometryManager::isPolygonInsidePolygon(const Polygon1& innerPol, const Po
     vector<Point> inner = p1.getPoints() , outer = p2.getPoints();
     for ( auto& point : outer) {
         if (!isPointInsidePolygon(inner , point)) {
+            return false;
+        }
+    }
+
+    for ( auto& point : inner) {
+        if (isPointInsidePolygon(outer , point)) {
             return false;
         }
     }

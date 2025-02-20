@@ -107,6 +107,11 @@ void LandDivisionBasedOnInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
 
         for(auto &div : paiPoly)
         {
+            double scaleFactorLands = 0.90;
+
+            div.first.scalePolygon(scaleFactorLands);
+            div.second.scalePolygon(scaleFactorLands);
+
             innerHome = innerHome1;
             bool validPol1 = DesignGeometryManager::positionPolygonInsideAnotherUsingAllAngles(div.first , innerHome);
             innerHome = innerHome1;

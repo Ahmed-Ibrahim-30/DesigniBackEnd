@@ -505,7 +505,7 @@ void APIController::subLandDivisionRoutes(SimpleApp &app)
         Design design1 ;
         string text;
 
-        for (int i = 4; i <= 6; ++i)
+        for (int i = 3; i <= 5; ++i)
         {
             design1 = templatesDesigns.getDesignByBedrooms(i);
             design1.scaleDesign(100);
