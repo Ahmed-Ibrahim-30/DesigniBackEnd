@@ -193,7 +193,8 @@ vector<Polygon1> Land::setHomesInsideSubLands(const Polygon1 &home , int greenAr
 
     for (int i = 0; i < subLand.size(); ++i){
         if(!subLand[i].isDivisible()) continue;
-        ans.push_back(setHomesInsideLand(home , subLand[i] , preferDegree));
+        Polygon1 homePol = setHomesInsideLand(home , subLand[i] , preferDegree);
+        if(!homePol.getPoints().empty())ans.push_back(homePol);
     }
 
     return ans;
@@ -226,7 +227,10 @@ Polygon1 Land::setHomesInsideLand(const Polygon1 &home , const Polygon1 &curLand
 
     // cout<<"NOT VALID\n";
 
-    return home;
+    vector<Point>pnt1;
+    Polygon1 notValidPolygon(pnt1);
+
+    return notValidPolygon;
 }
 
 map<int , map<Point , bool>> Land::storePointsShared(const vector<Polygon1> &polys)
