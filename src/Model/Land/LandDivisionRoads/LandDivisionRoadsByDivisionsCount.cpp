@@ -24,7 +24,7 @@ LandDivisionRoadsByDivisionsCount::divideLands(vector<Polygon1> &lands, double r
     vector<vector<Polygon1>> ans;
     divideLand( ratioA , ratioB , maxDivisions , lands , ans , landDivisionStrategy);
 
-    
+
     return ans;
 }
 
