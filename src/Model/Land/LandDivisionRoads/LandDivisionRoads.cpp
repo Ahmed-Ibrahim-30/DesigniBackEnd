@@ -363,6 +363,9 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
 
         double streetWidth = 0.7 * roadLine.getLength() ;
 
+        cout<< "streetWidth = "<<streetWidth<<"\n";
+        roadLine.print();
+
         Point center1 = pol1.calculateCentroid();
         Point center2 = pol2.calculateCentroid();
 
