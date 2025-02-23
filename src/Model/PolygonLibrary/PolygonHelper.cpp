@@ -220,19 +220,28 @@ vector<Polygon1> PolygonHelper::sortPolygonByArea(vector<Polygon1> &polygons)
 
 void PolygonHelper::renamePolygonsIds(vector<Polygon1> &polygons)
 {
-    sort(polygons.begin() , polygons.end() , [](Polygon1 &polygon1 , Polygon1 &polygon11) {
-        Point minPoint1 = polygon1.minPoint();
-        Point minPoint2 = polygon11.minPoint();
+//    sort(polygons.begin() , polygons.end() , [](Polygon1 &polygon1 , Polygon1 &polygon11) {
+//        Point minPoint1 = polygon1.minPoint();
+//        Point minPoint2 = polygon11.minPoint();
+//
+//        if (minPoint1.getY() != minPoint2.getY())
+//            return minPoint1.getY() < minPoint2.getY();
+//        return minPoint1.getX()< minPoint2.getX();
+//
+//    });
 
-        if (minPoint1.getY() != minPoint2.getY())
-            return minPoint1.getY() < minPoint2.getY();
-        return minPoint1.getX()< minPoint2.getX();
-
-    });
+    vector<tuple<double , double , int>> sortPolygons;
+    for (int i = 0; i < polygons.size(); ++i)
+    {
+        Point minPoint1 = polygons[i].minPoint();
+        sortPolygons.emplace_back(minPoint1.getY() , minPoint1.getX() , i);
+    }
+    sort(sortPolygons.begin(), sortPolygons.end());
 
     for (int i = 0; i < polygons.size(); ++i)
     {
-        polygons[i].setId(to_string(i+1));
+        int id = get<2>(sortPolygons[i]);
+        polygons[i].setId(to_string(id+1));
     }
 }
 
