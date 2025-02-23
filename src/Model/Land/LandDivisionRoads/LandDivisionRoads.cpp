@@ -392,25 +392,25 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
             }
         }
 
-//        for (int i = 0; i < points2.size(); ++i)
-//        {
-//            Point a0 = points2[i==0?points2.size()-1 : i-1];
-//            Point a1 = points2[i];
-//            Point a2 = points2[(i + 1) % points2.size()];
-//            Point a3 = points2[(i + 2) % points2.size()];
-//            Point &p = points2[i];
-//            Point &pp = points2[(i + 1) % points2.size()];
-//
-//            if ((a1 == p1 && a2 == p2) || (a1 == p2 && a2 == p1))
-//            {
-//                Line prev (a0.getX(),a0.getY(),a1.getX(),a1.getY());
-//                Line next (a2.getX(),a2.getY(),a3.getX(),a3.getY());
-//
-//                p = shiftPointOnLine(prev , p , streetWidth);
-//                pp = shiftPointOnLine(next , pp , streetWidth);
-//                break;
-//            }
-//        }
+        for (int i = 0; i < points2.size(); ++i)
+        {
+            Point a0 = points2[i==0?points2.size()-1 : i-1];
+            Point a1 = points2[i];
+            Point a2 = points2[(i + 1) % points2.size()];
+            Point a3 = points2[(i + 2) % points2.size()];
+            Point &p = points2[i];
+            Point &pp = points2[(i + 1) % points2.size()];
+
+            if ((a1 == p1 && a2 == p2) || (a1 == p2 && a2 == p1))
+            {
+                Line prev (a0.getX(),a0.getY(),a1.getX(),a1.getY());
+                Line next (a2.getX(),a2.getY(),a3.getX(),a3.getY());
+
+                p = shiftPointOnLine(prev , p , -streetWidth);
+                pp = shiftPointOnLine(next , pp , streetWidth);
+                break;
+            }
+        }
 
         pol1.setPoints(points1);
         pol2.setPoints(points2);
