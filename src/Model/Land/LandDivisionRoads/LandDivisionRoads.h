@@ -25,6 +25,8 @@ protected:
     double findY(double x, double x1, double y1, double x2, double y2);
     double findX(double y, double x1, double y1, double x2, double y2);
 
+    static int COUNT ;
+
 public:
     /**
      * Split Land with Roads Based on number of Divisions

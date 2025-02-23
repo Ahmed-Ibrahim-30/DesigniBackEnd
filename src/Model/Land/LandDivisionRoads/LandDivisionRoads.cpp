@@ -4,6 +4,8 @@
 
 #include "LandDivisionRoads.h"
 
+int LandDivisionRoads::COUNT = 0;
+
 Point LandDivisionRoads::getIntersectionPoint(const Point &p1, double slope, const Line &line) {
 
     double slope2 = PolygonHelper::getSlope(line.getX1() , line.getX2()  , line.getY1() , line.getY2());
@@ -41,7 +43,7 @@ Point LandDivisionRoads::getIntersectionPoint(const Line& line1, const Line& lin
 
 vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 polygon1)
 {
-
+    COUNT ++;
     vector<pair<Polygon1 , Polygon1>> ans;
     int n = (int)polygon1.getPoints().size();
 
@@ -361,7 +363,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         Point p1 (roadLine.getX1() , roadLine.getY1());
         Point p2 (roadLine.getX2() , roadLine.getY2());
 
-        double streetWidth = 0.01 * roadLine.getLength() ;
+        double streetWidth = COUNT == 1? 0.01 * roadLine.getLength() : 4;
 
         cout<< "streetWidth = "<<streetWidth<<"\n";
         roadLine.print();
