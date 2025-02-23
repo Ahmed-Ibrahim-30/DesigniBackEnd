@@ -472,7 +472,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         {
             auto pol = ans[i];
             int index = 0;
-            response["Inner"][i]["id"] = i + 1;
+            response["Inner"][i]["id"] = ans[i].getId();
             response["Inner"][i]["area"] = pol.getArea();
             response["Inner"][i]["green_area"] = !pol.isDivisible();
             for(auto &p : pol.getPoints())
