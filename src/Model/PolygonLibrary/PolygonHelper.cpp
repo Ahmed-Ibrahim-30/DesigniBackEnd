@@ -234,7 +234,7 @@ void PolygonHelper::renamePolygonsIds(vector<Polygon1> &polygons)
     for (int i = 0; i < polygons.size(); ++i)
     {
         Point minPoint1 = polygons[i].minPoint();
-        sortPolygons.emplace_back(minPoint1.getY() , minPoint1.getX() , i);
+        sortPolygons.emplace_back(minPoint1.getX() , minPoint1.getY() , i);
     }
     sort(sortPolygons.begin(), sortPolygons.end());
 
