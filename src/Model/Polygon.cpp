@@ -177,13 +177,21 @@ vector<Line> Polygon1::getLines()
 }
 
 Point Polygon1::minPoint() {
-    Point p = points[0];
+//    Point p = points[0];
+//
+//    for(auto &point : points)
+//    {
+//        p.setX(min(p.getX(),point.getX())) ;
+//
+//        p.setY(min(p.getY(),point.getY())) ;
+//    }
 
-    for(auto &point : points)
-    {
-        p.setX(min(p.getX(),point.getX())) ;
+    Point p = points[0]; // Start with the first point
 
-        p.setY(min(p.getY(),point.getY())) ;
+    for (const auto &point : points) {
+        if (point.getX() < p.getX() || (point.getX() == p.getX() && point.getY() < p.getY())) {
+            p = point; // Update only if the whole point is smaller
+        }
     }
     return p;
 }
