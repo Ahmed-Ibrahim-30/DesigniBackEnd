@@ -232,10 +232,13 @@ void PolygonHelper::renamePolygonsIds(Polygon1 &polygon1 , vector<Polygon1> &pol
     }
     sort(sortPolygons.begin(), sortPolygons.end());
 
+
     for (int i = 0; i < polygons.size(); ++i)
     {
         int id = get<2>(sortPolygons[i]);
         polygons[i].setId(to_string(id+1));
+
+        cout<<"ID = "<<get<2>(sortPolygons[i]) <<" "<< get<0>(sortPolygons[i]) <<" "<<get<1>(sortPolygons[i])<<"\n";
     }
 }
 
