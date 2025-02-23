@@ -376,8 +376,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         {
             if(p == p1 || p == p2)
             {
-                p .setX(center1.getX() + (p.getX() - center1.getX()) * 0.1);
-                p .setY(center1.getY() + (p.getY() - center1.getY()) * 0.1);
+                p .setX(center1.getX() + (p.getX() - center1.getX()) * 0.91);
+                p .setY(center1.getY() + (p.getY() - center1.getY()) * 0.91);
             }
         }
 
@@ -385,8 +385,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         {
             if(p == p1 || p == p2)
             {
-                p .setX(center2.getX() + (p.getX() - center2.getX()) * 0.1);
-                p .setY(center2.getY() + (p.getY() - center2.getY()) * 0.1);
+                p .setX(center2.getX() + (p.getX() - center2.getX()) * 0.91);
+                p .setY(center2.getY() + (p.getY() - center2.getY()) * 0.91);
             }
         }
 
