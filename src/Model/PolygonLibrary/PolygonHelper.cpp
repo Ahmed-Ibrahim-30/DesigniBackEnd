@@ -228,7 +228,7 @@ void PolygonHelper::renamePolygonsIds(Polygon1 &polygon1 , vector<Polygon1> &pol
     for (int i = 0; i < polygons.size(); ++i)
     {
         Point minPoint1 = polygons[i].minPoint();
-        sortPolygons.emplace_back(minPoint1.getX() , minPoint1.getY() , i);
+        sortPolygons.emplace_back(minPoint1.getX()+ minPoint1.getY() , minPoint1.getY() , i);
     }
     sort(sortPolygons.begin(), sortPolygons.end());
 
@@ -237,8 +237,6 @@ void PolygonHelper::renamePolygonsIds(Polygon1 &polygon1 , vector<Polygon1> &pol
     {
         int id = get<2>(sortPolygons[i]);
         polygons[id].setId(to_string(i+1));
-
-        cout<<"ID = "<<get<2>(sortPolygons[i]) <<" "<< get<0>(sortPolygons[i]) <<" "<<get<1>(sortPolygons[i])<<"\n";
     }
 }
 
