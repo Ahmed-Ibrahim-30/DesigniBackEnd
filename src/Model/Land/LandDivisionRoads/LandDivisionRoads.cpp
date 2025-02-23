@@ -363,7 +363,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         Point p1 (roadLine.getX1() , roadLine.getY1());
         Point p2 (roadLine.getX2() , roadLine.getY2());
 
-        double streetWidth = COUNT == 1? 0.01 * roadLine.getLength() : 4;
+        // 0.01 * roadLine.getLength()
+        double streetWidth = COUNT == 1? 8 : COUNT == 2? 6 : 4;
 
         cout<< "streetWidth = "<<streetWidth<<"\n";
         roadLine.print();
