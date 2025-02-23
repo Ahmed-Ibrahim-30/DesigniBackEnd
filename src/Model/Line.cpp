@@ -278,3 +278,7 @@ double Line::getAngle() const
     double angle = atan2(y2 - y1 , x2 - x1) * 180 / 3.14159;
     return angle < 0 ? angle + 360 : angle;
 }
+
+double Line::getLength() const {
+    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}

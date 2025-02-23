@@ -12,6 +12,8 @@
 #include "LandNetworkBySpacing.h"
 #include "LandDivisionBasedOnInnerDesign.h"
 #include "src/Model/DesignOutlines.h"
+#include "src/Model/Land/LandDivisionRoads/LandDivisionRoadsByDivisionsCount.h"
+
 #include <cmath>
 # define M_PI           3.14159265358979323846
 
@@ -31,6 +33,11 @@ private:
      * Pointer to Land Division
      */
     LandDivision * landDivision;
+
+    /**
+     * Pointer to Land Division Roads
+     */
+    LandDivisionRoads * landDivisionRoads;
 
     /**
      * Pointer to Land Network to create Roads between SubLands

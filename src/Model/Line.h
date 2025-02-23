@@ -64,6 +64,9 @@ public:
      */
     double getAngle() const;
 
+
+    double getLength() const;
+
     [[nodiscard]] double getCenterX1() const;
     void setDir(char d);
     void setDir();
