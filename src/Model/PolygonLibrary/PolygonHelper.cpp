@@ -228,6 +228,8 @@ void PolygonHelper::renamePolygonsIds(vector<Polygon1> &polygons)
 //            return minPoint1.getY() < minPoint2.getY();
 //        return minPoint1.getX()< minPoint2.getX();
 
+        return minPoint1.getX() + minPoint1.getY() < minPoint2.getX() + minPoint1.getY();
+
         if (minPoint1.getX() != minPoint2.getX())
             return minPoint1.getX() < minPoint2.getX();
         return minPoint1.getY()< minPoint2.getY();
