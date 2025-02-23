@@ -20,6 +20,13 @@ protected:
 
     vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1);
 
+    /**
+     * Build Outside Polygon for curLand
+     * @param mainLand
+     * @return
+     */
+    Polygon1 buildOutsideRoads(Polygon1 mainLand);
+
     Point shiftPointOnLine(const Line& line, const Point& p, double distance);
 
     double findY(double x, double x1, double y1, double x2, double y2);

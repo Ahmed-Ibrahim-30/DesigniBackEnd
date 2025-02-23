@@ -462,3 +462,33 @@ double LandDivisionRoads::findX(double y, double x1, double y1, double x2, doubl
 
     return x;
 }
+
+Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 mainLand) {
+    vector<Point> newPoints;
+    vector<Point> curPoints = mainLand.getPoints();
+
+    for (int i = 0; i < curPoints.size(); ++i) {
+        Point a0 = curPoints[i==0?curPoints.size()-1 : i-1];
+        Point a1 = curPoints[i];
+        Point a2 = curPoints[(i + 1) % curPoints.size()];
+
+        // Compute the direction vectors of adjacent edges
+        Point v1 = (a1 - a0).normalize(); // Edge from a0 to a1
+        Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
+
+        // Compute perpendicular vectors
+        Point perp1 = v1.perpendicular();
+        Point perp2 = v2.perpendicular();
+
+        // Compute outward direction (average of two perpendicular vectors)
+        Point offsetDir = (perp1 + perp2).normalize();
+
+        // Move the point outward by X
+        Point newPoint = a1 + offsetDir * 6;
+        newPoints.push_back(newPoint);
+    }
+
+    Polygon1 polygon1(newPoints);
+
+    return polygon1;
+}

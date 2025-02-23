@@ -10,9 +10,11 @@ vector<vector<Polygon1>>LandDivisionRoadsByDivisionsCount::divideLand(const Poly
     pols.push_back(land);
     vector<vector<Polygon1>> ans;
 
-
     divideLand( ratioA , ratioB , maxDivisions , pols , ans , landDivisionStrategy);
 
+    Polygon1 outSidePolygon = buildOutsideRoads(land);
+
+    for(auto &p : ans)p.push_back(outSidePolygon);
     return ans;
 }
 
@@ -22,6 +24,7 @@ LandDivisionRoadsByDivisionsCount::divideLands(vector<Polygon1> &lands, double r
     vector<vector<Polygon1>> ans;
     divideLand( ratioA , ratioB , maxDivisions , lands , ans , landDivisionStrategy);
 
+    
     return ans;
 }
 

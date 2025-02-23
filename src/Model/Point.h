@@ -38,6 +38,29 @@ public:
         return y < l.y;
     }
 
+    Point operator+(const Point& other) const {
+        return Point(x + other.x, y + other.y);
+    }
+
+    Point operator-(const Point& other) const {
+        return Point(x - other.x, y - other.y);
+    }
+
+    Point operator*(double scale) const {
+        return Point(x * scale, y * scale);
+    }
+
+    // Normalize the vector
+    [[nodiscard]] Point normalize() const {
+        double len = std::sqrt(x*x + y*y);
+        return Point(x / len, y / len);
+    }
+
+    // Rotate by 90 degrees counterclockwise
+    [[nodiscard]] Point perpendicular() const {
+        return Point(-y, x);
+    }
+
     bool operator!=(const Point &p) const {
         return !(*this == p);
     }
