@@ -361,7 +361,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         Point p1 (roadLine.getX1() , roadLine.getY1());
         Point p2 (roadLine.getX2() , roadLine.getY2());
 
-        double streetWidth = 0.1 * roadLine.getLength() ;
+        double streetWidth = 0.7 * roadLine.getLength() ;
 
         Point center1 = pol1.calculateCentroid();
         Point center2 = pol2.calculateCentroid();
