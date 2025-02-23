@@ -37,5 +37,47 @@ public:
      * @return
      */
     virtual vector<vector<Polygon1>> divideLand(const Polygon1 &land , double ratioA , double ratioB , int maxDivisions ,LandDivisionSortingStrategy  landDivisionStrategy  ) {vector<vector<Polygon1>> tst; return tst;}
+
+    /**
+     * Split Land Based on min Area should each Sub Land Have
+     * @param land
+     * @param area
+     * @return
+     */
+    virtual vector<vector<Polygon1>> divideLand(const Polygon1 &land , double area ,LandDivisionSortingStrategy  landDivisionStrategy  ) {vector<vector<Polygon1>> tst; return tst;}
+
+    /**
+     * Split Land Based on Inner Home Design should set inside each Sub Land
+     * @param land
+     * @param innerHome
+     * @return
+     */
+    virtual vector<vector<Polygon1>> divideLand(const Polygon1 &land , const Polygon1 &innerHome ,LandDivisionSortingStrategy  landDivisionStrategy  ) {vector<vector<Polygon1>> tst; return tst;}
+
+    /**
+     * Split Land Based on number of Divisions
+     * @param land
+     * @param ratioA
+     * @param ratioB
+     * @param maxDivisions
+     * @return
+     */
+    virtual vector<vector<Polygon1>> divideLands(vector< Polygon1> &lands , double ratioA , double ratioB , int maxDivisions,LandDivisionSortingStrategy  landDivisionStrategy  ) {vector<vector<Polygon1>> tst; return tst;}
+
+    /**
+     * Split Land Based on min Area should each Sub Land Have
+     * @param land
+     * @param area
+     * @return
+     */
+    virtual vector<vector<Polygon1>> divideLands(vector< Polygon1> &lands , double area ,LandDivisionSortingStrategy  landDivisionStrategy  ) {vector<vector<Polygon1>> tst; return tst;}
+
+    /**
+     * Split Land Based on Inner Home Design should set inside each Sub Land
+     * @param land
+     * @param innerHome
+     * @return
+     */
+    virtual vector<vector<Polygon1>> divideLands(vector< Polygon1> &lands , const Polygon1 &innerHome ,LandDivisionSortingStrategy  landDivisionStrategy  ) {vector<vector<Polygon1>> tst; return tst;}
 };
 #endif //DESIGNI_BACKEND_LANDDIVISIONROADS_H

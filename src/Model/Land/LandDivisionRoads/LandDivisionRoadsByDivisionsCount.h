@@ -10,8 +10,10 @@ class LandDivisionRoadsByDivisionsCount :public LandDivisionRoads{
 private:
     void divideLand(double ratioA, double ratioB, int maxDivisions, vector<Polygon1> &pols , vector<vector<Polygon1>> &ans, LandDivisionSortingStrategy  landDivisionStrategy);
 public:
-    vector<vector<Polygon1>> divideLand(const Polygon1 &land, double ratioA, double ratioB, int maxDivisions,
-                                        LandDivisionSortingStrategy landDivisionStrategy) override;
+    vector<vector<Polygon1>> divideLand(const Polygon1 &land ,double ratioA, double ratioB, int maxDivisions,LandDivisionSortingStrategy  landDivisionStrategy ) override;
+
+    vector<vector<Polygon1>>
+    divideLands(vector<Polygon1> &lands, double ratioA, double ratioB, int maxDivisions,LandDivisionSortingStrategy  landDivisionStrategy) override;
 };
 
 

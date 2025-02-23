@@ -1,38 +1,56 @@
 //
-// Created by ahmed Ibrahim on 22-Feb-25.
+// Created by ahmed Ibrahim on 23-Feb-25.
 //
 
-#include "LandDivisionRoadsByDivisionsCount.h"
+#include "LandDivisionRoadsByArea.h"
 
-vector<vector<Polygon1>>LandDivisionRoadsByDivisionsCount::divideLand(const Polygon1 &land, double ratioA, double ratioB, int maxDivisions,LandDivisionSortingStrategy landDivisionStrategy)
+vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLand(const Polygon1 &land ,double area , LandDivisionSortingStrategy  landDivisionStrategy)
 {
     vector <Polygon1> pols;
     pols.push_back(land);
     vector<vector<Polygon1>> ans;
+    divideLand( area , pols , ans , landDivisionStrategy);
 
+    cout<<"Ans Size = "<<ans.size()<<"\n";
 
-    divideLand( ratioA , ratioB , maxDivisions , pols , ans , landDivisionStrategy);
-
+    if(!ans.empty())
+    {
+        for(auto &pol : ans)
+        {
+            cout<<"********************************\n";
+            for(auto &t : pol) t.print();
+        }
+    }
     return ans;
 }
 
-vector<vector<Polygon1>>
-LandDivisionRoadsByDivisionsCount::divideLands(vector<Polygon1> &lands, double ratioA, double ratioB, int maxDivisions,
-                                               LandDivisionSortingStrategy landDivisionStrategy) {
+vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLands(vector<Polygon1> &lands, double area , LandDivisionSortingStrategy  landDivisionStrategy)
+{
     vector<vector<Polygon1>> ans;
-    divideLand( ratioA , ratioB , maxDivisions , lands , ans , landDivisionStrategy);
+    divideLand( area , lands , ans , landDivisionStrategy);
+
+    cout<<"Ans Size = "<<ans.size()<<"\n";
+
+    if(!ans.empty())
+    {
+        for(auto &pol : ans)
+        {
+            cout<<"********************************\n";
+            for(auto &t : pol) t.print();
+        }
+    }
 
     return ans;
 }
 
-void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB, int maxDivisions, vector<Polygon1> &pols,
-                                              vector<vector<Polygon1>> &ans,
-                                              LandDivisionSortingStrategy landDivisionStrategy){
-    if(pols.size() >= maxDivisions)
+void LandDivisionRoadsByArea::divideLand(double area , vector<Polygon1> &pols, vector<vector<Polygon1>> &ans , LandDivisionSortingStrategy  landDivisionStrategy)
+{
+    if(pols.size() > 100)
     {
         ans.push_back(pols);
         return;
     }
+    cout<<sol++<<"\n";
 
     SortLandDivisions *sortLandDivisions ;
     switch (landDivisionStrategy)
@@ -54,9 +72,11 @@ void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB,
             break;
     }
 
+
     pols = PolygonHelper::sortPolygonByArea(pols);
 
     vector<vector<Polygon1>> possibleDivisions;
+
     for (int i = 0; i < pols.size(); ++i)
     {
         if(!pols[i].isDivisible()) continue;//if land is green Area
@@ -72,8 +92,15 @@ void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB,
 
         vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
 
-        for (const auto& div : paiPoly)
+        for (auto div : paiPoly)
         {
+            double area1 = div.first.getArea();
+            double area2 = div.second.getArea();
+            if(area1 < area || area2 < area)
+            {
+                continue;
+            }
+
             newPolygons.push_back(div.first);
             newPolygons.push_back(div.second);
 
@@ -89,10 +116,16 @@ void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB,
 
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions);
 
-    divideLand( ratioA , ratioB , maxDivisions , possibleDivisions[0] , ans , landDivisionStrategy);
-
+    if (pols.size() == 1)
+    {
+        for(auto &solution : possibleDivisions)
+        {
+            divideLand( area , solution , ans , landDivisionStrategy);
+        }
+    }
+    else
+    {
+        divideLand( area , possibleDivisions[0] , ans , landDivisionStrategy);
+    }
 }
-
-
-
 
