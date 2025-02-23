@@ -387,7 +387,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
                 Line next (a2.getX(),a2.getY(),a3.getX(),a3.getY());
 
                 p = shiftPointOnLine(prev , p , -streetWidth);
-                pp = shiftPointOnLine(next , pp , -streetWidth);
+                pp = shiftPointOnLine(next , pp , streetWidth);
                 break;
             }
         }
