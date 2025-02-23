@@ -13,14 +13,6 @@ vector<vector<Polygon1>> LandDivisionBasedOnLandArea::divideLand(const Polygon1 
 
     cout<<"Ans Size = "<<ans.size()<<"\n";
 
-    if(!ans.empty())
-    {
-        for(auto &pol : ans)
-        {
-            cout<<"********************************\n";
-            for(auto &t : pol) t.print();
-        }
-    }
     return ans;
 }
 
@@ -50,8 +42,6 @@ void LandDivisionBasedOnLandArea::divideLand(double area , vector<Polygon1> &pol
         ans.push_back(pols);
         return;
     }
-    cout<<sol++<<"\n";
-
     SortLandDivisions *sortLandDivisions ;
     switch (landDivisionStrategy)
     {
@@ -112,7 +102,12 @@ void LandDivisionBasedOnLandArea::divideLand(double area , vector<Polygon1> &pol
         if(!paiPoly.empty())break;
     }
 
-    if(possibleDivisions.empty())return;
+    if(possibleDivisions.empty())
+    {
+        sol = -1;
+        ans.push_back(pols);
+        return;
+    }
 
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions);
 

@@ -40,8 +40,6 @@ vector<Polygon1> Land::SplitLand(double minSubArea, LandDivisionSortingStrategy 
 
     vector<vector<Polygon1>>pols = landDivision->divideLand(land , minSubArea , landDivisionStrategy);
 
-    // subLand = buildRoads(pols[0]);
-
     cout<<"Sizes = "<<subLand.size()<<"\n";
 
     return pols[0];

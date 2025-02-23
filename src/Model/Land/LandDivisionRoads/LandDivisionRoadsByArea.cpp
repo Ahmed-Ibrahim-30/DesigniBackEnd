@@ -112,7 +112,12 @@ void LandDivisionRoadsByArea::divideLand(double area , vector<Polygon1> &pols, v
         if(!paiPoly.empty())break;
     }
 
-    if(possibleDivisions.empty())return;
+    if(possibleDivisions.empty())
+    {
+        sol = -1;
+        ans.push_back(pols);
+        return;
+    }
 
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions);
 
