@@ -361,7 +361,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         Point p1 (roadLine.getX1() , roadLine.getY1());
         Point p2 (roadLine.getX2() , roadLine.getY2());
 
-        double streetWidth = 0.1 * roadLine.getLength() ;
+        double streetWidth = 0.2 * roadLine.getLength() ;
 
         cout<< "streetWidth = "<<streetWidth<<"\n";
         roadLine.print();
@@ -391,7 +391,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         }
 
         solution.first.setPoints(points1);
-        solution.second.setPoints(points2);
+//        solution.second.setPoints(points2);
 
     }
     return ans2;
