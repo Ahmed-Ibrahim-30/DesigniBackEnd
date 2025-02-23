@@ -99,7 +99,7 @@ public:
      * rename Polygons Ids
      * @param polygons
      */
-    static void renamePolygonsIds(vector<Polygon1> &polygons);
+    static void renamePolygonsIds(Polygon1 &polygon1 ,vector<Polygon1> &polygons);
 };
 
 
