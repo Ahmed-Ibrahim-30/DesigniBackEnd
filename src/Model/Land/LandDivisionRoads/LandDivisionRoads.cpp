@@ -372,21 +372,43 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         vector<Point> points1 = pol1.getPoints();
         vector<Point> points2 = pol2.getPoints();
 
-        for(auto &p : points1)
+        for (int i = 0; i < points1.size(); ++i)
         {
-            if(p == p1 || p == p2)
+            Point a0 = points1[i==0?points1.size()-1 : i-1];
+            Point a1 = points1[i];
+            Point a2 = points1[(i + 1) % points1.size()];
+            Point a3 = points1[(i + 2) % points1.size()];
+            Point &p = points1[i];
+            Point &pp = points1[(i + 1) % points1.size()];
+
+            if ((a1 == p1 && a2 == p2) || (a1 == p2 && a2 == p1))
             {
-                p .setX(center1.getX() + (p.getX() - center1.getX()) * 0.91);
-                p .setY(center1.getY() + (p.getY() - center1.getY()) * 0.91);
+                Line prev (a0.getX(),a0.getY(),a1.getX(),a1.getY());
+                Line next (a2.getX(),a2.getY(),a3.getX(),a3.getY());
+
+                p = shiftPointOnLine(prev , p , streetWidth);
+                pp = shiftPointOnLine(next , pp , streetWidth);
+                break;
             }
         }
 
-        for(auto &p : points2)
+        for (int i = 0; i < points2.size(); ++i)
         {
-            if(p == p1 || p == p2)
+            Point a0 = points2[i==0?points2.size()-1 : i-1];
+            Point a1 = points2[i];
+            Point a2 = points2[(i + 1) % points2.size()];
+            Point a3 = points2[(i + 2) % points2.size()];
+            Point &p = points2[i];
+            Point &pp = points2[(i + 1) % points2.size()];
+
+            if ((a1 == p1 && a2 == p2) || (a1 == p2 && a2 == p1))
             {
-                p .setX(center2.getX() + (p.getX() - center2.getX()) * 0.91);
-                p .setY(center2.getY() + (p.getY() - center2.getY()) * 0.91);
+                Line prev (a0.getX(),a0.getY(),a1.getX(),a1.getY());
+                Line next (a2.getX(),a2.getY(),a3.getX(),a3.getY());
+
+                p = shiftPointOnLine(prev , p , streetWidth);
+                pp = shiftPointOnLine(next , pp , streetWidth);
+                break;
             }
         }
 
@@ -395,6 +417,27 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
 
     }
     return ans2;
+}
+
+// Function to shift a point along a line by a given distance
+Point LandDivisionRoads::shiftPointOnLine(const Line& line, const Point& p, double distance) {
+    // Compute the direction vector of the line
+    double dx = line.getX2() - line.getX1();
+    double dy = line.getY2() - line.getY1();
+
+    // Compute the magnitude (length) of the direction vector
+    double length = line.getLength();
+
+    // Normalize the direction vector
+    dx /= length;
+    dy /= length;
+
+    // Scale by the distance
+    dx *= distance;
+    dy *= distance;
+
+    // Compute the new point position
+    return {p.getX() + dx, p.getY() + dy};
 }
 
 double LandDivisionRoads::findY(double x, double x1, double y1, double x2, double y2) {
