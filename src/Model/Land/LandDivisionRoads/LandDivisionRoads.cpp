@@ -336,8 +336,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
 
     for(auto &solution : ans2)
     {
-        Polygon1 pol1 = solution.first;
-        Polygon1 pol2 = solution.second;
+        Polygon1 &pol1 = solution.first;
+        Polygon1 &pol2 = solution.second;
 
         Line roadLine(INT_MAX,INT_MAX,INT_MAX,INT_MAX);
         set<Point> pol1Points;
@@ -372,26 +372,26 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         vector<Point> points1 = pol1.getPoints();
         vector<Point> points2 = pol2.getPoints();
 
-        for(auto &p : points1)
-        {
-            if(p == p1 || p == p2)
-            {
-                p .setX(center1.getX() + (p.getX() - center1.getX()) * streetWidth);
-                p .setY(center1.getY() + (p.getY() - center1.getY()) * streetWidth);
-            }
-        }
+//        for(auto &p : points1)
+//        {
+//            if(p == p1 || p == p2)
+//            {
+//                p .setX(center1.getX() + (p.getX() - center1.getX()) * streetWidth);
+//                p .setY(center1.getY() + (p.getY() - center1.getY()) * streetWidth);
+//            }
+//        }
+//
+//        for(auto &p : points2)
+//        {
+//            if(p == p1 || p == p2)
+//            {
+//                p .setX(center2.getX() + (p.getX() - center2.getX()) * streetWidth);
+//                p .setY(center2.getY() + (p.getY() - center2.getY()) * streetWidth);
+//            }
+//        }
 
-        for(auto &p : points2)
-        {
-            if(p == p1 || p == p2)
-            {
-                p .setX(center2.getX() + (p.getX() - center2.getX()) * streetWidth);
-                p .setY(center2.getY() + (p.getY() - center2.getY()) * streetWidth);
-            }
-        }
-
-        solution.first.setPoints(points1);
-//        solution.second.setPoints(points2);
+        pol1.setPoints(points1);
+        pol2.setPoints(points2);
 
     }
     return ans2;
