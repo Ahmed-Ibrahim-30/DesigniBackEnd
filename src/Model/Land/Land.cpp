@@ -75,16 +75,11 @@ vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivis
     landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
 
     vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratioA , ratioB , divisions , landDivisionStrategy);
-    vector<vector<Polygon1>> pols2 = landDivisionRoads->divideLand(land , ratioA , ratioB , divisions , landDivisionStrategy);
+//    vector<vector<Polygon1>> pols2 = landDivisionRoads->divideLand(land , ratioA , ratioB , divisions , landDivisionStrategy);
 
     // subLand = buildRoads(pols[0]);
 
-    cout<<"Sizes = "<<pols.size()<<"\n";
-    cout<<"Sizes = "<<pols2.size()<<"\n";
-
-    if (pols2.empty()) return pols[0];
-
-    return pols2[0];
+    return pols[0];
 }
 
 vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubArea,LandDivisionSortingStrategy  landDivisionStrategy)

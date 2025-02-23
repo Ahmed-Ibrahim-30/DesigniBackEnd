@@ -174,6 +174,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         cout<<"Area = "<<polygon1.getArea() <<" \n";
 
         vector<Polygon1> ans;
+        vector<Polygon1> streets;
+        LandDivisionRoads * landDivisionRoads;
         Land land(polygon1);
         auto oldDesign =jsonData.count("design")? jsonData["design"] : jsonData;
 
@@ -373,6 +375,18 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots*1.0 ) * 100.0;
             greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 900000);
+
+
+            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
+            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
+            if (pols.empty()) streets = land.buildRoads(ans);
+            else
+            {
+                streets = pols[0];
+                Polygon1 polygon11Copy = polygon1;
+                polygon11Copy.setPoints(polygon1.scalePolygon(1.1));
+                streets.push_back(polygon11Copy);
+            }
         }
 
         else if(jsonData.count("slots"))
@@ -391,6 +405,17 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
             greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 900000);
+
+            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
+            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
+            if (pols.empty()) streets = land.buildRoads(ans);
+            else
+            {
+                streets = pols[0];
+                Polygon1 polygon11Copy = polygon1;
+                polygon11Copy.setPoints(polygon1.scalePolygon(1.1));
+                streets.push_back(polygon11Copy);
+            }
         }
 
         else if(jsonData.count("home_area") )
@@ -421,10 +446,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
         }
 
-        vector<Polygon1> streets = land.buildRoads(ans);
-
-
-        polygon1 = streets.back();
+//        vector<Polygon1> streets = land.buildRoads(ans);
 
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)
         {
