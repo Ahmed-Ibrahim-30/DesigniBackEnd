@@ -79,7 +79,8 @@ vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivis
 
     // subLand = buildRoads(pols[0]);
 
-    cout<<"Sizes = "<<subLand.size()<<"\n";
+    cout<<"Sizes = "<<pols.size()<<"\n";
+    cout<<"Sizes = "<<pols2.size()<<"\n";
 
     if (pols2.empty()) return pols[0];
 
