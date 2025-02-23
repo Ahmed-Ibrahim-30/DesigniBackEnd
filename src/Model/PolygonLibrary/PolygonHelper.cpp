@@ -218,6 +218,23 @@ vector<Polygon1> PolygonHelper::sortPolygonByArea(vector<Polygon1> &polygons)
     return polygons;
 }
 
+void PolygonHelper::renamePolygonsIds(vector<Polygon1> &polygons)
+{
+    sort(polygons.begin() , polygons.end() , [](Polygon1 &polygon1 , Polygon1 &polygon11) {
+        Point minPoint1 = polygon1.minPoint();
+        Point minPoint2 = polygon11.minPoint();
+
+        if (minPoint1.getY() != minPoint2.getY())
+            return minPoint1.getY() < minPoint2.getY();
+        return minPoint1.getX()< minPoint2.getX();
+    });
+
+    for (int i = 0; i < polygons.size(); ++i)
+    {
+        polygons[i].setId(to_string(i+1));
+    }
+}
+
 
 
 

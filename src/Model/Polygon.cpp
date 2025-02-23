@@ -296,6 +296,14 @@ int Polygon1::countAcuteAnglesLines() {
     return acuteLines;
 }
 
+const string &Polygon1::getId() const {
+    return id;
+}
+
+void Polygon1::setId(const string &id) {
+    Polygon1::id = id;
+}
+
 
 
 

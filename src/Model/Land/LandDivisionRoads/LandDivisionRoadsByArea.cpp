@@ -11,16 +11,11 @@ vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLand(const Polygon1 &lan
     vector<vector<Polygon1>> ans;
     divideLand( area , pols , ans , landDivisionStrategy);
 
-    cout<<"Ans Size = "<<ans.size()<<"\n";
+    //Push OUTSIDE ROAD
+    Polygon1 outSidePolygon = buildOutsideRoads(land);
 
-    if(!ans.empty())
-    {
-        for(auto &pol : ans)
-        {
-            cout<<"********************************\n";
-            for(auto &t : pol) t.print();
-        }
-    }
+    for(auto &p : ans)p.push_back(outSidePolygon);
+
     return ans;
 }
 
@@ -29,16 +24,6 @@ vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLands(vector<Polygon1> &
     vector<vector<Polygon1>> ans;
     divideLand( area , lands , ans , landDivisionStrategy);
 
-    cout<<"Ans Size = "<<ans.size()<<"\n";
-
-    if(!ans.empty())
-    {
-        for(auto &pol : ans)
-        {
-            cout<<"********************************\n";
-            for(auto &t : pol) t.print();
-        }
-    }
 
     return ans;
 }

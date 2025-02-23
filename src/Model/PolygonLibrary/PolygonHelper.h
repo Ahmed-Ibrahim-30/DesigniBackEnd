@@ -94,6 +94,12 @@ public:
      * @return
      */
     static vector<Polygon1> sortPolygonByArea(vector<Polygon1> &polygons);
+
+    /**
+     * rename Polygons Ids
+     * @param polygons
+     */
+    static void renamePolygonsIds(vector<Polygon1> &polygons);
 };
 
 

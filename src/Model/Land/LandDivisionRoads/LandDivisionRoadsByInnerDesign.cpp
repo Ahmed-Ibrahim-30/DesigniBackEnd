@@ -12,19 +12,10 @@ vector<vector<Polygon1>> LandDivisionRoadsByInnerDesign::divideLand(const Polygo
     vector<vector<Polygon1>> ans;
     divideLand( innerHome , pols , ans , landDivisionStrategy);
 
-    cout<<"Ans Size = "<<ans.size()<<"\n";
+    //Push OUTSIDE ROAD
+    Polygon1 outSidePolygon = buildOutsideRoads(land);
 
-    for(auto &pol : ans)
-    {
-        cout<<"********************************\n";
-        for (int i = 0; i < pol.size(); ++i)
-        {
-            cout<<"*************** "<<i<<" *****************\n";
-            pol[i].print();
-            // cout<<"********************************\n";
-        }
-        break;
-    }
+    for(auto &p : ans)p.push_back(outSidePolygon);
 
     return ans;
 }
@@ -33,21 +24,6 @@ vector<vector<Polygon1>>
 LandDivisionRoadsByInnerDesign::divideLands(vector<Polygon1> &lands, const Polygon1 &innerHome, LandDivisionSortingStrategy  landDivisionStrategy) {
     vector<vector<Polygon1>> ans;
     divideLand( innerHome , lands , ans , landDivisionStrategy);
-
-    cout<<"Ans Size = "<<ans.size()<<"\n";
-
-    if(!ans.empty())
-    {
-//        for(auto &pol : ans)
-//        {
-//            for (int i = 0; i < pol.size(); ++i)
-//            {
-//                cout<<"*************** "<<i<<" *****************\n";
-//                pol[i].print();
-//                // cout<<"********************************\n";
-//            }
-//        }
-    }
 
     return ans;
 }

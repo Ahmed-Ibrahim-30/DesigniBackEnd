@@ -12,7 +12,20 @@ private:
      * Polygon Points
      */
     vector<Point> points;
+
+    /**
+     * IS POLYGON MAY BE DIVIDED
+     */
     bool divisible;
+
+    /**
+     * Polygon ID
+     */
+    string id;
+public:
+    const string &getId() const;
+
+    void setId(const string &id);
 
 public:
     const vector<Point> &getPoints() const;

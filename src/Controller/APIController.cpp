@@ -180,7 +180,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         vector<Polygon1> streets;
         LandDivisionRoads * landDivisionRoads;
         Land land(polygon1);
-        auto oldDesign =jsonData.count("design")? jsonData["design"] : jsonData;
+        auto oldDesign = jsonData.count("design")? jsonData["design"] : jsonData;
 
         Design design1 ;
 
@@ -269,7 +269,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             }
 
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
-
 
             design1.scaleDesign(100);
 
@@ -466,6 +465,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                     {"y" , polygon1.getPoints()[i].getY()}
             };
         }
+
+        PolygonHelper::renamePolygonsIds(ans);
 
         for(int i = 0 ; i < ans.size() ; i++)
         {
