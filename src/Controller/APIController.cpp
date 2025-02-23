@@ -423,10 +423,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
-            landDivisionRoads = new LandDivisionRoadsByArea();
-            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , homeArea , static_cast<LandDivisionSortingStrategy>(strategy) );
-            if (pols.empty()) streets = land.buildRoads(ans);
-            else  streets = pols[0];
+//            landDivisionRoads = new LandDivisionRoadsByArea();
+//            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , homeArea , static_cast<LandDivisionSortingStrategy>(strategy) );
+//            if (pols.empty()) streets = land.buildRoads(ans);
+//            else  streets = pols[0];
         }
 
         else if(jsonData.count("slot_area") )
@@ -437,10 +437,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
-            landDivisionRoads = new LandDivisionRoadsByArea();
-            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , homeArea , static_cast<LandDivisionSortingStrategy>(strategy) );
-            if (pols.empty()) streets = land.buildRoads(ans);
-            else  streets = pols[0];
+//            landDivisionRoads = new LandDivisionRoadsByArea();
+//            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , homeArea , static_cast<LandDivisionSortingStrategy>(strategy) );
+//            if (pols.empty()) streets = land.buildRoads(ans);
+//            else  streets = pols[0];
         }
 
         else if(jsonData.count("bedroom_count"))
@@ -458,8 +458,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             if (pols.empty()) streets = land.buildRoads(ans);
             else  streets = pols[0];
         }
-
-//        vector<Polygon1> streets = land.buildRoads(ans);
 
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)
         {
