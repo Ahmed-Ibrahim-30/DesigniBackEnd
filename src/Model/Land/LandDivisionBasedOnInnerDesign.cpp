@@ -80,8 +80,8 @@ void LandDivisionBasedOnInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
         {
             double scaleFactorLands = 0.95;
 
-            div.first.scalePolygon(scaleFactorLands);
-            div.second.scalePolygon(scaleFactorLands);
+//            div.first.scalePolygon(scaleFactorLands);
+//            div.second.scalePolygon(scaleFactorLands);
 
             innerHome = innerHome1;
             bool validPol1 = DesignGeometryManager::positionPolygonInsideAnotherUsingAllAngles(div.first , innerHome);
