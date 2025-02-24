@@ -1265,7 +1265,7 @@ bool DesignGeometryManager::isTwoRoomsIntersect(const Room &one, const Room &two
 
 bool DesignGeometryManager::positionPolygonInsideAnotherUsingAllAngles(Polygon1 &input, Polygon1 &pol)
 {
-    for (int angle = 0; angle <= 90; angle += 45) {
+    for (int angle = 0; angle <= 180; angle += 90) {
         Polygon1 cur = pol;
         cur.rotate(angle);
         bool valid = positionPolygonInsideAnother(input , cur);
