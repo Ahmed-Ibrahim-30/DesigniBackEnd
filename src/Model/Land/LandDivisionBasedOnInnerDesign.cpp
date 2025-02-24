@@ -78,7 +78,7 @@ void LandDivisionBasedOnInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
 
         for(auto &div : paiPoly)
         {
-            double scaleFactorLands = 0.90;
+            double scaleFactorLands = 0.95;
 
             div.first.scalePolygon(scaleFactorLands);
             div.second.scalePolygon(scaleFactorLands);
