@@ -484,7 +484,7 @@ Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 mainLand) {
         Point offsetDir = (perp1 + perp2).normalize();
 
         // Move the point outward by X
-        Point newPoint = a1 + offsetDir * 12;
+        Point newPoint = a1 + offsetDir * 20;
         newPoints.push_back(newPoint);
     }
 
