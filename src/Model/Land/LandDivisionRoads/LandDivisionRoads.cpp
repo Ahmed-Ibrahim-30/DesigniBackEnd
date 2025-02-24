@@ -162,6 +162,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
                     break;
                 }
             }
+
             if(a4.getX() != INT_MAX)
             {
                 bool flag = false;
@@ -208,6 +209,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
 
                 p1s.push_back(a3);
                 Point curPoint = a3;
+
+
                 while(curPoint != a4)
                 {
                     flag = false;
@@ -366,7 +369,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         // 0.01 * roadLine.getLength()
         double streetWidth = COUNT == 1 ? 8 : COUNT == 2 ? 6 : COUNT == 3 ?6: 4;
 
-        cout<< "streetWidth = "<<streetWidth<<"\n";
+//        cout<< "streetWidth = "<<streetWidth<<"\n";
         roadLine.print();
 
         Point center1 = pol1.calculateCentroid();

@@ -71,7 +71,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 {
 
     vector<pair<Polygon1 , Polygon1>> ans;
-    int n = polygon1.getPoints().size();
+    int n = (int)polygon1.getPoints().size();
 
     set<Line> polLines;
 
@@ -82,7 +82,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 
     double ratioA = 0 , ratioB = 0;
 
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         Point a1 = polygon1.getPoints()[i];
         Point a2 = polygon1.getPoints()[(i+1)%n];
 
@@ -108,7 +109,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
         {
             Line line = l.second;
 
-            double x1 = line.getX1() , y1 = line.getY1() , x2 = line.getX2() , y2 = line.getY2();
+            double x1 = line.getX1() , y1 = line.getY1() ,
+            x2 = line.getX2() , y2 = line.getY2();
 
             Point a1(x1 , y1);
             Point a2(x2 , y2);
@@ -136,45 +138,46 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
             }
 
             Point a3 (pX , pY);
-            // Point a4 (INT_MAX,INT_MAX);
 
-            Point a4 (pX * (maxPolygonPoint.getX() - pX + 100),pY * (maxPolygonPoint.getY() - pY + 100));
+            Point a4 (pX * (maxPolygonPoint.getX() - pX + 10000),pY * (maxPolygonPoint.getY() - pY + 100000));
 
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++)
+            {
                 Point p1 = polygon1.getPoints()[j];
                 Point p2 = polygon1.getPoints()[(j + 1) % n];
 
                 Line line1 (p1.getX() , p1.getY() , p2.getX() , p2.getY());
                 Line line2 (p2.getX() , p2.getY() , p1.getX() , p1.getY());
 
-                // if(p1 == a1 || p2 == a1 || p1 == a2 || p2==a2) continue;
                 if(line1 == line || line2 == line) continue;
 
                 Point intersectionPoint(0,0);
 
-                if(abs(a1.getX() - a2.getX()) > 0.1 && abs(a1.getY() - a2.getY()) > 0.1) intersectionPoint = getIntersectionPoint(a3 , -1/slope , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
+                if(abs(a1.getX() - a2.getX()) > 0.1 && abs(a1.getY() - a2.getY()) > 0.1)
+                    intersectionPoint = getIntersectionPoint(a3 , -1/slope , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
 
 
                 else{
                     if(abs(a1.getX() - a2.getX()) <= 0.1)
                     {
-                        a4 = Point(pX * ((maxPolygonPoint.getX() - minPolygonPoint.getX()) *10) , a3.getY());
+                        a4 = Point(pX * ((maxPolygonPoint.getX() - minPolygonPoint.getX()) *100) , a3.getY());
                     }
                     else
                     {
-                        a4 = Point(a3.getX() , pY * ((maxPolygonPoint.getY() - minPolygonPoint.getY()) *10));
+                        a4 = Point(a3.getX() , pY * ((maxPolygonPoint.getY() - minPolygonPoint.getY()) *100));
                     }
+
                     intersectionPoint = PolygonHelper::getIntersectionPoint({a3.getX() , a3.getY() , a4.getX() , a4.getY()} , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
 
                     if(intersectionPoint.getX() == INT_MAX || (intersectionPoint != a1 && intersectionPoint != a2))
                     {
                         if(abs(a1.getX() - a2.getX()) <= 0.1)
                         {
-                            a4 = Point(pX * -((maxPolygonPoint.getX() - minPolygonPoint.getX()) *10) , a3.getY());
+                            a4 = Point(pX * -((maxPolygonPoint.getX() - minPolygonPoint.getX()) *100) , a3.getY());
                         }
                         else
                         {
-                            a4 = Point(a3.getX() , pY * -((maxPolygonPoint.getY() - minPolygonPoint.getY()) *10));
+                            a4 = Point(a3.getX() , pY * -((maxPolygonPoint.getY() - minPolygonPoint.getY()) *100));
                         }
                         intersectionPoint = PolygonHelper::getIntersectionPoint({a3.getX() , a3.getY() , a4.getX() , a4.getY()} , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
                     }
@@ -188,6 +191,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
                     break;
                 }
             }
+
             if(a4.getX() != INT_MAX)
             {
                 bool flag = false;
