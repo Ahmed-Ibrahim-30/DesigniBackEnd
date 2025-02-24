@@ -171,7 +171,12 @@ vector<Polygon1> Land::setHomesInsideSubLands(const Polygon1 &home , int greenAr
     double preferDegree = 0;
     for (int i = 0; i < subLand.size(); ++i) {
         vector<Line> lines = subLand[i].getLines();
-        for (const auto & line : lines) {
+
+        std::sort(lines.begin(), lines.end() , [](Line &line , Line &line2){
+            return line.getLength() < line2.getLength();
+        });
+        for (const auto & line : lines)
+        {
             double dX = line.getX2() - line.getX1();
             double dY = line.getY2() - line.getY1();
 
@@ -180,14 +185,24 @@ vector<Polygon1> Land::setHomesInsideSubLands(const Polygon1 &home , int greenAr
 
             preferDegree =  angleInDegrees;
         }
+
+        Line line = lines[0];
+
+        double dX = line.getX2() - line.getX1();
+        double dY = line.getY2() - line.getY1();
+
+        double angle = atan2(dY, dX);
+        double angleInDegrees = angle * (180.0 / M_PI);
+
+        preferDegree =  angleInDegrees;
     }
     if (preferDegree < 0) preferDegree +=360;
 
     LOG(LogLevel::Debug , "preferDegree = "+ to_string(preferDegree));
 
-    for (int i = 0; i < subLand.size(); ++i){
-        ans.push_back(subLand[i]);
-        subLand[i].print();
+    for (auto & i : subLand){
+        ans.push_back(i);
+        i.print();
     }
 
     for (int i = 0; i < subLand.size(); ++i){

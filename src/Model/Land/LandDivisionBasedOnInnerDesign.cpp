@@ -12,20 +12,6 @@ vector<vector<Polygon1>> LandDivisionBasedOnInnerDesign::divideLand(const Polygo
     vector<vector<Polygon1>> ans;
     divideLand( innerHome , pols , ans , landDivisionStrategy);
 
-    cout<<"Ans Size = "<<ans.size()<<"\n";
-
-    for(auto &pol : ans)
-    {
-        cout<<"********************************\n";
-        for (int i = 0; i < pol.size(); ++i)
-        {
-            cout<<"*************** "<<i<<" *****************\n";
-            pol[i].print();
-            // cout<<"********************************\n";
-        }
-        break;
-    }
-
     return ans;
 }
 
@@ -33,21 +19,6 @@ vector<vector<Polygon1>>
 LandDivisionBasedOnInnerDesign::divideLands(vector<Polygon1> &lands, const Polygon1 &innerHome, LandDivisionSortingStrategy  landDivisionStrategy) {
     vector<vector<Polygon1>> ans;
     divideLand( innerHome , lands , ans , landDivisionStrategy);
-
-    cout<<"Ans Size = "<<ans.size()<<"\n";
-
-    if(!ans.empty())
-    {
-//        for(auto &pol : ans)
-//        {
-//            for (int i = 0; i < pol.size(); ++i)
-//            {
-//                cout<<"*************** "<<i<<" *****************\n";
-//                pol[i].print();
-//                // cout<<"********************************\n";
-//            }
-//        }
-    }
 
     return ans;
 }
