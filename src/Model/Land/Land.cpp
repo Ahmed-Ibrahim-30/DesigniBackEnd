@@ -183,7 +183,7 @@ vector<Polygon1> Land::setHomesInsideSubLands(const Polygon1 &home , int greenAr
             double angle = atan2(dY, dX);
             double angleInDegrees = angle * (180.0 / M_PI);
 
-            preferDegree =  angleInDegrees;
+            if (int(angleInDegrees) % 90  == 0)preferDegree =  angleInDegrees;
         }
 
         Line line = lines[0];
@@ -194,7 +194,7 @@ vector<Polygon1> Land::setHomesInsideSubLands(const Polygon1 &home , int greenAr
         double angle = atan2(dY, dX);
         double angleInDegrees = angle * (180.0 / M_PI);
 
-        preferDegree =  angleInDegrees;
+        if (int(angleInDegrees) % 90  == 0)preferDegree =  angleInDegrees;
     }
     if (preferDegree < 0) preferDegree +=360;
 
