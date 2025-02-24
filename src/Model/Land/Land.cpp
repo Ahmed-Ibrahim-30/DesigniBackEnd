@@ -227,7 +227,7 @@ Polygon1 Land::setHomesInsideLand(const Polygon1 &home , const Polygon1 &curLand
         return newPol;
     }
 
-    for (int j = 0 ; j <= 180; j+= 15) {
+    for (int j = 0 ; j <= 180; j+= 90) {
         newPol = home;
         if(j != 0)newPol.rotate(j);
         valid = DesignGeometryManager::positionPolygonInsideAnother(curLand , newPol);
