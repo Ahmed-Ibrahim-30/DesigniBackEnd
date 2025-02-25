@@ -116,8 +116,6 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
             Point a2(x2 , y2);
 
             double slope = PolygonHelper::getSlope(x1 , x2 ,y1 , y2);
-            cout<<"LINE = \n"; line.printJsonFormat();
-            cout<<"SLOPE = "<<slope<<"\n";
 
             double pX = 0 , pY = 0;
 
@@ -192,9 +190,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
                 }
             }
 
-            cout<<"Intersection Line = "<<"\n";
             Line intersectionLine(a3.getX() , a3.getY() , a4.getX() , a4.getY());
-            intersectionLine.printJsonFormat();
 
             pair<Polygon1  , Polygon1> newTwoPolygons = splitPolygons(polygon1 , intersectionLine);
 

@@ -37,7 +37,7 @@ vector<vector<Polygon1>> LandDivisionBasedOnLandArea::divideLands(vector<Polygon
 
 void LandDivisionBasedOnLandArea::divideLand(double area , vector<Polygon1> &pols, vector<vector<Polygon1>> &ans , LandDivisionSortingStrategy  landDivisionStrategy)
 {
-    if(pols.size() > 100)
+    if(pols.size() > 200)
     {
         ans.push_back(pols);
         return;

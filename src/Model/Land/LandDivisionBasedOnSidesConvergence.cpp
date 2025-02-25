@@ -6,8 +6,6 @@
 vector<vector<Polygon1>>
 LandDivisionBasedOnSidesConvergence::divideLand(const Polygon1 &land, double ratioA, double ratioB, int maxDivisions, LandDivisionSortingStrategy  landDivisionStrategy) {
     vector <Polygon1> pols;
-    cout<<"Main Land --> "<<"\n";
-    Polygon1 i = land; i.shiftX(200) ; i.shiftY(200); i.print();
     pols.push_back(land);
     vector<vector<Polygon1>> ans;
     divideLand( ratioA , ratioB , maxDivisions , pols , ans , landDivisionStrategy);
@@ -98,7 +96,6 @@ LandDivisionBasedOnSidesConvergence::divideLand(double ratioA, double ratioB, in
 
         vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
 
-        cout<<"paiPoly ---> "<<paiPoly.size()<<"\n";
         for (const auto& div : paiPoly)
         {
             newPolygons.push_back(div.first);
