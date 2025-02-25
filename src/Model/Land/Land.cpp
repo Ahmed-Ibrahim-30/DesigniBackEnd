@@ -73,10 +73,8 @@ vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivis
     landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
 
     vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratioA , ratioB , divisions , landDivisionStrategy);
-//    vector<vector<Polygon1>> pols2 = landDivisionRoads->divideLand(land , ratioA , ratioB , divisions , landDivisionStrategy);
 
-    // subLand = buildRoads(pols[0]);
-
+    if (pols.empty()) return {land};
     return pols[0];
 }
 

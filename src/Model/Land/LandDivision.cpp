@@ -116,6 +116,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
             Point a2(x2 , y2);
 
             double slope = PolygonHelper::getSlope(x1 , x2 ,y1 , y2);
+            cout<<"LINE = \n"; line.printJsonFormat();
+            cout<<"SLOPE = "<<slope<<"\n";
 
             double pX = 0 , pY = 0;
 
@@ -155,8 +157,6 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 
                 if(abs(a1.getX() - a2.getX()) > 0.1 && abs(a1.getY() - a2.getY()) > 0.1)
                     intersectionPoint = getIntersectionPoint(a3 , -1/slope , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
-
-
                 else{
                     if(abs(a1.getX() - a2.getX()) <= 0.1)
                     {
@@ -192,6 +192,14 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
                 }
             }
 
+            cout<<"Intersection Line = "<<"\n";
+            Line intersectionLine(a3.getX() , a3.getY() , a4.getX() , a4.getY());
+            intersectionLine.printJsonFormat();
+
+            pair<Polygon1  , Polygon1> newTwoPolygons = splitPolygons(polygon1 , intersectionLine);
+
+            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second);
+            break;
             if(a4.getX() != INT_MAX)
             {
                 bool flag = false;
@@ -201,10 +209,10 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
                 {
                     if(PolygonHelper::isPointInSegment(a3 , pLine))
                     {
-                        Line p = pLine;
+                        cout<<"YES A3\n";
                         newPolygonLine.erase(pLine);
-                        newPolygonLine.emplace(a3.getX() , a3.getY() , p.getX1() , p.getY1());
-                        newPolygonLine.emplace(a3.getX() , a3.getY() , p.getX2() , p.getY2());
+                        newPolygonLine.emplace(a3.getX() , a3.getY() , pLine.getX1() , pLine.getY1());
+                        newPolygonLine.emplace(a3.getX() , a3.getY() , pLine.getX2() , pLine.getY2());
                         flag = true;
                         break;
                     }
@@ -216,10 +224,10 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
                 {
                     if(PolygonHelper::isPointInSegment(a4 , pLine))
                     {
-                        Line p = pLine;
+                        cout<<"YES A4\n";
                         newPolygonLine.erase(pLine);
-                        newPolygonLine.emplace(a4.getX() , a4.getY() , p.getX1() , p.getY1());
-                        newPolygonLine.emplace(a4.getX() , a4.getY() , p.getX2() , p.getY2());
+                        newPolygonLine.emplace(a4.getX() , a4.getY() , pLine.getX1() , pLine.getY1());
+                        newPolygonLine.emplace(a4.getX() , a4.getY() , pLine.getX2() , pLine.getY2());
                         flag = true;
                         break;
                     }
@@ -268,6 +276,10 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
                     if(!flag) break;
                 }
 
+                cout<<"FIRST POLYGON --> "<<flag<<"\n";
+                Polygon1 tst1(p1s); tst1.print();
+
+
                 if(!flag) continue;
                 p2s.push_back(a3);
                 curPoint = a3;
@@ -301,6 +313,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
                     }
                     if(!flag) break;
                 }
+
+                cout<<"Second POLYGON --> "<<flag<<"\n";
                 if(!flag) continue;
 
                 Polygon1 po1 (p1s) , po2(p2s);
@@ -368,4 +382,48 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 
     return ans2;
 }
+
+Point getIntersection(Point A, Point B, Line line) {
+    double x1 = A.getX(), y1 = A.getY(), x2 = B.getX(), y2 = B.getY();
+    double x3 = line.getX1(), y3 = line.getY1(), x4 = line.getX2(), y4 = line.getY2();
+    double denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    if (denom == 0) return A;
+    double px = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denom;
+    double py = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denom;
+    return Point(px, py);
+}
+
+pair<Polygon1, Polygon1> LandDivision::splitPolygons(Polygon1 polygon1, const Line &line) {
+    std::vector<Point> poly1, poly2;
+    std::vector<Point> intersections;
+    vector<Point> points = polygon1.getPoints();
+
+    for (size_t i = 0; i < points.size(); i++) {
+        Point curr = points[i];
+        Point next = points[(i + 1) % points.size()];
+
+        // Check if current point is on one side of the line
+        double pos = (line.getX2() - line.getX1()) * (curr.getY() - line.getY1()) -
+                     (line.getY2() - line.getY1()) * (curr.getX() - line.getX1());
+
+        if (pos >= 0) poly1.push_back(curr);
+        else poly2.push_back(curr);
+
+        // Check for intersection with the edge
+
+        double nextPos = (line.getX2() - line.getX1()) * (next.getY() - line.getY1()) -
+                     (line.getY2() - line.getY1()) * (next.getX() - line.getX1());
+
+        if ((pos > 0 && nextPos < 0) || (pos < 0 && nextPos > 0)) {
+            Point inter = getIntersection(curr, next, line);
+            intersections.push_back(inter);
+            poly1.push_back(inter);
+            poly2.push_back(inter);
+        }
+    }
+
+    return {Polygon1(poly1), Polygon1(poly2)};
+}
+
+
 

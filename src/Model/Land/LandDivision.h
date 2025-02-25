@@ -22,6 +22,8 @@ protected:
     Point getIntersectionPoint(const Line& line1, const Line& line2, const Point& pointOnLine1);
 
     vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1);
+
+    pair<Polygon1 , Polygon1> splitPolygons(Polygon1 polygon1 ,const Line &line);
 public:
     /**
      * Split Land Based on number of Divisions

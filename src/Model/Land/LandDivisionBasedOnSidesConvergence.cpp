@@ -6,11 +6,15 @@
 vector<vector<Polygon1>>
 LandDivisionBasedOnSidesConvergence::divideLand(const Polygon1 &land, double ratioA, double ratioB, int maxDivisions, LandDivisionSortingStrategy  landDivisionStrategy) {
     vector <Polygon1> pols;
-    pols.push_back(land);
+    cout<<"Main Land --> "<<"\n";
+    Polygon1 i = land; i.shiftX(200) ; i.shiftY(200); i.print();
+    pols.push_back(i);
     vector<vector<Polygon1>> ans;
     divideLand( ratioA , ratioB , maxDivisions , pols , ans , landDivisionStrategy);
 
     cout<<"Ans Size = "<<ans.size()<<"\n";
+
+
 
     int index = 0;
     if(!ans.empty())
@@ -34,14 +38,13 @@ LandDivisionBasedOnSidesConvergence::divideLands(vector<Polygon1> &lands, double
     cout<<"Ans Size = "<<ans.size()<<"\n";
 
     int index = 0;
+
     if(!ans.empty())
     {
-//        for(auto &pol : ans[0])
-//        {
-//            index++;
-//            // if(index != 5) continue;
-//            pol.print();
-//        }
+        for(auto &pol : ans[0])
+        {
+            pol.print();
+        }
     }
 
     return ans;
@@ -95,6 +98,7 @@ LandDivisionBasedOnSidesConvergence::divideLand(double ratioA, double ratioB, in
 
         vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
 
+        cout<<"paiPoly ---> "<<paiPoly.size()<<"\n";
         for (const auto& div : paiPoly)
         {
             newPolygons.push_back(div.first);
@@ -108,7 +112,11 @@ LandDivisionBasedOnSidesConvergence::divideLand(double ratioA, double ratioB, in
         if(!paiPoly.empty())break;
     }
 
-    if(possibleDivisions.empty())return;
+    if(possibleDivisions.empty())
+    {
+        ans.push_back(pols);
+        return;
+    }
 
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions);
 
