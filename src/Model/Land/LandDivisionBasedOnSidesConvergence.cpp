@@ -8,7 +8,7 @@ LandDivisionBasedOnSidesConvergence::divideLand(const Polygon1 &land, double rat
     vector <Polygon1> pols;
     cout<<"Main Land --> "<<"\n";
     Polygon1 i = land; i.shiftX(200) ; i.shiftY(200); i.print();
-    pols.push_back(i);
+    pols.push_back(land);
     vector<vector<Polygon1>> ans;
     divideLand( ratioA , ratioB , maxDivisions , pols , ans , landDivisionStrategy);
 
