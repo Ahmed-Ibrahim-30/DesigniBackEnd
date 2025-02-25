@@ -100,6 +100,23 @@ public:
      * @param polygons
      */
     static void renamePolygonsIds(Polygon1 &polygon1 ,vector<Polygon1> &polygons);
+
+    /**
+     * Split Polygon to Two Polygons
+     * @param polygon1
+     * @param line
+     * @return
+     */
+    static pair<Polygon1, Polygon1> splitPolygons(const Polygon1& polygon1, const Line &line);
+
+    /**
+     * Helper function to compute the intersection point of a segment and the dividing line
+     * @param A
+     * @param B
+     * @param line
+     * @return
+     */
+    static Point getIntersection(Point A, const Point& B, const Line& line);
 };
 
 

@@ -163,6 +163,14 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
                 }
             }
 
+            Line intersectionLine(a3.getX() , a3.getY() , a4.getX() , a4.getY());
+
+            pair<Polygon1  , Polygon1> newTwoPolygons = PolygonHelper::splitPolygons(polygon1 , intersectionLine);
+
+            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second);
+            break;
+
+            //IF NOT FOUND ANY ISSUE IN DIVIDE POLYGON CAN BE REMOVE
             if(a4.getX() != INT_MAX)
             {
                 bool flag = false;

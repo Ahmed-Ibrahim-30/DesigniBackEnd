@@ -240,6 +240,50 @@ void PolygonHelper::renamePolygonsIds(Polygon1 &polygon1 , vector<Polygon1> &pol
     }
 }
 
+pair<Polygon1, Polygon1> PolygonHelper::splitPolygons(const Polygon1& polygon1, const Line &line) {
+    std::vector<Point> poly1, poly2;
+    std::vector<Point> intersections;
+    vector<Point> points = polygon1.getPoints();
+
+    for (size_t i = 0; i < points.size(); i++)
+    {
+        Point curr = points[i];
+        Point next = points[(i + 1) % points.size()];
+
+        // Check if current point is on one side of the line
+        double pos = (line.getX2() - line.getX1()) * (curr.getY() - line.getY1()) -
+                     (line.getY2() - line.getY1()) * (curr.getX() - line.getX1());
+
+        if (pos >= 0) poly1.push_back(curr);
+        else poly2.push_back(curr);
+
+        // Check for intersection with the edge
+
+        double nextPos = (line.getX2() - line.getX1()) * (next.getY() - line.getY1()) -
+                         (line.getY2() - line.getY1()) * (next.getX() - line.getX1());
+
+        if ((pos > 0 && nextPos < 0) || (pos < 0 && nextPos > 0)) {
+            Point inter = getIntersection(curr, next, line);
+            intersections.push_back(inter);
+            poly1.push_back(inter);
+            poly2.push_back(inter);
+        }
+    }
+
+    return {Polygon1(poly1), Polygon1(poly2)};
+}
+
+Point PolygonHelper::getIntersection(Point A, const Point& B, const Line& line) {
+    double x1 = A.getX(), y1 = A.getY(), x2 = B.getX(), y2 = B.getY();
+    double x3 = line.getX1(), y3 = line.getY1(), x4 = line.getX2(), y4 = line.getY2();
+    double denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    if (denom == 0) return A;
+    double px = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denom;
+    double py = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denom;
+    return {px, py};
+}
+
+
 
 
 
