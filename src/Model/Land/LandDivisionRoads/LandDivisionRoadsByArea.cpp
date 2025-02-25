@@ -16,6 +16,9 @@ vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLand(const Polygon1 &lan
 
     for(auto &p : ans)p.push_back(outSidePolygon);
 
+    std::sort(ans.begin(), ans.end() , [](vector<Polygon1> &pol1 , vector<Polygon1> &pol2){
+        return pol1.size() > pol2.size();
+    });
     return ans;
 }
 
@@ -30,7 +33,7 @@ vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLands(vector<Polygon1> &
 
 void LandDivisionRoadsByArea::divideLand(double area , vector<Polygon1> &pols, vector<vector<Polygon1>> &ans , LandDivisionSortingStrategy  landDivisionStrategy)
 {
-    if(pols.size() > 100)
+    if(pols.size() > 200)
     {
         ans.push_back(pols);
         return;

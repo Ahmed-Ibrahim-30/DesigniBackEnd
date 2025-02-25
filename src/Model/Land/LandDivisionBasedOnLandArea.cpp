@@ -21,15 +21,19 @@ vector<vector<Polygon1>> LandDivisionBasedOnLandArea::divideLands(vector<Polygon
     vector<vector<Polygon1>> ans;
     divideLand( area , lands , ans , landDivisionStrategy);
 
+    sort(ans.begin(), ans.end() , [](vector<Polygon1> &pol1 , vector<Polygon1> &pol2){
+        return pol1.size() > pol2.size();
+    });
+
     cout<<"Ans Size = "<<ans.size()<<"\n";
 
     if(!ans.empty())
     {
-        for(auto &pol : ans)
-        {
-            cout<<"********************************\n";
-            for(auto &t : pol) t.print();
-        }
+//        for(auto &pol : ans)
+//        {
+//            cout<<"********************************\n";
+//            for(auto &t : pol) t.print();
+//        }
     }
 
     return ans;
