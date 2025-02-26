@@ -519,7 +519,7 @@ void APIController::subLandDivisionRoutes(SimpleApp &app)
             return crow::response(400, "Invalid JSON format");
         }
         crow::json::wvalue response;
-        int strategy = (int)jsonData["strategy"].i();
+        int strategy = jsonData.count("strategy")?(int)jsonData["strategy"].i() : 0;
         auto polygon = jsonData["polygon"]["Points"];
         vector<Point> points;
         for(auto &point : polygon)
