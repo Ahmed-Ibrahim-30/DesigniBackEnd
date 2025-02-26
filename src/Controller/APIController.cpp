@@ -488,10 +488,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         for (int i = 0; i < landsAdj.size(); ++i)
         {
-            cout<<"LANDS --> "<<i+1<<" ---> ";
+            cout<<"LANDS --> "<<ans[i].getId()<<" ---> ";
             for (int j = 0; j < landsAdj[i].size(); ++j)
             {
-                cout<<landsAdj[i][j]<<" ";
+                cout<<ans[landsAdj[i][j]].getId()<<" ";
             }
             cout<<"\n";
         }
