@@ -484,8 +484,12 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             }
         }
 
+        GreenAreaSelector *greenSelector = new UniformGreenDistributor();
+        greenSelector->select(polygon1,ans , 15.0/100 , 0);
+
         vector<vector<int>> landsAdj = PolygonAdjacencyAnalyzer::getAdj(ans);
 
+        sort(landsAdj.begin(), landsAdj.end(),greater<>());
         for (int i = 0; i < landsAdj.size(); ++i)
         {
             cout<<"LANDS --> "<<ans[i].getId()<<" ---> ";
