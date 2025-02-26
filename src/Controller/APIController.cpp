@@ -520,7 +520,7 @@ void APIController::subLandDivisionRoutes(SimpleApp &app)
         }
         crow::json::wvalue response;
         int strategy = (int)jsonData["strategy"].i();
-        auto polygon = jsonData["polygon"];
+        auto polygon = jsonData["polygon"]["Points"];
         vector<Point> points;
         for(auto &point : polygon)
         {
