@@ -535,6 +535,7 @@ void APIController::subLandDivisionRoutes(SimpleApp &app)
         Land land(subLand);
         Design design1 ;
         string text;
+        response ["Details"] = {};
 
         for (int i = 3; i <= 5; ++i)
         {
@@ -543,11 +544,10 @@ void APIController::subLandDivisionRoutes(SimpleApp &app)
 
             ans = land.SplitLand(design1 , static_cast<LandDivisionSortingStrategy>(strategy));
 
-            text += "For "+ to_string(i) + "Bedrooms : Land can be divided into " + to_string(ans.size())+"\n";
+            text =  "For "+ to_string(i) + " Bedrooms : Land can be divided into " + to_string(ans.size());
+
+            response ["Details"][i-3] = text;
         }
-
-        response ["Details"] = text;
-
         crow::response finalRes (200 , response);
         finalRes.add_header("Access-Control-Allow-Origin", "*");
         finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
