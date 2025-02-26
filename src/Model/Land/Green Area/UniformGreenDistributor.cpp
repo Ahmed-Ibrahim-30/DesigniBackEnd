@@ -126,7 +126,9 @@ void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lan
 
         int greenAreaIndex = priorities[0].second;
 
-        lands[greenAreaIndex].setDivisible(true);
+        lands[greenAreaIndex].setDivisible(false);
+
+        cout<<lands[greenAreaIndex].getId() <<"IS GREEN AREA \n";
 
         //update Priority
         for (auto & j : priorities) {

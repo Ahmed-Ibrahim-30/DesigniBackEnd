@@ -470,7 +470,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         GreenAreaSelector *greenSelector = new UniformGreenDistributor();
         greenSelector->select(polygon1,ans , 15.0/100 , 0);
-        
+
         for(int i = 0 ; i < ans.size() ; i++)
         {
             auto pol = ans[i];
