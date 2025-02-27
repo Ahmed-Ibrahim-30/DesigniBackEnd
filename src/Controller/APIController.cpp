@@ -487,20 +487,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             }
         }
 
-
-
-        vector<vector<int>> landsAdj = PolygonAdjacencyAnalyzer::getAdj(ans);
-
-        sort(landsAdj.begin(), landsAdj.end(),greater<>());
-        for (int i = 0; i < landsAdj.size(); ++i)
-        {
-            cout<<"LANDS --> "<<ans[i].getId()<<" ---> ";
-            for (int j = 0; j < landsAdj[i].size(); ++j)
-            {
-                cout<<ans[landsAdj[i][j]].getId()<<" ";
-            }
-            cout<<"\n";
-        }
+        cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
 
         for(int i = 0 ; i < streets.size() - 1; i++)
         {
