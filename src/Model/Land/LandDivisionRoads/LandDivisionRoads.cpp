@@ -41,9 +41,12 @@ Point LandDivisionRoads::getIntersectionPoint(const Line& line1, const Line& lin
     return pointOnLine2;
 }
 
-vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 polygon1)
+vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 polygon1 , double scalingStreet)
 {
     COUNT ++;
+
+    double streetWidth1 = 8 * scalingStreet, streetWidth2 = 6 * scalingStreet, streetWidth3 = 4* scalingStreet;
+
     vector<pair<Polygon1 , Polygon1>> ans;
     int n = (int)polygon1.getPoints().size();
 
@@ -375,7 +378,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
         Point p2 (roadLine.getX2() , roadLine.getY2());
 
         // 0.01 * roadLine.getLength()
-        double streetWidth = COUNT == 1 ? 8 : COUNT == 2 ? 6 : COUNT == 3 ?6: 4;
+        double streetWidth = COUNT == 1 ? streetWidth1 : COUNT == 2 ? streetWidth2 : COUNT == 3 ?streetWidth2: streetWidth3;
 
 //        cout<< "streetWidth = "<<streetWidth<<"\n";
         roadLine.print();

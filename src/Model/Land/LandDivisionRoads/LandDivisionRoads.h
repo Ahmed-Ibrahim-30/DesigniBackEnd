@@ -18,7 +18,7 @@ protected:
     Point getIntersectionPoint(const Point &p1, double slope, const Line &line);
     Point getIntersectionPoint(const Line& line1, const Line& line2, const Point& pointOnLine1);
 
-    vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1);
+    vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1 , double scalingStreet = 1);
 
     /**
      * Build Outside Polygon for curLand

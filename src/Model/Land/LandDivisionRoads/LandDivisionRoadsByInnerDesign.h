@@ -9,6 +9,7 @@
 class LandDivisionRoadsByInnerDesign :public LandDivisionRoads{
 private:
     int sol = 0;
+    Polygon1 mainLand;
 
     void divideLand(const Polygon1 &innerHome , vector<Polygon1> &pols , vector<vector<Polygon1>> &ans ,LandDivisionSortingStrategy  landDivisionStrategy);
 

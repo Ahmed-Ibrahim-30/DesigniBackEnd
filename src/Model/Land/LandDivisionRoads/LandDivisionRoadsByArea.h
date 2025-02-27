@@ -10,6 +10,8 @@ class LandDivisionRoadsByArea :public LandDivisionRoads{
 private:
     int sol = 0;
 
+    Polygon1 mainLand;
+
     void divideLand(double area, vector<Polygon1> &pols , vector<vector<Polygon1>> &ans , LandDivisionSortingStrategy  landDivisionStrategy);
 
 public:

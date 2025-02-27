@@ -78,7 +78,7 @@ void LandDivisionRoadsByArea::divideLand(double area , vector<Polygon1> &pols, v
 
         auto polygonDivided = pols[i];
 
-        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
+        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided , );
 
         for (auto div : paiPoly)
         {
