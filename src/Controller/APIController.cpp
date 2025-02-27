@@ -468,8 +468,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
-        GreenAreaSelector *greenSelector = new UniformGreenDistributor();
-        greenSelector->select(polygon1,ans , 15.0/100 , 0);
+//        GreenAreaSelector *greenSelector = new UniformGreenDistributor();
+//        greenSelector->select(polygon1,ans , 15.0/100 , 0);
 
         for(int i = 0 ; i < ans.size() ; i++)
         {
