@@ -96,92 +96,92 @@
 //    }
 //}
 
-//void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage, double totalGreenAreas ) {
-//    int n = (int)lands.size();
-//    int greenAreas = n*greenAreaPercentage;
-//    cout<<"GREEN AREA = "<<greenAreas<<"\n";
-//    vector<vector<int>> landsAdj = PolygonAdjacencyAnalyzer::getAdj(lands);
-//
-//    vector< set<int>> landsAdjS(lands.size());
-//
-//    for (int i = 0; i < landsAdj.size(); ++i)
-//    {
-//        string landID = lands[i].getId();
-//        for (int j : landsAdj[i])
-//        {
-//            landsAdjS[i].insert(j);
-//        }
-//    }
-//    vector<pair<int , int>> priorities;
-//
-//    for (int i = 0; i < landsAdj.size(); ++i)
-//    {
-//        priorities.emplace_back(landsAdj[i].size(),i);
-//    }
-//
-//
-//    for (int i = 0; i < greenAreas; ++i)
-//    {
-//        sort(priorities.begin(), priorities.end() , greater<>());
-//
-//        int greenAreaIndex = priorities[0].second;
-//
-//        lands[greenAreaIndex].setDivisible(false);
-//
-//        cout<<lands[greenAreaIndex].getId() <<"IS GREEN AREA \n";
-//
-//        //update Priority
-//        for (auto & j : priorities) {
-//            if (landsAdjS[greenAreaIndex].count(j.second))
-//            {
-//                j.first--;
-//                j.first -= 100000;
-//            }
-//            else if (j.second == greenAreaIndex)
-//            {
-//                j.first  = -10000000 - i;
-//            }
-//        }
-//
-//        for(auto &adj : landsAdjS[greenAreaIndex])
-//        {
-//            landsAdjS[adj].erase(greenAreaIndex);
-//        }
-//        landsAdjS[greenAreaIndex].clear();
-//    }
-//}
-
 void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage, double totalGreenAreas ) {
     int n = (int)lands.size();
-    int greenCount = n*greenAreaPercentage;
-    cout<<"GREEN AREA = "<<greenCount<<"\n";
+    int greenAreas = n*greenAreaPercentage;
+    cout<<"GREEN AREA = "<<greenAreas<<"\n";
+    vector<vector<int>> landsAdj = PolygonAdjacencyAnalyzer::getAdj(lands);
 
-    vector<tuple<Polygon1, Point , int>> centroids;
+    vector< set<int>> landsAdjS(lands.size());
 
-    // Compute centroid for each polygon
-    for (int i = 0; i < lands.size(); ++i) {
-        centroids.emplace_back(lands[i], lands[i].calculateCentroid() , i);
+    for (int i = 0; i < landsAdj.size(); ++i)
+    {
+        string landID = lands[i].getId();
+        for (int j : landsAdj[i])
+        {
+            landsAdjS[i].insert(j);
+        }
+    }
+    vector<pair<int , int>> priorities;
+
+    for (int i = 0; i < landsAdj.size(); ++i)
+    {
+        priorities.emplace_back(landsAdj[i].size(),i);
     }
 
-    // Sort polygons by X and Y centroid positions to spread them evenly
-    std::sort(centroids.begin(), centroids.end(), []( auto& a,  auto& b) {
-        Polygon1 polygon1 , polygon2;
-        Point point1(0,0) , point2(0,0);
-        int index1 , index2;
-        tie(polygon1 , point1 , index1) = a;
-        tie(polygon1 , point1 , index2) = b;
-        return point1.getX() + point1.getY() < point2.getX() + point2.getY();
-    });
 
-    // Select green areas by choosing evenly spaced centroids
-    int step = (int)lands.size() / greenCount;
-    for (int i = 0; i < greenCount; i++) {
-        Polygon1 polygon1 ;
-        Point point1(0,0) ;
-        int index1 ;
+    for (int i = 0; i < greenAreas; ++i)
+    {
+        sort(priorities.begin(), priorities.end() , greater<>());
 
-        tie(polygon1 , point1 , index1) = centroids[i * step];
+        int greenAreaIndex = priorities[0].second;
 
-        lands[index1].setDivisible(false);
+        lands[greenAreaIndex].setDivisible(false);
+
+        cout<<lands[greenAreaIndex].getId() <<"IS GREEN AREA \n";
+
+        //update Priority
+        for (auto & j : priorities) {
+            if (landsAdjS[greenAreaIndex].count(j.second))
+            {
+                j.first--;
+                j.first -= 100000;
+            }
+            else if (j.second == greenAreaIndex)
+            {
+                j.first  = -10000000 - i;
+            }
+        }
+
+        for(auto &adj : landsAdjS[greenAreaIndex])
+        {
+            landsAdjS[adj].erase(greenAreaIndex);
+        }
+        landsAdjS[greenAreaIndex].clear();
     }
 }
+
+//void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage, double totalGreenAreas ) {
+//    int n = (int)lands.size();
+//    int greenCount = n*greenAreaPercentage;
+//    cout<<"GREEN AREA = "<<greenCount<<"\n";
+//
+//    vector<tuple<Polygon1, Point , int>> centroids;
+//
+//    // Compute centroid for each polygon
+//    for (int i = 0; i < lands.size(); ++i) {
+//        centroids.emplace_back(lands[i], lands[i].calculateCentroid() , i);
+//    }
+//
+//    // Sort polygons by X and Y centroid positions to spread them evenly
+//    std::sort(centroids.begin(), centroids.end(), []( auto& a,  auto& b) {
+//        Polygon1 polygon1 , polygon2;
+//        Point point1(0,0) , point2(0,0);
+//        int index1 , index2;
+//        tie(polygon1 , point1 , index1) = a;
+//        tie(polygon1 , point1 , index2) = b;
+//        return point1.getX() + point1.getY() < point2.getX() + point2.getY();
+//    });
+//
+//    // Select green areas by choosing evenly spaced centroids
+//    int step = (int)lands.size() / greenCount;
+//    for (int i = 0; i < greenCount; i++) {
+//        Polygon1 polygon1 ;
+//        Point point1(0,0) ;
+//        int index1 ;
+//
+//        tie(polygon1 , point1 , index1) = centroids[i * step];
+//
+//        lands[index1].setDivisible(false);
+//    }
+//}
