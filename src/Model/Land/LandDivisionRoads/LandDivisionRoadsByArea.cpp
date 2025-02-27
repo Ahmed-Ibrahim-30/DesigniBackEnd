@@ -11,6 +11,7 @@ vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLand(const Polygon1 &lan
     vector<vector<Polygon1>> ans;
     divideLand( area , pols , ans , landDivisionStrategy);
 
+    mainLand = land;
     //Push OUTSIDE ROAD
     Polygon1 outSidePolygon = buildOutsideRoads(land);
 
@@ -78,7 +79,7 @@ void LandDivisionRoadsByArea::divideLand(double area , vector<Polygon1> &pols, v
 
         auto polygonDivided = pols[i];
 
-        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided , );
+        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided , mainLand.getArea() / 10000);
 
         for (auto div : paiPoly)
         {
