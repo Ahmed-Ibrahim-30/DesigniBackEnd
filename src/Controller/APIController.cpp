@@ -377,7 +377,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             ans = land.SplitLand(landSlots , 1 , 1 , static_cast<LandDivisionSortingStrategy>(strategy));
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             //  GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
-            GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
+            GreenAreaSelector *greenSelector = new UniformGreenDistributor();
 
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
@@ -402,7 +402,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 //            GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
 //            greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
-            GreenAreaSelector *greenSelector = new CentralLandGreenSelector();
+            GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
