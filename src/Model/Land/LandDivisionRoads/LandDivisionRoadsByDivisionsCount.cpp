@@ -77,7 +77,7 @@ void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB,
 
         auto polygonDivided = pols[i];
 
-        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided , mainLand.getArea() * (0.0004/100));
+        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided , mainLand.getArea() * 0.00001);
 
         for (const auto& div : paiPoly)
         {
