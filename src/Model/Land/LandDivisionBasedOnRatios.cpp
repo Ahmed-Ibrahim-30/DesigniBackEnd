@@ -38,7 +38,7 @@ vector<vector<Polygon1>> LandDivisionBasedOnRatios::divideLands(vector<Polygon1>
 void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<Polygon1> &pols,vector<vector<Polygon1>> &ans,
                                            LandDivisionSortingStrategy landDivisionStrategy){
 
-    int divisions = ratios.size();
+    int divisions = (int)ratios.size();
 
     if(pols.size() >= divisions)
     {
@@ -46,7 +46,7 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
         return;
     }
 
-    int curIndex = pols.size();
+    int curIndex = (int)pols.size();
 
     SortLandDivisions *sortLandDivisions ;
     switch (landDivisionStrategy)
