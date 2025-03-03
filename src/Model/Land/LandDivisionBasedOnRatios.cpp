@@ -144,7 +144,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
     sort(allLines.begin() , allLines.end() , greater<>());
 
-    vector<pair<double , double>> ratios = {{ratio1  , ratio2},{1 , 1} , {1 , 2}  , {3 , 2} , {1 , 3} , {2,5} , {1 , 4} , {3,4}};
+    vector<pair<double , double>> ratios = {{ratio1  , ratio2},{ratio1+1  , ratio2},{ratio1  , ratio2-1},{1 , 1} , {1 , 2}  , {3 , 2} , {1 , 3} , {2,5} , {1 , 4} , {3,4}};
 
     for(auto &rat : ratios)
     {
