@@ -112,4 +112,10 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
             }
         }
     }
+
+    cout<<"Outer\n";
+
+    for(auto &p : outerLand.getPoints()){
+        cout<<p.getX() <<" "<<p.getY()<<"\n";
+    }
 }
