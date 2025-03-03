@@ -4,6 +4,7 @@
 
 #include "CentroidLineGreenSelector.h"
 #include "src/Model/PolygonLibrary/PolygonHelper.h"
+#include "src/Model/DesignGeometryManager.h"
 
 void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &lands, double greenAreaPercentage,double totalGreenAreas)
 {
@@ -102,7 +103,8 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
         for(auto &land : lands)
         {
             bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
-            if (isInside && land.isDivisible())
+            bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
+            if (isInside2 && land.isDivisible())
             {
                 cout<<"LAND IS GREEN AREA\n";
                 land.setDivisible(false);
