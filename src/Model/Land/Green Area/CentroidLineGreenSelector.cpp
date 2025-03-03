@@ -15,6 +15,8 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
     if (greenAreas == 0)return;
 
     Point centerP = outerLand.calculateCentroid();
+
+    cout<<"Center = "<<centerP.getX()<<" "<<centerP.getY()<<"\n";
     Point minP = outerLand.minPoint();
     Point maxP = outerLand.maxPoint();
     vector<Line> lines = outerLand.getLines();
@@ -83,7 +85,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
         }
     }
 
-//    cuttingLine.print();
+    cuttingLine.print();
 
     double dx = (cuttingLine.getX2() - cuttingLine.getX1()) / (greenAreas+1);
     double dy = (cuttingLine.getY2() - cuttingLine.getY1()) / (greenAreas+1);
