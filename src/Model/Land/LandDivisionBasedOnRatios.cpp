@@ -102,9 +102,9 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions , ratios[curIndex] , sumOtherRatio);
 
     vector<Polygon1> selectedSolution = possibleDivisions[0];
-    int n = selectedSolution.size();
+    int n = (int)selectedSolution.size();
 
-    if (selectedSolution[n-1].getArea() < selectedSolution[n-2].getArea())
+    if (selectedSolution[n-1].getArea() < selectedSolution[n-2].getArea() && ratios[curIndex] < sumOtherRatio)
     {
         swap(selectedSolution[n-1] , selectedSolution[n-2]);
     }
