@@ -88,7 +88,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
     double segments = cuttingLine.getLength() / (greenAreas+1);
 
     double dx = (cuttingLine.getX2() - cuttingLine.getX2()) / greenAreas;
-    double dy = (cuttingLine.getY2() - cuttingLine.getY2()) / greenAreas;
+    double dy = (cuttingLine.getY2() - cuttingLine.getY1()) / greenAreas;
     for (int i = 1; i <= greenAreas; ++i)
     {
         Point cut (0 , 0);
