@@ -87,8 +87,8 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
 
     double segments = cuttingLine.getLength() / (greenAreas+1);
 
-    double dx = (cuttingLine.getX2() - cuttingLine.getX1()) / greenAreas;
-    double dy = (cuttingLine.getY2() - cuttingLine.getY1()) / greenAreas;
+    double dx = (cuttingLine.getX2() - cuttingLine.getX1()) / greenAreas+1;
+    double dy = (cuttingLine.getY2() - cuttingLine.getY1()) / greenAreas+1;
 
     cout<<"DX = "<<dx<<" DY = "<<dy<<"\n";
     for (int i = 1; i <= greenAreas; ++i)
