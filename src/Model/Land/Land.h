@@ -13,7 +13,7 @@
 #include "LandDivisionBasedOnInnerDesign.h"
 #include "src/Model/DesignOutlines.h"
 #include "src/Model/Land/LandDivisionRoads/LandDivisionRoadsByDivisionsCount.h"
-
+#include "LandDivisionBasedOnRatios.h"
 #include <cmath>
 # define M_PI           3.14159265358979323846
 
@@ -76,6 +76,13 @@ public:
      */
     vector<Polygon1> SplitLand(int divisions , int ratioA , int ratioB, LandDivisionSortingStrategy landDivisionStrategy= LandDivisionSortingStrategy::MinimizingLengthVariance);
 
+    /**
+     * Split Land Based On List of Ratios
+     * @param ratios
+     * @param landDivisionStrategy
+     * @return
+     */
+    vector<Polygon1> SplitLand(const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy);
     /**
      *
      * @param minSubArea

@@ -77,6 +77,14 @@ vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivis
     if (pols.empty()) return {land};
     return pols[0];
 }
+vector<Polygon1> Land::SplitLand(const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy) {
+    landDivision = new LandDivisionBasedOnRatios();
+
+    vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratios , landDivisionStrategy);
+
+    if (pols.empty()) return {land};
+    return pols[0];
+}
 
 vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubArea,LandDivisionSortingStrategy  landDivisionStrategy)
 {

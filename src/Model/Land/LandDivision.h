@@ -76,6 +76,24 @@ public:
      * @return
      */
     virtual vector<vector<Polygon1>> divideLands(vector< Polygon1> &lands , const Polygon1 &innerHome ,LandDivisionSortingStrategy  landDivisionStrategy  ) {vector<vector<Polygon1>> tst; return tst;}
+
+    /**
+     * Split Land Based on list of ratios
+     * @param land
+     * @param ratios
+     * @param landDivisionStrategy
+     * @return
+     */
+    virtual vector<vector<Polygon1>> divideLand(const Polygon1 &land ,const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy ) {vector<vector<Polygon1>> tst; return tst;};
+
+    /**
+     * Split Land Based on list of ratios
+     * @param lands
+     * @param ratios
+     * @param landDivisionStrategy
+     * @return
+     */
+    virtual vector<vector<Polygon1>>divideLands(vector<Polygon1> &lands,const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy) { vector<vector<Polygon1>> tst; return tst; };
 };
 
 #endif //DESIGNI_LANDDIVISION_H
