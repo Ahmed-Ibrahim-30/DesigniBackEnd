@@ -46,7 +46,7 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
         return;
     }
 
-    int curIndex = (int)pols.size();
+    int curIndex = (int)pols.size() - 1;
 
     SortLandDivisions *sortLandDivisions ;
     switch (landDivisionStrategy)
@@ -108,7 +108,7 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
     {
         swap(selectedSolution[n-1] , selectedSolution[n-2]);
     }
-    cout<<"Ratio --> "<<ratios[0]<<" "<<sumOtherRatio<<"\t "<<selectedSolution[n-2].getArea()<<" "<<selectedSolution[n-1].getArea()<<"\n";
+    cout<<"Ratio --> "<<ratios[curIndex]<<" "<<sumOtherRatio<<"\t "<<selectedSolution[n-1].getArea()/selectedSolution[n-2].getArea()<<"\n";
     divideLand( ratios , selectedSolution , ans , landDivisionStrategy);
 }
 
