@@ -82,15 +82,20 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
         }
     }
 
+    cuttingLine.print();
+
 
     double segments = cuttingLine.getLength() / (greenAreas+1);
-    double dx = (cuttingLine.getX2() - cuttingLine.getX2()) / segments;
-    double dy = (cuttingLine.getY2() - cuttingLine.getY2()) / segments;
+
+    double dx = (cuttingLine.getX2() - cuttingLine.getX2()) / greenAreas;
+    double dy = (cuttingLine.getY2() - cuttingLine.getY2()) / greenAreas;
     for (int i = 1; i <= greenAreas; ++i)
     {
         Point cut (0 , 0);
         cut.setX(cuttingLine.getX1() + i*dx);
         cut.setY(cuttingLine.getY1() + i*dy);
+
+        cout<<"CUR POINT = "<<cut.getX() <<" "<<cut.getY()<<"\n";
 
         for(auto &land : lands)
         {
