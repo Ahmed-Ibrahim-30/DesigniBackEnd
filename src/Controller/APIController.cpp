@@ -386,10 +386,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 900000);
 
 
-            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
-            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
-            if (pols.empty()) streets = land.buildRoads(ans);
-            else streets = pols[0];
+//            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
+//            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
+//            if (pols.empty()) streets = land.buildRoads(ans);
+//            else streets = pols[0];
         }
 
         else if(jsonData.count("slots"))
@@ -409,10 +409,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
             greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 900000);
 
-            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
-            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
-            if (pols.empty()) streets = land.buildRoads(ans);
-            else  streets = pols[0];
+//            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
+//            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
+//            if (pols.empty()) streets = land.buildRoads(ans);
+//            else  streets = pols[0];
         }
 
         else if(jsonData.count("home_area") )
@@ -469,9 +469,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
-//        GreenAreaSelector *greenSelector = new UniformGreenDistributor();
-//        greenSelector->select(polygon1,ans , 15.0/100 , 0);
-
         for(int i = 0 ; i < ans.size() ; i++)
         {
             auto pol = ans[i];
@@ -490,11 +487,11 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
 
-        for(int i = 0 ; i < streets.size() - 1; i++)
+        for(int i = 0 ; i < streets.size(); i++)
         {
             auto pol = streets[i];
             int index = 0;
-            if(i != streets.size() -1)response["streets"][i]["id"] = i + 1;
+            response["streets"][i]["id"] = i + 1;
             response["streets"][i]["area"] = pol.getArea();
             response["streets"][i]["green_area"] = !pol.isDivisible();
             for(auto &p : pol.getPoints())

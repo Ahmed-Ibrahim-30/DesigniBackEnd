@@ -97,6 +97,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
             bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
             if (isInside && land.isDivisible())
             {
+                cout<<"LAND IS GREEN AREA\n";
                 land.setDivisible(false);
                 break;
             }
