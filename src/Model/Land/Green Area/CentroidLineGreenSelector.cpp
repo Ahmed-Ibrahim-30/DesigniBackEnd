@@ -115,7 +115,13 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
 
     cout<<"Outer\n";
 
-    for(auto &p : outerLand.getPoints()){
+    Polygon1 newp = outerLand;
+    newp.shiftY(300);
+
+    for(auto &p : newp.getPoints()){
         cout<<p.getX() <<" "<<p.getY()<<"\n";
     }
+    cuttingLine.setY1(cuttingLine.getY1()+300);
+    cuttingLine.setY2(cuttingLine.getY2()+300);
+    cuttingLine.printJsonFormat();
 }
