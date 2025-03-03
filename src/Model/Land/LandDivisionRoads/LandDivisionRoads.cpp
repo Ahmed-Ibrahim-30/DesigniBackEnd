@@ -170,6 +170,11 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
 
             pair<Polygon1  , Polygon1> newTwoPolygons = PolygonHelper::splitPolygons(polygon1 , intersectionLine);
 
+            double area1 = newTwoPolygons.first.getArea();
+            double area2 = newTwoPolygons.second.getArea();
+
+            if(min(area1 , area2) / max(area1 , area2) < 0.5) continue;
+
             ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second);
             break;
 

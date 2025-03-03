@@ -194,6 +194,11 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 
             pair<Polygon1  , Polygon1> newTwoPolygons = PolygonHelper::splitPolygons(polygon1 , intersectionLine);
 
+            double area1 = newTwoPolygons.first.getArea();
+            double area2 = newTwoPolygons.second.getArea();
+
+            if(min(area1 , area2) / max(area1 , area2) < 0.5) continue;
+
             ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second);
             break;
             if(a4.getX() != INT_MAX)
@@ -332,7 +337,6 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
         }
 
     }
-
 
     vector<pair<double , int>> sortPols;
     for (int i = 0; i < ans.size(); ++i)

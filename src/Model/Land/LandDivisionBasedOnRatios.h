@@ -16,7 +16,7 @@ private:
      * @param polygon1
      * @return
      */
-    vector<pair<Polygon1 , Polygon1>> splitPolygons(Polygon1 polygon1);
+    vector<pair<Polygon1 , Polygon1>> splitPolygons(Polygon1 &polygon1 , double ratio1 , double ratio2);
 public:
     vector<vector<Polygon1>> divideLand(const Polygon1 &land ,const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy ) override;
 

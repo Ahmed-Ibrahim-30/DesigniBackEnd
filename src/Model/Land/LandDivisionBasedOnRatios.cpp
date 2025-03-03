@@ -48,6 +48,11 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
 
     int curIndex = (int)pols.size() - 1;
 
+    double sumOtherRatio = 0;
+    for (int i = curIndex+1; i < ratios.size(); ++i) {
+        sumOtherRatio += ratios[i];
+    }
+
     SortLandDivisions *sortLandDivisions ;
     switch (landDivisionStrategy)
     {
@@ -76,7 +81,7 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
 
     auto polygonDivided = pols.back();
 
-    vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
+    vector<pair<Polygon1 , Polygon1>> paiPoly = splitPolygons( polygonDivided , ratios[curIndex] , sumOtherRatio);
 
     for (const auto& div : paiPoly)
     {
@@ -94,10 +99,6 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
         ans.push_back(pols);
         return;
     }
-    double sumOtherRatio = 0;
-    for (int i = curIndex+1; i < ratios.size(); ++i) {
-        sumOtherRatio += ratios[i];
-    }
 
     possibleDivisions = sortLandDivisions->sortDivisions(possibleDivisions , ratios[curIndex] , sumOtherRatio);
 
@@ -112,6 +113,182 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
     divideLand( ratios , selectedSolution , ans , landDivisionStrategy);
 }
 
-vector<pair<Polygon1, Polygon1>> LandDivisionBasedOnRatios::splitPolygons(Polygon1 polygon1) {
-    return vector<pair<Polygon1, Polygon1>>();
+vector<pair<Polygon1, Polygon1>>
+LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, double ratio2)
+{
+    vector<pair<Polygon1 , Polygon1>> ans;
+    int n = (int)polygon1.getPoints().size();
+
+    set<Line> polLines;
+
+    vector<pair<double , Line>> allLines;
+
+    Point maxPolygonPoint = polygon1.maxPoint();
+    Point minPolygonPoint = polygon1.minPoint();
+
+    double ratioA = 0 , ratioB = 0;
+
+    for (int i = 0; i < n; ++i)
+    {
+        Point a1 = polygon1.getPoints()[i];
+        Point a2 = polygon1.getPoints()[(i+1)%n];
+
+        polLines.emplace(a1.getX() , a1.getY() , a2.getX() , a2.getY());
+
+        double x1 = a1.getX() , y1 = a1.getY() , x2 = a2.getX() , y2 = a2.getY();
+
+        double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
+
+        allLines.emplace_back(length , Line(x1 , y1 , x2 , y2));
+    }
+
+    sort(allLines.begin() , allLines.end() , greater<>());
+
+    vector<pair<double , double>> ratios = {{ratio1  , ratio2},{1 , 1} , {1 , 2}  , {3 , 2} , {1 , 3} , {2,5} , {1 , 4} , {3,4}};
+
+    for(auto &rat : ratios)
+    {
+        ratioA = rat.first;
+        ratioB = rat.second;
+
+        for (auto &l : allLines)
+        {
+            Line line = l.second;
+
+            double x1 = line.getX1() , y1 = line.getY1() ,
+                    x2 = line.getX2() , y2 = line.getY2();
+
+            Point a1(x1 , y1);
+            Point a2(x2 , y2);
+
+            double slope = PolygonHelper::getSlope(x1 , x2 ,y1 , y2);
+
+            double pX = 0 , pY = 0;
+
+            if(a1.getX() >= a2.getX())
+            {
+                pX = a1.getX() - (a1.getX() - a2.getX()) * (ratioB/(ratioA+ratioB));
+            }
+            else
+            {
+                pX = a1.getX() + (a2.getX() - a1.getX() ) * (ratioB/(ratioA+ratioB));
+            }
+
+            if(a1.getY() >= a2.getY())
+            {
+                pY = a1.getY() - (a1.getY() - a2.getY()) * (ratioB/(ratioA+ratioB));
+            }
+            else
+            {
+                pY = a1.getY() + (a2.getY() - a1.getY() ) * (ratioB/(ratioA+ratioB));
+            }
+
+            Point a3 (pX , pY);
+
+            Point a4 (pX * (maxPolygonPoint.getX() - pX + 10000),pY * (maxPolygonPoint.getY() - pY + 100000));
+
+            for (int j = 0; j < n; j++)
+            {
+                Point p1 = polygon1.getPoints()[j];
+                Point p2 = polygon1.getPoints()[(j + 1) % n];
+
+                Line line1 (p1.getX() , p1.getY() , p2.getX() , p2.getY());
+                Line line2 (p2.getX() , p2.getY() , p1.getX() , p1.getY());
+
+                if(line1 == line || line2 == line) continue;
+
+                Point intersectionPoint(0,0);
+
+                if(abs(a1.getX() - a2.getX()) > 0.1 && abs(a1.getY() - a2.getY()) > 0.1)
+                    intersectionPoint = getIntersectionPoint(a3 , -1/slope , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
+                else{
+                    if(abs(a1.getX() - a2.getX()) <= 0.1)
+                    {
+                        a4 = Point(pX * ((maxPolygonPoint.getX() - minPolygonPoint.getX()) *100) , a3.getY());
+                    }
+                    else
+                    {
+                        a4 = Point(a3.getX() , pY * ((maxPolygonPoint.getY() - minPolygonPoint.getY()) *100));
+                    }
+
+                    intersectionPoint = PolygonHelper::getIntersectionPoint({a3.getX() , a3.getY() , a4.getX() , a4.getY()} , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
+
+                    if(intersectionPoint.getX() == INT_MAX || (intersectionPoint != a1 && intersectionPoint != a2))
+                    {
+                        if(abs(a1.getX() - a2.getX()) <= 0.1)
+                        {
+                            a4 = Point(pX * -((maxPolygonPoint.getX() - minPolygonPoint.getX()) *100) , a3.getY());
+                        }
+                        else
+                        {
+                            a4 = Point(a3.getX() , pY * -((maxPolygonPoint.getY() - minPolygonPoint.getY()) *100));
+                        }
+                        intersectionPoint = PolygonHelper::getIntersectionPoint({a3.getX() , a3.getY() , a4.getX() , a4.getY()} , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
+                    }
+                }
+
+
+
+                if(intersectionPoint.getX() != INT_MAX && intersectionPoint != a1 && intersectionPoint != a2)
+                {
+                    a4 = intersectionPoint;
+                    break;
+                }
+            }
+
+            Line intersectionLine(a3.getX() , a3.getY() , a4.getX() , a4.getY());
+
+            pair<Polygon1  , Polygon1> newTwoPolygons = PolygonHelper::splitPolygons(polygon1 , intersectionLine);
+
+            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second);
+            break;
+
+        }
+
+    }
+
+    vector<pair<double , int>> sortPols;
+    for (int i = 0; i < ans.size(); ++i)
+    {
+        Polygon1 first  = ans[i].first;
+        Polygon1 second = ans[i].second;
+
+        vector<Line> lines = first.getLines();
+        double diff = 0;
+        for (int j = 0; j < lines.size(); ++j) {
+            double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
+                    x2 = lines[j].getX2() , y2 = lines[j].getY2();
+
+            double x11 = lines[(j+1)%lines.size()].getX1() , y11 = lines[(j+1)%lines.size()].getY1() ,
+                    x21 = lines[(j+1)%lines.size()].getX2() , y21 = lines[(j+1)%lines.size()].getY2();
+
+            double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
+            double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
+            diff += abs(length - length2);
+        }
+
+        lines = second.getLines();
+        for (int j = 0; j < lines.size(); ++j) {
+            double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
+                    x2 = lines[j].getX2() , y2 = lines[j].getY2();
+
+            double x11 = lines[(j+1)%lines.size()].getX1() , y11 = lines[(j+1)%lines.size()].getY1() ,
+                    x21 = lines[(j+1)%lines.size()].getX2() , y21 = lines[(j+1)%lines.size()].getY2();
+
+            double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
+            double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
+            diff += abs(length - length2);
+        }
+
+        sortPols.emplace_back(diff , i);
+    }
+
+    sort(sortPols.begin() , sortPols.end());
+
+    vector<pair<Polygon1 , Polygon1>> ans2;
+    for(auto &tst : sortPols)ans2.push_back(ans[tst.second]);
+
+
+    return ans2;
 }
+
