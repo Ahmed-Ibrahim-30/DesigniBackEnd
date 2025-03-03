@@ -41,7 +41,8 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
     double denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 
     // Check if lines are parallel (denominator is 0)
-    if (denominator == 0) {
+    if (denominator == 0)
+    {
         return {INT_MAX , INT_MAX}; // No intersection
     }
 
@@ -53,7 +54,8 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
     if (px + 0.1 < std::min(x1, x2) || px > std::max(x1, x2)+ 0.1 ||
         px + 0.1 < std::min(x3, x4) || px > std::max(x3, x4)+ 0.1 ||
         py + 0.1 < std::min(y1, y2) || py > std::max(y1, y2)+ 0.1 ||
-        py + 0.1 < std::min(y3, y4) || py > std::max(y3, y4)+ 0.1) {
+        py + 0.1 < std::min(y3, y4) || py > std::max(y3, y4)+ 0.1)
+    {
         return {INT_MAX , INT_MAX}; // No intersection
     }
 
@@ -282,6 +284,57 @@ Point PolygonHelper::getIntersection(Point A, const Point& B, const Line& line) 
     double py = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denom;
     return {px, py};
 }
+
+bool PolygonHelper::isPointInsidePolygon(const Point& point, const Polygon1& polygon)
+{
+    const vector<Point>& vertices = polygon.getPoints();
+    int n = vertices.size();
+    if (n < 3) return false;
+
+    auto onSegment = [](const Point& p, const Point& q, const Point& r) {
+        return (q.getX() <= std::max(p.getX(), r.getX()) && q.getX() >= std::min(p.getX(), r.getX()) &&
+                q.getY() <= std::max(p.getY(), r.getY()) && q.getY() >= std::min(p.getY(), r.getY()));
+    };
+
+    auto orientation = [](const Point& p, const Point& q, const Point& r) {
+        double val = (q.getY() - p.getY()) * (r.getX() - q.getX()) -
+                     (q.getX() - p.getX()) * (r.getY() - q.getY());
+        if (val == 0) return 0; // Collinear
+        return (val > 0) ? 1 : 2; // Clockwise or Counterclockwise
+    };
+
+    auto doIntersect = [&](const Point& p1, const Point& q1, const Point& p2, const Point& q2) {
+        int o1 = orientation(p1, q1, p2);
+        int o2 = orientation(p1, q1, q2);
+        int o3 = orientation(p2, q2, p1);
+        int o4 = orientation(p2, q2, q1);
+
+        if (o1 != o2 && o3 != o4) return true;
+
+        if (o1 == 0 && onSegment(p1, p2, q1)) return true;
+        if (o2 == 0 && onSegment(p1, q2, q1)) return true;
+        if (o3 == 0 && onSegment(p2, p1, q2)) return true;
+        if (o4 == 0 && onSegment(p2, q1, q2)) return true;
+
+        return false;
+    };
+
+    Point extreme(1e9, point.getY());
+    int count = 0, i = 0;
+    do {
+        int next = (i + 1) % n;
+
+        if (doIntersect(vertices[i], vertices[next], point, extreme)) {
+            if (orientation(vertices[i], point, vertices[next]) == 0)
+                return onSegment(vertices[i], point, vertices[next]);
+            count++;
+        }
+        i = next;
+    } while (i != 0);
+
+    return (count % 2 == 1);
+}
+
 
 
 

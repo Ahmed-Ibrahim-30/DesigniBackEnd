@@ -12,6 +12,9 @@ vector<vector<Polygon1>> LandDivisionRoadsByInnerDesign::divideLand(const Polygo
     vector<vector<Polygon1>> ans;
     divideLand( innerHome , pols , ans , landDivisionStrategy);
 
+
+    mainLand =land;
+
     //Push OUTSIDE ROAD
     Polygon1 outSidePolygon = buildOutsideRoads(land);
 
@@ -68,7 +71,7 @@ void LandDivisionRoadsByInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
         if(!pols[i].isDivisible()) continue;//if land is green Area
 
         auto polygonDivided = pols[i];
-        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided);
+        vector<pair<Polygon1 , Polygon1>> paiPoly = dividePolygons( polygonDivided , sqrt(mainLand.getArea() / 100000));
 
         if(paiPoly.empty()) continue;
 

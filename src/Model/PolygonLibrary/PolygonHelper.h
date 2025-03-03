@@ -117,6 +117,14 @@ public:
      * @return
      */
     static Point getIntersection(Point A, const Point& B, const Line& line);
+
+    /**
+     * is Point Inside Polygon
+     * @param point
+     * @param polygon
+     * @return
+     */
+    static bool isPointInsidePolygon(const Point& point, const Polygon1& polygon);
 };
 
 
