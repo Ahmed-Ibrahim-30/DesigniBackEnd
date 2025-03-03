@@ -40,7 +40,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
             if (centerPoint1.getX() != INT_MAX)
             {
                 cuttingLine.setX1(centerPoint1.getX());
-                cuttingLine.setY1(centerPoint1.getY());
+//                cuttingLine.setY1(centerPoint1.getY());
                 continue;
             }
 
@@ -49,7 +49,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
             if (centerPoint2.getX() != INT_MAX)
             {
                 cuttingLine.setX2(centerPoint2.getX());
-                cuttingLine.setY2(centerPoint2.getY());
+//                cuttingLine.setY2(centerPoint2.getY());
             }
         }
     }
@@ -70,7 +70,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
 
             if (centerPoint1.getX() != INT_MAX)
             {
-                cuttingLine.setX1(centerPoint1.getX());
+//                cuttingLine.setX1(centerPoint1.getX());
                 cuttingLine.setY1(centerPoint1.getY());
                 continue;
             }
@@ -79,7 +79,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
 
             if (centerPoint2.getX() != INT_MAX)
             {
-                cuttingLine.setX2(centerPoint2.getX());
+//                cuttingLine.setX2(centerPoint2.getX());
                 cuttingLine.setY2(centerPoint2.getY());
             }
         }
