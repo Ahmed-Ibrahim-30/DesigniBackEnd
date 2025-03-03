@@ -118,8 +118,11 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
     Polygon1 newp = outerLand;
     newp.shiftY(300);
     newp.print();
-    
+
     cuttingLine.setY1(cuttingLine.getY1()+300);
     cuttingLine.setY2(cuttingLine.getY2()+300);
     cuttingLine.printJsonFormat();
+    
+    Point centroid = newp.calculateCentroid();
+    cout<<"Center = "<<centroid.getX()<<" "<<centroid.getY()<<"\n";
 }
