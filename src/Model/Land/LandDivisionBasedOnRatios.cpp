@@ -108,5 +108,10 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
     {
         swap(selectedSolution[n-1] , selectedSolution[n-2]);
     }
+    cout<<"Ratio --> "<<ratios[0]<<" "<<sumOtherRatio<<"\t "<<selectedSolution[n-2].getArea()<<" "<<selectedSolution[n-1].getArea()<<"\n";
     divideLand( ratios , selectedSolution , ans , landDivisionStrategy);
+}
+
+vector<pair<Polygon1, Polygon1>> LandDivisionBasedOnRatios::splitPolygons(Polygon1 polygon1) {
+    return vector<pair<Polygon1, Polygon1>>();
 }
