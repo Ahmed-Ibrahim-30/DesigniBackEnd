@@ -105,12 +105,37 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
             {
                 bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
                 bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
-                if (isInside && land.isDivisible())
+                if ((isInside || isInside2) && land.isDivisible())
                 {
                     land.setDivisible(false);
                     greenAreaCount++;
                     flag = true;
                     break;
+                }
+            }
+        }
+        if (!flag)
+        {
+            double dx2 = (cuttingLine.getX2() - cuttingLine.getX1()) / (greenAreas+4);
+            double dy2 = (cuttingLine.getY2() - cuttingLine.getY1()) / (greenAreas+4);
+            for (int i = 1; i <= greenAreas; ++i)
+            {
+                if(greenAreaCount >= greenAreas)break;
+                Point cut (0 , 0);
+                cut.setX(cuttingLine.getX1() + i*dx2);
+                cut.setY(cuttingLine.getY1() + i*dy2);
+
+                for(auto &land : lands)
+                {
+                    bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
+                    bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
+                    if ((isInside || isInside2) && land.isDivisible())
+                    {
+                        land.setDivisible(false);
+                        greenAreaCount++;
+                        flag = true;
+                        break;
+                    }
                 }
             }
         }
