@@ -87,49 +87,35 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
 
     double dx = (cuttingLine.getX2() - cuttingLine.getX1()) / (greenAreas+1);
     double dy = (cuttingLine.getY2() - cuttingLine.getY1()) / (greenAreas+1);
-    for (int i = 1; i <= greenAreas; ++i)
+
+    int greenAreaCount = 0;
+    while (greenAreaCount < greenAreas)
     {
-        Point cut (0 , 0);
-        cut.setX(cuttingLine.getX1() + i*dx);
-        cut.setY(cuttingLine.getY1() + i*dy);
-
         bool flag = false;
+        for (int i = 1; i <= greenAreas; ++i)
+        {
+            if(greenAreaCount >= greenAreas)break;
+            Point cut (0 , 0);
+            cut.setX(cuttingLine.getX1() + i*dx);
+            cut.setY(cuttingLine.getY1() + i*dy);
 
-        for(auto &land : lands)
-        {
-            bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
-            bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
-            if (isInside2 && land.isDivisible())
-            {
-                land.setDivisible(false);
-                flag = true;
-                break;
-            }
-        }
-        if (!flag)
-        {
             for(auto &land : lands)
             {
-
-                if ( land.isDivisible())
+                bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
+                bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
+                if (isInside && land.isDivisible())
                 {
-                    for (int j = 1; j <= greenAreas; ++j) {
-                        if(j==i)continue;
-                        cut.setX(cuttingLine.getX1() + j * dx);
-                        cut.setY(cuttingLine.getY1() + j * dy);
-                        bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
-                        bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
-
-                        if(isInside2)
-                        {
-                            land.setDivisible(false);
-                            break;
-                        }
-                    }
+                    land.setDivisible(false);
+                    greenAreaCount++;
+                    flag = true;
+                    break;
                 }
             }
         }
+        if (!flag)break;
     }
+
+
 
 //    cout<<"Outer\n";
 //
