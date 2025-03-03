@@ -2,9 +2,9 @@
 // Created by ahmed Ibrahim on 03-Mar-25.
 //
 
-#include "LandDivisionBasedOnRatios.h"
+#include "LandDivisionRoadsByRatios.h"
 
-vector<vector<Polygon1>> LandDivisionBasedOnRatios::divideLand(const Polygon1 &land, const vector<double> &ratios,
+vector<vector<Polygon1>> LandDivisionRoadsByRatios::divideLand(const Polygon1 &land, const vector<double> &ratios,
                                                                LandDivisionSortingStrategy landDivisionStrategy) {
     vector <Polygon1> pols;
     pols.push_back(land);
@@ -17,25 +17,15 @@ vector<vector<Polygon1>> LandDivisionBasedOnRatios::divideLand(const Polygon1 &l
     return ans;
 }
 
-vector<vector<Polygon1>> LandDivisionBasedOnRatios::divideLands(vector<Polygon1> &lands, const vector<double> &ratios,
+vector<vector<Polygon1>> LandDivisionRoadsByRatios::divideLands(vector<Polygon1> &lands, const vector<double> &ratios,
                                                                 LandDivisionSortingStrategy landDivisionStrategy) {
     vector<vector<Polygon1>> ans;
     divideLand( ratios , lands , ans , landDivisionStrategy);
 
-    cout<<"Ans Size = "<<ans.size()<<"\n";
-
-    if(!ans.empty())
-    {
-        for(auto &pol : ans[0])
-        {
-            pol.print();
-        }
-    }
-
     return ans;
 }
 
-void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<Polygon1> &pols,vector<vector<Polygon1>> &ans,
+void LandDivisionRoadsByRatios::divideLand(const vector<double> &ratios, vector<Polygon1> &pols,vector<vector<Polygon1>> &ans,
                                            LandDivisionSortingStrategy landDivisionStrategy){
 
     int divisions = (int)ratios.size();
@@ -81,7 +71,7 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
 
     auto polygonDivided = pols.back();
 
-    vector<pair<Polygon1 , Polygon1>> paiPoly = splitPolygons( polygonDivided , ratios[curIndex] , sumOtherRatio);
+    vector<pair<Polygon1 , Polygon1>> paiPoly = splitPolygons( polygonDivided , ratios[curIndex] , sumOtherRatio , sqrt(mainLand.getArea() / 100000));
 
     for (const auto& div : paiPoly)
     {
@@ -115,8 +105,10 @@ void LandDivisionBasedOnRatios::divideLand(const vector<double> &ratios, vector<
 }
 
 vector<pair<Polygon1, Polygon1>>
-LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, double ratio2)
+LandDivisionRoadsByRatios::splitPolygons(Polygon1 &polygon1, double ratio1, double ratio2 , double scalingStreet)
 {
+    double streetWidth1 = 8 * scalingStreet, streetWidth2 = 6 * scalingStreet, streetWidth3 = 4* scalingStreet;
+
     vector<pair<Polygon1 , Polygon1>> ans;
     int n = (int)polygon1.getPoints().size();
 
@@ -127,10 +119,9 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
     Point maxPolygonPoint = polygon1.maxPoint();
     Point minPolygonPoint = polygon1.minPoint();
 
-    double ratioA , ratioB ;
+    double ratioA = 0 , ratioB = 0;
 
-    for (int i = 0; i < n; ++i)
-    {
+    for (int i = 0; i < n; ++i) {
         Point a1 = polygon1.getPoints()[i];
         Point a2 = polygon1.getPoints()[(i+1)%n];
 
@@ -145,7 +136,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
     sort(allLines.begin() , allLines.end() , greater<>());
 
-    vector<pair<double , double>> ratios = {{ratio1  , ratio2},{ratio1+1  , ratio2},{ratio1  , ratio2-1},{1 , 1} , {1 , 2}  , {3 , 2} , {1 , 3} , {2,5} , {1 , 4} , {3,4}};
+    vector<pair<double , double>> ratios = {{ratio1  , ratio2},{ratio1+1  , ratio2},{ratio1  , ratio2-1},{1 , 1} , {1 , 2} , {2 , 1} , {3 , 2} , {1 , 3} , {2,5} , {1 , 4} , {3,4} , {4,3}};
 
     for(auto &rat : ratios)
     {
@@ -186,43 +177,43 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
             Point a3 (pX , pY);
 
-            Point a4 (pX * (maxPolygonPoint.getX() - pX + 10000),pY * (maxPolygonPoint.getY() - pY + 100000));
+            Point a4 (pX * (maxPolygonPoint.getX() - pX + 100),pY * (maxPolygonPoint.getY() - pY + 100));
 
-            for (int j = 0; j < n; j++)
-            {
+            for (int j = 0; j < n; j++) {
                 Point p1 = polygon1.getPoints()[j];
                 Point p2 = polygon1.getPoints()[(j + 1) % n];
 
                 Line line1 (p1.getX() , p1.getY() , p2.getX() , p2.getY());
                 Line line2 (p2.getX() , p2.getY() , p1.getX() , p1.getY());
 
+                // if(p1 == a1 || p2 == a1 || p1 == a2 || p2==a2) continue;
                 if(line1 == line || line2 == line) continue;
 
                 Point intersectionPoint(0,0);
 
-                if(abs(a1.getX() - a2.getX()) > 0.1 && abs(a1.getY() - a2.getY()) > 0.1)
-                    intersectionPoint = getIntersectionPoint(a3 , -1/slope , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
+                if(abs(a1.getX() - a2.getX()) > 0.1 && abs(a1.getY() - a2.getY()) > 0.1) intersectionPoint = getIntersectionPoint(a3 , -1/slope , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
+
+
                 else{
                     if(abs(a1.getX() - a2.getX()) <= 0.1)
                     {
-                        a4 = Point(pX * ((maxPolygonPoint.getX() - minPolygonPoint.getX()) *100) , a3.getY());
+                        a4 = Point(pX * ((maxPolygonPoint.getX() - minPolygonPoint.getX()) *10) , a3.getY());
                     }
                     else
                     {
-                        a4 = Point(a3.getX() , pY * ((maxPolygonPoint.getY() - minPolygonPoint.getY()) *100));
+                        a4 = Point(a3.getX() , pY * ((maxPolygonPoint.getY() - minPolygonPoint.getY()) *10));
                     }
-
                     intersectionPoint = PolygonHelper::getIntersectionPoint({a3.getX() , a3.getY() , a4.getX() , a4.getY()} , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
 
                     if(intersectionPoint.getX() == INT_MAX || (intersectionPoint != a1 && intersectionPoint != a2))
                     {
                         if(abs(a1.getX() - a2.getX()) <= 0.1)
                         {
-                            a4 = Point(pX * -((maxPolygonPoint.getX() - minPolygonPoint.getX()) *100) , a3.getY());
+                            a4 = Point(pX * -((maxPolygonPoint.getX() - minPolygonPoint.getX()) *10) , a3.getY());
                         }
                         else
                         {
-                            a4 = Point(a3.getX() , pY * -((maxPolygonPoint.getY() - minPolygonPoint.getY()) *100));
+                            a4 = Point(a3.getX() , pY * -((maxPolygonPoint.getY() - minPolygonPoint.getY()) *10));
                         }
                         intersectionPoint = PolygonHelper::getIntersectionPoint({a3.getX() , a3.getY() , a4.getX() , a4.getY()} , {p1.getX() , p1.getY() , p2.getX() , p2.getY()});
                     }
@@ -243,10 +234,10 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
             ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second);
             break;
-
         }
 
     }
+
 
     vector<pair<double , int>> sortPols;
     for (int i = 0; i < ans.size(); ++i)
@@ -290,6 +281,88 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
     for(auto &tst : sortPols)ans2.push_back(ans[tst.second]);
 
 
+    for(auto &solution : ans2)
+    {
+        Polygon1 &pol1 = solution.first;
+        Polygon1 &pol2 = solution.second;
+
+        Line roadLine(INT_MAX,INT_MAX,INT_MAX,INT_MAX);
+        set<Point> pol1Points;
+        for(auto &p : pol1.getPoints()) pol1Points.insert(p);
+
+        for(auto &p : pol2.getPoints())
+        {
+            if (pol1Points.count(p))
+            {
+                if (roadLine.getX1() == INT_MAX)
+                {
+                    roadLine.setX1(p.getX());
+                    roadLine.setY1(p.getY());
+                }else{
+                    roadLine.setX2(p.getX());
+                    roadLine.setY2(p.getY());
+                }
+            }
+        }
+
+        Point p1 (roadLine.getX1() , roadLine.getY1());
+        Point p2 (roadLine.getX2() , roadLine.getY2());
+
+        // 0.01 * roadLine.getLength()
+        double streetWidth = COUNT == 1 ? streetWidth1 : COUNT == 2 ? streetWidth2 : COUNT == 3 ?streetWidth2: streetWidth3;
+
+//        cout<< "streetWidth = "<<streetWidth<<"\n";
+        roadLine.print();
+
+        Point center1 = pol1.calculateCentroid();
+        Point center2 = pol2.calculateCentroid();
+
+        vector<Point> points1 = pol1.getPoints();
+        vector<Point> points2 = pol2.getPoints();
+
+        for (int i = 0; i < points1.size(); ++i)
+        {
+            Point a0 = points1[i==0?points1.size()-1 : i-1];
+            Point a1 = points1[i];
+            Point a2 = points1[(i + 1) % points1.size()];
+            Point a3 = points1[(i + 2) % points1.size()];
+            Point &p = points1[i];
+            Point &pp = points1[(i + 1) % points1.size()];
+
+            if ((a1 == p1 && a2 == p2) || (a1 == p2 && a2 == p1))
+            {
+                Line prev (a0.getX(),a0.getY(),a1.getX(),a1.getY());
+                Line next (a2.getX(),a2.getY(),a3.getX(),a3.getY());
+
+                p = shiftPointOnLine(prev , p , -streetWidth);
+                pp = shiftPointOnLine(next , pp , streetWidth);
+                break;
+            }
+        }
+
+        for (int i = 0; i < points2.size(); ++i)
+        {
+            Point a0 = points2[i==0?points2.size()-1 : i-1];
+            Point a1 = points2[i];
+            Point a2 = points2[(i + 1) % points2.size()];
+            Point a3 = points2[(i + 2) % points2.size()];
+            Point &p = points2[i];
+            Point &pp = points2[(i + 1) % points2.size()];
+
+            if ((a1 == p1 && a2 == p2) || (a1 == p2 && a2 == p1))
+            {
+                Line prev (a0.getX(),a0.getY(),a1.getX(),a1.getY());
+                Line next (a2.getX(),a2.getY(),a3.getX(),a3.getY());
+
+                p = shiftPointOnLine(prev , p , -streetWidth);
+                pp = shiftPointOnLine(next , pp , streetWidth);
+                break;
+            }
+        }
+
+        pol1.setPoints(points1);
+        pol2.setPoints(points2);
+
+    }
     return ans2;
 }
-
