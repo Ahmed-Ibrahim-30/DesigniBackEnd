@@ -83,22 +83,17 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
         }
     }
 
-    cuttingLine.print();
-
-
-    double segments = cuttingLine.getLength() / (greenAreas+1);
+//    cuttingLine.print();
 
     double dx = (cuttingLine.getX2() - cuttingLine.getX1()) / (greenAreas+1);
     double dy = (cuttingLine.getY2() - cuttingLine.getY1()) / (greenAreas+1);
-
-    cout<<"DX = "<<dx<<" DY = "<<dy<<"\n";
     for (int i = 1; i <= greenAreas; ++i)
     {
         Point cut (0 , 0);
         cut.setX(cuttingLine.getX1() + i*dx);
         cut.setY(cuttingLine.getY1() + i*dy);
 
-        cout<<"CUR POINT = "<<cut.getX() <<" "<<cut.getY()<<"\n";
+        bool flag = false;
 
         for(auto &land : lands)
         {
@@ -106,23 +101,46 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
             bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
             if (isInside2 && land.isDivisible())
             {
-                cout<<"LAND IS GREEN AREA\n";
                 land.setDivisible(false);
+                flag = true;
                 break;
+            }
+        }
+        if (!flag)
+        {
+            for(auto &land : lands)
+            {
+
+                if ( land.isDivisible())
+                {
+                    for (int j = 1; j <= greenAreas; ++j) {
+                        if(j==i)continue;
+                        cut.setX(cuttingLine.getX1() + j * dx);
+                        cut.setY(cuttingLine.getY1() + j * dy);
+                        bool isInside = PolygonHelper::isPointInsidePolygon(cut , land);
+                        bool isInside2 = DesignGeometryManager::isPointInsidePolygon(land.getPoints() , cut);
+
+                        if(isInside2)
+                        {
+                            land.setDivisible(false);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
 
-    cout<<"Outer\n";
-
-    Polygon1 newp = outerLand;
-    newp.shiftY(300);
-    newp.print();
-
-    cuttingLine.setY1(cuttingLine.getY1()+300);
-    cuttingLine.setY2(cuttingLine.getY2()+300);
-    cuttingLine.printJsonFormat();
-    
-    Point centroid = newp.calculateCentroid();
-    cout<<"Center = "<<centroid.getX()<<" "<<centroid.getY()<<"\n";
+//    cout<<"Outer\n";
+//
+//    Polygon1 newp = outerLand;
+//    newp.shiftY(300);
+//    newp.print();
+//
+//    cuttingLine.setY1(cuttingLine.getY1()+300);
+//    cuttingLine.setY2(cuttingLine.getY2()+300);
+//    cuttingLine.printJsonFormat();
+//
+//    Point centroid = newp.calculateCentroid();
+//    cout<<"Center = "<<centroid.getX()<<" "<<centroid.getY()<<"\n";
 }
