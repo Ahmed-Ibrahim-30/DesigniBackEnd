@@ -485,7 +485,8 @@ double LandDivisionBasedOnRatios::getMaxValueForLine(const Line &line, double in
 
     if (increaseFactor <= 0) return 0; // Avoid division by zero
 
-    double x1  , y1 , x2 , y2;
+    double x1 = line.getX1(), y1 = line.getY1();
+    double x2 = line.getX2(), y2 = line.getY2();
 
     double length = line.getLength();
     double segment = length/ increaseFactor;
