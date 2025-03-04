@@ -431,54 +431,55 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
             else {
                 l = mid;
             }
+
             solution = newTwoPolygons;
 
-            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second );
+//            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second );
         }
+        ans.push_back(solution);
 
     }
 
-//    vector<pair<double , int>> sortPols;
-//    for (int i = 0; i < ans.size(); ++i)
-//    {
-//        Polygon1 first  = ans[i].first;
-//        Polygon1 second = ans[i].second;
-//
-//        vector<Line> lines = first.getLines();
-//        double diff = 0;
-//        for (int j = 0; j < lines.size(); ++j) {
-//            double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
-//                    x2 = lines[j].getX2() , y2 = lines[j].getY2();
-//
-//            double x11 = lines[(j+1)%lines.size()].getX1() , y11 = lines[(j+1)%lines.size()].getY1() ,
-//                    x21 = lines[(j+1)%lines.size()].getX2() , y21 = lines[(j+1)%lines.size()].getY2();
-//
-//            double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
-//            double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
-//            diff += abs(length - length2);
-//        }
-//
-//        lines = second.getLines();
-//        for (int j = 0; j < lines.size(); ++j) {
-//            double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
-//                    x2 = lines[j].getX2() , y2 = lines[j].getY2();
-//
-//            double x11 = lines[(j+1)%lines.size()].getX1() , y11 = lines[(j+1)%lines.size()].getY1() ,
-//                    x21 = lines[(j+1)%lines.size()].getX2() , y21 = lines[(j+1)%lines.size()].getY2();
-//
-//            double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
-//            double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
-//            diff += abs(length - length2);
-//        }
-//
-//        sortPols.emplace_back(diff , i);
-//    }
-//
-//    sort(sortPols.begin() , sortPols.end());
+    vector<pair<double , int>> sortPols;
+    for (int i = 0; i < ans.size(); ++i)
+    {
+        Polygon1 first  = ans[i].first;
+        Polygon1 second = ans[i].second;
+
+        vector<Line> lines = first.getLines();
+        double diff = 0;
+        for (int j = 0; j < lines.size(); ++j) {
+            double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
+                    x2 = lines[j].getX2() , y2 = lines[j].getY2();
+
+            double x11 = lines[(j+1)%lines.size()].getX1() , y11 = lines[(j+1)%lines.size()].getY1() ,
+                    x21 = lines[(j+1)%lines.size()].getX2() , y21 = lines[(j+1)%lines.size()].getY2();
+
+            double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
+            double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
+            diff += abs(length - length2);
+        }
+
+        lines = second.getLines();
+        for (int j = 0; j < lines.size(); ++j) {
+            double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
+                    x2 = lines[j].getX2() , y2 = lines[j].getY2();
+
+            double x11 = lines[(j+1)%lines.size()].getX1() , y11 = lines[(j+1)%lines.size()].getY1() ,
+                    x21 = lines[(j+1)%lines.size()].getX2() , y21 = lines[(j+1)%lines.size()].getY2();
+
+            double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
+            double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
+            diff += abs(length - length2);
+        }
+
+        sortPols.emplace_back(diff , i);
+    }
+
+    sort(sortPols.begin() , sortPols.end());
 
     vector<pair<Polygon1 , Polygon1>> ans2;
-//    for(auto &tst : sortPols)ans2.push_back(ans[tst.second]);
-    ans2.push_back(solution);
+    for(auto &tst : sortPols)ans2.push_back(ans[tst.second]);
 
     double area1 = solution.first.getArea();
     double area2 = solution.second.getArea();
