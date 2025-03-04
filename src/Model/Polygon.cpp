@@ -256,16 +256,28 @@ void Polygon1::shiftY(double dy)
 
 Point Polygon1::calculateCentroid()
 {
-    Point centroid( 0 , 0 );
-    for(auto &point : points)
-    {
-        centroid.setY(point.getY() + centroid.getY());
-        centroid.setX(point.getX() + centroid.getX());
-    }
+    double signedArea = 0.0;
+    double Cx = 0.0;
+    double Cy = 0.0;
     int n = (int)points.size();
-    centroid.setY(centroid.getY() / n);
-    centroid.setX(centroid.getX() / n);
-    return centroid;
+
+    for (int i = 0; i < n; ++i) {
+        double x0 = points[i].getX();
+        double y0 = points[i].getY();
+        double x1 = points[(i + 1) % n].getX();
+        double y1 = points[(i + 1) % n].getY();
+
+        double a = x0 * y1 - x1 * y0;
+        signedArea += a;
+        Cx += (x0 + x1) * a;
+        Cy += (y0 + y1) * a;
+    }
+
+    signedArea *= 0.5;
+    Cx /= (6.0 * signedArea);
+    Cy /= (6.0 * signedArea);
+
+    return {Cx, Cy};
 }
 
 vector<Point> Polygon1::scalePolygon(double scale)
