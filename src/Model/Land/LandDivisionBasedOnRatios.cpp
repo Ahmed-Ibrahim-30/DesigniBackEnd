@@ -299,44 +299,23 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
     vector<pair<Polygon1 , Polygon1>> ans;
     int n = (int)polygon1.getPoints().size();
 
-    set<Line> polLines;
-
-    vector<pair<double , Line>> allLines;
+    vector< Line> allLines = polygon1.getLines();
 
     Point maxPolygonPoint = polygon1.maxPoint();
     Point minPolygonPoint = polygon1.minPoint();
-
-    for (int i = 0; i < n; ++i)
-    {
-        Point a1 = polygon1.getPoints()[i];
-        Point a2 = polygon1.getPoints()[(i+1)%n];
-
-        polLines.emplace(a1.getX() , a1.getY() , a2.getX() , a2.getY());
-
-        double x1 = a1.getX() , y1 = a1.getY() , x2 = a2.getX() , y2 = a2.getY();
-
-        double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
-
-        allLines.emplace_back(length , Line(x1 , y1 , x2 , y2));
-    }
-
-    sort(allLines.begin() , allLines.end() , greater<>());
 
     pair<Polygon1 , Polygon1> solution;
 
 
     for (auto &li : allLines)
     {
-        Line line = li.second;
+        Line line = li;
         double increaseFactor = 2;
 
         double iv = getMaxValueForLine(line , increaseFactor);
 
-        cout<<"IV = " << iv<<"\n";
-
         double length = line.getLength();
         double segment = length/ increaseFactor;
-        cout<<"LENGTH = "<<length <<" -- > segment == "<<segment<<"\n";
 
         double x1 = line.getX1() , y1 = line.getY1();
         double x2 = line.getX2() , y2 = line.getY2();
@@ -344,14 +323,12 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
         double dx = (x2 - x1)/segment;
         double dy = (y2 - y1)/segment;
 
-        cout<<"dx = "<<dx <<" -- > dy == "<<dy<<"\n";
-
         Point a1(x1 , y1);
         Point a2(x2 , y2);
 
         double slope = PolygonHelper::getSlope(x1 , x2 ,y1 , y2);
 
-        double pX = 0 , pY = 0;
+        double pX , pY ;
 
         double l = 0 , r = iv;
 
@@ -425,7 +402,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
             double ratioA = area1 / area2;
             double ratioB = ratio1 / ratio2;
 
-            cout<<"ratioA = "<<ratioA <<" ratioB = "<<ratioB<<"\n";
+            cout<<"Area 1 = "<<area1<<" Area2 = "<<area2<<"  ratioA = "<<ratioA <<" ratioB = "<<ratioB<<"\n";
 
             if (ratioA <= ratioB) r = mid;
             else {
@@ -434,7 +411,6 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
             solution = newTwoPolygons;
 
-//            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second );
         }
         ans.push_back(solution);
 
@@ -447,7 +423,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
         Polygon1 second = ans[i].second;
 
         vector<Line> lines = first.getLines();
-        double diff = 0;
+        double diff = first.getMAXSideLength() - first.getMINSideLength();
         for (int j = 0; j < lines.size(); ++j) {
             double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
                     x2 = lines[j].getX2() , y2 = lines[j].getY2();
@@ -457,9 +433,10 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
             double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
             double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
-            diff += abs(length - length2);
+//            diff += abs(length - length2);
         }
 
+        diff += second.getMAXSideLength() - second.getMINSideLength();
         lines = second.getLines();
         for (int j = 0; j < lines.size(); ++j) {
             double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
@@ -470,7 +447,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
             double length = sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) );
             double length2 = sqrt(((x21 - x11)*(x21 - x11)) + ((y21 - y11)*(y21 - y11)) );
-            diff += abs(length - length2);
+//            diff += abs(length - length2);
         }
 
         sortPols.emplace_back(diff , i);
