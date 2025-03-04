@@ -307,9 +307,8 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
     pair<Polygon1 , Polygon1> solution;
 
 
-    for (auto &li : allLines)
+    for (auto &line : allLines)
     {
-        Line line = li;
         double increaseFactor = 2;
 
         double iv = getMaxValueForLine(line , increaseFactor);
@@ -457,14 +456,6 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
     vector<pair<Polygon1 , Polygon1>> ans2;
     for(auto &tst : sortPols)ans2.push_back(ans[tst.second]);
-
-    double area1 = solution.first.getArea();
-    double area2 = solution.second.getArea();
-
-    double ratioA = area1 / area2;
-    double ratioB = ratio1 / ratio2;
-
-    cout<<"Final = ratioA = "<<ratioA <<" ratioB = "<<ratioB<<"\n";
 
     return ans2;
 }

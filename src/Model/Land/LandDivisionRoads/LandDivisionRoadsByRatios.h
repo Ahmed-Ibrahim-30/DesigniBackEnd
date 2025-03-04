@@ -20,6 +20,8 @@ public:
     vector<vector<Polygon1>> divideLand(const Polygon1 &land ,const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy ) override;
 
     vector<vector<Polygon1>>divideLands(vector<Polygon1> &lands,const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy) override;
+
+    double getMaxValueForLine(const Line &line, double increaseFactor);
 };
 
 
