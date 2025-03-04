@@ -423,7 +423,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
         Polygon1 second = ans[i].second;
 
         vector<Line> lines = first.getLines();
-        double diff = first.getMAXSideLength() - first.getMINSideLength();
+        double diff = first.getMAXSideLength() ;
         for (int j = 0; j < lines.size(); ++j) {
             double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
                     x2 = lines[j].getX2() , y2 = lines[j].getY2();
@@ -436,7 +436,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 //            diff += abs(length - length2);
         }
 
-        diff += second.getMAXSideLength() - second.getMINSideLength();
+        diff += second.getMAXSideLength() ;
         lines = second.getLines();
         for (int j = 0; j < lines.size(); ++j) {
             double x1 = lines[j].getX1() , y1 = lines[j].getY1() ,
