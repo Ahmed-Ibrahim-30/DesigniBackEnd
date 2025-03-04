@@ -17,6 +17,13 @@ private:
      * @return
      */
     vector<pair<Polygon1 , Polygon1>> splitPolygons(Polygon1 &polygon1 , double ratio1 , double ratio2);
+
+    /**
+     *
+     * @param line
+     * @return
+     */
+    static double getMaxValueForLine(const Line &line , double increaseFactor);
 public:
     vector<vector<Polygon1>> divideLand(const Polygon1 &land ,const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy ) override;
 
