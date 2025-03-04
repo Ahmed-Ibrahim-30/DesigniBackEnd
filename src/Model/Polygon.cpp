@@ -280,6 +280,44 @@ Point Polygon1::calculateCentroid()
     return {Cx, Cy};
 }
 
+Line Polygon1::getCenterLine()
+{
+    int n = (int)points.size();
+    if (n < 2) throw std::runtime_error("Polygon must have at least two points");
+
+    Point centroid = calculateCentroid();
+    double cx = centroid.getX(), cy = centroid.getY();
+
+    double sxx = 0, sxy = 0, syy = 0;
+    for (const auto& p : points) {
+        double dx = p.getX() - cx;
+        double dy = p.getY() - cy;
+        sxx += dx * dx;
+        sxy += dx * dy;
+        syy += dy * dy;
+    }
+
+    double theta = 0.5 * atan2(2 * sxy, sxx - syy);
+    double dx = cos(theta);
+    double dy = sin(theta);
+
+    double minProj = std::numeric_limits<double>::max();
+    double maxProj = std::numeric_limits<double>::lowest();
+
+    for (const auto& p : points) {
+        double proj = (p.getX() - cx) * dx + (p.getY() - cy) * dy;
+        minProj = std::min(minProj, proj);
+        maxProj = std::max(maxProj, proj);
+    }
+
+    double x1 = cx + minProj * dx;
+    double y1 = cy + minProj * dy;
+    double x2 = cx + maxProj * dx;
+    double y2 = cy + maxProj * dy;
+
+    return {x1, y1, x2, y2};
+}
+
 vector<Point> Polygon1::scalePolygon(double scale)
 {
     vector<Point> scaledVertices;

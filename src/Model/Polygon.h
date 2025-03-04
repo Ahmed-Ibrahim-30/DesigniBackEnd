@@ -88,6 +88,12 @@ public:
     Point calculateCentroid();
 
     /**
+     * Get Center Line
+     * @return
+     */
+    Line getCenterLine();
+
+    /**
      * @brief scalePolygon
      * @param scale
      * @return
