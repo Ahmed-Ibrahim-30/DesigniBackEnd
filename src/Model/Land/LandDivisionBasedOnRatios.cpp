@@ -355,7 +355,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
         double l = 0 , r = iv;
 
-        while (l<=r)
+        while (r - l > 1e-6)
         {
             double mid = (l+r)/2;
 
@@ -425,11 +425,13 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
             double ratioA = area1 / area2;
             double ratioB = ratio1 / ratio2;
 
-            if (ratioA > ratioB) r = mid;
+            cout<<"ratioA = "<<ratioA <<" ratioB = "<<ratioB<<"\n";
+
+            if (ratioA <= ratioB) r = mid;
             else {
                 l = mid;
-                solution = newTwoPolygons;
             }
+            solution = newTwoPolygons;
 
             ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second );
         }
@@ -476,9 +478,17 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
     vector<pair<Polygon1 , Polygon1>> ans2;
 //    for(auto &tst : sortPols)ans2.push_back(ans[tst.second]);
-//    ans2.push_back(solution);
+    ans2.push_back(solution);
 
-    return ans;
+    double area1 = solution.first.getArea();
+    double area2 = solution.second.getArea();
+
+    double ratioA = area1 / area2;
+    double ratioB = ratio1 / ratio2;
+
+    cout<<"Final = ratioA = "<<ratioA <<" ratioB = "<<ratioB<<"\n";
+
+    return ans2;
 }
 
 double LandDivisionBasedOnRatios::getMaxValueForLine(const Line &line, double increaseFactor) {
@@ -494,6 +504,10 @@ double LandDivisionBasedOnRatios::getMaxValueForLine(const Line &line, double in
     double dx = (x2 - x1)/segment;
     double dy = (y2 - y1)/segment;
 
+    cout<<"dx2 = "<<dx <<" -- > dy2 == "<<dy<<"\n";
+
+    line.print();
+
     double l = 0 , r = 1e9 , ans = 0;
     while (r - l > 1e-6)
     {
@@ -501,8 +515,13 @@ double LandDivisionBasedOnRatios::getMaxValueForLine(const Line &line, double in
         double x = x1 + mid*dx;
         double y = y1 + mid*dy;
 
-        if (x <= x2 && y<= y2)l = mid , ans = mid;
-        else r = mid;
+        cout<<"X = "<<x<<" Y = "<<y<<" MID = "<<mid << "L = "<<l<<" R = "<<r<<"\n";
+
+        bool inBounds = ((x1 <= x2 && x <= x2) || (x1 > x2 && x >= x2)) &&
+                        ((y1 <= y2 && y <= y2) || (y1 > y2 && y >= y2));
+
+        if (inBounds)l = mid , ans = mid;
+        else r = mid ;
     }
     return ans;
 }
