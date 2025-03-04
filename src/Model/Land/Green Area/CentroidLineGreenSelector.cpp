@@ -88,7 +88,7 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
     cout<<"BEFORE\n";
     cuttingLine.printJsonFormat();
 
-    cuttingLine = outerLand.getCenterLine();
+//    cuttingLine = outerLand.getCenterLine();
     cout<<"After\n";
     cuttingLine.printJsonFormat();
     double dx = (cuttingLine.getX2() - cuttingLine.getX1()) / (greenAreas+1);
