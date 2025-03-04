@@ -332,14 +332,19 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
         double iv = getMaxValueForLine(line , increaseFactor);
 
+        cout<<"IV = " << iv<<"\n";
+
         double length = line.getLength();
         double segment = length/ increaseFactor;
+        cout<<"LENGTH = "<<length <<" -- > segment == "<<segment<<"\n";
 
         double x1 = line.getX1() , y1 = line.getY1();
         double x2 = line.getX2() , y2 = line.getY2();
 
         double dx = (x2 - x1)/segment;
         double dy = (y2 - y1)/segment;
+
+        cout<<"dx = "<<dx <<" -- > dy == "<<dy<<"\n";
 
         Point a1(x1 , y1);
         Point a2(x2 , y2);
@@ -426,7 +431,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
                 solution = newTwoPolygons;
             }
 
-//            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second );
+            ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second );
         }
 
     }
@@ -471,9 +476,9 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
     vector<pair<Polygon1 , Polygon1>> ans2;
 //    for(auto &tst : sortPols)ans2.push_back(ans[tst.second]);
-    ans2.push_back(solution);
+//    ans2.push_back(solution);
 
-    return ans2;
+    return ans;
 }
 
 double LandDivisionBasedOnRatios::getMaxValueForLine(const Line &line, double increaseFactor) {
