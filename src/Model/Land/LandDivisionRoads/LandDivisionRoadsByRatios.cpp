@@ -221,9 +221,8 @@ LandDivisionRoadsByRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
             solution = newTwoPolygons;
         }
-
+        ans.push_back(solution);
     }
-
 
     vector<pair<double , int>> sortPols;
     for (int i = 0; i < ans.size(); ++i)
