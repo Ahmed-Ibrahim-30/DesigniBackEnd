@@ -51,8 +51,6 @@ vector<vector<Polygon1>> LandDivisionBasedOnRatios::divideLands(vector<Polygon1>
 
 void LandDivisionBasedOnRatios::divideLand(vector<pair<Polygon1, vector<double>>> &polsRatios, vector<vector<pair<Polygon1 , vector<double>>>> &ans, LandDivisionSortingStrategy landDivisionStrategy)
 {
-    cout<<"Lands Size = "<<polsRatios.size()<<"\n";
-
     int n = (int) polsRatios.size();
     bool flag = false;
     for (int i = 0; i < polsRatios.size(); ++i)
@@ -94,7 +92,6 @@ void LandDivisionBasedOnRatios::divideLand(vector<pair<Polygon1, vector<double>>
         }
         cout<<"firstRatio = "<<firstRatio <<"  secondRatio == "<<secondRatio<<"\n";
 
-        cout<<"LandPoints = "<<land.getPoints().size()<<"\n";
         vector<pair<Polygon1 , Polygon1>> paiPoly = splitPolygons( land , firstRatio , secondRatio);
 
         cout<<"paiPoly = "<<paiPoly.size()<<"\n";
@@ -121,7 +118,7 @@ void LandDivisionBasedOnRatios::divideLand(vector<pair<Polygon1, vector<double>>
         cout<<"possibleDivisions << "<<possibleDivisions.size()<<"\n";
         cout<<"possibleDivisions2 << "<<possibleDivisions[0].size()<<"\n";
 
-        vector<pair<Polygon1 , vector<double>>> selectedSolution = possibleDivisions[1];
+        vector<pair<Polygon1 , vector<double>>> selectedSolution = possibleDivisions[0];
 
         divideLand(  selectedSolution , ans , landDivisionStrategy);
     }
@@ -234,13 +231,23 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
         double iv = getMaxValueForLine(line , increaseFactor);
 
         double length = line.getLength();
+
         double segment = length/ increaseFactor;
 
         double x1 = line.getX1() , y1 = line.getY1();
         double x2 = line.getX2() , y2 = line.getY2();
+        line.printJsonFormat();
 
         double dx = (x2 - x1)/segment;
         double dy = (y2 - y1)/segment;
+
+        if (dx == 0) dx+= 0.001;
+        if (dy == 0) dy+= 0.001;
+
+        cout<<"IV = "<<iv<<"\n";
+        cout<<"Length = "<<length<<"\n";
+        cout<<"segment = "<<segment<<"\n";
+        cout<<"DX = "<<dx<<"  DY = "<<dy<<"\n";
 
         Point a1(x1 , y1);
         Point a2(x2 , y2);
@@ -307,6 +314,7 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
                 if(intersectionPoint.getX() != INT_MAX && intersectionPoint != a1 && intersectionPoint != a2)
                 {
                     a4 = intersectionPoint;
+                    cout<<"intersectionPoint =  "; line1.printJsonFormat();
                     break;
                 }
             }
@@ -321,7 +329,8 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
             double ratioA = area1 / area2;
             double ratioB = ratio1 / ratio2;
 
-//            cout<<"Area 1 = "<<area1<<" Area2 = "<<area2<<"  ratioA = "<<ratioA <<" ratioB = "<<ratioB<<"\n";
+            intersectionLine.printJsonFormat();
+            cout<<"Area 1 = "<<area1<<" Area2 = "<<area2<<"  ratioA = "<<ratioA <<" ratioB = "<<ratioB<<"\n";
 
             if (ratioA <= ratioB) r = mid;
             else {
@@ -329,8 +338,8 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
             }
 
             solution = newTwoPolygons;
-
         }
+        cout<<"Points = "<<solution.first.getPoints().size()<<" "<<solution.second.getPoints().size()<<"\n";
         ans.push_back(solution);
     }
 
