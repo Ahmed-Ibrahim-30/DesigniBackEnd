@@ -72,18 +72,26 @@ void LandDivisionBasedOnRatios::divideLand(vector<pair<Polygon1, vector<double>>
         }
 
         sort(ratios.begin(), ratios.end());
-        int midRatios = ((int)ratios.size()+1)/2;
         double firstRatio = 0.0 , secondRatio = 0.0;
-        vector<double> ratiosA , ratiosB;
+        vector<double> ratiosA , ratiosB ;
 
-        cout<<"Ratios = \n";
+        int a = 0, b = (int)ratios.size()-1;
+        //2 4 5 6 7 8
         for (int j = 0; j < ratios.size(); ++j)
         {
-            cout<<ratios[j]<<"   ";
-            if (j<midRatios)firstRatio+=ratios[j] , ratiosA.push_back(ratios[j]);
-            else secondRatio += ratios[j] , ratiosB.push_back(ratios[j]);
+            if (secondRatio <= firstRatio)
+            {
+                ratiosB.push_back(ratios[b]);
+                secondRatio+=ratios[b];
+                b--;
+            }
+            else
+            {
+                ratiosA.push_back(ratios[a]);
+                firstRatio+=ratios[a];
+                a++;
+            }
         }
-        cout<<"\n";
         cout<<"firstRatio = "<<firstRatio <<"  secondRatio == "<<secondRatio<<"\n";
 
         cout<<"LandPoints = "<<land.getPoints().size()<<"\n";
