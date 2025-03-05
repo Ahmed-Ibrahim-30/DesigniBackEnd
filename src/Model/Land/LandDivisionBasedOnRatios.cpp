@@ -241,8 +241,8 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
         double dx = (x2 - x1)/segment;
         double dy = (y2 - y1)/segment;
 
-        if (dx == 0) dx+= 0.001;
-        if (dy == 0) dy+= 0.001;
+        if (dx == 0) continue;//Must fix it
+        if (dy == 0) continue;
 
         cout<<"IV = "<<iv<<"\n";
         cout<<"Length = "<<length<<"\n";
@@ -325,6 +325,8 @@ LandDivisionBasedOnRatios::splitPolygons(Polygon1 &polygon1, double ratio1, doub
 
             double area1 = newTwoPolygons.first.getArea();
             double area2 = newTwoPolygons.second.getArea();
+
+            if (area1 < 10 || area2 <10)continue;//must fix after that
 
             double ratioA = area1 / area2;
             double ratioB = ratio1 / ratio2;
