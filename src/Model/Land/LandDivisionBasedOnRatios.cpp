@@ -115,15 +115,12 @@ void LandDivisionBasedOnRatios::divideLand(vector<pair<Polygon1, vector<double>>
 
         vector<pair<Polygon1 , vector<double>>> selectedSolution = possibleDivisions[1];
 
-        ans.push_back(selectedSolution);
-//        divideLand(  selectedSolution , ans , landDivisionStrategy);
-            flag = false;
-        break;
+        divideLand(  selectedSolution , ans , landDivisionStrategy);
     }
 
     if (!flag)
     {
-//        ans.push_back(polsRatios);
+        ans.push_back(polsRatios);
         return;
     }
 }
