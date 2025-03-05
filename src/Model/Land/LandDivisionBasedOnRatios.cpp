@@ -76,7 +76,7 @@ void LandDivisionBasedOnRatios::divideLand(vector<pair<Polygon1, vector<double>>
         cout<<"\n";
         cout<<"firstRatio = "<<firstRatio <<"  secondRatio == "<<secondRatio<<"\n";
 
-        vector<pair<Polygon1 , Polygon1>> paiPoly = splitPolygons( land , firstRatio , secondRatio);
+        vector<pair<Polygon1 , Polygon1>> paiPoly = splitPolygons( land , 2 , 8);
 
         vector<vector<pair<Polygon1 , vector<double>>>> possibleDivisions;
 
@@ -99,7 +99,7 @@ void LandDivisionBasedOnRatios::divideLand(vector<pair<Polygon1, vector<double>>
             return;
         }
 
-        vector<pair<Polygon1 , vector<double>>> selectedSolution = possibleDivisions[1];
+        vector<pair<Polygon1 , vector<double>>> selectedSolution = possibleDivisions[0];
 
 //        divideLand(  selectedSolution , ans , landDivisionStrategy);
             flag = false;
