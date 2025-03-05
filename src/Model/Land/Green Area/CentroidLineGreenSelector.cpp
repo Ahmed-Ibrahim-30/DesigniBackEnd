@@ -22,75 +22,72 @@ void CentroidLineGreenSelector::select(Polygon1 &outerLand, vector<Polygon1> &la
     vector<Line> lines = outerLand.getLines();
     Line cuttingLine (0, 0 , 0 , 0 );
 
-    if (maxP.getX() - minP.getX() >= maxP.getY() - minP.getY())//Horizontal Line
-    {
-        cuttingLine = Line(-2000000 , centerP.getY() , 2000000 , centerP.getY());
-
-        for (int i = 0; i < lines.size(); ++i)
-        {
-            Line line = lines[i];
-            Point centerPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line);
-            if (centerPoint.getX() == INT_MAX) continue;
-
-            Line first (-2000000 , centerP.getY() , centerP.getX() , centerP.getY());
-            Line second (centerP.getX() , centerP.getY() , 2000000 , centerP.getY());
-
-            Point centerPoint1 = PolygonHelper::getIntersectionPoint(first , line);
-
-            if (centerPoint1.getX() != INT_MAX)
-            {
-                cuttingLine.setX1(centerPoint1.getX());
-//                cuttingLine.setY1(centerPoint1.getY());
-                continue;
-            }
-
-            Point centerPoint2 = PolygonHelper::getIntersectionPoint(second , line);
-
-            if (centerPoint2.getX() != INT_MAX)
-            {
-                cuttingLine.setX2(centerPoint2.getX());
-//                cuttingLine.setY2(centerPoint2.getY());
-            }
-        }
-    }
-    else
-    {
-        cuttingLine = Line(centerP.getX() , -2000000 , centerP.getX() , 2000000);
-
-        for (int i = 0; i < lines.size(); ++i)
-        {
-            Line line = lines[i];
-            Point centerPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line);
-            if (centerPoint.getX() == INT_MAX) continue;
-
-            Line first (centerP.getX() , -2000000 , centerP.getX() , centerP.getY());
-            Line second(centerP.getX() , centerP.getY() , centerP.getX() , 2000000);
-
-            Point centerPoint1 = PolygonHelper::getIntersectionPoint(first , line);
-
-            if (centerPoint1.getX() != INT_MAX)
-            {
+//    if (maxP.getX() - minP.getX() >= maxP.getY() - minP.getY())//Horizontal Line
+//    {
+//        cuttingLine = Line(-2000000 , centerP.getY() , 2000000 , centerP.getY());
+//
+//        for (int i = 0; i < lines.size(); ++i)
+//        {
+//            Line line = lines[i];
+//            Point centerPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line);
+//            if (centerPoint.getX() == INT_MAX) continue;
+//
+//            Line first (-2000000 , centerP.getY() , centerP.getX() , centerP.getY());
+//            Line second (centerP.getX() , centerP.getY() , 2000000 , centerP.getY());
+//
+//            Point centerPoint1 = PolygonHelper::getIntersectionPoint(first , line);
+//
+//            if (centerPoint1.getX() != INT_MAX)
+//            {
 //                cuttingLine.setX1(centerPoint1.getX());
-                cuttingLine.setY1(centerPoint1.getY());
-                continue;
-            }
-
-            Point centerPoint2 = PolygonHelper::getIntersectionPoint(second , line);
-
-            if (centerPoint2.getX() != INT_MAX)
-            {
+////                cuttingLine.setY1(centerPoint1.getY());
+//                continue;
+//            }
+//
+//            Point centerPoint2 = PolygonHelper::getIntersectionPoint(second , line);
+//
+//            if (centerPoint2.getX() != INT_MAX)
+//            {
 //                cuttingLine.setX2(centerPoint2.getX());
-                cuttingLine.setY2(centerPoint2.getY());
-            }
-        }
-    }
-
-    cout<<"BEFORE\n";
-    cuttingLine.printJsonFormat();
+////                cuttingLine.setY2(centerPoint2.getY());
+//            }
+//        }
+//    }
+//    else
+//    {
+//        cuttingLine = Line(centerP.getX() , -2000000 , centerP.getX() , 2000000);
+//
+//        for (int i = 0; i < lines.size(); ++i)
+//        {
+//            Line line = lines[i];
+//            Point centerPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line);
+//            if (centerPoint.getX() == INT_MAX) continue;
+//
+//            Line first (centerP.getX() , -2000000 , centerP.getX() , centerP.getY());
+//            Line second(centerP.getX() , centerP.getY() , centerP.getX() , 2000000);
+//
+//            Point centerPoint1 = PolygonHelper::getIntersectionPoint(first , line);
+//
+//            if (centerPoint1.getX() != INT_MAX)
+//            {
+////                cuttingLine.setX1(centerPoint1.getX());
+//                cuttingLine.setY1(centerPoint1.getY());
+//                continue;
+//            }
+//
+//            Point centerPoint2 = PolygonHelper::getIntersectionPoint(second , line);
+//
+//            if (centerPoint2.getX() != INT_MAX)
+//            {
+////                cuttingLine.setX2(centerPoint2.getX());
+//                cuttingLine.setY2(centerPoint2.getY());
+//            }
+//        }
+//    }
+//
 
     cuttingLine = outerLand.getCenterLine();
-    cout<<"After\n";
-    cuttingLine.printJsonFormat();
+
     double dx = (cuttingLine.getX2() - cuttingLine.getX1()) / (greenAreas+1);
     double dy = (cuttingLine.getY2() - cuttingLine.getY1()) / (greenAreas+1);
 

@@ -11,6 +11,8 @@ private:
     Polygon1 mainLand;
     void divideLand(const vector<double> &ratios, vector<Polygon1> &pols , vector<vector<Polygon1>> &ans, LandDivisionSortingStrategy  landDivisionStrategy);
 
+    void divideLand(vector<pair<Polygon1 ,vector<double>>> &polsRatios , vector<vector<pair<Polygon1 , vector<double>>>> &ans, LandDivisionSortingStrategy  landDivisionStrategy);
+
     /**
      * Split Polygon
      * @param polygon1
