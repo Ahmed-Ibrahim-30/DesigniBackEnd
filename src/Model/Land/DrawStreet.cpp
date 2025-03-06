@@ -13,7 +13,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     double step1 = 20 , step2 = 30;
 
-    double height = 50;
+    double height = 100000000000;
 
     for (int i = 0; i < centerLines.size(); ++i)
     {
@@ -32,6 +32,20 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
             }
 
             Point next1UP = {next1.getX() , next1.getY() + height};
+
+            Line nextLine (next1.getX() , next1.getY() , next1UP.getX() , next1UP.getY());
+
+            for(auto &upLine : topPoints)
+            {
+                Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+
+                if (intersection.getX() != INT_MAX)
+                {
+                    next1UP = intersection;
+                    break;
+                }
+            }
+
             Point next2 = PolygonHelper::getNextPoint(next1 , destination , step1);
 
             if (next2 == destination){
@@ -39,6 +53,18 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
             }
 
             Point next2UP = {next2.getX() , next2.getY() + height};
+
+            nextLine = Line(next2.getX() , next2.getY() , next2UP.getX() , next2UP.getY());
+            for(auto &upLine : topPoints)
+            {
+                Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+
+                if (intersection.getX() != INT_MAX)
+                {
+                    next2UP = intersection;
+                    break;
+                }
+            }
 
             vector<Line> homeLines;
             homeLines.emplace_back(next1.getX() , next1.getY() , next2.getX() , next2.getY());
@@ -70,6 +96,20 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
             }
 
             Point next1UP = {next1.getX() , next1.getY() - height};
+
+            Line nextLine (next1.getX() , next1.getY() , next1UP.getX() , next1UP.getY());
+
+            for(auto &upLine : bottomPoints)
+            {
+                Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+
+                if (intersection.getX() != INT_MAX)
+                {
+                    next1UP = intersection;
+                    break;
+                }
+            }
+
             Point next2 = PolygonHelper::getNextPoint(next1 , destination , step1);
 
             if (next2 == destination){
@@ -77,6 +117,19 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
             }
 
             Point next2UP = {next2.getX() , next2.getY() - height};
+
+            nextLine = Line(next2.getX() , next2.getY() , next2UP.getX() , next2UP.getY());
+
+            for(auto &upLine : bottomPoints)
+            {
+                Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+
+                if (intersection.getX() != INT_MAX)
+                {
+                    next1UP = intersection;
+                    break;
+                }
+            }
 
             vector<Line> homeLines;
             homeLines.emplace_back(next1.getX() , next1.getY() , next2.getX() , next2.getY());
