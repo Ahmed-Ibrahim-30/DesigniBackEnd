@@ -77,19 +77,20 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
         Point cur = points[i];
         Point next = points[(i+1) %n];
 
-        if (cur.getY() < centroid.getY())
+        if (cur.getY() > centroid.getY())
         {
+            cout<<"Above --> "<<cur.getX()<<" "<<cur.getY()<<"\n";
             Point centerPoint(0,0);
-            if (prev.getY()>= centroid.getY())
+            if (prev.getY()<= centroid.getY())
             {
                 centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
             }
-            else if (next.getY()>= centroid.getY())
+            else if (next.getY()<= centroid.getY())
             {
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
             }
             else{
-                Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() + 10000000);
+                Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
                 for(auto &line : lines)
                 {
                     Point one(line.getX1() , line.getY1());
