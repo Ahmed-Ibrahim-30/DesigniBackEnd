@@ -69,7 +69,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
     vector<Point> points = polygon.getPoints();
     vector<Line> lines = polygon.getLines();
     int n = (int)points.size();
-    vector<Point> centerPoints;
+    vector<Point> centerPoints ;
 
     for (int i = 0; i < n; ++i)
     {
@@ -118,6 +118,94 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
         centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
     }
     return centerLines;
+}
+
+vector<Line> PolygonHelper::getTopLines(Polygon1 &polygon , double offsite)
+{
+    vector<Line> topLines;
+    Point centroid = polygon.calculateCentroid();
+    vector<Point> points = polygon.getPoints();
+    vector<Line> lines = polygon.getLines();
+    int n = (int)points.size();
+    vector<Point> centerPoints ;
+
+    for (int i = 0; i < n; ++i)
+    {
+        Point prev = points[i==0 ? n-1 : i-1];
+        Point cur = points[i];
+        Point next = points[(i+1) %n];
+
+        if (cur.getY() > centroid.getY())
+        {
+            Point centerPoint(0,0);
+            if (prev.getY()<= centroid.getY())
+            {
+                centerPoint = getNextPoint(cur , prev , offsite);
+            }
+            else if (next.getY()<= centroid.getY())
+            {
+                centerPoint = getNextPoint(cur , next , offsite);
+            }
+            else{
+                Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
+
+                centerPoint = getNextPoint({straight.getX1() , straight.getY1()} , {straight.getX2() , straight.getY2()} , offsite);
+            }
+            centerPoints.push_back(centerPoint);
+        }
+    }
+
+    for (int i = 1; i < centerPoints.size(); ++i)
+    {
+        Point prev = centerPoints[ i-1];
+        Point cur = centerPoints[i];
+        topLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+    }
+    return topLines;
+}
+
+vector<Line> PolygonHelper::getBottomLines(Polygon1 &polygon , double offsite)
+{
+    vector<Line> bottomLines;
+    Point centroid = polygon.calculateCentroid();
+    vector<Point> points = polygon.getPoints();
+    vector<Line> lines = polygon.getLines();
+    int n = (int)points.size();
+    vector<Point> centerPoints ;
+
+    for (int i = 0; i < n; ++i)
+    {
+        Point prev = points[i==0 ? n-1 : i-1];
+        Point cur = points[i];
+        Point next = points[(i+1) %n];
+
+        if (cur.getY() < centroid.getY())
+        {
+            Point centerPoint(0,0);
+            if (prev.getY()>= centroid.getY())
+            {
+                centerPoint = getNextPoint(cur , prev , offsite);
+            }
+            else if (next.getY() >= centroid.getY())
+            {
+                centerPoint = getNextPoint(cur , next , offsite);
+            }
+            else{
+                Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() + 10000000);
+
+                centerPoint = getNextPoint({straight.getX1() , straight.getY1()} , {straight.getX2() , straight.getY2()} , offsite);
+            }
+            centerPoints.push_back(centerPoint);
+        }
+    }
+
+    for (int i = 1; i < centerPoints.size(); ++i)
+    {
+        Point prev = centerPoints[ i-1];
+        Point cur = centerPoints[i];
+        bottomLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+    }
+    return bottomLines;
 }
 
 Point PolygonHelper::getNextPoint(const Point& current, const Point& destination, double step) {

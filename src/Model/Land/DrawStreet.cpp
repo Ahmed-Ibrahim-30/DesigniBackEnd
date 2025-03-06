@@ -8,6 +8,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
     centerLines = PolygonHelper::getCenterLines(polygon1);
 
+    vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 20);
+    vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 20);
+
     double step1 = 20 , step2 = 30;
 
     double height = 50;
@@ -87,6 +90,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
             current = next2;
         }
     }
+
+    streets.push_back(topPoints);
+    streets.push_back(bottomPoints);
 }
 
 const vector<Line> &DrawStreet::getCenterLines() const {

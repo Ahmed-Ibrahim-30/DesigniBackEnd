@@ -141,6 +141,20 @@ public:
      * @return
      */
     static Point getNextPoint(const Point& current, const Point& destination, double step);
+
+    /**
+     * offsite any line above centroid Point under by 20
+     * @param polygon
+     * @return
+     */
+    static vector<Line> getTopLines(Polygon1 &polygon , double offsite);
+
+    /**
+     * offsite any line under centroid Point above by 20
+     * @param polygon
+     * @return
+     */
+    static vector<Line> getBottomLines(Polygon1 &polygon , double offsite);
 };
 
 
