@@ -15,7 +15,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         Line line = centerLines[i];
 
         Point current = {line.getX1() , line.getY1()};
-        Point destination = {line.getX1() , line.getY1()};
+        Point destination = {line.getX2() , line.getY2()};
 
         Point next1 = PolygonHelper::getNextPoint(current , destination , step1);
         Point next1UP = {next1.getX() , next1.getY() + 30};
