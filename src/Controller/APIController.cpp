@@ -29,6 +29,7 @@ APIController::APIController(crow::SimpleApp &app)
     modifyDesignRoutes(app);
     requestDesignRoutes(app);
     requestDesign2Routes(app);
+    landDivisionRoutesStreets(app);
 }
 
 void APIController::preProcessing() {
