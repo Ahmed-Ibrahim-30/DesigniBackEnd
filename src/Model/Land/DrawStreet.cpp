@@ -157,7 +157,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
                 if (intersection.getX() != INT_MAX)
                 {
-                    next1UP = intersection;
+//                    next1UP = intersection;
                     break;
                 }
             }
