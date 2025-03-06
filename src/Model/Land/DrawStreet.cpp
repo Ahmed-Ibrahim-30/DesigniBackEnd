@@ -207,8 +207,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         }
     }
 
-    streets.push_back(topPoints);
-    streets.push_back(bottomPoints);
+//    streets.push_back(topPoints);
+//    streets.push_back(bottomPoints);
 }
 
 const vector<Line> &DrawStreet::getCenterLines() const {
