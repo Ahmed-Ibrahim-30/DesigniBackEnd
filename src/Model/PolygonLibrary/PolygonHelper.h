@@ -132,6 +132,15 @@ public:
      * @return
      */
     static vector<Line> getCenterLines(Polygon1 &polygon);
+
+    /**
+     * Get Next Point for line
+     * @param current
+     * @param destination
+     * @param step
+     * @return
+     */
+    static Point getNextPoint(const Point& current, const Point& destination, double step);
 };
 
 

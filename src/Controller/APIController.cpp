@@ -559,8 +559,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         DrawStreet drawStreet;
         drawStreet.drawStreets(polygon1);
         vector<Line> centerLines = drawStreet.getCenterLines();
-
-        cout<<"CenterLines Size = "<<centerLines.size()<<"\n";
+        vector<vector<Line>> homes = drawStreet.getStreets();
 
         for (int i = 0; i < centerLines.size(); ++i)
         {
@@ -570,6 +569,19 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
                     {"x2" , centerLines[i].getX2()},
                     {"y2" , centerLines[i].getY2()},
             };
+        }
+
+        for (int i = 0; i < homes.size(); ++i)
+        {
+            for (int j = 0; j < homes[i].size(); ++j) {
+                response["homes"][i][j] = {
+                        {"x1" , homes[i][j].getX1()},
+                        {"y1" , homes[i][j].getY1()},
+                        {"x2" , homes[i][j].getX2()},
+                        {"y2" , homes[i][j].getY2()},
+                };
+            }
+
         }
 
         crow::response finalRes (200 , response);

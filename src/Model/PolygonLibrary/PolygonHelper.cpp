@@ -79,7 +79,6 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
 
         if (cur.getY() > centroid.getY())
         {
-            cout<<"Above --> "<<cur.getX()<<" "<<cur.getY()<<"\n";
             Point centerPoint(0,0);
             if (prev.getY()<= centroid.getY())
             {
@@ -119,6 +118,24 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
         centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
     }
     return centerLines;
+}
+
+Point PolygonHelper::getNextPoint(const Point& current, const Point& destination, double step) {
+    double dx = destination.getX() - current.getX();
+    double dy = destination.getY() - current.getY();
+    Line line (current.getX() , current.getY() , destination.getX() , destination.getY());
+    double length = line.getLength();
+
+
+    if (length < step) {
+        return destination;  // If the remaining distance is smaller than step, just return the destination
+    }
+
+    // Normalize the direction vector
+    Point unitDirection = {dx / length, dy / length};
+
+    // Compute the new point
+    return {current.getX()  + unitDirection.getX()  * step, current.getY() + unitDirection.getY() * step};
 }
 
 bool PolygonHelper::isPointInSegment(const Point &p, const Line &line)
