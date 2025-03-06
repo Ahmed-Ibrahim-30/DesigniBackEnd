@@ -8,7 +8,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
     centerLines = PolygonHelper::getCenterLines(polygon1);
 
-    double step1 = 20 , step2 = 10;
+    double step1 = 20 , step2 = 30;
 
     double height = 50;
 
@@ -54,7 +54,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         Line line = centerLines[i];
 
         Point current(line.getX1() , line.getY1());
-        step2 = 10;
+        step2 = 30;
 
         while (true)
         {
