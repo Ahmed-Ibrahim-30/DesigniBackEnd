@@ -12,6 +12,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 20);
 
     double step1 = 20 , step2 = 30;
+    vector<Line> polygonLines = polygon1.getLines();
 
     double height = 100000000000;
 
@@ -35,14 +36,29 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
             Line nextLine (next1.getX() , next1.getY() , next1UP.getX() , next1UP.getY());
 
+            bool foundIntersection = false;
             for(auto &upLine : topPoints)
             {
                 Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
                 if (intersection.getX() != INT_MAX)
                 {
+                    foundIntersection = true;
                     next1UP = intersection;
                     break;
+                }
+            }
+            if (!foundIntersection)
+            {
+                for(auto &pLine : polygonLines)
+                {
+                    Point intersection = PolygonHelper::getIntersectionPoint(pLine , nextLine);
+
+                    if (intersection.getX() != INT_MAX)
+                    {
+                        next1UP = intersection;
+                        break;
+                    }
                 }
             }
 
@@ -54,6 +70,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
             Point next2UP = {next2.getX() , next2.getY() + height};
 
+            foundIntersection = false;
             nextLine = Line(next2.getX() , next2.getY() , next2UP.getX() , next2UP.getY());
             for(auto &upLine : topPoints)
             {
@@ -61,8 +78,22 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
                 if (intersection.getX() != INT_MAX)
                 {
+                    foundIntersection = true;
                     next2UP = intersection;
                     break;
+                }
+            }
+            if (!foundIntersection)
+            {
+                for(auto &pLine : polygonLines)
+                {
+                    Point intersection = PolygonHelper::getIntersectionPoint(pLine , nextLine);
+
+                    if (intersection.getX() != INT_MAX)
+                    {
+                        next2UP = intersection;
+                        break;
+                    }
                 }
             }
 
