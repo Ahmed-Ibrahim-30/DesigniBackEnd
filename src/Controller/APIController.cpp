@@ -18,6 +18,7 @@
 #include "src/Model/Land/LandDivisionRoads/LandDivisionRoadsByArea.h"
 #include "src/Model/Land/LandDivisionRoads/LandDivisionRoadsByDivisionsCount.h"
 #include "src/Model/Land/LandDivisionRoads/LandDivisionRoadsByRatios.h"
+#include "src/Model/Land/DrawStreet.h"
 APIController::APIController(crow::SimpleApp &app)
 {
     preProcessing();
@@ -554,6 +555,20 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         Polygon1 polygon1(points);
 
         cout<<"Area = "<<polygon1.getArea() <<" \n";
+
+        DrawStreet drawStreet;
+        drawStreet.drawStreets(polygon1);
+        vector<Line> centerLines = drawStreet.getCenterLines();
+
+        for (int i = 0; i < centerLines.size(); ++i)
+        {
+            response["centerLines"][i] = {
+                    {"x1" , centerLines[i].getX1()},
+                    {"y1" , centerLines[i].getY1()},
+                    {"x2" , centerLines[i].getX2()},
+                    {"y2" , centerLines[i].getY2()},
+            };
+        }
 
         crow::response finalRes (200 , response);
 
