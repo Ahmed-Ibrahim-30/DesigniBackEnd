@@ -323,7 +323,8 @@ vector<Point> Polygon1::scalePolygon(double scale)
     vector<Point> scaledVertices;
     Point centroid = calculateCentroid();
 
-    for (auto& vertex : points) {
+    for (auto& vertex : points)
+    {
         Point scaledVertex;
         scaledVertex.setX( centroid.getX() + (vertex.getX() - centroid.getX()) * scale);
         scaledVertex.setY( centroid.getY() + (vertex.getY() - centroid.getY()) * scale);

@@ -530,6 +530,39 @@ void APIController::landDivisionRoutes(SimpleApp &app)
     });
 }
 
+void APIController::landDivisionRoutesStreets(SimpleApp &app)
+{
+    CROW_ROUTE(app , "/LandDivision2").methods(crow::HTTPMethod::POST)([&](const crow::request&req)
+    {
+        auto jsonData = crow::json::load(req.body);
+        std::cout << "Request Body: " << req.body << std::endl;
+        if (!jsonData) {
+            return crow::response(400, "Invalid JSON format");
+        }
+        crow::json::wvalue response;
+        int strategy = (int)jsonData["strategy"].i();
+        auto polygon = jsonData["polygon"];
+        vector<Point> points;
+        for(auto &point : polygon)
+        {
+            double x = point["x"].d();
+            double y = point["y"].d();
+            points.emplace_back(x , y);
+        }
+
+        Polygon1 polygon1(points);
+
+        cout<<"Area = "<<polygon1.getArea() <<" \n";
+
+        crow::response finalRes (200 , response);
+
+        finalRes.add_header("Access-Control-Allow-Origin", "*");
+        finalRes.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        finalRes.add_header("Access-Control-Allow-Headers", "Content-Type");
+        return finalRes;
+    });
+}
+
 void APIController::subLandDivisionRoutes(SimpleApp &app)
 {
     CROW_ROUTE(app , "/SubLandDivision").methods(crow::HTTPMethod::POST)([&](const crow::request&req)

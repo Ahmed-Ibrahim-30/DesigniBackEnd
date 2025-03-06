@@ -125,6 +125,13 @@ public:
      * @return
      */
     static bool isPointInsidePolygon(const Point& point, const Polygon1& polygon);
+
+    /**
+     * Get Center Lines
+     * @param polygon
+     * @return
+     */
+    static vector<Line> getCenterLines(Polygon1 &polygon);
 };
 
 

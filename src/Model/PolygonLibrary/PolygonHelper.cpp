@@ -62,6 +62,64 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
     return Point{px, py};
 }
 
+vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
+{
+    vector<Line> centerLines;
+    Point centroid = polygon.calculateCentroid();
+    vector<Point> points = polygon.getPoints();
+    vector<Line> lines = polygon.getLines();
+    int n = (int)points.size();
+    vector<Point> centerPoints;
+
+    for (int i = 0; i < n; ++i)
+    {
+        Point prev = points[i==0 ? n-1 : i-1];
+        Point cur = points[i];
+        Point next = points[(i+1) %n];
+
+        if (cur.getY() < centroid.getY())
+        {
+            Point centerPoint(0,0);
+            if (prev.getY()>= centroid.getY())
+            {
+                centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
+            }
+            else if (next.getY()>= centroid.getY())
+            {
+                centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
+            }
+            else{
+                Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() + 10000000);
+                for(auto &line : lines)
+                {
+                    Point one(line.getX1() , line.getY1());
+                    Point two(line.getX2() , line.getY2());
+
+                    if (one == cur || two == cur)continue;
+
+                    Point intersectionPoint = getIntersectionPoint(straight , line);
+                    if (intersectionPoint.getX() != INT_MAX)
+                    {
+                        straight.setX2(intersectionPoint.getX());
+                        straight.setY2(intersectionPoint.getY());
+                        break;
+                    }
+                }
+                centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
+            }
+            centerPoints.push_back(centerPoint);
+        }
+    }
+
+    for (int i = 1; i < centerPoints.size(); ++i)
+    {
+        Point prev = centerPoints[ i-1];
+        Point cur = centerPoints[i];
+        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+    }
+    return centerLines;
+}
+
 bool PolygonHelper::isPointInSegment(const Point &p, const Line &line)
 {
     if(abs(line.getX1() - line.getX2()) <= 0.1 || abs(line.getY1() - line.getY2()) <= 0.1 )
@@ -260,7 +318,6 @@ pair<Polygon1, Polygon1> PolygonHelper::splitPolygons(const Polygon1& polygon1, 
         else poly2.push_back(curr);
 
         // Check for intersection with the edge
-
         double nextPos = (line.getX2() - line.getX1()) * (next.getY() - line.getY1()) -
                          (line.getY2() - line.getY1()) * (next.getX() - line.getX1());
 
