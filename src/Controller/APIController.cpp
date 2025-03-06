@@ -560,6 +560,8 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         drawStreet.drawStreets(polygon1);
         vector<Line> centerLines = drawStreet.getCenterLines();
 
+        cout<<"CenterLines Size = "<<centerLines.size()<<"\n";
+
         for (int i = 0; i < centerLines.size(); ++i)
         {
             response["centerLines"][i] = {
