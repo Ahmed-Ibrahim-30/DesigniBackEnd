@@ -125,6 +125,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
             if (next1 == destination){
                 break;
             }
+            bool foundIntersection = false;
 
             Point next1UP = {next1.getX() , next1.getY() - height};
 
@@ -136,8 +137,23 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
                 if (intersection.getX() != INT_MAX)
                 {
+                    foundIntersection = true;
                     next1UP = intersection;
                     break;
+                }
+            }
+
+            if (!foundIntersection)
+            {
+                for(auto &pLine : polygonLines)
+                {
+                    Point intersection = PolygonHelper::getIntersectionPoint(pLine , nextLine);
+
+                    if (intersection.getX() != INT_MAX)
+                    {
+                        next1UP = intersection;
+                        break;
+                    }
                 }
             }
 
@@ -151,14 +167,30 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
             nextLine = Line(next2.getX() , next2.getY() , next2UP.getX() , next2UP.getY());
 
+            foundIntersection = false;
             for(auto &upLine : bottomPoints)
             {
                 Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
                 if (intersection.getX() != INT_MAX)
                 {
+                    foundIntersection = true;
                     next2UP = intersection;
                     break;
+                }
+            }
+
+            if (!foundIntersection)
+            {
+                for(auto &pLine : polygonLines)
+                {
+                    Point intersection = PolygonHelper::getIntersectionPoint(pLine , nextLine);
+
+                    if (intersection.getX() != INT_MAX)
+                    {
+                        next2UP = intersection;
+                        break;
+                    }
                 }
             }
 
