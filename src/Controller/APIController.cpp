@@ -561,15 +561,15 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<vector<Line>> homes = drawStreet.getStreets();
 
-//        for (int i = 0; i < centerLines.size(); ++i)
-//        {
-//            response["centerLines"][i] = {
-//                    {"x1" , centerLines[i].getX1()},
-//                    {"y1" , centerLines[i].getY1()},
-//                    {"x2" , centerLines[i].getX2()},
-//                    {"y2" , centerLines[i].getY2()},
-//            };
-//        }
+        for (int i = 0; i < centerLines.size(); ++i)
+        {
+            response["centerLines"][i] = {
+                    {"x1" , centerLines[i].getX1()},
+                    {"y1" , centerLines[i].getY1()},
+                    {"x2" , centerLines[i].getX2()},
+                    {"y2" , centerLines[i].getY2()},
+            };
+        }
 
         for (int i = 0; i < homes.size(); ++i)
         {
