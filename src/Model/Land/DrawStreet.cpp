@@ -168,7 +168,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
         for(auto &pLine : polygonLines)
         {
-            Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
+            Point intersection = PolygonHelper::getIntersectionPoint(pLine , leftExtension);
 
             if (intersection.getX() != INT_MAX)
             {
