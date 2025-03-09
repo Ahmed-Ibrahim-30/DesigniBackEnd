@@ -181,6 +181,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         extensions.push_back(leftExtension);
         roadExtension.push_back(extensions);
 
+        //Home border
         vector<Line> homeBorderSol;
 
         Point start = startPoint;
@@ -370,6 +371,35 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         extensions.push_back(rightExtension);
 
         roadExtension.push_back(extensions);
+
+
+        //Home Border
+
+        vector<Line> homeBorderSol;
+
+        Point start = startPoint;
+        Point last = lastPoint;
+        Point center = centerBottom;
+
+        while (true)
+        {
+            Point nextPoint1 = PolygonHelper::getNextPoint(start , next1UP , 20);
+            Point nextPoint2 = PolygonHelper::getNextPoint(last , next2UP , 20);
+            Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTop , 20);
+
+            if (nextPoint1 == next1UP || nextPoint2 == next2UP || nextPoint3 == centerTop)
+            {
+                break;
+            }
+
+            homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
+            homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
+
+            start = nextPoint1;
+            last = nextPoint2;
+            center = nextPoint3;
+        }
+        homeBorder.push_back(homeBorderSol);
     }
     return bottomStreets;
 }
