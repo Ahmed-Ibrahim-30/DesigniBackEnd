@@ -10,6 +10,9 @@ class DrawStreet {
 private:
     vector<Line> centerLines;
     vector<vector<Line>> streets;
+
+    vector<vector<Line>> drawTopStreets(const vector<Line> &polygonLines ,const vector<Line> &TopLine , double step = 40);
+    vector<vector<Line>> drawBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &bottomLine , double step = 40);
 public:
     void drawStreets(Polygon1 &polygon1);
     const vector<Line> &getCenterLines() const;
