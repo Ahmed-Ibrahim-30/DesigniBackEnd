@@ -590,6 +590,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         drawStreet.drawStreets(polygon1);
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<vector<Line>> homes = drawStreet.getStreets();
+        vector<vector<Line>> roadExtension = drawStreet.getRoadExtension();
 
         for (int i = 0; i < centerLines.size(); ++i)
         {
@@ -613,7 +614,18 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             }
         }
 
-        response["roadExtension"] = std::vector<crow::json::wvalue>{};
+        for (int i = 0; i < roadExtension.size(); ++i)
+        {
+            for (int j = 0; j < roadExtension[i].size(); ++j) {
+                response["roadExtension"][i][j] = {
+                        {"x1" , roadExtension[i][j].getX1()},
+                        {"y1" , roadExtension[i][j].getY1()},
+                        {"x2" , roadExtension[i][j].getX2()},
+                        {"y2" , roadExtension[i][j].getY2()},
+                };
+            }
+        }
+
         response["homeBorder"] = std::vector<crow::json::wvalue>{};
 
 

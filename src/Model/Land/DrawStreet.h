@@ -10,6 +10,14 @@ class DrawStreet {
 private:
     vector<Line> centerLines;
     vector<vector<Line>> streets;
+    vector<vector<Line>> roadExtension;
+public:
+    const vector<vector<Line>> &getRoadExtension() const;
+
+    const vector<vector<Line>> &getHomeBorder() const;
+
+private:
+    vector<vector<Line>> homeBorder;
 
     vector<vector<Line>> drawTopStreets(const vector<Line> &polygonLines ,const vector<Line> &TopLine , double step = 40);
     vector<vector<Line>> drawBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &bottomLine , double step = 40);

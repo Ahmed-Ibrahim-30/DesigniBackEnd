@@ -11,7 +11,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 20);
     vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 20);
 
-    double step1 = 40 , step2 = 30;
+    double step1 = 40 ;
     vector<Line> polygonLines = polygon1.getLines();
 
     vector<vector<Line>> topStreets = drawTopStreets(polygonLines , topPoints , step1);
@@ -142,6 +142,29 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
 
         topStreets.push_back(homeLines);
+
+        vector<Line> extensions;
+        Point centerBottom , centerTop;
+        double reqLength = step/2;
+        for(auto &bLine : bottomLines)
+        {
+            double lineLen = bLine.getLength();
+
+            if (lineLen < reqLength)
+            {
+                reqLength -= lineLen;
+                continue;
+            }
+
+            centerBottom = PolygonHelper::getNextPoint({bLine.getX1() , bLine.getY1()} , {bLine.getX2() , bLine.getY2()} , reqLength);
+        }
+
+        centerTop = Point ((next1UP.getX()+next2UP.getX())/2 , (next1UP.getY()+next2UP.getY())/2);
+
+        Line centerExtension (centerBottom.getX() , centerBottom.getY() , centerTop.getX() , centerTop.getY());
+        extensions.push_back(centerExtension);
+
+        roadExtension.push_back(extensions);
     }
     return topStreets;
 }
@@ -275,6 +298,14 @@ const vector<Line> &DrawStreet::getCenterLines() const {
 
 const vector<vector<Line>> &DrawStreet::getStreets() const {
     return streets;
+}
+
+const vector<vector<Line>> &DrawStreet::getRoadExtension() const {
+    return roadExtension;
+}
+
+const vector<vector<Line>> &DrawStreet::getHomeBorder() const {
+    return homeBorder;
 }
 
 
