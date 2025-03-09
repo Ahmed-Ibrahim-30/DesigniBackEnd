@@ -657,6 +657,11 @@ void APIController::subLandDivisionRoutes(SimpleApp &app)
         for (int i = 3; i <= 5; ++i)
         {
             design1 = templatesDesigns.getDesignByBedrooms(i);
+            if(design1.getRooms().empty())
+            {
+                response ["Details"][i-3] = "0";
+                continue;
+            }
 
             ans = land.SplitLand(design1 , static_cast<LandDivisionSortingStrategy>(strategy));
 
