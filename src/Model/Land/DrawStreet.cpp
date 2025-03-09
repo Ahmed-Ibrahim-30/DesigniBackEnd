@@ -277,7 +277,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         partialLine ={startPoint.getX() , startPoint.getY() , destination.getX() , destination.getY()};
         length = partialLine.getLength();
 
-        if (length < newStep)
+        if (length < step)
         {
             topLines.push_back(partialLine);
 
@@ -285,12 +285,12 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
             if (centerLineIndex == centerLines.size())break;
             line = centerLines[centerLineIndex];
             destination = {line.getX2() , line.getY2()};
-            lastPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , newStep - length);
+            lastPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , step - length);
 
             topLines.emplace_back(line.getX1() , line.getY1() , lastPoint.getX() , lastPoint.getY());
         }else
         {
-            lastPoint = PolygonHelper::getNextPoint(startPoint , destination , newStep);
+            lastPoint = PolygonHelper::getNextPoint(startPoint , destination , step);
             topLines.emplace_back(startPoint.getX() , startPoint.getY() , lastPoint.getX() , lastPoint.getY());
         }
 
