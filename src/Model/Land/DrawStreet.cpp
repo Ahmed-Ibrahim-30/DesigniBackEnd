@@ -200,6 +200,10 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
             homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
             homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
+
+            start = nextPoint1;
+            last = nextPoint2;
+            center = nextPoint3;
         }
         homeBorder.push_back(homeBorderSol);
     }
