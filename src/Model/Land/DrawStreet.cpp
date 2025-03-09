@@ -288,6 +288,30 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
 
         bottomStreets.push_back(homeLines);
+
+
+        vector<Line> extensions;
+        Point centerBottom , centerTop;
+        double reqLength = step/2;
+        for(auto &bLine : topLines)
+        {
+            double lineLen = bLine.getLength();
+
+            if (lineLen < reqLength)
+            {
+                reqLength -= lineLen;
+                continue;
+            }
+
+            centerBottom = PolygonHelper::getNextPoint({bLine.getX1() , bLine.getY1()} , {bLine.getX2() , bLine.getY2()} , reqLength);
+        }
+
+        centerTop = Point ((next1UP.getX()+next2UP.getX())/2 , (next1UP.getY()+next2UP.getY())/2);
+
+        Line centerExtension (centerBottom.getX() , centerBottom.getY() , centerTop.getX() , centerTop.getY());
+        extensions.push_back(centerExtension);
+
+        roadExtension.push_back(extensions);
     }
     return bottomStreets;
 }
