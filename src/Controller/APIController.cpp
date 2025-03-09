@@ -586,9 +586,10 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
                 };
             }
         }
-        
-        response["roadExtension"] = {};
-        response["homeBorder"] = {};
+
+        response["roadExtension"] = std::vector<crow::json::wvalue>{};
+        response["homeBorder"] = std::vector<crow::json::wvalue>{};
+
 
         crow::response finalRes (200 , response);
 
