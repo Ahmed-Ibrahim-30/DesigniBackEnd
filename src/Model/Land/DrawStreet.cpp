@@ -25,6 +25,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
         Line line = centerLines[centerLineIndex];
 
+        vector<Line> bottomLines;
+
         Point destination = {line.getX2() , line.getY2()};
 
         Line partialLine {lastPoint.getX() , lastPoint.getY() , destination.getX() , destination.getY()};
@@ -45,12 +47,20 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
         if (length < step1)
         {
+            bottomLines.push_back(partialLine);
+
             centerLineIndex ++;
             if (centerLineIndex == centerLines.size())break;
             line = centerLines[centerLineIndex];
             destination = {line.getX2() , line.getY2()};
-            lastPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , step1 - length);;
-        }else lastPoint = PolygonHelper::getNextPoint(startPoint , destination , step1);
+            lastPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , step1 - length);
+
+            bottomLines.emplace_back(line.getX1() , line.getY1() , lastPoint.getX() , lastPoint.getY());
+        }else
+        {
+            lastPoint = PolygonHelper::getNextPoint(startPoint , destination , step1);
+            bottomLines.emplace_back(startPoint.getX() , startPoint.getY() , lastPoint.getX() , lastPoint.getY());
+        }
 
 
         Point next1UP = {startPoint.getX() , startPoint.getY() + height};
@@ -114,7 +124,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         }
 
         vector<Line> homeLines;
-        homeLines.emplace_back(startPoint.getX() , startPoint.getY() , lastPoint.getX() , lastPoint.getY());
+        homeLines.insert(homeLines.end() , bottomLines.begin() , bottomLines.end());
         homeLines.emplace_back(startPoint.getX() , startPoint.getY() , next1UP.getX() , next1UP.getY());
         homeLines.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
         homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
