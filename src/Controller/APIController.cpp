@@ -496,6 +496,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             response["Inner"][i]["id"] = ans[i].getId();
             response["Inner"][i]["area"] = pol.getArea();
             response["Inner"][i]["green_area"] = !pol.isDivisible();
+            response["Inner"][i]["centerLines"] = {};
+            response["Inner"][i]["roads"] = {};
+            response["Inner"][i]["roadExtension"] = {};
+            response["Inner"][i]["homeBorder"] = {};
             for(auto &p : pol.getPoints())
             {
                 response["Inner"][i]["Points"][index++] = {
@@ -574,15 +578,17 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         for (int i = 0; i < homes.size(); ++i)
         {
             for (int j = 0; j < homes[i].size(); ++j) {
-                response["homes"][i][j] = {
+                response["roads"][i][j] = {
                         {"x1" , homes[i][j].getX1()},
                         {"y1" , homes[i][j].getY1()},
                         {"x2" , homes[i][j].getX2()},
                         {"y2" , homes[i][j].getY2()},
                 };
             }
-
         }
+        
+        response["roadExtension"] = {};
+        response["homeBorder"] = {};
 
         crow::response finalRes (200 , response);
 
