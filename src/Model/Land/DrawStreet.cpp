@@ -326,6 +326,21 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         Line centerExtension (centerBottom.getX() , centerBottom.getY() , centerTop.getX() , centerTop.getY());
         extensions.push_back(centerExtension);
 
+
+        Line rightExtension (lastPoint.getX() , lastPoint.getY() , lastPoint.getX() , lastPoint.getY() + height);
+
+        for(auto &pLine : polygonLines)
+        {
+            Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
+
+            if (intersection.getX() != INT_MAX)
+            {
+                rightExtension.setY2(intersection.getY());
+                break;
+            }
+        }
+        extensions.push_back(rightExtension);
+
         roadExtension.push_back(extensions);
     }
     return bottomStreets;
