@@ -18,6 +18,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines , bottomPoints , step1);
 
     streets.insert(streets.end() , bottomStreets.begin() , bottomStreets.end());
+    streets.insert(streets.end() , topStreets.begin() , topStreets.end());
 
 //    for (int i = 0; i < centerLines.size(); ++i)
 //    {
