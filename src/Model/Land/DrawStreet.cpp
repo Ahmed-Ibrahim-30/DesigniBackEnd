@@ -164,7 +164,22 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         Line centerExtension (centerBottom.getX() , centerBottom.getY() , centerTop.getX() , centerTop.getY());
         extensions.push_back(centerExtension);
 
+        Line leftExtension (startPoint.getX() , startPoint.getY() , startPoint.getX() , startPoint.getY() - height);
+
+        for(auto &pLine : polygonLines)
+        {
+            Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
+
+            if (intersection.getX() != INT_MAX)
+            {
+                leftExtension.setY2(intersection.getY());
+                break;
+            }
+        }
+        extensions.push_back(leftExtension);
+
         roadExtension.push_back(extensions);
+
     }
     return topStreets;
 }
