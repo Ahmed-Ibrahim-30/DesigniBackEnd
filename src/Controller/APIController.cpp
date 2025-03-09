@@ -496,10 +496,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             response["Inner"][i]["id"] = ans[i].getId();
             response["Inner"][i]["area"] = pol.getArea();
             response["Inner"][i]["green_area"] = !pol.isDivisible();
-            response["Inner"][i]["centerLines"] = {};
-            response["Inner"][i]["roads"] = {};
-            response["Inner"][i]["roadExtension"] = {};
-            response["Inner"][i]["homeBorder"] = {};
+            response["Inner"][i]["centerLines"] = std::vector<crow::json::wvalue>{};
+            response["Inner"][i]["roads"] = std::vector<crow::json::wvalue>{};
+            response["Inner"][i]["roadExtension"] = std::vector<crow::json::wvalue>{};
+            response["Inner"][i]["homeBorder"] = std::vector<crow::json::wvalue>{};
             for(auto &p : pol.getPoints())
             {
                 response["Inner"][i]["Points"][index++] = {
