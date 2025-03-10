@@ -5,14 +5,16 @@
 #ifndef DESIGNI_BACKEND_DRAWSTREET_H
 #define DESIGNI_BACKEND_DRAWSTREET_H
 #include "src/Model/PolygonLibrary/PolygonHelper.h"
+#include "src/Model/Land/CityGrid.h"
 
 class DrawStreet {
 private:
     vector<Line> centerLines;
-    vector<vector<Line>> streets;
-    vector<vector<Line>> roadExtension;
 
-    vector<vector<Line>> homeBorder;
+    vector<CityGrid> cities;
+
+    vector<vector<Line>> streets;
+
 
     /**
      * Draw TOP BOTTOM Streets
@@ -22,7 +24,7 @@ private:
      * @param step
      * @return
      */
-    vector<vector<Line>> drawTopBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &TopLine , const vector<Line> &bottomLine , double step = 40);
+    vector<vector<Line>> drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &TopLine , const vector<Line> &bottomLine , double step = 40);
 
     /**
      * Get Next Point after start Point with step variable
@@ -40,11 +42,6 @@ private:
 
 public:
     void drawStreets(Polygon1 &polygon1);
-
-
-    [[nodiscard]] const vector<vector<Line>> &getRoadExtension() const;
-
-    [[nodiscard]] const vector<vector<Line>> &getHomeBorder() const;
 
     [[nodiscard]] const vector<Line> &getCenterLines() const;
 

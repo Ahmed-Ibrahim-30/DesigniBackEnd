@@ -31,8 +31,6 @@ file(GLOB_RECURSE SRC_FILES
 add_executable(Designi_BackEnd
         main.cpp
         ${SRC_FILES}
-        src/Model/Land/DrawStreet.cpp
-        src/Model/Land/DrawStreet.h
 )
 
 find_package(Threads REQUIRED)

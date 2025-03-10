@@ -512,8 +512,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             drawStreet.drawStreets(pol);
             vector<Line> centerLines = drawStreet.getCenterLines();
             vector<vector<Line>> roads = drawStreet.getStreets();
-            vector<vector<Line>> roadExtension = drawStreet.getRoadExtension();
-            vector<vector<Line>> homeBorder = drawStreet.getHomeBorder();
+//            vector<vector<Line>> roadExtension = drawStreet.getRoadExtension();
+//            vector<vector<Line>> homeBorder = drawStreet.getHomeBorder();
 
             for (int j = 0; j < centerLines.size(); ++j)
             {
@@ -537,29 +537,29 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 }
             }
 
-            for (int m = 0; m < roadExtension.size(); ++m)
-            {
-                for (int j = 0; j < roadExtension[i].size(); ++j) {
-                    response["Inner"][i]["roadExtension"][m][j] = {
-                            {"x1" , roadExtension[m][j].getX1()},
-                            {"y1" , roadExtension[m][j].getY1()},
-                            {"x2" , roadExtension[m][j].getX2()},
-                            {"y2" , roadExtension[m][j].getY2()},
-                    };
-                }
-            }
-
-            for (int m = 0; m < homeBorder.size(); ++m)
-            {
-                for (int j = 0; j < homeBorder[i].size(); ++j) {
-                    response["Inner"][i]["homeBorder"][m][j] = {
-                            {"x1" , homeBorder[m][j].getX1()},
-                            {"y1" , homeBorder[m][j].getY1()},
-                            {"x2" , homeBorder[m][j].getX2()},
-                            {"y2" , homeBorder[m][j].getY2()},
-                    };
-                }
-            }
+//            for (int m = 0; m < roadExtension.size(); ++m)
+//            {
+//                for (int j = 0; j < roadExtension[i].size(); ++j) {
+//                    response["Inner"][i]["roadExtension"][m][j] = {
+//                            {"x1" , roadExtension[m][j].getX1()},
+//                            {"y1" , roadExtension[m][j].getY1()},
+//                            {"x2" , roadExtension[m][j].getX2()},
+//                            {"y2" , roadExtension[m][j].getY2()},
+//                    };
+//                }
+//            }
+//
+//            for (int m = 0; m < homeBorder.size(); ++m)
+//            {
+//                for (int j = 0; j < homeBorder[i].size(); ++j) {
+//                    response["Inner"][i]["homeBorder"][m][j] = {
+//                            {"x1" , homeBorder[m][j].getX1()},
+//                            {"y1" , homeBorder[m][j].getY1()},
+//                            {"x2" , homeBorder[m][j].getX2()},
+//                            {"y2" , homeBorder[m][j].getY2()},
+//                    };
+//                }
+//            }
         }
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
@@ -617,8 +617,8 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         drawStreet.drawStreets(polygon1);
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<vector<Line>> homes = drawStreet.getStreets();
-        vector<vector<Line>> roadExtension = drawStreet.getRoadExtension();
-        vector<vector<Line>> homeBorder = drawStreet.getHomeBorder();
+//        vector<vector<Line>> roadExtension = drawStreet.getRoadExtension();
+//        vector<vector<Line>> homeBorder = drawStreet.getHomeBorder();
 
         for (int i = 0; i < centerLines.size(); ++i)
         {
@@ -642,29 +642,29 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             }
         }
 
-        for (int i = 0; i < roadExtension.size(); ++i)
-        {
-            for (int j = 0; j < roadExtension[i].size(); ++j) {
-                response["roadExtension"][i][j] = {
-                        {"x1" , roadExtension[i][j].getX1()},
-                        {"y1" , roadExtension[i][j].getY1()},
-                        {"x2" , roadExtension[i][j].getX2()},
-                        {"y2" , roadExtension[i][j].getY2()},
-                };
-            }
-        }
-
-        for (int i = 0; i < homeBorder.size(); ++i)
-        {
-            for (int j = 0; j < homeBorder[i].size(); ++j) {
-                response["homeBorder"][i][j] = {
-                        {"x1" , homeBorder[i][j].getX1()},
-                        {"y1" , homeBorder[i][j].getY1()},
-                        {"x2" , homeBorder[i][j].getX2()},
-                        {"y2" , homeBorder[i][j].getY2()},
-                };
-            }
-        }
+//        for (int i = 0; i < roadExtension.size(); ++i)
+//        {
+//            for (int j = 0; j < roadExtension[i].size(); ++j) {
+//                response["roadExtension"][i][j] = {
+//                        {"x1" , roadExtension[i][j].getX1()},
+//                        {"y1" , roadExtension[i][j].getY1()},
+//                        {"x2" , roadExtension[i][j].getX2()},
+//                        {"y2" , roadExtension[i][j].getY2()},
+//                };
+//            }
+//        }
+//
+//        for (int i = 0; i < homeBorder.size(); ++i)
+//        {
+//            for (int j = 0; j < homeBorder[i].size(); ++j) {
+//                response["homeBorder"][i][j] = {
+//                        {"x1" , homeBorder[i][j].getX1()},
+//                        {"y1" , homeBorder[i][j].getY1()},
+//                        {"x2" , homeBorder[i][j].getX2()},
+//                        {"y2" , homeBorder[i][j].getY2()},
+//                };
+//            }
+//        }
 
 //        response["homeBorder"] = std::vector<crow::json::wvalue>{};
 
