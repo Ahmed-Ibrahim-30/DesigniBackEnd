@@ -12,6 +12,10 @@ private:
     vector<Line> centerLines;
 
     vector<CityGrid> cities;
+public:
+    const vector<CityGrid> &getCities() const;
+
+private:
 
     vector<vector<Line>> streets;
 
@@ -24,7 +28,7 @@ private:
      * @param step
      * @return
      */
-    vector<vector<Line>> drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &TopLine , const vector<Line> &bottomLine , double step = 40);
+    vector<Line> drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step, bool isTop);
 
     /**
      * Get Next Point after start Point with step variable
@@ -35,6 +39,7 @@ private:
      * @return
      */
     Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step ,vector<Line> &connLines);
+    Point getPrevPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step ,vector<Line> &connLines);
 
     vector<vector<Line>> drawTopStreets(const vector<Line> &polygonLines ,const vector<Line> &TopLine , double step = 40);
     vector<vector<Line>> drawBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &bottomLine , double step = 40);

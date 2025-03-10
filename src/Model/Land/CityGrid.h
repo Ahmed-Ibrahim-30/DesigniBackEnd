@@ -14,6 +14,7 @@ private:
 
 public:
     CityGrid(const vector<Line> &streets, const vector<Line> &roadExtension, const vector<Line> &homeBorder);
+    CityGrid() = default;
 
     [[nodiscard]] const vector<Line> &getStreets() const;
 

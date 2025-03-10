@@ -617,6 +617,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         drawStreet.drawStreets(polygon1);
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<vector<Line>> homes = drawStreet.getStreets();
+        vector<CityGrid> cities = drawStreet.getCities();
 //        vector<vector<Line>> roadExtension = drawStreet.getRoadExtension();
 //        vector<vector<Line>> homeBorder = drawStreet.getHomeBorder();
 
@@ -642,17 +643,19 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             }
         }
 
-//        for (int i = 0; i < roadExtension.size(); ++i)
-//        {
-//            for (int j = 0; j < roadExtension[i].size(); ++j) {
-//                response["roadExtension"][i][j] = {
-//                        {"x1" , roadExtension[i][j].getX1()},
-//                        {"y1" , roadExtension[i][j].getY1()},
-//                        {"x2" , roadExtension[i][j].getX2()},
-//                        {"y2" , roadExtension[i][j].getY2()},
-//                };
-//            }
-//        }
+        for(int i = 0 ; i< cities.size() ; i++)
+        {
+            CityGrid city = cities[i];
+            vector<Line> roadExtension = city.getRoadExtension();
+            for (int j = 0; j < roadExtension.size(); ++j) {
+                response["roadExtension"][i][j] = {
+                        {"x1" , roadExtension[j].getX1()},
+                        {"y1" , roadExtension[j].getY1()},
+                        {"x2" , roadExtension[j].getX2()},
+                        {"y2" , roadExtension[j].getY2()},
+                };
+            }
+        }
 //
 //        for (int i = 0; i < homeBorder.size(); ++i)
 //        {

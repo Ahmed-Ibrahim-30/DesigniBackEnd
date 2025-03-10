@@ -226,6 +226,7 @@ Point PolygonHelper::getNextPoint(const Point& current, const Point& destination
     return {current.getX()  + unitDirection.getX()  * step, current.getY() + unitDirection.getY() * step};
 }
 
+
 bool PolygonHelper::isPointInSegment(const Point &p, const Line &line)
 {
     if(abs(line.getX1() - line.getX2()) <= 0.1 || abs(line.getY1() - line.getY2()) <= 0.1 )
