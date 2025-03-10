@@ -322,7 +322,7 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
 {
     vector<Line> extensions;
     Point centerBottom , centerTop;
-    double reqLength = step/2;
+    double reqLength = step;
     for(auto &bLine : topLines)
     {
         double lineLen = bLine.getLength();
