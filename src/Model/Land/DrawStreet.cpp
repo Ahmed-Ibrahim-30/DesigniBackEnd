@@ -323,6 +323,7 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
     vector<Line> extensions;
     Point centerBottom , centerTop;
     double reqLength = step;
+
     for(auto &bLine : topLines)
     {
         double lineLen = bLine.getLength();
@@ -334,6 +335,7 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
         }
 
         centerBottom = PolygonHelper::getNextPoint({bLine.getX1() , bLine.getY1()} , {bLine.getX2() , bLine.getY2()} , reqLength);
+        break;
     }
 
     centerTop = Point ((startUp.getX()+endUp.getX())/2 , (startUp.getY()+endUp.getY())/2);
@@ -363,8 +365,8 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
         }
     }
     vector<Line>tt;
-    Point nextEnd = getNextPoint(end , lineIndex2 , centerLines , step/2 , tt);
-    Point prevStart = getPrevPoint(start , lineIndex1 , centerLines , step/2 , tt);
+    Point nextEnd = getNextPoint(end , lineIndex2 , centerLines , step , tt);
+    Point prevStart = getPrevPoint(start , lineIndex1 , centerLines , step , tt);
 
 
     Line rightExtension (nextEnd.getX() , nextEnd.getY() , nextEnd.getX() , nextEnd.getY() + (1000000000 * (isTop? 1 :-1)));
