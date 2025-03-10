@@ -618,9 +618,6 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<vector<Line>> homes = drawStreet.getStreets();
         vector<CityGrid> cities = drawStreet.getCities();
-//        vector<vector<Line>> roadExtension = drawStreet.getRoadExtension();
-//        vector<vector<Line>> homeBorder = drawStreet.getHomeBorder();
-
         for (int i = 0; i < centerLines.size(); ++i)
         {
             response["centerLines"][i] = {
@@ -647,6 +644,8 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         {
             CityGrid city = cities[i];
             vector<Line> roadExtension = city.getRoadExtension();
+            vector<Line> homeBorder = city.getHomeBorder();
+
             for (int j = 0; j < roadExtension.size(); ++j) {
                 response["roadExtension"][i][j] = {
                         {"x1" , roadExtension[j].getX1()},
@@ -655,19 +654,16 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
                         {"y2" , roadExtension[j].getY2()},
                 };
             }
+
+            for (int j = 0; j < homeBorder.size(); ++j) {
+                response["homeBorder"][i][j] = {
+                        {"x1" , homeBorder[j].getX1()},
+                        {"y1" , homeBorder[j].getY1()},
+                        {"x2" , homeBorder[j].getX2()},
+                        {"y2" , homeBorder[j].getY2()},
+                };
+            }
         }
-//
-//        for (int i = 0; i < homeBorder.size(); ++i)
-//        {
-//            for (int j = 0; j < homeBorder[i].size(); ++j) {
-//                response["homeBorder"][i][j] = {
-//                        {"x1" , homeBorder[i][j].getX1()},
-//                        {"y1" , homeBorder[i][j].getY1()},
-//                        {"x2" , homeBorder[i][j].getX2()},
-//                        {"y2" , homeBorder[i][j].getY2()},
-//                };
-//            }
-//        }
 
 //        response["homeBorder"] = std::vector<crow::json::wvalue>{};
 
