@@ -15,6 +15,16 @@ private:
     vector<vector<Line>> homeBorder;
 
     /**
+     * Draw TOP BOTTOM Streets
+     * @param polygonLines
+     * @param TopLine
+     * @param bottomLine
+     * @param step
+     * @return
+     */
+    vector<vector<Line>> drawTopBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &TopLine , const vector<Line> &bottomLine , double step = 40);
+
+    /**
      * Get Next Point after start Point with step variable
      * @param start
      * @param lineIndex

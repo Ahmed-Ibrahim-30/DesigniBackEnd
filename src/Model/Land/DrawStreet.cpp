@@ -24,6 +24,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    streets.push_back(bottomPoints);
 }
 
+
+
 vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines, const vector<Line> &topLine, double step)
 {
     vector<vector<Line>> topStreets;
@@ -222,11 +224,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     {
         double newStep = bottomStreets.empty() ? step + step/2 : step;
 
-        Line line = centerLines[centerLineIndex];
-
         vector<Line> topLines;
-
-        Point destination = {line.getX2() , line.getY2()};
 
         Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerLines , newStep , topLines);
 
@@ -237,6 +235,8 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         lastPoint = getNextPoint(startPoint , centerLineIndex , centerLines , step , topLines);
 
+        if (lastPoint.getX() == INT_MAX) break;
+        
         Point next1UP = {startPoint.getX() , startPoint.getY() - height};
 
         Line nextLine (startPoint.getX() , startPoint.getY() , next1UP.getX() , next1UP.getY());
@@ -256,16 +256,6 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         if (!foundIntersection)
         {
             continue;
-            for(auto &pLine : polygonLines)
-            {
-                Point intersection = PolygonHelper::getIntersectionPoint(pLine , nextLine);
-
-                if (intersection.getX() != INT_MAX)
-                {
-                    next1UP = intersection;
-                    break;
-                }
-            }
         }
 
 
@@ -287,16 +277,6 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         if (!foundIntersection)
         {
             continue;
-            for(auto &pLine : polygonLines)
-            {
-                Point intersection = PolygonHelper::getIntersectionPoint(pLine , nextLine);
-
-                if (intersection.getX() != INT_MAX)
-                {
-                    next2UP = intersection;
-                    break;
-                }
-            }
         }
 
         vector<Line> homeLines;
@@ -426,6 +406,8 @@ const vector<vector<Line>> &DrawStreet::getRoadExtension() const {
 const vector<vector<Line>> &DrawStreet::getHomeBorder() const {
     return homeBorder;
 }
+
+
 
 
 
