@@ -6,7 +6,7 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    centerLines = PolygonHelper::getCenterLines(polygon1 , 20);
+    centerLines = PolygonHelper::getCenterLines(polygon1 , 10);
 
     vector<Line> centerLinesTop , centerLinesBottom;
 
@@ -22,11 +22,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     double step1 = 40 ;
     vector<Line> polygonLines = polygon1.getLines();
 
-//    vector<vector<Line>> topStreets = drawTopStreets(polygonLines , topPoints , step1);
-//    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines , bottomPoints , step1);
-//
-//    streets.insert(streets.end() , bottomStreets.begin() , bottomStreets.end());
-//    streets.insert(streets.end() , topStreets.begin() , topStreets.end());
+    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  topPoints , step1);
+    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, bottomPoints , step1);
+
+    streets.insert(streets.end() , bottomStreets.begin() , bottomStreets.end());
+    streets.insert(streets.end() , topStreets.begin() , topStreets.end());
 
 //    streets.push_back(topPoints);
 //    streets.push_back(bottomPoints);
@@ -34,23 +34,23 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
 
 
-vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines, const vector<Line> &topLine, double step)
+vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &topLine, double step)
 {
     vector<vector<Line>> topStreets;
     double height = 100000000000;
 
     int centerLineIndex = 0;
-    Point lastPoint = {centerLines[0].getX1() , centerLines[0].getY1() };
-    while(centerLineIndex < centerLines.size())
+    Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
+    while(centerLineIndex < centerL.size())
     {
         vector<Line> bottomLines;
 
-        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerLines , step , bottomLines);
+        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerL , step , bottomLines);
 
         if (startPoint.getX() == INT_MAX) break;
         bottomLines.clear();
 
-        lastPoint = getNextPoint(startPoint , centerLineIndex , centerLines , step , bottomLines);
+        lastPoint = getNextPoint(startPoint , centerLineIndex , centerL , step , bottomLines);
 
         if (lastPoint.getX() == INT_MAX) break;
 
@@ -106,7 +106,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         topStreets.push_back(homeLines);
 
         //EXTENSIONS
-        vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint , lastPoint , next1UP , next2UP , step/2 , true);
+        vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint , lastPoint , next1UP , next2UP , step/2 , true, centerL);
 
         CityGrid cityGrid;
         cityGrid.setStreets(homeLines);
@@ -143,27 +143,27 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
     return topStreets;
 }
 
-vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLines, const vector<Line> &bottomLines, double step)
+vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &bottomLines, double step)
 {
     vector<vector<Line>> bottomStreets;
     double height = 100000000000;
 
     int centerLineIndex = 0 ;
-    Point lastPoint = {centerLines[0].getX1() , centerLines[0].getY1() };
-    while(centerLineIndex < centerLines.size())
+    Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
+    while(centerLineIndex < centerL.size())
     {
         double newStep = bottomStreets.empty() ? step + step/2 : step;
 
         vector<Line> topLines;
 
-        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerLines , newStep , topLines);
+        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerL , newStep , topLines);
 
         topLines.clear();
 
         if (startPoint.getX() == INT_MAX)break;
 
 
-        lastPoint = getNextPoint(startPoint , centerLineIndex , centerLines , step , topLines);
+        lastPoint = getNextPoint(startPoint , centerLineIndex , centerL , step , topLines);
 
         if (lastPoint.getX() == INT_MAX) break;
 
@@ -222,7 +222,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
 
         //Extensions
-        vector<Line> extensions = drawExtensions(polygonLines , topLines , startPoint , lastPoint , next1UP , next2UP , step/2 , false);
+        vector<Line> extensions = drawExtensions(polygonLines , topLines , startPoint , lastPoint , next1UP , next2UP , step/2 , false , centerL);
 
         CityGrid cityGrid;
         cityGrid.setStreets(homeLines);
@@ -259,7 +259,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     return bottomStreets;
 }
 
-vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines , const Point &start, const Point &end, const Point &startUp, const Point &endUp,double step , bool isTop)
+vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines , const Point &start, const Point &end, const Point &startUp, const Point &endUp,double step , bool isTop ,const vector<Line> &centerL)
 {
     vector<Line> extensions;
     Point centerBottom(100,100) , centerTop;
@@ -287,8 +287,8 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
 
     int lineIndex1 = 0 , lineIndex2 = 0;
 
-    for (int i = 0; i < centerLines.size(); ++i) {
-        Line c = centerLines[i];
+    for (int i = 0; i < centerL.size(); ++i) {
+        Line c = centerL[i];
 
         double minX = min(c.getX1() , c.getX2());
         double maxX = max(c.getX1() , c.getX2());
@@ -307,8 +307,8 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
         }
     }
     vector<Line>tt;
-    Point nextEnd = getNextPoint(end , lineIndex2 , centerLines , step , tt);
-    Point prevStart = getPrevPoint(start , lineIndex1 , centerLines , step , tt);
+    Point nextEnd = getNextPoint(end , lineIndex2 , centerL , step , tt);
+    Point prevStart = getPrevPoint(start , lineIndex1 , centerL , step , tt);
 
 
     Line rightExtension (nextEnd.getX() , nextEnd.getY() , nextEnd.getX() , nextEnd.getY() + (1000000000 * (isTop? 1 :-1)));
