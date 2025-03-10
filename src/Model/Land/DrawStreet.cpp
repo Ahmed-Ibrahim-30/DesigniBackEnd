@@ -285,6 +285,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
 
         cout<<"centerLineIndex2 = "<<centerLineIndex<< "\n";
         if (lastPoint.getX() == INT_MAX) break;
+        Line st = {lastPoint.getX() , lastPoint.getY() , streetsOrder[centerLineIndex].getX2() , streetsOrder[centerLineIndex].getY2()};
+        if (centerLineIndex == 2 && st.getLength() < 20)break;
 
         int index1 = -1, index2 = -1;
 
