@@ -277,11 +277,13 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
 
         Point startPoint = getNextPoint(lastPoint , centerLineIndex , streetsOrder , step , bottomLines);
 
+        cout<<"centerLineIndex1 = "<<centerLineIndex<< "\n";
         if (startPoint.getX() == INT_MAX) break;
         bottomLines.clear();
 
         lastPoint = getNextPoint(startPoint , centerLineIndex , streetsOrder , step , bottomLines);
 
+        cout<<"centerLineIndex2 = "<<centerLineIndex<< "\n";
         if (lastPoint.getX() == INT_MAX) break;
 
         int index1 = -1, index2 = -1;
