@@ -29,7 +29,7 @@ private:
      * @return
      */
     vector<Line> drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step, bool isTop,const vector<Line> &centerL);
-    vector<Line> drawHomeBorders(const vector<Line> &polygonLines ,const vector<Line> &topLines , vector<Line> &streetsLines , vector<Line> &extensionsLine);
+    vector<Line> drawHomeBorders(const vector<Line> &polygonLines ,const vector<Line> &topLines , vector<Line> &streetsLines , vector<Line> &extensionsLine, bool isTop);
 
     /**
      * Get Next Point after start Point with step variable
