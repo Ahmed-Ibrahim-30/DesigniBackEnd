@@ -268,7 +268,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
     step = length / (int)(length/20);
 
     vector<Line >topLines = isTop ? PolygonHelper::getTopLines(polygon1 , 10) : PolygonHelper::getBottomLines(polygon1 , 10) ;
-
+    vector<Line> polygonLines = polygon1.getLines();
     cout<<"streetsOrder = "<<streetsOrder.size()<<"\n";
     while(centerLineIndex < streetsOrder.size())
     {
@@ -343,7 +343,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
         }
         if (!foundIntersection)
         {
-            for(auto &upLine : topLines)
+            for(auto &upLine : polygonLines)
             {
                 Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -388,7 +388,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
         }
         if (!foundIntersection)
         {
-            for(auto &upLine : topLines)
+            for(auto &upLine : polygonLines)
             {
                 Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
