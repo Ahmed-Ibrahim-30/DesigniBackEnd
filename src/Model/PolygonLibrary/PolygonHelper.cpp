@@ -97,7 +97,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
 
                 centerPointT = getNextPoint(centerPoint , cur , 5);
-                centerPointB = getNextPoint(centerPoint , prev , 5);
+                centerPointB = getNextPoint(centerPoint , next , 5);
             }
             else{
                 Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
