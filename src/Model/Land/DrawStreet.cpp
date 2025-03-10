@@ -271,6 +271,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
 
     while(centerLineIndex < streetsOrder.size())
     {
+        cout<<"centerLineIndex = "<<centerLineIndex<< "\n";
         vector<Line> bottomLines;
 
         Point startPoint = getNextPoint(lastPoint , centerLineIndex , streetsOrder , step , bottomLines);
@@ -348,7 +349,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
                     break;
                 }
             }
-
         }
 
 
