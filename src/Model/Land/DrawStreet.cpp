@@ -45,7 +45,9 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
     {
         vector<Line> bottomLines;
 
-        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerL , step , bottomLines);
+        double newStep = topStreets.empty() ? 30 : step;
+
+        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerL , newStep , bottomLines);
 
         if (startPoint.getX() == INT_MAX) break;
         bottomLines.clear();
@@ -114,33 +116,6 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         cityGrid.setHomeBorder(homeBorder);
 
         cities.push_back(cityGrid);
-
-        //Home border
-//        vector<Line> homeBorderSol;
-//
-//        Point start = startPoint;
-//        Point last = lastPoint;
-//        Point center = centerBottom;
-//
-//        while (true)
-//        {
-//            Point nextPoint1 = PolygonHelper::getNextPoint(start , next1UP , 20);
-//            Point nextPoint2 = PolygonHelper::getNextPoint(last , next2UP , 20);
-//            Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTop , 20);
-//
-//            if (nextPoint1 == next1UP || nextPoint2 == next2UP || nextPoint3 == centerTop)
-//            {
-//                break;
-//            }
-//
-//            homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
-//            homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
-//
-//            start = nextPoint1;
-//            last = nextPoint2;
-//            center = nextPoint3;
-//        }
-//        homeBorder.push_back(homeBorderSol);
     }
     return topStreets;
 }
@@ -154,7 +129,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
     while(centerLineIndex < centerL.size())
     {
-        double newStep = bottomStreets.empty() ? step + step/2 : step;
+        double newStep = bottomStreets.empty() ? 30 + step/2 : step;
 
         vector<Line> topLines;
 
@@ -225,7 +200,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , topLines , startPoint , lastPoint , next1UP , next2UP , step/2 , false , centerL);
-        
+
         vector<Line> homeBorder = drawHomeBorders(polygonLines , topLines , homeLines , extensions);
         CityGrid cityGrid;
         cityGrid.setStreets(homeLines);
