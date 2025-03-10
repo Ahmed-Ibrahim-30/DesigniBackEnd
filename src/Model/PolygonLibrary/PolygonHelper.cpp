@@ -62,7 +62,7 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
     return Point{px, py};
 }
 
-vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
+vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineHeight)
 {
     vector<Line> centerLines;
     Point centroid = polygon.calculateCentroid();
@@ -89,15 +89,15 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
             {
                 centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
 
-                centerPointT = getNextPoint(centerPoint , cur , 5);
-                centerPointB = getNextPoint(centerPoint , prev , 5);
+                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
+                centerPointB = getNextPoint(centerPoint , prev , centerLineHeight/2);
             }
             else if (next.getY()<= centroid.getY())
             {
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
 
-                centerPointT = getNextPoint(centerPoint , cur , 5);
-                centerPointB = getNextPoint(centerPoint , next , 5);
+                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
+                centerPointB = getNextPoint(centerPoint , next , centerLineHeight/2);
             }
             else{
                 Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
@@ -118,8 +118,8 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
                 }
                 centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
 
-                centerPointT = getNextPoint(centerPoint , cur , 5);
-                centerPointB = getNextPoint(centerPoint , {straight.getX2() , straight.getY2()} , 5);
+                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
+                centerPointB = getNextPoint(centerPoint , {straight.getX2() , straight.getY2()} , centerLineHeight/2);
             }
             centerPoints.push_back(centerPoint);
             centerPointsTOP.push_back(centerPointT);

@@ -131,7 +131,7 @@ public:
      * @param polygon
      * @return
      */
-    static vector<Line> getCenterLines(Polygon1 &polygon);
+    static vector<Line> getCenterLines(Polygon1 &polygon ,double centerLineHeight = 10);
 
     /**
      * Get Next Point for line

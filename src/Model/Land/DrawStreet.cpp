@@ -6,7 +6,7 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    centerLines = PolygonHelper::getCenterLines(polygon1);
+    centerLines = PolygonHelper::getCenterLines(polygon1 , 20);
 
     vector<Line> centerLinesTop , centerLinesBottom;
 
