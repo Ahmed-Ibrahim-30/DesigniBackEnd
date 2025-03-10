@@ -98,6 +98,13 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         topStreets.push_back(homeLines);
 
         //EXTENSIONS
+        vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint , lastPoint , next1UP , next2UP , step/2 , true);
+
+        CityGrid cityGrid;
+        cityGrid.setStreets(homeLines);
+        cityGrid.setRoadExtension(extensions);
+        cities.push_back(cityGrid);
+
 //        vector<Line> extensions;
 //        Point centerBottom , centerTop;
 //        double reqLength = step/2;
