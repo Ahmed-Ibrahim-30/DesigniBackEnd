@@ -6,6 +6,7 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
+    mainLand = polygon1;
     centerLines = PolygonHelper::getCenterLines(polygon1 , 10);
 
     vector<Line> centerLinesTop , centerLinesBottom;
@@ -16,8 +17,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-    vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 20);
-    vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 20);
+    vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 30);
+    vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 30);
 
     double step1 = 40 ;
     vector<Line> polygonLines = polygon1.getLines();
@@ -109,7 +110,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint , lastPoint , next1UP , next2UP , step/2 , true, centerL);
-        vector<Line> homeBorder = drawHomeBorders(polygonLines , bottomLines , homeLines , extensions , true);
+        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLines , extensions , true);
         CityGrid cityGrid;
         cityGrid.setStreets(homeLines);
         cityGrid.setRoadExtension(extensions);
@@ -201,7 +202,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , topLines , startPoint , lastPoint , next1UP , next2UP , step/2 , false , centerL);
 
-        vector<Line> homeBorder = drawHomeBorders(polygonLines , topLines , homeLines , extensions , false);
+        vector<Line> homeBorder = drawHomeBorders(mainLand , homeLines , extensions , false);
         CityGrid cityGrid;
         cityGrid.setStreets(homeLines);
         cityGrid.setRoadExtension(extensions);
@@ -214,7 +215,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 }
 
 vector<Line>
-DrawStreet::drawHomeBorders(const vector<Line> &polygonLines, const vector<Line> &topLines, vector<Line> &streetsLines,
+DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
                             vector<Line> &extensionsLine , bool isTop) {
 
     vector<Line> homeBorderSol;
@@ -265,6 +266,8 @@ DrawStreet::drawHomeBorders(const vector<Line> &polygonLines, const vector<Line>
     double length = startLine.getLength() + endLine.getLength() + topLine.getLength();
 
     step = length / (int)(length/20);
+
+    vector<Line >topLines = isTop ? PolygonHelper::getTopLines(polygon1 , 10) : PolygonHelper::getBottomLines(polygon1 , 10) ;
 
     while(centerLineIndex < streetsOrder.size())
     {

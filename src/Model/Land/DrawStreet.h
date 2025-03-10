@@ -12,13 +12,10 @@ private:
     vector<Line> centerLines;
 
     vector<CityGrid> cities;
-public:
-    const vector<CityGrid> &getCities() const;
-
-private:
 
     vector<vector<Line>> streets;
 
+    Polygon1 mainLand;
 
     /**
      * Draw TOP BOTTOM Streets
@@ -29,7 +26,7 @@ private:
      * @return
      */
     vector<Line> drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step, bool isTop,const vector<Line> &centerL);
-    vector<Line> drawHomeBorders(const vector<Line> &polygonLines ,const vector<Line> &topLines , vector<Line> &streetsLines , vector<Line> &extensionsLine, bool isTop);
+    vector<Line> drawHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLines , vector<Line> &extensionsLine, bool isTop);
 
     /**
      * Get Next Point after start Point with step variable
@@ -52,6 +49,8 @@ public:
     [[nodiscard]] const vector<Line> &getCenterLines() const;
 
     [[nodiscard]] const vector<vector<Line>> &getStreets() const;
+
+    const vector<CityGrid> &getCities() const;
 };
 
 
