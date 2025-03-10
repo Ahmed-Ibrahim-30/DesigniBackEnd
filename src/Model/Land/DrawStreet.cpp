@@ -323,12 +323,12 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
     vector<Line> extensions;
     Point centerBottom , centerTop;
     double reqLength = step;
-    cout<<"topLines = "<<topLines.size()<<"\n";
+//    cout<<"topLines = "<<topLines.size()<<"\n";
 
     for(auto &bLine : topLines)
     {
         double lineLen = bLine.getLength();
-        cout<<"reqLength = "<<reqLength <<" + lineLen = "<<lineLen<<"\n";
+//        cout<<"reqLength = "<<reqLength <<" + lineLen = "<<lineLen<<"\n";
 
         if (lineLen < reqLength)
         {
@@ -343,7 +343,7 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
     centerTop = Point ((startUp.getX()+endUp.getX())/2 , (startUp.getY()+endUp.getY())/2);
 
     Line centerExtension (centerBottom.getX() , centerBottom.getY() , centerTop.getX() , centerTop.getY());
-    extensions.push_back(centerExtension);
+//    extensions.push_back(centerExtension);
 
     int lineIndex1 = 0 , lineIndex2 = 0;
 
