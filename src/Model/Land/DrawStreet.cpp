@@ -323,10 +323,12 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
     vector<Line> extensions;
     Point centerBottom , centerTop;
     double reqLength = step;
+    cout<<"topLines = "<<topLines.size()<<"\n";
 
     for(auto &bLine : topLines)
     {
         double lineLen = bLine.getLength();
+        cout<<"reqLength = "<<reqLength <<" + lineLen = "<<lineLen<<"\n";
 
         if (lineLen < reqLength)
         {
