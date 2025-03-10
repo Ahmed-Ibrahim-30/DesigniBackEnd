@@ -107,10 +107,12 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
         //EXTENSIONS
         vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint , lastPoint , next1UP , next2UP , step/2 , true, centerL);
-
+        vector<Line> homeBorder = drawHomeBorders(polygonLines , bottomLines , homeLines , extensions);
         CityGrid cityGrid;
         cityGrid.setStreets(homeLines);
         cityGrid.setRoadExtension(extensions);
+        cityGrid.setHomeBorder(homeBorder);
+
         cities.push_back(cityGrid);
 
         //Home border
@@ -230,33 +232,42 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         cities.push_back(cityGrid);
         //Home Border
 
-//        vector<Line> homeBorderSol;
-//
-//        Point start = startPoint;
-//        Point last = lastPoint;
-//        Point center = centerBottom;
-//
-//        while (true)
-//        {
-//            Point nextPoint1 = PolygonHelper::getNextPoint(start , next1UP , 20);
-//            Point nextPoint2 = PolygonHelper::getNextPoint(last , next2UP , 20);
-//            Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTop , 20);
-//
-//            if (nextPoint1 == next1UP || nextPoint2 == next2UP || nextPoint3 == centerTop)
-//            {
-//                break;
-//            }
-//
-//            homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
-//            homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
-//
-//            start = nextPoint1;
-//            last = nextPoint2;
-//            center = nextPoint3;
-//        }
-//        homeBorder.push_back(homeBorderSol);
     }
     return bottomStreets;
+}
+
+vector<Line>
+DrawStreet::drawHomeBorders(const vector<Line> &polygonLines, const vector<Line> &topLines, vector<Line> &streetsLines,
+                            vector<Line> &extensionsLine) {
+
+    vector<Line> homeBorderSol;
+    Point start = {streetsLines[streetsLines.size() -3 ].getX1() , streetsLines[streetsLines.size() -3 ].getY1()};
+    Point last = {streetsLines[streetsLines.size() -2 ].getX1() , streetsLines[streetsLines.size() -2 ].getY1()};
+    Point center = {extensionsLine[0 ].getX1() , extensionsLine[0 ].getY1()};
+
+    Point startTOP = {streetsLines[streetsLines.size() -3 ].getX2() , streetsLines[streetsLines.size() -3 ].getY2()};
+    Point lastTOP = {streetsLines[streetsLines.size() -2 ].getX2() , streetsLines[streetsLines.size() -2 ].getY2()};
+    Point centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
+
+    while (true)
+    {
+        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , 20);
+        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , 20);
+        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , 20);
+
+        if (nextPoint1 == startTOP || nextPoint2 == lastTOP || nextPoint3 == centerTOP)
+        {
+            break;
+        }
+
+        homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
+        homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
+
+        start = nextPoint1;
+        last = nextPoint2;
+        center = nextPoint3;
+    }
+    return homeBorderSol;
 }
 
 vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines , const Point &start, const Point &end, const Point &startUp, const Point &endUp,double step , bool isTop ,const vector<Line> &centerL)
@@ -278,7 +289,6 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
         centerBottom = PolygonHelper::getNextPoint({bLine.getX1() , bLine.getY1()} , {bLine.getX2() , bLine.getY2()} , reqLength);
         break;
     }
-    cout<<"centerBottom = "<<centerBottom.getX()<<" "<<centerBottom.getY()<<"\n";
 
     centerTop = Point ((startUp.getX()+endUp.getX())/2 , (startUp.getY()+endUp.getY())/2);
 
@@ -415,6 +425,8 @@ const vector<vector<Line>> &DrawStreet::getStreets() const {
 const vector<CityGrid> &DrawStreet::getCities() const {
     return cities;
 }
+
+
 
 
 
