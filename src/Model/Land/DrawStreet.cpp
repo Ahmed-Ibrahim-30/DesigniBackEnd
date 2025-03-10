@@ -269,6 +269,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
 
     vector<Line >topLines = isTop ? PolygonHelper::getTopLines(polygon1 , 10) : PolygonHelper::getBottomLines(polygon1 , 10) ;
 
+    cout<<"streetsOrder = "<<streetsOrder.size()<<"\n";
     while(centerLineIndex < streetsOrder.size())
     {
         cout<<"centerLineIndex = "<<centerLineIndex<< "\n";
