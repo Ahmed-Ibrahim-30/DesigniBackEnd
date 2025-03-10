@@ -70,6 +70,8 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
     vector<Line> lines = polygon.getLines();
     int n = (int)points.size();
     vector<Point> centerPoints ;
+    vector<Point> centerPointsTOP ;
+    vector<Point> centerPointsBottom ;
 
     for (int i = 0; i < n; ++i)
     {
@@ -80,13 +82,22 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
         if (cur.getY() > centroid.getY())
         {
             Point centerPoint(0,0);
+            Point centerPointT(0,0);
+            Point centerPointB(0,0);
+
             if (prev.getY()<= centroid.getY())
             {
                 centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
+
+                centerPointT = getNextPoint(centerPoint , cur , 5);
+                centerPointB = getNextPoint(centerPoint , prev , 5);
             }
             else if (next.getY()<= centroid.getY())
             {
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
+
+                centerPointT = getNextPoint(centerPoint , cur , 5);
+                centerPointB = getNextPoint(centerPoint , prev , 5);
             }
             else{
                 Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
@@ -106,15 +117,34 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon)
                     }
                 }
                 centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
+
+                centerPointT = getNextPoint(centerPoint , cur , 5);
+                centerPointB = getNextPoint(centerPoint , {straight.getX2() , straight.getY2()} , 5);
             }
             centerPoints.push_back(centerPoint);
+            centerPointsTOP.push_back(centerPointT);
+            centerPointsBottom.push_back(centerPointB);
         }
     }
 
-    for (int i = 1; i < centerPoints.size(); ++i)
+//    for (int i = 1; i < centerPoints.size(); ++i)
+//    {
+//        Point prev = centerPoints[ i-1];
+//        Point cur = centerPoints[i];
+//        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+//    }
+
+    for (int i = 1; i < centerPointsTOP.size(); ++i)
     {
-        Point prev = centerPoints[ i-1];
-        Point cur = centerPoints[i];
+        Point prev = centerPointsTOP[ i-1];
+        Point cur = centerPointsTOP[i];
+        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+    }
+
+    for (int i = 1; i < centerPointsBottom.size(); ++i)
+    {
+        Point prev = centerPointsBottom[ i-1];
+        Point cur = centerPointsBottom[i];
         centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
     }
     return centerLines;
