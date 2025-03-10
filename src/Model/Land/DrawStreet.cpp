@@ -432,7 +432,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
         else
         {
             endPoint = PolygonHelper::getNextPoint(startPoint , destination , step);
-            connLines.emplace_back(line.getX1() , line.getY1() , endPoint.getX() , endPoint.getY());
+            connLines.emplace_back(startPoint.getX() , startPoint.getY() , endPoint.getX() , endPoint.getY());
             break;
         }
     }
