@@ -426,7 +426,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
                 return {INT_MAX, INT_MAX};
             }
             step -= length;
-            startPoint = {line.getX1() , line.getY1()};
+            startPoint = {line.getX2() , line.getY2()};
         }
         else
         {
