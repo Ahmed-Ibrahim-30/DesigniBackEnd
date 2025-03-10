@@ -334,7 +334,6 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
     for(auto &bLine : topLines)
     {
         double lineLen = bLine.getLength();
-        bLine.print();
 
         if (lineLen < reqLength)
         {
@@ -345,6 +344,7 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
         centerBottom = PolygonHelper::getNextPoint({bLine.getX1() , bLine.getY1()} , {bLine.getX2() , bLine.getY2()} , reqLength);
         break;
     }
+    cout<<"centerBottom = "<<centerBottom.getX()<<" "<<centerBottom.getY()<<"\n";
 
     centerTop = Point ((startUp.getX()+endUp.getX())/2 , (startUp.getY()+endUp.getY())/2);
 
