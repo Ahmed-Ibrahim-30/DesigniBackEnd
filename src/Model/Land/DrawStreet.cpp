@@ -328,7 +328,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines , const Point &start, const Point &end, const Point &startUp, const Point &endUp,double step , bool isTop)
 {
     vector<Line> extensions;
-    Point centerBottom , centerTop;
+    Point centerBottom(100,100) , centerTop;
     double reqLength = step;
 
     for(auto &bLine : topLines)
