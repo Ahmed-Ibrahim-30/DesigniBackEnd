@@ -228,7 +228,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
     Point centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
 
     Line startLine (start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
-    Line endLine (last.getX() , last.getY() , lastTOP.getX() , lastTOP.getY() );
+    Line endLine (lastTOP.getX() , lastTOP.getY() , last.getX() , last.getY() );
     Line topLine (startTOP.getX() , startTOP.getY() , lastTOP.getX() , lastTOP.getY() );
     Line centerLine (center.getX() , center.getY() , centerTOP.getX() , centerTOP.getY() );
 
