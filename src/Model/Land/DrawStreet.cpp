@@ -226,11 +226,19 @@ DrawStreet::drawHomeBorders(const vector<Line> &polygonLines, const vector<Line>
     Point lastTOP = {streetsLines[streetsLines.size() -2 ].getX2() , streetsLines[streetsLines.size() -2 ].getY2()};
     Point centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
 
+    Line startLine (start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
+    Line endLine (last.getX() , last.getY() , lastTOP.getX() , lastTOP.getY() );
+    Line centerLine (center.getX() , center.getY() , centerTOP.getX() , centerTOP.getY() );
+
+    double minLength = min({startLine.getLength() , endLine.getLength() , centerLine.getLength()});
+
+    double step = minLength / (minLength/20);
+
     while (true)
     {
-        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , 20);
-        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , 20);
-        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , 20);
+        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
+        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
+        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , step);
 
         if (nextPoint1 == startTOP || nextPoint2 == lastTOP || nextPoint3 == centerTOP)
         {
