@@ -228,43 +228,14 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         Point destination = {line.getX2() , line.getY2()};
 
-        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerLines , newStep);
+        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerLines , newStep , topLines);
+
+        topLines.clear();
 
         if (startPoint.getX() == INT_MAX)break;
 
-        Line partialLine {lastPoint.getX() , lastPoint.getY() , destination.getX() , destination.getY()};
 
-        double length = partialLine.getLength();
-
-//        if (length < newStep)
-//        {
-//            centerLineIndex ++;
-//            if (centerLineIndex == centerLines.size())break;
-//            line = centerLines[centerLineIndex];
-//            destination = {line.getX2() , line.getY2()};
-//            startPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , newStep - length);
-//        }else startPoint = PolygonHelper::getNextPoint(lastPoint , destination , newStep);
-
-        partialLine ={startPoint.getX() , startPoint.getY() , destination.getX() , destination.getY()};
-        length = partialLine.getLength();
-
-        if (length < step)
-        {
-            topLines.push_back(partialLine);
-
-            centerLineIndex ++;
-            if (centerLineIndex == centerLines.size())break;
-            line = centerLines[centerLineIndex];
-            destination = {line.getX2() , line.getY2()};
-            lastPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , step - length);
-
-            topLines.emplace_back(line.getX1() , line.getY1() , lastPoint.getX() , lastPoint.getY());
-        }else
-        {
-            lastPoint = PolygonHelper::getNextPoint(startPoint , destination , step);
-            topLines.emplace_back(startPoint.getX() , startPoint.getY() , lastPoint.getX() , lastPoint.getY());
-        }
-
+        lastPoint = getNextPoint(startPoint , centerLineIndex , centerLines , step , topLines);
 
         Point next1UP = {startPoint.getX() , startPoint.getY() - height};
 
@@ -337,77 +308,78 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         bottomStreets.push_back(homeLines);
 
 
-        vector<Line> extensions;
-        Point centerBottom , centerTop;
-        double reqLength = step/2;
-        for(auto &bLine : topLines)
-        {
-            double lineLen = bLine.getLength();
-
-            if (lineLen < reqLength)
-            {
-                reqLength -= lineLen;
-                continue;
-            }
-
-            centerBottom = PolygonHelper::getNextPoint({bLine.getX1() , bLine.getY1()} , {bLine.getX2() , bLine.getY2()} , reqLength);
-        }
-
-        centerTop = Point ((next1UP.getX()+next2UP.getX())/2 , (next1UP.getY()+next2UP.getY())/2);
-
-        Line centerExtension (centerBottom.getX() , centerBottom.getY() , centerTop.getX() , centerTop.getY());
-        extensions.push_back(centerExtension);
-
-
-        Line rightExtension (lastPoint.getX() , lastPoint.getY() , lastPoint.getX() , lastPoint.getY() + height);
-
-        for(auto &pLine : polygonLines)
-        {
-            Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
-
-            if (intersection.getX() != INT_MAX)
-            {
-                rightExtension.setY2(intersection.getY());
-                break;
-            }
-        }
-        extensions.push_back(rightExtension);
-
-        roadExtension.push_back(extensions);
+        //Extensions
+//        vector<Line> extensions;
+//        Point centerBottom , centerTop;
+//        double reqLength = step/2;
+//        for(auto &bLine : topLines)
+//        {
+//            double lineLen = bLine.getLength();
+//
+//            if (lineLen < reqLength)
+//            {
+//                reqLength -= lineLen;
+//                continue;
+//            }
+//
+//            centerBottom = PolygonHelper::getNextPoint({bLine.getX1() , bLine.getY1()} , {bLine.getX2() , bLine.getY2()} , reqLength);
+//        }
+//
+//        centerTop = Point ((next1UP.getX()+next2UP.getX())/2 , (next1UP.getY()+next2UP.getY())/2);
+//
+//        Line centerExtension (centerBottom.getX() , centerBottom.getY() , centerTop.getX() , centerTop.getY());
+//        extensions.push_back(centerExtension);
+//
+//
+//        Line rightExtension (lastPoint.getX() , lastPoint.getY() , lastPoint.getX() , lastPoint.getY() + height);
+//
+//        for(auto &pLine : polygonLines)
+//        {
+//            Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
+//
+//            if (intersection.getX() != INT_MAX)
+//            {
+//                rightExtension.setY2(intersection.getY());
+//                break;
+//            }
+//        }
+//        extensions.push_back(rightExtension);
+//
+//        roadExtension.push_back(extensions);
 
 
         //Home Border
 
-        vector<Line> homeBorderSol;
-
-        Point start = startPoint;
-        Point last = lastPoint;
-        Point center = centerBottom;
-
-        while (true)
-        {
-            Point nextPoint1 = PolygonHelper::getNextPoint(start , next1UP , 20);
-            Point nextPoint2 = PolygonHelper::getNextPoint(last , next2UP , 20);
-            Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTop , 20);
-
-            if (nextPoint1 == next1UP || nextPoint2 == next2UP || nextPoint3 == centerTop)
-            {
-                break;
-            }
-
-            homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
-            homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
-
-            start = nextPoint1;
-            last = nextPoint2;
-            center = nextPoint3;
-        }
-        homeBorder.push_back(homeBorderSol);
+//        vector<Line> homeBorderSol;
+//
+//        Point start = startPoint;
+//        Point last = lastPoint;
+//        Point center = centerBottom;
+//
+//        while (true)
+//        {
+//            Point nextPoint1 = PolygonHelper::getNextPoint(start , next1UP , 20);
+//            Point nextPoint2 = PolygonHelper::getNextPoint(last , next2UP , 20);
+//            Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTop , 20);
+//
+//            if (nextPoint1 == next1UP || nextPoint2 == next2UP || nextPoint3 == centerTop)
+//            {
+//                break;
+//            }
+//
+//            homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
+//            homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
+//
+//            start = nextPoint1;
+//            last = nextPoint2;
+//            center = nextPoint3;
+//        }
+//        homeBorder.push_back(homeBorderSol);
     }
     return bottomStreets;
 }
 
-Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<Line> &lines, double step)
+Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<Line> &lines, double step ,vector<Line> &connLines)
 {
     Point endPoint , startPoint = start;
     while (true)
@@ -420,6 +392,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
 
         if (length < step)
         {
+            connLines.push_back(partialLine);
             lineIndex ++;
             if (lineIndex == lines.size())
             {
@@ -431,6 +404,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
         else
         {
             endPoint = PolygonHelper::getNextPoint(startPoint , destination , step);
+            connLines.emplace_back(line.getX1() , line.getY1() , endPoint.getX() , endPoint.getY());
             break;
         }
     }

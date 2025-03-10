@@ -22,7 +22,7 @@ private:
      * @param step
      * @return
      */
-    Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step = 40);
+    Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step ,vector<Line> &connLines);
 
     vector<vector<Line>> drawTopStreets(const vector<Line> &polygonLines ,const vector<Line> &TopLine , double step = 40);
     vector<vector<Line>> drawBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &bottomLine , double step = 40);
