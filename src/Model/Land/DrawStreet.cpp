@@ -334,6 +334,7 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
     for(auto &bLine : topLines)
     {
         double lineLen = bLine.getLength();
+        bLine.print();
 
         if (lineLen < reqLength)
         {
