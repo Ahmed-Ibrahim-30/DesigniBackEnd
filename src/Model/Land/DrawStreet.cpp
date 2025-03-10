@@ -232,7 +232,7 @@ DrawStreet::drawHomeBorders(const vector<Line> &polygonLines, const vector<Line>
 
     double minLength = min({startLine.getLength() , endLine.getLength() , centerLine.getLength()});
 
-    double step = minLength / (minLength/20);
+    double step = minLength / (int)(minLength/20);
     cout<<"minLength = "<<minLength<<"   step = "<<step<<"\n";
 
     while (true)
