@@ -28,8 +28,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     streets.insert(streets.end() , bottomStreets.begin() , bottomStreets.end());
     streets.insert(streets.end() , topStreets.begin() , topStreets.end());
 
-//    streets.push_back(topPoints);
-//    streets.push_back(bottomPoints);
+    streets.push_back(topPoints);
+    streets.push_back(bottomPoints);
 }
 
 
