@@ -230,6 +230,8 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerLines , newStep);
 
+        if (startPoint.getX() == INT_MAX)break;
+
         Line partialLine {lastPoint.getX() , lastPoint.getY() , destination.getX() , destination.getY()};
 
         double length = partialLine.getLength();
@@ -407,12 +409,12 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
 Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<Line> &lines, double step)
 {
-    Point endPoint;
+    Point endPoint , startPoint = start;
     while (true)
     {
         const Line& line = lines[lineIndex];
         Point destination = {line.getX2() , line.getY2()};
-        Line partialLine {start.getX() , start.getY() , destination.getX() , destination.getY()};
+        Line partialLine {startPoint.getX() , startPoint.getY() , destination.getX() , destination.getY()};
 
         double length = partialLine.getLength();
 
@@ -424,10 +426,11 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
                 return {INT_MAX, INT_MAX};
             }
             step -= length;
+            startPoint = {line.getX1() , line.getY1()};
         }
         else
         {
-            endPoint = PolygonHelper::getNextPoint(start , destination , step);
+            endPoint = PolygonHelper::getNextPoint(startPoint , destination , step);
             break;
         }
     }
