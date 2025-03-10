@@ -221,7 +221,6 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     while(centerLineIndex < centerLines.size())
     {
         double newStep = bottomStreets.empty() ? step + step/2 : step;
-        Point startPoint = {0 , 0};
 
         Line line = centerLines[centerLineIndex];
 
@@ -229,18 +228,20 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         Point destination = {line.getX2() , line.getY2()};
 
+        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerLines , newStep);
+
         Line partialLine {lastPoint.getX() , lastPoint.getY() , destination.getX() , destination.getY()};
 
         double length = partialLine.getLength();
 
-        if (length < newStep)
-        {
-            centerLineIndex ++;
-            if (centerLineIndex == centerLines.size())break;
-            line = centerLines[centerLineIndex];
-            destination = {line.getX2() , line.getY2()};
-            startPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , newStep - length);
-        }else startPoint = PolygonHelper::getNextPoint(lastPoint , destination , newStep);
+//        if (length < newStep)
+//        {
+//            centerLineIndex ++;
+//            if (centerLineIndex == centerLines.size())break;
+//            line = centerLines[centerLineIndex];
+//            destination = {line.getX2() , line.getY2()};
+//            startPoint =  PolygonHelper::getNextPoint({line.getX1() , line.getY1()} , destination , newStep - length);
+//        }else startPoint = PolygonHelper::getNextPoint(lastPoint , destination , newStep);
 
         partialLine ={startPoint.getX() , startPoint.getY() , destination.getX() , destination.getY()};
         length = partialLine.getLength();
@@ -404,6 +405,35 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     return bottomStreets;
 }
 
+Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<Line> &lines, double step)
+{
+    Point endPoint;
+    while (true)
+    {
+        const Line& line = lines[lineIndex];
+        Point destination = {line.getX2() , line.getY2()};
+        Line partialLine {start.getX() , start.getY() , destination.getX() , destination.getY()};
+
+        double length = partialLine.getLength();
+
+        if (length < step)
+        {
+            lineIndex ++;
+            if (lineIndex == lines.size())
+            {
+                return {INT_MAX, INT_MAX};
+            }
+            step -= length;
+        }
+        else
+        {
+            endPoint = PolygonHelper::getNextPoint(start , destination , step);
+            break;
+        }
+    }
+    return endPoint;
+}
+
 const vector<Line> &DrawStreet::getCenterLines() const {
     return centerLines;
 }
@@ -419,6 +449,8 @@ const vector<vector<Line>> &DrawStreet::getRoadExtension() const {
 const vector<vector<Line>> &DrawStreet::getHomeBorder() const {
     return homeBorder;
 }
+
+
 
 
 

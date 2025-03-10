@@ -11,21 +11,34 @@ private:
     vector<Line> centerLines;
     vector<vector<Line>> streets;
     vector<vector<Line>> roadExtension;
-public:
-    const vector<vector<Line>> &getRoadExtension() const;
 
-    const vector<vector<Line>> &getHomeBorder() const;
-
-private:
     vector<vector<Line>> homeBorder;
+
+    /**
+     * Get Next Point after start Point with step variable
+     * @param start
+     * @param lineIndex
+     * @param lines
+     * @param step
+     * @return
+     */
+    Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step = 40);
 
     vector<vector<Line>> drawTopStreets(const vector<Line> &polygonLines ,const vector<Line> &TopLine , double step = 40);
     vector<vector<Line>> drawBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &bottomLine , double step = 40);
+
+
 public:
     void drawStreets(Polygon1 &polygon1);
-    const vector<Line> &getCenterLines() const;
 
-    const vector<vector<Line>> &getStreets() const;
+
+    [[nodiscard]] const vector<vector<Line>> &getRoadExtension() const;
+
+    [[nodiscard]] const vector<vector<Line>> &getHomeBorder() const;
+
+    [[nodiscard]] const vector<Line> &getCenterLines() const;
+
+    [[nodiscard]] const vector<vector<Line>> &getStreets() const;
 };
 
 
