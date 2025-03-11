@@ -192,6 +192,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
             {
                 foundIntersection = true;
                 next12UP = intersection;
+                next12UP.setY(next12UP.getY() - 5);
                 break;
             }
         }
@@ -233,6 +234,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
             {
                 foundIntersection = true;
                 next22UP = intersection;
+                next22UP.setY(next22UP.getY() - 5);
                 break;
             }
         }
