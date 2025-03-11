@@ -44,7 +44,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
                 newline.setX1(intersection.getX());
                 newline.setY1(intersection.getY());
 
-                if (newline.getLength() <= 10) break;
+                if (upLine == topPoints.back() && newline.getLength() <= 10) break;
                 foundIntersection = true;
                 break;
             }
@@ -78,7 +78,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
                 newline.setX1(intersection.getX());
                 newline.setY1(intersection.getY());
 
-                if (newline.getLength() <= 10) break;
+                if (upLine == bottomPoints.back() &&newline.getLength() <= 10) break;
                 foundIntersection = true;
                 break;
             }
