@@ -399,7 +399,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , topLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 +5, false, centerL);
-        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions , true);
+        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions , false);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
