@@ -254,12 +254,12 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
 
         //EXTENSIONS And Border
-        //vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint1 , lastPoint , next1UP , next2UP , step/2 , true, centerL);
+        vector<Line> extensions = drawExtensions(polygonLines , bottomLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 , true, centerL);
         //vector<Line> homeBorder = drawHomeBorders( mainLand, homeLines , extensions , true);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
-//        cityGrid.setRoadExtension(extensions);
+        cityGrid.setRoadExtension(extensions);
 //        cityGrid.setHomeBorder(homeBorder);
 
         cities.push_back(cityGrid);
