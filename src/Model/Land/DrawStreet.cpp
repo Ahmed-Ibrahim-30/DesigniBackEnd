@@ -400,7 +400,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , topLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 +5, false, centerL);
-        //vector<Line> homeBorder = drawHomeBorders( mainLand, homeLines , extensions , true);
+        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions , true);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
@@ -414,16 +414,16 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 }
 
 vector<Line>
-DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
+DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner ,
                             vector<Line> &extensionsLine , bool isTop) {
 
     vector<Line> homeBorderSol;
-    Point start = {streetsLines[streetsLines.size() -3 ].getX1() , streetsLines[streetsLines.size() -3 ].getY1()};
-    Point last = {streetsLines[streetsLines.size() -2 ].getX1() , streetsLines[streetsLines.size() -2 ].getY1()};
+    Point start = {streetsLinesInner[streetsLinesInner.size() -3 ].getX1() , streetsLinesInner[streetsLinesInner.size() -3 ].getY1()};
+    Point last = {streetsLinesInner[streetsLinesInner.size() -2 ].getX1() , streetsLinesInner[streetsLinesInner.size() -2 ].getY1()};
     Point center = {extensionsLine[0 ].getX1() , extensionsLine[0 ].getY1()};
 
-    Point startTOP = {streetsLines[streetsLines.size() -3 ].getX2() , streetsLines[streetsLines.size() -3 ].getY2()};
-    Point lastTOP = {streetsLines[streetsLines.size() -2 ].getX2() , streetsLines[streetsLines.size() -2 ].getY2()};
+    Point startTOP = {streetsLinesInner[streetsLinesInner.size() -3 ].getX2() , streetsLinesInner[streetsLinesInner.size() -3 ].getY2()};
+    Point lastTOP = {streetsLinesInner[streetsLinesInner.size() -2 ].getX2() , streetsLinesInner[streetsLinesInner.size() -2 ].getY2()};
     Point centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
 
     Line startLine (start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
@@ -453,6 +453,21 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
         last = nextPoint2;
         center = nextPoint3;
     }
+
+
+    start = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -3 ].getY1()};
+    last = {streetsLinesOuter[streetsLinesOuter.size() -2 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -2 ].getY1()};
+    center = {extensionsLine[0 ].getX1() , extensionsLine[0 ].getY1()};
+
+    startTOP = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX2() , streetsLinesOuter[streetsLinesOuter.size() -3 ].getY2()};
+    lastTOP = {streetsLinesOuter[streetsLinesOuter.size() -2 ].getX2() , streetsLinesOuter[streetsLinesOuter.size() -2 ].getY2()};
+    centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
+
+    startLine  = Line(start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
+    endLine = Line(lastTOP.getX() , lastTOP.getY() , last.getX() , last.getY() );
+    topLine = Line(startTOP.getX() , startTOP.getY() , lastTOP.getX() , lastTOP.getY() );
+    centerLine = Line(center.getX() , center.getY() , centerTOP.getX() , centerTOP.getY() );
+
 
     vector<Line> streetsOrder = {startLine , topLine , endLine};
 
@@ -602,7 +617,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
 //        homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
         homeLines.emplace_back(next2UP.getX() , next2UP.getY() , lastPoint.getX() , lastPoint.getY());
 
-        homeBorderSol.insert(homeBorderSol.end() , homeLines.begin() , homeLines.end());
+//        homeBorderSol.insert(homeBorderSol.end() , homeLines.begin() , homeLines.end());
     }
 
     return homeBorderSol;
