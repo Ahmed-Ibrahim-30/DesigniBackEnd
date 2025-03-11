@@ -492,7 +492,23 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Line st = {lastPoint.getX() , lastPoint.getY() , streetsOrder[centerLineIndex].getX2() , streetsOrder[centerLineIndex].getY2()};
         if (centerLineIndex == 2 && st.getLength() < 20)break;
 
-        int index1 = -1, index2 = -1;
+        int index1 = -1;
+
+        for (int i = 0; i < streetsOrder.size(); ++i)
+        {
+            Line line = streetsOrder[i];
+            double minX = min(line.getX1() , line.getX2());
+            double maxX = max(line.getX1() , line.getX2());
+            double minY = min(line.getY1() , line.getY2());
+            double maxY = max(line.getY1() , line.getY2());
+
+            if (lastPoint.getX() >= minX && lastPoint.getX() <= maxX &&
+                    lastPoint.getY() >= minY && lastPoint.getY() <= maxY)
+            {
+                index1 = i;
+                break;
+            }
+        }
 
 
         Point next1UP ;
@@ -500,16 +516,16 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         bool foundIntersection = false;
 
 
-        if (index2 == 0 )
+        if (index1 == 0 )
         {
             next1UP = {lastPoint.getX() - height , lastPoint.getY()};
         }
-        else if (index2 == 1)
+        else if (index1 == 1)
         {
             if (isTop)next1UP = {lastPoint.getX() , lastPoint.getY() + height};
             else next1UP = {lastPoint.getX() , lastPoint.getY() - height};
         }
-        else if (index2 == 2)
+        else if (index1 == 2)
         {
             next1UP = {lastPoint.getX() + height , lastPoint.getY()};
         }
