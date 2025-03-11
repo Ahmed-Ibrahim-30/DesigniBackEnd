@@ -51,7 +51,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         lastLine.setX1(next.getX());
         lastLine.setY1(next.getY());
 
-        if (index == centerLinesBottom. size() - 1 &&lastLine.getLength() <= 10) break;
+        if (index == centerLinesBottom. size() - 1 && lastLine.getLength() <= 20) break;
 
         divisionsB++;
         start = next;
