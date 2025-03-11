@@ -76,8 +76,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     vector<Line> polygonLines = polygon1.getLines();
 
-    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  topPoints , step1);
-    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, bottomPoints , step1);
+    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  topPoints , step1 , divisions);
+    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, bottomPoints , step1 , divisions);
 
     streets.insert(streets.end() , bottomStreets.begin() , bottomStreets.end());
     streets.insert(streets.end() , topStreets.begin() , topStreets.end());
@@ -88,14 +88,14 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
 
 
-vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &topLine, double step)
+vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &topLine, double step ,int divisions)
 {
     vector<vector<Line>> topStreets;
     double height = 100000000000;
 
     int centerLineIndex = 0;
     Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
-    while(centerLineIndex < centerL.size())
+    for (int m = 0; m < divisions; ++m)
     {
         vector<Line> bottomLines;
 
@@ -174,14 +174,14 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
     return topStreets;
 }
 
-vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &bottomLines, double step)
+vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &bottomLines, double step ,int divisions)
 {
     vector<vector<Line>> bottomStreets;
     double height = 100000000000;
 
     int centerLineIndex = 0 ;
     Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
-    while(centerLineIndex < centerL.size())
+    for (int m = 0; m < divisions; ++m)
     {
         double newStep = bottomStreets.empty() ? 30 + step/2 : step;
 
