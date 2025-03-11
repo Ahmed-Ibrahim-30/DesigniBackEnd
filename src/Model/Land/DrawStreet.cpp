@@ -617,7 +617,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 //        homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
         homeLines.emplace_back(next2UP.getX() , next2UP.getY() , lastPoint.getX() , lastPoint.getY());
 
-//        homeBorderSol.insert(homeBorderSol.end() , homeLines.begin() , homeLines.end());
+        homeBorderSol.insert(homeBorderSol.end() , homeLines.begin() , homeLines.end());
     }
 
     return homeBorderSol;
