@@ -27,6 +27,12 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         vector<Line> ll;
         Point next = getNextPoint(start , index , centerLinesTop , step1/2 , ll);
         if (next.getX() == INT_MAX) break;
+
+        Line lastLine = centerLinesTop[index];
+        lastLine.setX1(next.getX());
+        lastLine.setY1(next.getY());
+
+        if (lastLine.getLength() <= 10) break;
         divisions++;
         start = next;
     }
@@ -41,6 +47,12 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         vector<Line> ll;
         Point next = getNextPoint(start , index , centerLinesBottom , step1/2 , ll);
         if (next.getX() == INT_MAX) break;
+        Line lastLine = centerLinesBottom[index];
+        lastLine.setX1(next.getX());
+        lastLine.setY1(next.getY());
+
+        if (lastLine.getLength() <= 10) break;
+
         divisionsB++;
         start = next;
     }
