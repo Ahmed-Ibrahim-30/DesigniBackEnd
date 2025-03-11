@@ -6,6 +6,7 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
+    double step1 = 40 ;
     mainLand = polygon1;
     centerLines = PolygonHelper::getCenterLines(polygon1 , 10);
 
@@ -17,10 +18,55 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
+    int divisions = 0 , index = 0 , divisionsB = 1;
+
+    Point start = PolygonHelper::getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()},{centerLinesTop[index].getX2() , centerLinesTop[index].getY2()},step1 - 10);
+
+    while (true)
+    {
+        vector<Line> ll;
+        Point next = getNextPoint(start , index , centerLinesTop , step1/2 , ll);
+        if (next.getX() == INT_MAX) break;
+        divisions++;
+        start = next;
+    }
+
+    divisions/=4;
+    index = 0;
+
+    start = PolygonHelper::getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()},{centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2()},step1 + 10);
+
+    while (true)
+    {
+        vector<Line> ll;
+        Point next = getNextPoint(start , index , centerLinesBottom , step1/2 , ll);
+        if (next.getX() == INT_MAX) break;
+        divisionsB++;
+        start = next;
+    }
+
+    divisionsB/=4;
+
+    cout<<"divisions = "<<divisions <<"\n";
+    cout<<"divisionsB = "<<divisionsB <<"\n";
+
+    divisions = min(divisions , divisionsB);
+
+    double lengthC = 0;
+    for(auto &line : centerLinesTop)
+    {
+        lengthC += line.getLength();
+    }
+
+    step1 = lengthC / (int)(lengthC/40);
+
+    cout<<"New Step = "<<step1<<"\n";
+
+
     vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 30);
     vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 30);
 
-    double step1 = 40 ;
+
     vector<Line> polygonLines = polygon1.getLines();
 
     vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  topPoints , step1);
@@ -269,21 +315,17 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLines,
 
     vector<Line >topLines = isTop ? PolygonHelper::getTopLines(polygon1 , 10) : PolygonHelper::getBottomLines(polygon1 , 10) ;
     vector<Line> polygonLines = polygon1.getLines();
-    cout<<"streetsOrder = "<<streetsOrder.size()<<"\n";
     while(centerLineIndex < streetsOrder.size())
     {
-        cout<<"centerLineIndex = "<<centerLineIndex<< "\n";
         vector<Line> bottomLines;
 
         Point startPoint = getNextPoint(lastPoint , centerLineIndex , streetsOrder , step , bottomLines);
 
-        cout<<"centerLineIndex1 = "<<centerLineIndex<< "\n";
         if (startPoint.getX() == INT_MAX) break;
         bottomLines.clear();
 
         lastPoint = getNextPoint(startPoint , centerLineIndex , streetsOrder , step , bottomLines);
 
-        cout<<"centerLineIndex2 = "<<centerLineIndex<< "\n";
         if (lastPoint.getX() == INT_MAX) break;
         Line st = {lastPoint.getX() , lastPoint.getY() , streetsOrder[centerLineIndex].getX2() , streetsOrder[centerLineIndex].getY2()};
         if (centerLineIndex == 2 && st.getLength() < 20)break;
