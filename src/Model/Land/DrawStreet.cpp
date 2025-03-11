@@ -59,9 +59,16 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     }
 
     step1 = lengthC / (int)(lengthC/40);
-
     cout<<"New Step = "<<step1<<"\n";
 
+    lengthC = 0;
+    for(auto &line : centerLinesBottom)
+    {
+        lengthC += line.getLength();
+    }
+
+    step1 = min(step1 , lengthC / (int)(lengthC/40));
+    cout<<"New Step = "<<step1<<"\n";
 
     vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 30);
     vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 30);
