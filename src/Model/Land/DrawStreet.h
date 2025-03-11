@@ -13,8 +13,6 @@ private:
 
     vector<CityGrid> cities;
 
-    vector<vector<Line>> streets;
-
     Polygon1 mainLand;
 
     /**
@@ -47,8 +45,6 @@ public:
     void drawStreets(Polygon1 &polygon1);
 
     [[nodiscard]] const vector<Line> &getCenterLines() const;
-
-    [[nodiscard]] const vector<vector<Line>> &getStreets() const;
 
     const vector<CityGrid> &getCities() const;
 };

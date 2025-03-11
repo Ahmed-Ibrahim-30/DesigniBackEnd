@@ -122,9 +122,6 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  topPoints , step1 , divisions);
     vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, bottomPoints , step1 , divisions);
 
-    streets.insert(streets.end() , bottomStreets.begin() , bottomStreets.end());
-    streets.insert(streets.end() , topStreets.begin() , topStreets.end());
-
 //    streets.push_back(topPoints);
 //    streets.push_back(bottomPoints);
 }
@@ -243,26 +240,25 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
             continue;
         }
 
-        vector<Line> homeLines;
-        homeLines.insert(homeLines.end() , bottomLines.begin() , bottomLines.end());
-        homeLines.emplace_back(startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
-        homeLines.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
-        homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
+        vector<Line> homeLinesOuter , homeLinesInner;
+        homeLinesOuter.insert(homeLinesOuter.end() , bottomLines.begin() , bottomLines.end());
+        homeLinesOuter.emplace_back(startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
+        homeLinesOuter.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
+        homeLinesOuter.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
 
 
-        homeLines.insert(homeLines.end() , bottomLines2.begin() , bottomLines2.end());
-        homeLines.emplace_back(startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
-        homeLines.emplace_back(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
-        homeLines.emplace_back(next12UP.getX() , next12UP.getY() , next22UP.getX() , next22UP.getY());
+        homeLinesInner.insert(homeLinesInner.end() , bottomLines2.begin() , bottomLines2.end());
+        homeLinesInner.emplace_back(startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
+        homeLinesInner.emplace_back(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
+        homeLinesInner.emplace_back(next12UP.getX() , next12UP.getY() , next22UP.getX() , next22UP.getY());
 
-
-        topStreets.push_back(homeLines);
 
         //EXTENSIONS And Border
         //vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint1 , lastPoint , next1UP , next2UP , step/2 , true, centerL);
         //vector<Line> homeBorder = drawHomeBorders( mainLand, homeLines , extensions , true);
         CityGrid cityGrid;
-        cityGrid.setStreets(homeLines);
+        cityGrid.setInnerStreets(homeLinesInner);
+        cityGrid.setOuterStreets(homeLinesOuter);
 //        cityGrid.setRoadExtension(extensions);
 //        cityGrid.setHomeBorder(homeBorder);
 
@@ -281,23 +277,27 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     for (int m = 0; m < divisions; ++m)
     {
         double newStep = bottomStreets.empty() ? 30 + step/2 : step;
+        int curIndex = centerLineIndex;
 
-        vector<Line> topLines;
+        vector<Line> topLines , topLines2;
 
-        Point startPoint = getNextPoint(lastPoint , centerLineIndex , centerL , newStep , topLines);
+        Point startPoint1 = getNextPoint(lastPoint , centerLineIndex , centerL , newStep , topLines);
+        Point startPoint2 = getNextPoint(lastPoint , curIndex , centerL , newStep + 5, topLines);
 
+
+        if (startPoint1.getX() == INT_MAX || startPoint2.getX() == INT_MAX) break;
         topLines.clear();
 
-        if (startPoint.getX() == INT_MAX)break;
+        curIndex = centerLineIndex;
 
-
-        lastPoint = getNextPoint(startPoint , centerLineIndex , centerL , step , topLines);
+        lastPoint = getNextPoint(startPoint1 , centerLineIndex , centerL , step , topLines);
+        Point lastPoint2 = getNextPoint(startPoint2 , curIndex , centerL , step-10 , topLines2);
 
         if (lastPoint.getX() == INT_MAX) break;
 
-        Point next1UP = {startPoint.getX() , startPoint.getY() - height};
+        Point next1UP = {startPoint1.getX() , startPoint1.getY() - height};
 
-        Line nextLine (startPoint.getX() , startPoint.getY() , next1UP.getX() , next1UP.getY());
+        Line nextLine (startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
 
         bool foundIntersection = false;
         for(auto &upLine : bottomLines)
@@ -312,6 +312,29 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
             }
         }
 
+        if (!foundIntersection)
+        {
+            continue;
+        }
+
+
+        Point next12UP = {startPoint2.getX() , startPoint2.getY() - height};
+
+        nextLine =Line (startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
+
+        foundIntersection = false;
+        for(auto &upLine : bottomLines)
+        {
+            Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+
+            if (intersection.getX() != INT_MAX)
+            {
+                foundIntersection = true;
+                next12UP = intersection;
+                next12UP.setY(next12UP.getY() - 5);
+                break;
+            }
+        }
         if (!foundIntersection)
         {
             continue;
@@ -339,24 +362,49 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
             continue;
         }
 
-        vector<Line> homeLines;
-        homeLines.insert(homeLines.end() , topLines.begin() , topLines.end());
-        homeLines.emplace_back(startPoint.getX() , startPoint.getY() , next1UP.getX() , next1UP.getY());
-        homeLines.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
-        homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
+        Point next22UP = {lastPoint2.getX() , lastPoint2.getY() - height};
 
-        bottomStreets.push_back(homeLines);
+        foundIntersection = false;
+        nextLine = Line(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
+        for(auto &upLine : bottomLines)
+        {
+            Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+
+            if (intersection.getX() != INT_MAX)
+            {
+                foundIntersection = true;
+                next22UP = intersection;
+                next22UP.setY(next22UP.getY() - 5);
+                break;
+            }
+        }
+        if (!foundIntersection)
+        {
+            continue;
+        }
+
+        vector<Line> homeLinesOuter , homeLinesInner;
+        homeLinesOuter.insert(homeLinesOuter.end() , topLines.begin() , topLines.end());
+        homeLinesOuter.emplace_back(startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
+        homeLinesOuter.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
+        homeLinesOuter.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
+
+
+        homeLinesInner.insert(homeLinesInner.end() , topLines2.begin() , topLines2.end());
+        homeLinesInner.emplace_back(startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
+        homeLinesInner.emplace_back(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
+        homeLinesInner.emplace_back(next12UP.getX() , next12UP.getY() , next22UP.getX() , next22UP.getY());
 
 
 
         //EXTENSIONS And Border
-        vector<Line> extensions = drawExtensions(polygonLines , topLines , startPoint , lastPoint , next1UP , next2UP , step/2 , false , centerL);
-
-        vector<Line> homeBorder = drawHomeBorders(mainLand , homeLines , extensions , false);
+        //vector<Line> extensions = drawExtensions(polygonLines , bottomLines , startPoint1 , lastPoint , next1UP , next2UP , step/2 , true, centerL);
+        //vector<Line> homeBorder = drawHomeBorders( mainLand, homeLines , extensions , true);
         CityGrid cityGrid;
-        cityGrid.setStreets(homeLines);
-        cityGrid.setRoadExtension(extensions);
-        cityGrid.setHomeBorder(homeBorder);
+        cityGrid.setInnerStreets(homeLinesInner);
+        cityGrid.setOuterStreets(homeLinesOuter);
+//        cityGrid.setRoadExtension(extensions);
+//        cityGrid.setHomeBorder(homeBorder);
 
         cities.push_back(cityGrid);
 
@@ -705,10 +753,6 @@ Point DrawStreet::getPrevPoint(const Point &end, int &lineIndex, const vector<Li
 
 const vector<Line> &DrawStreet::getCenterLines() const {
     return centerLines;
-}
-
-const vector<vector<Line>> &DrawStreet::getStreets() const {
-    return streets;
 }
 
 const vector<CityGrid> &DrawStreet::getCities() const {

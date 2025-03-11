@@ -614,7 +614,6 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         DrawStreet drawStreet;
         drawStreet.drawStreets(polygon1);
         vector<Line> centerLines = drawStreet.getCenterLines();
-        vector<vector<Line>> homes = drawStreet.getStreets();
         vector<CityGrid> cities = drawStreet.getCities();
         for (int i = 0; i < centerLines.size(); ++i)
         {
@@ -626,23 +625,23 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             };
         }
 
-        for (int i = 0; i < homes.size(); ++i)
-        {
-            for (int j = 0; j < homes[i].size(); ++j) {
-                response["roads"][i][j] = {
-                        {"x1" , homes[i][j].getX1()},
-                        {"y1" , homes[i][j].getY1()},
-                        {"x2" , homes[i][j].getX2()},
-                        {"y2" , homes[i][j].getY2()},
-                };
-            }
-        }
-
-        for(int i = 0 ; i< cities.size() ; i++)
+        cout<<"cities Size = "<<cities.size()<<"\n";
+        cout<<"cities Size = "<<cities.size()<<"\n";
+        for(int i = 0 ; i < cities.size() ; i++)
         {
             CityGrid city = cities[i];
             vector<Line> roadExtension = city.getRoadExtension();
             vector<Line> homeBorder = city.getHomeBorder();
+            vector<Line> roads = city.getStreets();
+
+            for (int j = 0; j < roads.size(); ++j) {
+                response["roads"][i][j] = {
+                        {"x1" , roads[j].getX1()},
+                        {"y1" , roads[j].getY1()},
+                        {"x2" , roads[j].getX2()},
+                        {"y2" , roads[j].getY2()},
+                };
+            }
 
             for (int j = 0; j < roadExtension.size(); ++j) {
                 response["roadExtension"][i][j] = {

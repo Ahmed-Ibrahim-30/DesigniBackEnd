@@ -8,17 +8,23 @@
 
 class CityGrid {
 private:
-    vector<Line> streets;
+    vector<Line> innerStreets , outerStreets;
     vector<Line> roadExtension;
     vector<Line> homeBorder;
-
 public:
-    CityGrid(const vector<Line> &streets, const vector<Line> &roadExtension, const vector<Line> &homeBorder);
     CityGrid() = default;
 
-    [[nodiscard]] const vector<Line> &getStreets() const;
+    vector<Line> getStreets() ;
 
-    void setStreets(const vector<Line> &streets);
+    void setInnerStreets(const vector<Line> &innerStreets);
+
+    void setOuterStreets(const vector<Line> &outerStreets);
+
+    const vector<Line> &getInnerStreets() const;
+
+    const vector<Line> &getOuterStreets() const;
+
+    void setStreets(const vector<Line> &inner , const vector<Line> &outer);
 
     [[nodiscard]] const vector<Line> &getRoadExtension() const;
 

@@ -4,15 +4,16 @@
 
 #include "CityGrid.h"
 
-CityGrid::CityGrid(const vector<Line> &streets, const vector<Line> &roadExtension, const vector<Line> &homeBorder)
-        : streets(streets), roadExtension(roadExtension), homeBorder(homeBorder) {}
-
-const vector<Line> &CityGrid::getStreets() const {
-    return streets;
+vector<Line> CityGrid::getStreets()
+{
+    vector<Line> streets1 = innerStreets;
+    streets1.insert(streets1.end() , outerStreets.begin() , outerStreets.end());
+    return streets1;
 }
 
-void CityGrid::setStreets(const vector<Line> &streets) {
-    CityGrid::streets = streets;
+void CityGrid::setStreets(const vector<Line> &inner , const vector<Line> &outer) {
+    setInnerStreets(inner);
+    setOuterStreets(outer);
 }
 
 const vector<Line> &CityGrid::getRoadExtension() const {
@@ -29,4 +30,20 @@ const vector<Line> &CityGrid::getHomeBorder() const {
 
 void CityGrid::setHomeBorder(const vector<Line> &homeBorder) {
     CityGrid::homeBorder = homeBorder;
+}
+
+const vector<Line> &CityGrid::getInnerStreets() const {
+    return innerStreets;
+}
+
+const vector<Line> &CityGrid::getOuterStreets() const {
+    return outerStreets;
+}
+
+void CityGrid::setInnerStreets(const vector<Line> &innerStreets) {
+    CityGrid::innerStreets = innerStreets;
+}
+
+void CityGrid::setOuterStreets(const vector<Line> &outerStreets) {
+    CityGrid::outerStreets = outerStreets;
 }
