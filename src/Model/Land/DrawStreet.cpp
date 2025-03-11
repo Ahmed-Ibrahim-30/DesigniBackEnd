@@ -243,8 +243,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         vector<Line> homeLinesOuter , homeLinesInner;
         homeLinesOuter.insert(homeLinesOuter.end() , bottomLines.begin() , bottomLines.end());
         homeLinesOuter.emplace_back(startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
-        homeLinesOuter.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
-        homeLinesOuter.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
+        homeLinesOuter.emplace_back(next2UP.getX() , next2UP.getY() , lastPoint.getX() , lastPoint.getY());        homeLinesOuter.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
 
         topStreets.push_back(homeLinesOuter);
         homeLinesInner.insert(homeLinesInner.end() , bottomLines2.begin() , bottomLines2.end());
@@ -386,7 +385,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         vector<Line> homeLinesOuter , homeLinesInner;
         homeLinesOuter.insert(homeLinesOuter.end() , topLines.begin() , topLines.end());
         homeLinesOuter.emplace_back(startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
-        homeLinesOuter.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
+        homeLinesOuter.emplace_back(next2UP.getX() , next2UP.getY() , lastPoint.getX() , lastPoint.getY());
         homeLinesOuter.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
 
         bottomStreets.push_back(homeLinesOuter);
@@ -559,11 +558,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         }
 
         vector<Line> homeLines;
-//        homeLines.insert(homeLines.end() , bottomLines.begin() , bottomLines.end());
         homeLines.emplace_back(lastPoint.getX() , lastPoint.getY() , next1UP.getX() , next1UP.getY());
-//        homeLines.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
-//        homeLines.emplace_back(next2UP.getX() , next2UP.getY() , lastPoint.getX() , lastPoint.getY());
-
         homeBorderSol.insert(homeBorderSol.end() , homeLines.begin() , homeLines.end());
     }
 
