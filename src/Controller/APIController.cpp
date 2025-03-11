@@ -469,8 +469,9 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             int landSlots = (int)ratios.size();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
 
-            ans = land.SplitLand(ratios  , static_cast<LandDivisionSortingStrategy>(strategy));
 
+            if(landSlots > 0)ans = land.SplitLand(ratios  , static_cast<LandDivisionSortingStrategy>(strategy));
+            else ans = land.SplitLand(10000 , static_cast<LandDivisionSortingStrategy>(strategy)) ;
             GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
