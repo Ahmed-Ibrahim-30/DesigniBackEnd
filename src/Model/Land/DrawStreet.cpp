@@ -24,7 +24,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     int divisions = 0 , index = 0 , divisionsB = 1;
 
-    Point start = PolygonHelper::getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()},{centerLinesTop[index].getX2() , centerLinesTop[index].getY2()},step1 - 10);
+    Point start = PolygonHelper::getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()},{centerLinesTop[index].getX2() , centerLinesTop[index].getY2()},startSpace);
 
     while (true)
     {
@@ -58,7 +58,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     divisions/=4;
     index = 0;
 
-    start = PolygonHelper::getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()},{centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2()},step1 + 10);
+    start = PolygonHelper::getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()},{centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2()},startSpace + step1/2);
 
     while (true)
     {
@@ -139,7 +139,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
     {
         vector<Line> bottomLines , bottomLines2;
 
-        double newStep = topStreets.empty() ? 30 : step;
+        double newStep = topStreets.empty() ? startSpace : step;
         int curIndex = centerLineIndex;
 
         Point startPoint1 = getNextPoint(lastPoint , centerLineIndex , centerL , newStep , bottomLines);
@@ -276,7 +276,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
     for (int m = 0; m < divisions; ++m)
     {
-        double newStep = bottomStreets.empty() ? 30 + step/2 : step;
+        double newStep = bottomStreets.empty() ? startSpace + step/2 : step;
         int curIndex = centerLineIndex;
 
         vector<Line> topLines , topLines2;

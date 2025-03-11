@@ -13,6 +13,8 @@ private:
 
     vector<CityGrid> cities;
 
+    double startSpace = 35;
+
     Polygon1 mainLand;
 
     /**
