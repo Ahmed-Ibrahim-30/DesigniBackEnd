@@ -246,7 +246,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         homeLinesOuter.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
         homeLinesOuter.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
 
-
+        topStreets.push_back(homeLinesOuter);
         homeLinesInner.insert(homeLinesInner.end() , bottomLines2.begin() , bottomLines2.end());
         homeLinesInner.emplace_back(startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
         homeLinesInner.emplace_back(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
@@ -331,7 +331,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
             {
                 foundIntersection = true;
                 next12UP = intersection;
-                next12UP.setY(next12UP.getY() - 5);
+                next12UP.setY(next12UP.getY() + 5);
                 break;
             }
         }
@@ -374,7 +374,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
             {
                 foundIntersection = true;
                 next22UP = intersection;
-                next22UP.setY(next22UP.getY() - 5);
+                next22UP.setY(next22UP.getY() + 5);
                 break;
             }
         }
@@ -389,6 +389,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         homeLinesOuter.emplace_back(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
         homeLinesOuter.emplace_back(next1UP.getX() , next1UP.getY() , next2UP.getX() , next2UP.getY());
 
+        bottomStreets.push_back(homeLinesOuter);
 
         homeLinesInner.insert(homeLinesInner.end() , topLines2.begin() , topLines2.end());
         homeLinesInner.emplace_back(startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
