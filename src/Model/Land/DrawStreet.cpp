@@ -254,7 +254,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
 
         //EXTENSIONS And Border
-        vector<Line> extensions = drawExtensions(polygonLines , bottomLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 +5, true, centerL);
+        vector<Line> extensions = drawExtensions(polygonLines , bottomLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 -5, true, centerL);
         //vector<Line> homeBorder = drawHomeBorders( mainLand, homeLines , extensions , true);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
