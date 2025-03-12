@@ -642,7 +642,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             vector<Line> homeBorder = city.getHomeBorder();
             vector<Line> roads = city.getInnerStreets();
 
-            for (int j = roads.size() - 3; j < roads.size(); ++j) {
+            for (int j = (int)roads.size() - 3; j < roads.size(); ++j) {
                 response["roads"][i][j] = {
                         {"x1" , roads[j].getX1()},
                         {"y1" , roads[j].getY1()},
