@@ -530,10 +530,19 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 CityGrid city = cities[j];
                 vector<Line> roadExtension = city.getRoadExtension();
                 vector<Line> homeBorder = city.getHomeBorder();
-                vector<Line> roads = city.getStreets();
+                vector<Line> roads = city.getInnerStreets();
 
-                for (int m = 0; m < roads.size(); ++m) {
+                for (int m = roads.size()-3; m < roads.size(); ++m) {
                     response["Inner"][i]["roads"][j][m] = {
+                            {"x1" , roads[m].getX1()},
+                            {"y1" , roads[m].getY1()},
+                            {"x2" , roads[m].getX2()},
+                            {"y2" , roads[m].getY2()},
+                    };
+                }
+                roads = city.getOuterStreets();
+                for (int m = roads.size()-3; m < roads.size(); ++m) {
+                    response["Inner"][i]["roads"][j][3+m] = {
                             {"x1" , roads[m].getX1()},
                             {"y1" , roads[m].getY1()},
                             {"x2" , roads[m].getX2()},
