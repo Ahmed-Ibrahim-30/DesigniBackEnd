@@ -23,8 +23,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
 
     int divisions = 0 , index = 0 , divisionsB = 1;
-
-    Point start = PolygonHelper::getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()},{centerLinesTop[index].getX2() , centerLinesTop[index].getY2()},startSpace);
+    vector<Line> bo;
+    Point start = getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()} , index , centerLinesTop , startSpace , bo);
 
     while (true)
     {
@@ -43,8 +43,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     divisions/=4;
     index = 0;
 
-    start = PolygonHelper::getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()},{centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2()},startSpace + step1/2);
-
+    bo.clear();
+    start = getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()} , index , centerLinesTop , startSpace + step1/2, bo);
+    
     while (true)
     {
         vector<Line> ll;
