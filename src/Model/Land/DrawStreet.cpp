@@ -96,7 +96,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    streets.push_back(bottomPoints);
 
 
-    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesBottom);
+    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
     //Bottoms
     vector<Line> centerBottoms = SplitCenterLines(startSpace + step1/2 , step1 , divisions , centerLinesBottom);
     centerLines.clear();
