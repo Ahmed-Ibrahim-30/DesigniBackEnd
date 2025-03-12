@@ -94,6 +94,39 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
 //    streets.push_back(topPoints);
 //    streets.push_back(bottomPoints);
+
+    double stC = startSpace; index = 0;
+    Point stP = {centerLinesTop[index].getX1() , centerLinesTop[index].getY1()};
+    vector<Line> centerTop;
+    for (int i = 0; i < divisions; ++i)
+    {
+        vector<Line> bottoms;
+        Point next = getNextPoint(stP , index , centerLinesTop , stC , bottoms);
+        stC = step1;
+
+        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+        bottoms.clear();
+
+        stP = next;
+
+        int index2 = index;
+        next = getNextPoint(next , index2 , centerLinesTop , 5 , bottoms);
+
+        Point next2 = getNextPoint(next , index2 , centerLinesTop , stC - 10 , bottoms);
+
+        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+
+        stP = getNextPoint(stP , index , centerLinesTop , stC , bottoms);
+    }
+    Line l (stP.getX() , stP.getY() , centerLinesTop.back().getX2() , centerLinesTop.back().getY2());
+
+    vector<Line> bottoms;
+    stP = getNextPoint(stP , index , centerLinesTop , l.getLength() , bottoms);
+
+    centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+
+    centerLines.clear();
+    centerLines = centerTop;
 }
 
 
