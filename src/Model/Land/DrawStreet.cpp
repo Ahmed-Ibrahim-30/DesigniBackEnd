@@ -32,25 +32,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         Point next = getNextPoint(start , index , centerLinesTop , step1/2 , ll);
         if (next.getX() == INT_MAX) break;
 
-        Line nextLine(next.getX() , next.getY() , next.getX() , next.getY()+ 10000000);
-        bool foundIntersection = false;
-        for(auto &upLine : topPoints)
-        {
-            Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+        Line nextLine(next.getX() , next.getY() , centerLinesTop[index].getX2() , centerLinesTop[index].getY2());
 
-            if (intersection.getX() != INT_MAX)
-            {
-                Line newline = upLine;
-                newline.setX1(intersection.getX());
-                newline.setY1(intersection.getY());
 
-                if (upLine == topPoints.back() && newline.getLength() <= 10) break;
-                foundIntersection = true;
-                break;
-            }
-        }
-
-        if (!foundIntersection) break;
+        if (index == centerLinesTop.size()-1 && nextLine.getLength() <= 10) break;
         divisions++;
         start = next;
     }
@@ -66,25 +51,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         Point next = getNextPoint(start , index , centerLinesBottom , step1/2 , ll);
         if (next.getX() == INT_MAX) break;
 
-        Line nextLine(next.getX() , next.getY() , next.getX() , next.getY()- 10000000);
-        bool foundIntersection = false;
-        for(auto &upLine : bottomPoints)
-        {
-            Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+        Line nextLine(next.getX() , next.getY() , centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2());
 
-            if (intersection.getX() != INT_MAX)
-            {
-                Line newline = upLine;
-                newline.setX1(intersection.getX());
-                newline.setY1(intersection.getY());
 
-                if (upLine == bottomPoints.back() &&newline.getLength() <= 10) break;
-                foundIntersection = true;
-                break;
-            }
-        }
-
-        if (!foundIntersection) break;
+        if (index == centerLinesBottom.size()-1 && nextLine.getLength() <= 10) break;
 
         divisionsB++;
         start = next;
@@ -130,6 +100,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
 vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &topLine, double step ,int divisions)
 {
+    vector<Line>topLinesC = topLine;
+    topLinesC.insert(topLinesC.end() , polygonLines.begin() , polygonLines.end());
     vector<vector<Line>> topStreets;
     double height = 100000000000;
 
@@ -160,7 +132,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         Line nextLine (startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
 
         bool foundIntersection = false;
-        for(auto &upLine : topLine)
+        for(auto &upLine : topLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -181,7 +153,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
         nextLine =Line (startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
 
         foundIntersection = false;
-        for(auto &upLine : topLine)
+        for(auto &upLine : topLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -203,7 +175,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
         foundIntersection = false;
         nextLine = Line(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
-        for(auto &upLine : topLine)
+        for(auto &upLine : topLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -223,7 +195,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
         foundIntersection = false;
         nextLine = Line(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
-        for(auto &upLine : topLine)
+        for(auto &upLine : topLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -268,6 +240,8 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
 vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &bottomLines, double step ,int divisions)
 {
+    vector<Line> bottomLinesC = bottomLines;
+    bottomLinesC.insert(bottomLinesC.end() , polygonLines.begin() , polygonLines.end());
     vector<vector<Line>> bottomStreets;
     double height = 100000000000;
 
@@ -299,7 +273,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         Line nextLine (startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
 
         bool foundIntersection = false;
-        for(auto &upLine : bottomLines)
+        for(auto &upLine : bottomLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -322,7 +296,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         nextLine =Line (startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
 
         foundIntersection = false;
-        for(auto &upLine : bottomLines)
+        for(auto &upLine : bottomLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -344,7 +318,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         foundIntersection = false;
         nextLine = Line(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
-        for(auto &upLine : bottomLines)
+        for(auto &upLine : bottomLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
@@ -365,7 +339,7 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         foundIntersection = false;
         nextLine = Line(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
-        for(auto &upLine : bottomLines)
+        for(auto &upLine : bottomLinesC)
         {
             Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
 
