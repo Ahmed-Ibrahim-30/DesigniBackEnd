@@ -643,7 +643,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             vector<Line> roads = city.getInnerStreets();
 
             for (int j = (int)roads.size() - 3; j < roads.size(); ++j) {
-                response["roads"][i][j] = {
+                response["roads"][i][j - ((int)roads.size() - 3)] = {
                         {"x1" , roads[j].getX1()},
                         {"y1" , roads[j].getY1()},
                         {"x2" , roads[j].getX2()},
@@ -651,15 +651,15 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
                 };
             }
 
-//            roads = city.getOuterStreets();
-//            for (int j = roads.size() - 3; j < roads.size(); ++j) {
-//                response["roads"][i][3 + j] = {
-//                        {"x1" , roads[j].getX1()},
-//                        {"y1" , roads[j].getY1()},
-//                        {"x2" , roads[j].getX2()},
-//                        {"y2" , roads[j].getY2()},
-//                };
-//            }
+            roads = city.getOuterStreets();
+            for (int j = roads.size() - 3; j < roads.size(); ++j) {
+                response["roads"][i][3 + j - ((int)roads.size() - 3)] = {
+                        {"x1" , roads[j].getX1()},
+                        {"y1" , roads[j].getY1()},
+                        {"x2" , roads[j].getX2()},
+                        {"y2" , roads[j].getY2()},
+                };
+            }
 
             for (int j = 0; j < roadExtension.size(); ++j) {
                 response["roadExtension"][i][j] = {
