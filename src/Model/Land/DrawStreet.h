@@ -43,6 +43,8 @@ private:
     vector<vector<Line>> drawBottomStreets(const vector<Line> &polygonLines ,const vector<Line> &centerL,const vector<Line> &bottomLine , double step ,int divisions);
 
 
+    vector<Line> SplitCenterLines(double startSpace ,double step1 , int divisions,const vector<Line> &centerLines2);
+
 public:
     void drawStreets(Polygon1 &polygon1);
 

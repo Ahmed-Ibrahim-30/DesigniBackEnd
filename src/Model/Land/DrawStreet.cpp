@@ -95,14 +95,24 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    streets.push_back(topPoints);
 //    streets.push_back(bottomPoints);
 
-    double stC = startSpace; index = 0;
-    Point stP = {centerLinesTop[index].getX1() , centerLinesTop[index].getY1()};
+
+    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesBottom);
+    //Bottoms
+    vector<Line> centerBottoms = SplitCenterLines(startSpace + step1/2 , step1 , divisions , centerLinesBottom);
+    centerLines.clear();
+    centerLines = centerTop;
+    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+}
+
+vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
+    int index = 0;
+    Point stP = {centerLines2[index].getX1() , centerLines2[index].getY1()};
     vector<Line> centerTop;
     for (int i = 0; i < divisions; ++i)
     {
         vector<Line> bottoms;
-        Point next = getNextPoint(stP , index , centerLinesTop , stC , bottoms);
-        stC = step1;
+        Point next = getNextPoint(stP , index , centerLines2 , startSpace , bottoms);
+        startSpace = step1;
 
         centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
         bottoms.clear();
@@ -110,24 +120,23 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         stP = next;
 
         int index2 = index;
-        next = getNextPoint(next , index2 , centerLinesTop , 5 , bottoms);
+        next = getNextPoint(next , index2 , centerLines2 , 5 , bottoms);
         bottoms.clear();
 
-        Point next2 = getNextPoint(next , index2 , centerLinesTop , stC - 10 , bottoms);
+        Point next2 = getNextPoint(next , index2 , centerLines2 , startSpace - 10 , bottoms);
 
         centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
-        stP = getNextPoint(stP , index , centerLinesTop , stC , bottoms);
+        stP = getNextPoint(stP , index , centerLines2 , startSpace , bottoms);
     }
-    Line l (stP.getX() , stP.getY() , centerLinesTop.back().getX2() , centerLinesTop.back().getY2());
+    Line l (stP.getX() , stP.getY() , centerLines2.back().getX2() , centerLines2.back().getY2());
 
     vector<Line> bottoms;
-    stP = getNextPoint(stP , index , centerLinesTop , l.getLength() , bottoms);
+    stP = getNextPoint(stP , index , centerLines2 , l.getLength() , bottoms);
 
     centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
-    centerLines.clear();
-    centerLines = centerTop;
+    return centerTop;
 }
 
 
@@ -730,6 +739,8 @@ const vector<Line> &DrawStreet::getCenterLines() const {
 const vector<CityGrid> &DrawStreet::getCities() const {
     return cities;
 }
+
+
 
 
 
