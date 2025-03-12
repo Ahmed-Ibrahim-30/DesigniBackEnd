@@ -45,7 +45,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     bo.clear();
     start = getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()} , index , centerLinesTop , startSpace + step1/2, bo);
-    
+
     while (true)
     {
         vector<Line> ll;

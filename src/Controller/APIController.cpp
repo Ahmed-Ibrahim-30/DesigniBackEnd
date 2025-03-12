@@ -471,7 +471,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
 
             if(landSlots > 0)ans = land.SplitLand(ratios  , static_cast<LandDivisionSortingStrategy>(strategy));
-            else ans = land.SplitLand(10000 , static_cast<LandDivisionSortingStrategy>(strategy)) ;
+            else ans = land.SplitLand(30000 , static_cast<LandDivisionSortingStrategy>(strategy)) ;
             GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
