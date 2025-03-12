@@ -132,7 +132,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
     Line l (stP.getX() , stP.getY() , centerLines2.back().getX2() , centerLines2.back().getY2());
 
     vector<Line> bottoms;
-    stP = getNextPoint(stP , index , centerLines2 , l.getLength() , bottoms);
+    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 100, bottoms);
 
     centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
