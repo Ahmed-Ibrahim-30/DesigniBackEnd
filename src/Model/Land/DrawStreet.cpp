@@ -111,10 +111,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
         int index2 = index;
         next = getNextPoint(next , index2 , centerLinesTop , 5 , bottoms);
+        bottoms.clear();
 
         Point next2 = getNextPoint(next , index2 , centerLinesTop , stC - 10 , bottoms);
 
-//        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
         stP = getNextPoint(stP , index , centerLinesTop , stC , bottoms);
     }
