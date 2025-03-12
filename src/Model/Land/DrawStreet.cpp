@@ -99,9 +99,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
     //Bottoms
     vector<Line> centerBottoms = SplitCenterLines(startSpace + step1/2 , step1 , divisions , centerLinesBottom);
-//    centerLines.clear();
-//    centerLines = centerTop;
-//    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+    centerLines.clear();
+    centerLines = centerTop;
+    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
