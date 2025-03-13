@@ -488,9 +488,9 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             };
         }
 
+        ans = streets;
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
-        ans = streets;
 
         for(int i = 0 ; i < ans.size() ; i++)
         {
