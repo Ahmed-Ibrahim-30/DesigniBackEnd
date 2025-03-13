@@ -526,20 +526,20 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             }
 
 
-            DrawStreet drawStreet;
-            drawStreet.drawStreets(pol);
-            vector<Line> centerLines = drawStreet.getCenterLines();
-            vector<CityGrid> cities = drawStreet.getCities();
-
-            for (int j = 0; j < centerLines.size(); ++j)
-            {
-                response["Inner"][i]["centerLines"][j] = {
-                        {"x1" , centerLines[j].getX1()},
-                        {"y1" , centerLines[j].getY1()},
-                        {"x2" , centerLines[j].getX2()},
-                        {"y2" , centerLines[j].getY2()},
-                };
-            }
+//            DrawStreet drawStreet;
+//            drawStreet.drawStreets(pol);
+//            vector<Line> centerLines = drawStreet.getCenterLines();
+//            vector<CityGrid> cities = drawStreet.getCities();
+//
+//            for (int j = 0; j < centerLines.size(); ++j)
+//            {
+//                response["Inner"][i]["centerLines"][j] = {
+//                        {"x1" , centerLines[j].getX1()},
+//                        {"y1" , centerLines[j].getY1()},
+//                        {"x2" , centerLines[j].getX2()},
+//                        {"y2" , centerLines[j].getY2()},
+//                };
+//            }
 //
 //
 //            for(int j = 0 ; j< cities.size() ; j++)
