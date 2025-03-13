@@ -516,60 +516,60 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             vector<Line> centerLines = drawStreet.getCenterLines();
             vector<CityGrid> cities = drawStreet.getCities();
 
-            for (int j = 0; j < centerLines.size(); ++j)
-            {
-                response["Inner"][i]["centerLines"][j] = {
-                        {"x1" , centerLines[j].getX1()},
-                        {"y1" , centerLines[j].getY1()},
-                        {"x2" , centerLines[j].getX2()},
-                        {"y2" , centerLines[j].getY2()},
-                };
-            }
-
-
-            for(int j = 0 ; j< cities.size() ; j++)
-            {
-                CityGrid city = cities[j];
-                vector<Line> roadExtension = city.getRoadExtension();
-                vector<Line> homeBorder = city.getHomeBorder();
-                vector<Line> roads = city.getInnerStreets();
-
-                for (int m = roads.size()-3; m < roads.size(); ++m) {
-                    response["Inner"][i]["roads"][j][m - roads.size() +3 ] = {
-                            {"x1" , roads[m].getX1()},
-                            {"y1" , roads[m].getY1()},
-                            {"x2" , roads[m].getX2()},
-                            {"y2" , roads[m].getY2()},
-                    };
-                }
-                roads = city.getOuterStreets();
-                for (int m = roads.size()-3; m < roads.size(); ++m) {
-                    response["Inner"][i]["roads"][j][6 + m -roads.size()] = {
-                            {"x1" , roads[m].getX1()},
-                            {"y1" , roads[m].getY1()},
-                            {"x2" , roads[m].getX2()},
-                            {"y2" , roads[m].getY2()},
-                    };
-                }
-
-                for (int m = 0; m < roadExtension.size(); ++m) {
-                    response["Inner"][i]["roadExtension"][j][m] = {
-                            {"x1" , roadExtension[m].getX1()},
-                            {"y1" , roadExtension[m].getY1()},
-                            {"x2" , roadExtension[m].getX2()},
-                            {"y2" , roadExtension[m].getY2()},
-                    };
-                }
-
-                for (int m = 0; m < homeBorder.size(); ++m) {
-                    response["Inner"][i]["homeBorder"][j][m] = {
-                            {"x1" , homeBorder[m].getX1()},
-                            {"y1" , homeBorder[m].getY1()},
-                            {"x2" , homeBorder[m].getX2()},
-                            {"y2" , homeBorder[m].getY2()},
-                    };
-                }
-            }
+//            for (int j = 0; j < centerLines.size(); ++j)
+//            {
+//                response["Inner"][i]["centerLines"][j] = {
+//                        {"x1" , centerLines[j].getX1()},
+//                        {"y1" , centerLines[j].getY1()},
+//                        {"x2" , centerLines[j].getX2()},
+//                        {"y2" , centerLines[j].getY2()},
+//                };
+//            }
+//
+//
+//            for(int j = 0 ; j< cities.size() ; j++)
+//            {
+//                CityGrid city = cities[j];
+//                vector<Line> roadExtension = city.getRoadExtension();
+//                vector<Line> homeBorder = city.getHomeBorder();
+//                vector<Line> roads = city.getInnerStreets();
+//
+//                for (int m = roads.size()-3; m < roads.size(); ++m) {
+//                    response["Inner"][i]["roads"][j][m - roads.size() +3 ] = {
+//                            {"x1" , roads[m].getX1()},
+//                            {"y1" , roads[m].getY1()},
+//                            {"x2" , roads[m].getX2()},
+//                            {"y2" , roads[m].getY2()},
+//                    };
+//                }
+//                roads = city.getOuterStreets();
+//                for (int m = roads.size()-3; m < roads.size(); ++m) {
+//                    response["Inner"][i]["roads"][j][6 + m -roads.size()] = {
+//                            {"x1" , roads[m].getX1()},
+//                            {"y1" , roads[m].getY1()},
+//                            {"x2" , roads[m].getX2()},
+//                            {"y2" , roads[m].getY2()},
+//                    };
+//                }
+//
+//                for (int m = 0; m < roadExtension.size(); ++m) {
+//                    response["Inner"][i]["roadExtension"][j][m] = {
+//                            {"x1" , roadExtension[m].getX1()},
+//                            {"y1" , roadExtension[m].getY1()},
+//                            {"x2" , roadExtension[m].getX2()},
+//                            {"y2" , roadExtension[m].getY2()},
+//                    };
+//                }
+//
+//                for (int m = 0; m < homeBorder.size(); ++m) {
+//                    response["Inner"][i]["homeBorder"][j][m] = {
+//                            {"x1" , homeBorder[m].getX1()},
+//                            {"y1" , homeBorder[m].getY1()},
+//                            {"x2" , homeBorder[m].getX2()},
+//                            {"y2" , homeBorder[m].getY2()},
+//                    };
+//                }
+//            }
         }
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
