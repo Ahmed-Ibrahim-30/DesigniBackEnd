@@ -354,6 +354,14 @@ double PolygonHelper::getSlope(double x1, double x2, double y1, double y2) {
     return (y2-y1) / (x2 - x1);
 }
 
+double PolygonHelper::getSlope(const Line &line) {
+    double x1 = line.getX1(), x2 = line.getX1();
+    double y1 = line.getY1(), y2 = line.getY2();
+    if(x2 == x1) return 0;
+
+    return (y2-y1) / (x2 - x1);
+}
+
 Point PolygonHelper::getSecondPointOfLineByAngle(double x, double y, double angle , double dist)
 {
     double angle_rad = angle * 3.14159 / 180.0;
@@ -559,6 +567,17 @@ bool PolygonHelper::isPointInsidePolygon(const Point& point, const Polygon1& pol
     } while (i != 0);
 
     return (count % 2 == 1);
+}
+
+Point PolygonHelper::getOtherLinePoint(const Point &p, double slope, double y) {
+    if (slope == 0)
+    {
+        return {p.getX() , p.getY() + y};
+    }
+
+
+    double x2 = (((p.getY() - y)/slope) - p.getX()) * -1;
+    return {x2 , y};
 }
 
 

@@ -55,6 +55,8 @@ public:
      */
     static double getSlope(double x1, double x2, double y1, double y2);
 
+    static double getSlope(const Line &line);
+
     /**
      * Get Second Point of Line Using Angle
      * @param x
@@ -163,6 +165,15 @@ public:
      * @return
      */
     static Polygon1  getScalingPolygon(Polygon1 &mainLand , double distance);
+
+    /**
+     * Get Other Point On Line with Specific Slope
+     * @param p
+     * @param slope
+     * @param y
+     * @return
+     */
+    static Point getOtherLinePoint(const Point &p , double slope , double y);
 };
 
 
