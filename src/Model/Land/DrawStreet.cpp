@@ -84,7 +84,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     step1 = ((lengthC) / (int)(divisions*4)) * 2;
 
-    cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions <<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
+    cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 //    cout<<"Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 
     lengthC = 0;
