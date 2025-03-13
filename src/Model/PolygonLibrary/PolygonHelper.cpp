@@ -194,35 +194,62 @@ vector<Line> PolygonHelper::getTopLines(Polygon1 &polygon , double offsite)
     return topLines;
 }
 
-Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
-{
+//Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
+//{
+//    vector<Point> newPoints;
+//    vector<Point> curPoints = mainLand.getPoints();
+//
+//    for (int i = 0; i < curPoints.size(); ++i)
+//    {
+//        Point a0 = curPoints[i==0?curPoints.size()-1 : i-1];
+//        Point a1 = curPoints[i];
+//        Point a2 = curPoints[(i + 1) % curPoints.size()];
+//
+//        // Compute the direction vectors of adjacent edges
+//        Point v1 = (a1 - a0).normalize(); // Edge from a0 to a1
+//        Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
+//
+//        // Compute perpendicular vectors
+//        Point perp1 = v1.perpendicular();
+//        Point perp2 = v2.perpendicular();
+//
+//        // Compute outward direction (average of two perpendicular vectors)
+//        Point offsetDir = (perp1 + perp2).normalize();
+//
+//        // Move the point outward by X
+//        Point newPoint = a1 + offsetDir * distance;
+//        newPoints.push_back(newPoint);
+//    }
+//
+//    Polygon1 polygon1(newPoints);
+//
+//    return polygon1;
+//}
+
+Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand, double distance) {
     vector<Point> newPoints;
     vector<Point> curPoints = mainLand.getPoints();
+    int n = curPoints.size();
 
-    for (int i = 0; i < curPoints.size(); ++i)
-    {
-        Point a0 = curPoints[i==0?curPoints.size()-1 : i-1];
+    for (int i = 0; i < n; ++i) {
         Point a1 = curPoints[i];
-        Point a2 = curPoints[(i + 1) % curPoints.size()];
+        Point a2 = curPoints[(i + 1) % n];
 
-        // Compute the direction vectors of adjacent edges
-        Point v1 = (a1 - a0).normalize(); // Edge from a0 to a1
-        Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
+        // Compute edge vector and perpendicular offset
+        Point edge = (a2 - a1).normalize();
+        Point perp = edge.perpendicular(); // Get normal
 
-        // Compute perpendicular vectors
-        Point perp1 = v1.perpendicular();
-        Point perp2 = v2.perpendicular();
+        // Offset both points along the perpendicular direction
+        Point p1 = a1 + perp * distance;
+        Point p2 = a2 + perp * distance;
 
-        // Compute outward direction (average of two perpendicular vectors)
-        Point offsetDir = (perp1 + perp2).normalize();
-
-        // Move the point outward by X
-        Point newPoint = a1 + offsetDir * distance;
-        newPoints.push_back(newPoint);
+        // Store the new points
+        newPoints.push_back(p1);
+        newPoints.push_back(p2);
     }
 
+    // Construct the new polygon
     Polygon1 polygon1(newPoints);
-
     return polygon1;
 }
 
