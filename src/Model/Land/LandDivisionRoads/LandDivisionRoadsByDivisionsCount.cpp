@@ -14,11 +14,6 @@ vector<vector<Polygon1>>LandDivisionRoadsByDivisionsCount::divideLand(const Poly
 
     divideLand( ratioA , ratioB , maxDivisions , pols , ans , landDivisionStrategy);
 
-    //Push OUTSIDE ROAD
-    Polygon1 outSidePolygon = buildOutsideRoads(land);
-
-    for(auto &p : ans)p.push_back(outSidePolygon);
-
     return ans;
 }
 

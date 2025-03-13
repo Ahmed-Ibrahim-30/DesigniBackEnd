@@ -475,11 +475,21 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
-            landDivisionRoads = new LandDivisionRoadsByRatios();
+
             vector<vector<Polygon1>> pols ;
 
-            if(landSlots > 0)pols = landDivisionRoads->divideLand(polygon1 , ratios , static_cast<LandDivisionSortingStrategy>(strategy) );
-            else pols =landDivisionRoads->divideLand(polygon1 , 30000 , static_cast<LandDivisionSortingStrategy>(strategy) );
+            if(landSlots > 0)
+            {
+                landDivisionRoads = new LandDivisionRoadsByRatios();
+                pols = landDivisionRoads->divideLand(polygon1 , ratios , static_cast<LandDivisionSortingStrategy>(strategy) );
+            }
+            else
+            {
+                landDivisionRoads = new LandDivisionRoadsByArea();
+                pols =landDivisionRoads->divideLand(polygon1 , 30000 , static_cast<LandDivisionSortingStrategy>(strategy) );
+            }
+
+
             if (pols.empty()) streets = land.buildRoads(ans);
             else  streets = pols[0];
         }
@@ -494,12 +504,14 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         ans = streets;
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
+        Polygon1 outerLand = landDivisionRoads->getOuterLand(polygon1);
+
 
         for(int i = 0 ; i < ans.size() ; i++)
         {
             auto pol = ans[i];
             int index = 0;
-            response["Inner"][i]["id"] = i == ans.size()-1 ?"" : ans[i].getId();
+            response["Inner"][i]["id"] =  ans[i].getId();
             response["Inner"][i]["area"] = pol.getArea();
             response["Inner"][i]["green_area"] = !pol.isDivisible();
             response["Inner"][i]["roadExtension"] = std::vector<crow::json::wvalue>{};
@@ -576,6 +588,21 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
+
+        response["Inner"][ans.size()]["id"] =  "";
+        response["Inner"][ans.size()]["area"] = outerLand.getArea();
+        response["Inner"][ans.size()]["green_area"] = !outerLand.isDivisible();
+        response["Inner"][ans.size()]["roadExtension"] = std::vector<crow::json::wvalue>{};
+        response["Inner"][ans.size()]["homeBorder"] = std::vector<crow::json::wvalue>{};
+
+        int index1 = 0;
+        for(auto &p : outerLand.getPoints())
+        {
+            response["Inner"][ans.size()]["Points"][index1++] = {
+                    {"x" , p.getX()} ,
+                    {"y" , p.getY()}
+            };
+        }
 
         for(int i = 0 ; i < streets.size(); i++)
         {

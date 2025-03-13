@@ -482,7 +482,7 @@ double LandDivisionRoads::findX(double y, double x1, double y1, double x2, doubl
     return x;
 }
 
-Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 mainLand) {
+Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 &mainLand) {
     vector<Point> newPoints;
     vector<Point> curPoints = mainLand.getPoints();
 
@@ -510,4 +510,9 @@ Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 mainLand) {
     Polygon1 polygon1(newPoints);
 
     return polygon1;
+}
+
+Polygon1 LandDivisionRoads::getOuterLand(Polygon1 &mainLand)
+{
+    return buildOutsideRoads(mainLand);
 }

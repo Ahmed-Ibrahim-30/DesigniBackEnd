@@ -21,11 +21,11 @@ protected:
     vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1 , double scalingStreet = 1);
 
     /**
-     * Build Outside Polygon for curLand
+     * Build Outside Land for curLand
      * @param mainLand
      * @return
      */
-    Polygon1 buildOutsideRoads(Polygon1 mainLand);
+    Polygon1 buildOutsideRoads(Polygon1 &mainLand);
 
     Point shiftPointOnLine(const Line& line, const Point& p, double distance);
 
@@ -35,6 +35,12 @@ protected:
     static int COUNT ;
 
 public:
+
+    /**
+     * Get Outer Land
+     * @return
+     */
+    Polygon1 getOuterLand(Polygon1 &mainLand);
     /**
      * Split Land with Roads Based on number of Divisions
      * @param land

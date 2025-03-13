@@ -12,10 +12,6 @@ vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLand(const Polygon1 &lan
     divideLand( area , pols , ans , landDivisionStrategy);
 
     mainLand = land;
-    //Push OUTSIDE ROAD
-    Polygon1 outSidePolygon = buildOutsideRoads(land);
-
-    for(auto &p : ans)p.push_back(outSidePolygon);
 
     std::sort(ans.begin(), ans.end() , [](vector<Polygon1> &pol1 , vector<Polygon1> &pol2){
         return pol1.size() > pol2.size();

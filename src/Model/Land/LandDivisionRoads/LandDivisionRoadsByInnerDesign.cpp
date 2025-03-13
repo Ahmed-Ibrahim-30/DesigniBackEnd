@@ -12,13 +12,7 @@ vector<vector<Polygon1>> LandDivisionRoadsByInnerDesign::divideLand(const Polygo
     vector<vector<Polygon1>> ans;
     divideLand( innerHome , pols , ans , landDivisionStrategy);
 
-
     mainLand =land;
-
-    //Push OUTSIDE ROAD
-    Polygon1 outSidePolygon = buildOutsideRoads(land);
-
-    for(auto &p : ans)p.push_back(outSidePolygon);
 
     return ans;
 }
