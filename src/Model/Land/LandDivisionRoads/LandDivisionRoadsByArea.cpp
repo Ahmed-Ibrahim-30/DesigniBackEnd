@@ -9,9 +9,9 @@ vector<vector<Polygon1>> LandDivisionRoadsByArea::divideLand(const Polygon1 &lan
     vector <Polygon1> pols;
     pols.push_back(land);
     vector<vector<Polygon1>> ans;
+    mainLand = land;
     divideLand( area , pols , ans , landDivisionStrategy);
 
-    mainLand = land;
 
     std::sort(ans.begin(), ans.end() , [](vector<Polygon1> &pol1 , vector<Polygon1> &pol2){
         return pol1.size() > pol2.size();

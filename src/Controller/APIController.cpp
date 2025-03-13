@@ -479,6 +479,9 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             vector<vector<Polygon1>> pols ;
 
+            cout<<"landSlots = "<<landSlots<<"\n";
+
+
             if(landSlots > 0)
             {
                 landDivisionRoads = new LandDivisionRoadsByRatios();
@@ -494,6 +497,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             if (pols.empty()) streets = land.buildRoads(ans);
             else  streets = pols[0];
         }
+
+
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)
         {
             response["outerLand"][i] = {
