@@ -22,8 +22,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     vector<Line> spacingLines = innerPolygon.getLines();
 
-    vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 30);
-    vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 30);
+//    vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 30);
+//    vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 30);
 
 
     int divisions = 0 , index = 0 , divisionsB = 1;
