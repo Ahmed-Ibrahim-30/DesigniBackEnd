@@ -100,7 +100,7 @@ void LandDivisionRoadsByRatios::divideLand(const vector<double> &ratios, vector<
         swap(selectedSolution[n-1] , selectedSolution[n-2]);
     }
 
-    cout<<"Ratio --> "<<ratios[curIndex]<<" "<<sumOtherRatio<<"\t "<<selectedSolution[n-1].getArea()/selectedSolution[n-2].getArea()<<"\n";
+//    cout<<"Ratio --> "<<ratios[curIndex]<<" "<<sumOtherRatio<<"\t "<<selectedSolution[n-1].getArea()/selectedSolution[n-2].getArea()<<"\n";
     divideLand( ratios , selectedSolution , ans , landDivisionStrategy);
 }
 
