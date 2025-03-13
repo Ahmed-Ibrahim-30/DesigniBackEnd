@@ -80,7 +80,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     lengthC-=40;
 
-    step1 = (lengthC) / (int)(lengthC/40);
+    step1 = ((lengthC) / (int)(divisions*4)) * 2;
     cout<<"Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 
     lengthC = 0;
@@ -90,7 +90,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     }
     lengthC-=40;
 
-    step1 = min(step1 , (lengthC) / (int)(lengthC/40));
+    step1 = min(step1 , ((lengthC) / (int)(divisions*4)) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
     step1+=5;
