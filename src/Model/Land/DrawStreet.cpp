@@ -208,7 +208,11 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
         if (!m)
         {
+            cout<<"StartPoint = "<<startPoint1.getX() <<" "<<startPoint1.getY()<<"\n";
+            cout<<"Slope == "<<PolygonHelper::getSlope(rightLine)<<" \n";
+            rightLine.printJsonFormat();
             next1UP = PolygonHelper::getOtherLinePoint(startPoint1 , PolygonHelper::getSlope(rightLine) , startPoint1.getY() + height);
+            cout<<"next1UPPoint = "<<next1UP.getX() <<" "<<next1UP.getY()<<"\n";
         }
 
         Line nextLine (startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
