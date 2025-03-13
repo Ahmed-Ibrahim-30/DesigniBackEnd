@@ -488,7 +488,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             };
         }
 
-//        ans = streets;
+        ans = streets;
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
 
@@ -496,7 +496,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         {
             auto pol = ans[i];
             int index = 0;
-            response["Inner"][i]["id"] = ans[i].getId();
+            response["Inner"][i]["id"] = i == ans.size()-1 ?"" : ans[i].getId();
             response["Inner"][i]["area"] = pol.getArea();
             response["Inner"][i]["green_area"] = !pol.isDivisible();
             response["Inner"][i]["roadExtension"] = std::vector<crow::json::wvalue>{};
