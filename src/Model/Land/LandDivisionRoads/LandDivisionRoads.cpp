@@ -45,7 +45,8 @@ vector<pair<Polygon1 , Polygon1>> LandDivisionRoads::dividePolygons(Polygon1 pol
 {
     COUNT ++;
 
-    double streetWidth1 = 8 * scalingStreet, streetWidth2 = 6 * scalingStreet, streetWidth3 = 4* scalingStreet;
+//    double streetWidth1 = 8 * scalingStreet, streetWidth2 = 6 * scalingStreet, streetWidth3 = 4* scalingStreet;
+    double streetWidth1 = 15, streetWidth2 = 15, streetWidth3 = 15;
 
     vector<pair<Polygon1 , Polygon1>> ans;
     int n = (int)polygon1.getPoints().size();
