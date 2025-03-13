@@ -56,6 +56,11 @@ public:
         return Point(x / len, y / len);
     }
 
+    // Normalize the vector
+    [[nodiscard]] double dot(Point &p) const {
+        return x*p.getX() + y*p.getY();
+    }
+
     // Rotate by 90 degrees counterclockwise
     [[nodiscard]] Point perpendicular() const {
         return Point(-y, x);

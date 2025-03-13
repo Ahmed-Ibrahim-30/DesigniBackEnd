@@ -242,14 +242,14 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand, double distance)
         Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
 
         // Compute perpendicular vectors
-        Point perp1 = Point(-v1.y, v1.x); // Perpendicular to v1
-        Point perp2 = Point(-v2.y, v2.x); // Perpendicular to v2
+        Point perp1 = Point(-v1.getY(), v1.getX()); // Perpendicular to v1
+        Point perp2 = Point(-v2.getY(), v2.getX()); // Perpendicular to v2
 
         // Compute outward direction (average of two perpendicular vectors)
         Point offsetDir = (perp1 + perp2).normalize();
 
         // Calculate the angle between the two edges
-        double angle = acos(v1.dot(v2));
+        double angle = acos(v1 .dot (v2));
 
         // Calculate the scaling factor to ensure the correct distance
         double scaleFactor = distance / sin(angle / 2);
