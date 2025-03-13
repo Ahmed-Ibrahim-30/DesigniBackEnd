@@ -39,7 +39,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         Line nextLine(next.getX() , next.getY() , centerLinesTop[index].getX2() , centerLinesTop[index].getY2());
 
 
-        if (index == centerLinesTop.size()-1 && nextLine.getLength() <= 10) break;
+        if (index == centerLinesTop.size()-1 && nextLine.getLength() <= 20) break;
         divisions++;
         start = next;
     }
@@ -59,7 +59,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         Line nextLine(next.getX() , next.getY() , centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2());
 
 
-        if (index == centerLinesBottom.size()-1 && nextLine.getLength() <= 10) break;
+        if (index == centerLinesBottom.size()-1 && nextLine.getLength() <= 20) break;
 
         divisionsB++;
         start = next;
