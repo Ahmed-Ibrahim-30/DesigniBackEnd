@@ -97,7 +97,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
 
-//    streets.push_back(topPoints);
+
 //    streets.push_back(bottomPoints);
 
 
@@ -107,6 +107,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     centerLines.clear();
     centerLines = centerTop;
     centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {

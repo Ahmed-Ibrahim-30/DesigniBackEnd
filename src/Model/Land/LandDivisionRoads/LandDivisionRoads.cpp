@@ -510,7 +510,6 @@ Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 &mainLand)
 
         Line ll(a1.getX() , a1.getY() , newPoint.getX() , newPoint.getY());
 
-        cout<<"LineLength = "<<ll.getLength()<<"\n";
         newPoints.push_back(newPoint);
     }
 
