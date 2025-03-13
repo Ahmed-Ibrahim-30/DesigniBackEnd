@@ -10,9 +10,9 @@ vector<vector<Polygon1>> LandDivisionRoadsByInnerDesign::divideLand(const Polygo
     vector <Polygon1> pols;
     pols.push_back(land);
     vector<vector<Polygon1>> ans;
+    mainLand =land;
     divideLand( innerHome , pols , ans , landDivisionStrategy);
 
-    mainLand =land;
 
     return ans;
 }
