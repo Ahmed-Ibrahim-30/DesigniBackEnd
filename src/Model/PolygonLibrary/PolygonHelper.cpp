@@ -355,7 +355,7 @@ double PolygonHelper::getSlope(double x1, double x2, double y1, double y2) {
 }
 
 double PolygonHelper::getSlope(const Line &line) {
-    double x1 = line.getX1(), x2 = line.getX1();
+    double x1 = line.getX1(), x2 = line.getX2();
     double y1 = line.getY1(), y2 = line.getY2();
     if(x2 == x1) return 0;
 
