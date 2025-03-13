@@ -29,6 +29,12 @@ Polygon1::Polygon1(const vector<Point> &points_ , bool divisible_) : points(poin
         // points = newP;
     }
 
+
+    Point start = points[0];
+    Point end = points.back();
+
+    if (start.getY() < end.getY())std::reverse(points.begin(), points.end());
+
 }
 
 const vector<Point> &Polygon1::getPoints() const {
