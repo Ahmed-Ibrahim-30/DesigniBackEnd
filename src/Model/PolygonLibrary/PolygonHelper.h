@@ -155,6 +155,14 @@ public:
      * @return
      */
     static vector<Line> getBottomLines(Polygon1 &polygon , double offsite);
+
+    /**
+     * getScalingPolygon
+     * @param mainLand
+     * @param distance
+     * @return
+     */
+    static Polygon1  getScalingPolygon(Polygon1 &mainLand , double distance);
 };
 
 

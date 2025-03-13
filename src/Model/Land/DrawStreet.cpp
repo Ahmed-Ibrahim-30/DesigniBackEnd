@@ -18,6 +18,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
+
+    vector<Line> spacingLines = innerPolygon.getLines();
+
     vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 30);
     vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 30);
 
@@ -90,8 +94,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     vector<Line> polygonLines = polygon1.getLines();
 
-    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  topPoints , step1 , divisions);
-    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, bottomPoints , step1 , divisions);
+    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
 
 //    streets.push_back(topPoints);
 //    streets.push_back(bottomPoints);
