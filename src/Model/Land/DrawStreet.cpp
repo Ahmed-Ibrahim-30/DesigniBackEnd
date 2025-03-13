@@ -67,8 +67,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     divisionsB/=4;
 
-    cout<<"divisions = "<<divisions <<"\n";
-    cout<<"divisionsB = "<<divisionsB <<"\n";
+//    cout<<"divisions = "<<divisions <<"\n";
+//    cout<<"divisionsB = "<<divisionsB <<"\n";
 
     divisions = min(divisions , divisionsB);
 
@@ -79,7 +79,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     }
 
     step1 = lengthC / (int)(lengthC/40);
-    cout<<"New Step = "<<step1<<"\n";
+//    cout<<"New Step = "<<step1<<"\n";
 
     lengthC = 0;
     for(auto &line : centerLinesBottom)
@@ -88,7 +88,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     }
 
     step1 = min(step1 , lengthC / (int)(lengthC/40));
-    cout<<"New Step = "<<step1<<"\n";
+//    cout<<"New Step = "<<step1<<"\n";
 
 
 
@@ -597,7 +597,7 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
 
     reqLength/=2;
 
-    cout<<"reqLength = "<<reqLength<<"\n";
+//    cout<<"reqLength = "<<reqLength<<"\n";
 
     for(auto &bLine : topLines)
     {
