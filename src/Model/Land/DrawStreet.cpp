@@ -208,11 +208,7 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
         if (!m)
         {
-            cout<<"StartPoint = "<<startPoint1.getX() <<" "<<startPoint1.getY()<<"\n";
-            cout<<"Slope == "<<PolygonHelper::getSlope(rightLine)<<" \n";
-            rightLine.printJsonFormat();
             next1UP = PolygonHelper::getOtherLinePoint(startPoint1 , PolygonHelper::getSlope(rightLine) , startPoint1.getY() + height);
-            cout<<"next1UPPoint = "<<next1UP.getX() <<" "<<next1UP.getY()<<"\n";
         }
 
         Line nextLine (startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
@@ -346,6 +342,31 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
     vector<vector<Line>> bottomStreets;
     double height = 100000000000;
 
+    Line rightLine , lastLine;
+
+    Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
+    Point centerLast = {centerL.back().getX2() , centerL.back().getY2()};
+
+    for (auto &polLine : polygonLines)
+    {
+        double minX = min(polLine.getX1() , polLine.getX2());
+        double maxX = max(polLine.getX1() , polLine.getX2());
+        double minY = min(polLine.getY1() , polLine.getY2());
+        double maxY = max(polLine.getY1() , polLine.getY2());
+
+        if (centerFirst.getX() >= minX && centerFirst.getX() <= maxX &&
+            centerFirst.getY() >= minY && centerFirst.getY() <= maxY)
+        {
+            rightLine = polLine;
+        }
+
+        if (centerLast.getX() >= minX && centerLast.getX() <= maxX &&
+            centerLast.getY() >= minY && centerLast.getY() <= maxY)
+        {
+            lastLine = polLine;
+        }
+    }
+
     int centerLineIndex = 0 ;
     Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
     for (int m = 0; m < divisions; ++m)
@@ -371,6 +392,11 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         Point next1UP = {startPoint1.getX() , startPoint1.getY() - height};
 
+        if (!m)
+        {
+            next1UP = PolygonHelper::getOtherLinePoint(startPoint1 , PolygonHelper::getSlope(rightLine) , startPoint1.getY() - height);
+        }
+
         Line nextLine (startPoint1.getX() , startPoint1.getY() , next1UP.getX() , next1UP.getY());
 
         bool foundIntersection = false;
@@ -393,6 +419,11 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
 
         Point next12UP = {startPoint2.getX() , startPoint2.getY() - height};
+
+        if (!m)
+        {
+            next12UP = PolygonHelper::getOtherLinePoint(startPoint2 , PolygonHelper::getSlope(rightLine) , startPoint2.getY() - height);
+        }
 
         nextLine =Line (startPoint2.getX() , startPoint2.getY() , next12UP.getX() , next12UP.getY());
 
@@ -417,6 +448,11 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
 
         Point next2UP = {lastPoint.getX() , lastPoint.getY() - height};
 
+        if (m == divisions - 1)
+        {
+            next2UP = PolygonHelper::getOtherLinePoint(lastPoint , PolygonHelper::getSlope(lastLine) , lastPoint.getY() - height);
+        }
+
         foundIntersection = false;
         nextLine = Line(lastPoint.getX() , lastPoint.getY() , next2UP.getX() , next2UP.getY());
         for(auto &upLine : bottomLinesC)
@@ -437,6 +473,11 @@ vector<vector<Line>> DrawStreet::drawBottomStreets(const vector<Line> &polygonLi
         }
 
         Point next22UP = {lastPoint2.getX() , lastPoint2.getY() - height};
+
+        if (m == divisions - 1)
+        {
+            next22UP = PolygonHelper::getOtherLinePoint(lastPoint2 , PolygonHelper::getSlope(lastLine) , lastPoint2.getY() - height);
+        }
 
         foundIntersection = false;
         nextLine = Line(lastPoint2.getX() , lastPoint2.getY() , next22UP.getX() , next22UP.getY());
