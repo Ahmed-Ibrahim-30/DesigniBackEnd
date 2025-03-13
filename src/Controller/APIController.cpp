@@ -476,7 +476,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
             landDivisionRoads = new LandDivisionRoadsByRatios();
-            vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , ratios , static_cast<LandDivisionSortingStrategy>(strategy) );
+            vector<vector<Polygon1>> pols ;
+
+            if(landSlots > 0)pols = landDivisionRoads->divideLand(polygon1 , ratios , static_cast<LandDivisionSortingStrategy>(strategy) );
+            else pols =landDivisionRoads->divideLand(polygon1 , 30000 , static_cast<LandDivisionSortingStrategy>(strategy) );
             if (pols.empty()) streets = land.buildRoads(ans);
             else  streets = pols[0];
         }
@@ -488,7 +491,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             };
         }
 
-//        ans = streets;
+        ans = streets;
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
 
