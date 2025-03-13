@@ -461,6 +461,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         else if(jsonData.count("ratios"))
         {
+            cout<<"ratios = "<<"\n";
             auto ratiosA = jsonData["ratios"];
             vector<double> ratios;
             for(auto &r : ratiosA){
