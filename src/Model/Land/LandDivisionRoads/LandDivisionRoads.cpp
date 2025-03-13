@@ -485,12 +485,13 @@ double LandDivisionRoads::findX(double y, double x1, double y1, double x2, doubl
 
 Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 &mainLand)
 {
+
     vector<Point> newPoints;
     vector<Point> curPoints = mainLand.getPoints();
 
     for (int i = 0; i < curPoints.size(); ++i)
     {
-        Point a0 = curPoints[i==0?curPoints.size()-1 : i-1];
+        Point a0 = curPoints[i == 0 ? curPoints.size() - 1 : i - 1];
         Point a1 = curPoints[i];
         Point a2 = curPoints[(i + 1) % curPoints.size()];
 
@@ -499,20 +500,54 @@ Polygon1 LandDivisionRoads::buildOutsideRoads(Polygon1 &mainLand)
         Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
 
         // Compute perpendicular vectors
-        Point perp1 = v1.perpendicular();
-        Point perp2 = v2.perpendicular();
+        Point perp1 = Point(-v1.getY(), v1.getX()); // Perpendicular to v1
+        Point perp2 = Point(-v2.getY(), v2.getX()); // Perpendicular to v2
 
         // Compute outward direction (average of two perpendicular vectors)
         Point offsetDir = (perp1 + perp2).normalize();
 
-        // Move the point outward by X
-        Point newPoint = a1 + offsetDir * 20;
+        // Calculate the angle between the two edges
+        double angle = acos(v1 .dot (v2));
+
+        // Calculate the scaling factor to ensure the correct distance
+        double scaleFactor = 20 / sin(angle / 2);
+
+        // Move the point outward by the scaled distance
+        Point newPoint = a1 + offsetDir * scaleFactor;
         newPoints.push_back(newPoint);
     }
 
     Polygon1 polygon1(newPoints);
 
     return polygon1;
+//    vector<Point> newPoints;
+//    vector<Point> curPoints = mainLand.getPoints();
+//
+//    for (int i = 0; i < curPoints.size(); ++i)
+//    {
+//        Point a0 = curPoints[i==0?curPoints.size()-1 : i-1];
+//        Point a1 = curPoints[i];
+//        Point a2 = curPoints[(i + 1) % curPoints.size()];
+//
+//        // Compute the direction vectors of adjacent edges
+//        Point v1 = (a1 - a0).normalize(); // Edge from a0 to a1
+//        Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
+//
+//        // Compute perpendicular vectors
+//        Point perp1 = v1.perpendicular();
+//        Point perp2 = v2.perpendicular();
+//
+//        // Compute outward direction (average of two perpendicular vectors)
+//        Point offsetDir = (perp1 + perp2).normalize();
+//
+//        // Move the point outward by X
+//        Point newPoint = a1 + offsetDir * 20;
+//        newPoints.push_back(newPoint);
+//    }
+//
+//    Polygon1 polygon1(newPoints);
+//
+//    return polygon1;
 }
 
 Polygon1 LandDivisionRoads::getOuterLand(Polygon1 &mainLand)
