@@ -711,6 +711,17 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
 
         polygon1.rotate(90);
         centerLines = polygon1.getLines();
+
+        Point minPoint = polygon1.minPoint();
+        Point maxPoint = polygon1.maxPoint();
+
+        double dx = maxPoint.getX() - minPoint.getX();
+        double dy = maxPoint.getY() - minPoint.getY();
+
+        if (dy > dx)
+        {
+            cout<<"YES Greater\n";
+        }
         for (int i = 0; i < centerLines.size(); ++i)
         {
             response["centerLines"][i] = {
