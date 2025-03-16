@@ -79,8 +79,6 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     vector<Line> centerLines;
     Line centerLine = polygon.getCenterLine();
 
-    centerLines.push_back(centerLine);
-    return centerLines;
     vector<Point> points = polygon.getPoints();
     vector<Line> lines = polygon.getLines();
     int n = (int)points.size();
@@ -99,6 +97,8 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         if (cur.getY() > centerLine.getY1() || cur.getY() > centerLine.getY2())
         {
             cout<<"Gre -- "<<cur.getX() << " "<<cur.getY()<<"\n";
+
+            centerLines.emplace_back(cur.getX() , cur.getY() , cur.getX()*5 , cur.getY());
             Point centerPoint(0,0);
             Point centerPointT(0,0);
             Point centerPointB(0,0);
