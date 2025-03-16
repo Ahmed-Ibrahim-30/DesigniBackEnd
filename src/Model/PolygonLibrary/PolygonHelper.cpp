@@ -85,6 +85,8 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     vector<Point> centerPointsTOP ;
     vector<Point> centerPointsBottom ;
 
+    centerLine.printJsonFormat();
+
     for (int i = 0; i < n; ++i)
     {
         Point prev = points[i == 0 ? n-1 : i-1];
