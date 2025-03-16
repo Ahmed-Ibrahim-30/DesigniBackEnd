@@ -719,15 +719,8 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         double dy = maxPoint.getY() - minPoint.getY();
 
         Point center = polygon1.calculateCentroid();
-
-
-
-        if (dy > dx)
-        {
-            cout<<"YES Greater\n";
-
-            centerLines.emplace_back(center.getX() , center.getY() , center.getX()*10 , center.getY());
-        }
+        centerLines.emplace_back(center.getX() , center.getY() , center.getX()*10 , center.getY());
+        
         for (int i = 0; i < centerLines.size(); ++i)
         {
             response["centerLines"][i] = {
