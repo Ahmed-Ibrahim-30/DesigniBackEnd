@@ -94,7 +94,9 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         Point cur = points[i];
         Point next = points[(i+1) %n];
 
-        if (cur.getY() > centerLine.getY1() || cur.getY() > centerLine.getY2())
+        double d = (cur.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(cur.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
+
+        if (d > 0)
         {
             cout<<"Gre -- "<<cur.getX() << " "<<cur.getY()<<"\n";
 
