@@ -128,7 +128,6 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
                 Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
 
 
-                centerLines.emplace_back(straight);
 
                 for(auto &line : lines)
                 {
@@ -146,6 +145,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
                     }
                     cout<<"Cutting\n";
                 }
+                centerLines.emplace_back(straight);
                 centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
 
                 centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
