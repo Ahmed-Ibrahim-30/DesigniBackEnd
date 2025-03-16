@@ -139,6 +139,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
                         straight.setY2(intersectionPoint.getY());
                         break;
                     }
+                    cout<<"Cutting\n";
                 }
                 centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
 
