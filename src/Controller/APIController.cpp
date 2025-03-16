@@ -720,7 +720,8 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
 
         Point center = polygon1.calculateCentroid();
         centerLines.emplace_back(center.getX() , center.getY() , center.getX()*10 , center.getY());
-        
+
+        centerLines.push_back(polygon1.getCenterLine());
         for (int i = 0; i < centerLines.size(); ++i)
         {
             response["centerLines"][i] = {
