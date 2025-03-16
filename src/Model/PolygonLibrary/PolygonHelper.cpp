@@ -124,6 +124,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
                 centerPointB = getNextPoint(centerPoint , next , centerLineHeight/2);
             }
             else{
+                cout<<"HERE\n";
                 Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
                 for(auto &line : lines)
                 {
