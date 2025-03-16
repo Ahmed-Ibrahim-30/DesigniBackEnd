@@ -74,16 +74,10 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     {
         cout<<"Y > X\n";
         polygon.rotate(90);
-
-        dx = maxPoint.getX() - minPoint.getX();
-        dy = maxPoint.getY() - minPoint.getY();
-
-        if(dx > dy)cout<<"YES\n";
     }
-    polygon.print();
 
     vector<Line> centerLines;
-    Point centroid = polygon.calculateCentroid();
+    Line centerLine = polygon.getCenterLine();
     vector<Point> points = polygon.getPoints();
     vector<Line> lines = polygon.getLines();
     int n = (int)points.size();
@@ -91,22 +85,20 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     vector<Point> centerPointsTOP ;
     vector<Point> centerPointsBottom ;
 
-    cout<<"Centroid = "<<centroid.getX() <<" "<<centroid.getY()<<"\n";
-
     for (int i = 0; i < n; ++i)
     {
         Point prev = points[i == 0 ? n-1 : i-1];
         Point cur = points[i];
         Point next = points[(i+1) %n];
 
-        if (cur.getY() > centroid.getY())
+        if (cur.getY() > centerLine.getY1() || cur.getY() > centerLine.getY2())
         {
             cout<<"Gre\n";
             Point centerPoint(0,0);
             Point centerPointT(0,0);
             Point centerPointB(0,0);
 
-            if (prev.getY()<= centroid.getY())
+            if (prev.getY()<= centerLine.getY1() || prev.getY()<= centerLine.getY2())
             {
                 cout<<"Gre2\n";
                 centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
@@ -114,7 +106,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
                 centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
                 centerPointB = getNextPoint(centerPoint , prev , centerLineHeight/2);
             }
-            else if (next.getY()<= centroid.getY())
+            else if (next.getY()<= centerLine.getY1() || next.getY()<= centerLine.getY2())
             {
                 cout<<"Gre3\n";
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
