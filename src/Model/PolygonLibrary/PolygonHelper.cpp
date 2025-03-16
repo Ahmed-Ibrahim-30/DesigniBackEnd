@@ -160,11 +160,11 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 
     if(dy > dx)
     {
-        polygon.rotate(270);
-        for(auto &l : centerLines)
-        {
-            l.rotate(270);
-        }
+//        polygon.rotate(270);
+//        for(auto &l : centerLines)
+//        {
+//            l.rotate(270);
+//        }
     }
 
     return centerLines;
