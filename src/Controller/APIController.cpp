@@ -703,13 +703,13 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         Polygon1 polygon1(points);
 
         cout<<"Area = "<<polygon1.getArea() <<" \n";
+        polygon1.rotate(90);
 
         DrawStreet drawStreet;
         drawStreet.drawStreets(polygon1);
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<CityGrid> cities = drawStreet.getCities();
 
-        polygon1.rotate(90);
         centerLines = polygon1.getLines();
 
         Point minPoint = polygon1.minPoint();
