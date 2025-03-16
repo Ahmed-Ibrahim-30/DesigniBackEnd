@@ -724,7 +724,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
 
         vector<Line> centerLines2 = drawStreet.getCenterLines();
 
-        centerLines.insert(centerLines.end() , centerLines2.begin() , centerLines.end());
+        centerLines.insert(centerLines.end() , centerLines2.begin() , centerLines2.end());
         for (int i = 0; i < centerLines.size(); ++i)
         {
             response["centerLines"][i] = {
