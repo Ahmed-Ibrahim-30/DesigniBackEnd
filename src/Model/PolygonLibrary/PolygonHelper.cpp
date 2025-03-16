@@ -72,8 +72,15 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 
     if (dy > dx)
     {
+        cout<<"Y > X\n";
         polygon.rotate(90);
+
+        dx = maxPoint.getX() - minPoint.getX();
+        dy = maxPoint.getY() - minPoint.getY();
+
+        if(dx > dy)cout<<"YES\n";
     }
+    polygon.print();
 
     vector<Line> centerLines;
     Point centroid = polygon.calculateCentroid();
@@ -84,20 +91,24 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     vector<Point> centerPointsTOP ;
     vector<Point> centerPointsBottom ;
 
+    cout<<"Centroid = "<<centroid.getX() <<" "<<centroid.getY()<<"\n";
+
     for (int i = 0; i < n; ++i)
     {
-        Point prev = points[i==0 ? n-1 : i-1];
+        Point prev = points[i == 0 ? n-1 : i-1];
         Point cur = points[i];
         Point next = points[(i+1) %n];
 
         if (cur.getY() > centroid.getY())
         {
+            cout<<"Gre\n";
             Point centerPoint(0,0);
             Point centerPointT(0,0);
             Point centerPointB(0,0);
 
             if (prev.getY()<= centroid.getY())
             {
+                cout<<"Gre2\n";
                 centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
 
                 centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
@@ -105,6 +116,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
             }
             else if (next.getY()<= centroid.getY())
             {
+                cout<<"Gre3\n";
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
 
                 centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
@@ -138,12 +150,6 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         }
     }
 
-//    for (int i = 1; i < centerPoints.size(); ++i)
-//    {
-//        Point prev = centerPoints[ i-1];
-//        Point cur = centerPoints[i];
-//        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
-//    }
 
     for (int i = 1; i < centerPointsTOP.size(); ++i)
     {

@@ -104,12 +104,30 @@ vector<Point> Polygon1::getOutsidePoints() {
     return outsidePoints;
 }
 
-void Polygon1::print() {
+void Polygon1::print()
+{
+    double minX = 1000000 , minY = 100000;
+    vector<Point> poi1 = points;
+
+    for(auto &p : poi1)
+    {
+        minX = min(minX , p.getX());
+        minY = min(minY , p.getY());
+    }
+
+    cout<<"minX = "<<minX<<" "<<minY<<"\n";
+
+    for(auto &p : poi1)
+    {
+        if (minX < 0)p.setX(p.getX() + (minX * -1));
+        if (minY < 0)p.setY(p.getY() + (minY * -1));
+    }
+
     // cout<<"Polygon -- .. \n";
-    int n = (int)points.size();
-    for (int i = 0; i < points.size(); ++i) {
-        Point a1 = points[i];
-        Point a2 = points[(i+1)%n];
+    int n = (int)poi1.size();
+    for (int i = 0; i < poi1.size(); ++i) {
+        Point a1 = poi1[i];
+        Point a2 = poi1[(i+1)%n];
         cout << "{ x1:" << a1.getX() << ", y1:" << a1.getY() << ", x2:" << a2.getX() << ", y2:" << a2.getY()<< "},\n";
     }
 }

@@ -10,6 +10,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     mainLand = polygon1;
     centerLines = PolygonHelper::getCenterLines(polygon1 , 10);
 
+    cout<<"CenterLine Size = "<<centerLines.size()<<"\n";
+
     vector<Line> centerLinesTop , centerLinesBottom;
 
     for (int i = 0; i < centerLines.size(); ++i)
