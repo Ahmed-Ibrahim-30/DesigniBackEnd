@@ -148,19 +148,19 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     }
 
 
-    for (int i = 1; i < centerPointsTOP.size(); ++i)
-    {
-        Point prev = centerPointsTOP[ i-1];
-        Point cur = centerPointsTOP[i];
-        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
-    }
-
-    for (int i = 1; i < centerPointsBottom.size(); ++i)
-    {
-        Point prev = centerPointsBottom[ i-1];
-        Point cur = centerPointsBottom[i];
-        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
-    }
+//    for (int i = 1; i < centerPointsTOP.size(); ++i)
+//    {
+//        Point prev = centerPointsTOP[ i-1];
+//        Point cur = centerPointsTOP[i];
+//        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+//    }
+//
+//    for (int i = 1; i < centerPointsBottom.size(); ++i)
+//    {
+//        Point prev = centerPointsBottom[ i-1];
+//        Point cur = centerPointsBottom[i];
+//        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+//    }
 
 
     if(dy > dx)
