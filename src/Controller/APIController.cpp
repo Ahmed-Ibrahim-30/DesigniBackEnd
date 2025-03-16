@@ -508,14 +508,9 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
 
         ans = streets;
-        PolygonHelper::renamePolygonsIds(polygon1 , ans);
+        vector<Polygon1> ans2 = ans;
 
-        Polygon1 outerLand = landDivisionRoads->getOuterLand(polygon1);
-
-
-        int index1 = 0;
-        for(int i = 0 ; i < ans.size() ; i++)
-        {
+        for(int i = 0 ; i < ans.size() ; i++){
             auto pol = ans[i];
 
             vector<Line> polLines = pol.getLines();
@@ -536,32 +531,40 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 landDivisionRoads = new LandDivisionRoadsByArea();
                 vector<Polygon1 >pols2 =landDivisionRoads->divideLand(pol , 500 , static_cast<LandDivisionSortingStrategy>(strategy) )[0];
 
-                for(auto &p : pols2)
-                {
-                    response["Inner"][index1]["id"] =  p.getId();
-                    response["Inner"][index1]["area"] = p.getArea();
-                    response["Inner"][index1]["green_area"] = !p.isDivisible();
-                    response["Inner"][index1]["roadExtension"] = std::vector<crow::json::wvalue>{};
-                    response["Inner"][index1]["homeBorder"] = std::vector<crow::json::wvalue>{};
+                ans2.insert(ans2.end() , pols2.begin() , pols2.end());
+            }
+        }
 
-                    for (int j = 0; j < p.getPoints().size(); ++j)
-                    {
-                        response["Inner"][index1]["Points"][j] = {
-                                {"x" , p.getPoints()[j].getX()} ,
-                                {"y" , p.getPoints()[j].getY()}
-                        };
-                    }
-                    index1++;
+        ans = ans2;
+
+        PolygonHelper::renamePolygonsIds(polygon1 , ans);
+
+        Polygon1 outerLand = landDivisionRoads->getOuterLand(polygon1);
+
+
+        for(int i = 0 ; i < ans.size() ; i++)
+        {
+            auto pol = ans[i];
+
+            vector<Line> polLines = pol.getLines();
+            bool flag = true;
+
+            for(auto &l : polLines)
+            {
+                double length = l.getLength();
+                if (length > 80)
+                {
+                    flag = false;
+                    break;
                 }
-                continue;
             }
 
             int index = 0;
-            response["Inner"][index1]["id"] =  pol.getId();
-            response["Inner"][index1]["area"] = pol.getArea();
-            response["Inner"][index1]["green_area"] = !pol.isDivisible();
-            response["Inner"][index1]["roadExtension"] = std::vector<crow::json::wvalue>{};
-            response["Inner"][index1]["homeBorder"] = std::vector<crow::json::wvalue>{};
+            response["Inner"][i]["id"] =  pol.getId();
+            response["Inner"][i]["area"] = pol.getArea();
+            response["Inner"][i]["green_area"] = !pol.isDivisible();
+            response["Inner"][i]["roadExtension"] = std::vector<crow::json::wvalue>{};
+            response["Inner"][i]["homeBorder"] = std::vector<crow::json::wvalue>{};
 
             for(auto &p : pol.getPoints())
             {
@@ -571,8 +574,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 };
             }
 
+//            if(flag)continue;
             continue;
-
 
             DrawStreet drawStreet;
             drawStreet.drawStreets(pol);
@@ -581,7 +584,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             for (int j = 0; j < centerLines.size(); ++j)
             {
-                response["Inner"][index1]["centerLines"][j] = {
+                response["Inner"][i]["centerLines"][j] = {
                         {"x1" , centerLines[j].getX1()},
                         {"y1" , centerLines[j].getY1()},
                         {"x2" , centerLines[j].getX2()},
@@ -598,7 +601,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 vector<Line> roads = city.getInnerStreets();
 
                 for (int m = roads.size()-3; m < roads.size(); ++m) {
-                    response["Inner"][index1]["roads"][j][m - roads.size() +3 ] = {
+                    response["Inner"][i]["roads"][j][m - roads.size() +3 ] = {
                             {"x1" , roads[m].getX1()},
                             {"y1" , roads[m].getY1()},
                             {"x2" , roads[m].getX2()},
@@ -607,7 +610,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 }
                 roads = city.getOuterStreets();
                 for (int m = roads.size()-3; m < roads.size(); ++m) {
-                    response["Inner"][index1]["roads"][j][6 + m -roads.size()] = {
+                    response["Inner"][i]["roads"][j][6 + m -roads.size()] = {
                             {"x1" , roads[m].getX1()},
                             {"y1" , roads[m].getY1()},
                             {"x2" , roads[m].getX2()},
@@ -616,7 +619,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 }
 
 //                for (int m = 0; m < roadExtension.size(); ++m) {
-//                    response["Inner"][index1]["roadExtension"][j][m] = {
+//                    response["Inner"][i]["roadExtension"][j][m] = {
 //                            {"x1" , roadExtension[m].getX1()},
 //                            {"y1" , roadExtension[m].getY1()},
 //                            {"x2" , roadExtension[m].getX2()},
@@ -625,7 +628,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 //                }
 //
 //                for (int m = 0; m < homeBorder.size(); ++m) {
-//                    response["Inner"][index1]["homeBorder"][j][m] = {
+//                    response["Inner"][i]["homeBorder"][j][m] = {
 //                            {"x1" , homeBorder[m].getX1()},
 //                            {"y1" , homeBorder[m].getY1()},
 //                            {"x2" , homeBorder[m].getX2()},
@@ -633,8 +636,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 //                    };
 //                }
             }
-
-            index1++;
         }
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
@@ -645,7 +646,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         response["Inner"][ans.size()]["roadExtension"] = std::vector<crow::json::wvalue>{};
         response["Inner"][ans.size()]["homeBorder"] = std::vector<crow::json::wvalue>{};
 
-        index1 = 0;
+        int index1 = 0;
         for(auto &p : outerLand.getPoints())
         {
             response["Inner"][ans.size()]["Points"][index1++] = {
