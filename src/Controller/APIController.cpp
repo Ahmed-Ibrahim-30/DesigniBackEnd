@@ -528,8 +528,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             if (flag)
             {
-                landDivisionRoads = new LandDivisionRoadsByArea();
-                vector<Polygon1 >pols2 =landDivisionRoads->divideLand(pol , 500 , static_cast<LandDivisionSortingStrategy>(strategy) )[0];
+                vector<Polygon1 >pols2 =land.SplitLand(500 , static_cast<LandDivisionSortingStrategy>(strategy));
 
                 ans2.insert(ans2.end() , pols2.begin() , pols2.end());
             }else ans2.push_back(ans[i]);
@@ -575,7 +574,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             }
 
             if(flag)continue;
-//            continue;
 
             DrawStreet drawStreet;
             drawStreet.drawStreets(pol);
