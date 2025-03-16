@@ -703,7 +703,6 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         Polygon1 polygon1(points);
 
         cout<<"Area = "<<polygon1.getArea() <<" \n";
-        polygon1.rotate(90);
 
         DrawStreet drawStreet;
         drawStreet.drawStreets(polygon1);

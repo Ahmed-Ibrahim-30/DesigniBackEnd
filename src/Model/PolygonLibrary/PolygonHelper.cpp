@@ -73,7 +73,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     if (dy > dx)
     {
         cout<<"Y > X\n";
-//        polygon.rotate(90);
+        polygon.rotate(90);
     }
 
     vector<Line> centerLines;
@@ -93,7 +93,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 
         if (cur.getY() > centerLine.getY1() || cur.getY() > centerLine.getY2())
         {
-            cout<<"Gre\n";
+            cout<<"Gre -- "<<cur.getX() << " "<<cur.getY()<<"\n";
             Point centerPoint(0,0);
             Point centerPointT(0,0);
             Point centerPointB(0,0);
