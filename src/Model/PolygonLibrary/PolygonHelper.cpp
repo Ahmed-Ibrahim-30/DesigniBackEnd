@@ -126,6 +126,10 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
             else{
                 cout<<"HERE\n";
                 Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
+
+
+                centerLines.emplace_back(straight);
+
                 for(auto &line : lines)
                 {
                     Point one(line.getX1() , line.getY1());
