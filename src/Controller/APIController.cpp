@@ -726,7 +726,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         {
             cout<<"YES Greater\n";
 
-            centerLines.emplace_back(center.getX() , center.getY() , center.getX()*10 , center.getY())
+            centerLines.emplace_back(center.getX() , center.getY() , center.getX()*10 , center.getY());
         }
         for (int i = 0; i < centerLines.size(); ++i)
         {
