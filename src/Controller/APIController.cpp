@@ -709,21 +709,10 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<CityGrid> cities = drawStreet.getCities();
 
-        centerLines = polygon1.getLines();
-
-        Point minPoint = polygon1.minPoint();
-        Point maxPoint = polygon1.maxPoint();
-
-        double dx = maxPoint.getX() - minPoint.getX();
-        double dy = maxPoint.getY() - minPoint.getY();
-
-        Point center = polygon1.calculateCentroid();
+        centerLines.insert(centerLines.end() , polygon1.getLines().begin() , polygon1.getLines().end());
 
         centerLines.push_back(polygon1.getCenterLine());
 
-        vector<Line> centerLines2 = drawStreet.getCenterLines();
-
-        centerLines.insert(centerLines.end() , centerLines2.begin() , centerLines2.end());
         for (int i = 0; i < centerLines.size(); ++i)
         {
             response["centerLines"][i] = {
