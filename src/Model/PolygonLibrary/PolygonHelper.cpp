@@ -98,7 +98,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         double d2 = (prev.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(prev.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
         double d3 = (next.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(next.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
 
-        if (d > 0)
+        if (d < 0)
         {
             cout<<"Gre -- "<<cur.getX() << " "<<cur.getY()<<"\n";
 
@@ -107,7 +107,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
             Point centerPointT(0,0);
             Point centerPointB(0,0);
 
-            if (d2 <= 0)
+            if (d2 >= 0)
             {
                 cout<<"Gre2\n";
                 centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
@@ -115,7 +115,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
                 centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
                 centerPointB = getNextPoint(centerPoint , prev , centerLineHeight/2);
             }
-            else if (d3 <= 0)
+            else if (d3 >= 0)
             {
                 cout<<"Gre3\n";
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
