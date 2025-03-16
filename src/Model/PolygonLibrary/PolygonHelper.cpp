@@ -477,15 +477,17 @@ void PolygonHelper::renamePolygonsIds(Polygon1 &polygon1 , vector<Polygon1> &pol
     }
 }
 
-pair<Polygon1, Polygon1> PolygonHelper::splitPolygons(const Polygon1& polygon1, const Line &line) {
-    std::vector<Point> poly1, poly2;
-    std::vector<Point> intersections;
+pair<Polygon1, Polygon1> PolygonHelper::splitPolygons(const Polygon1& polygon1, const Line &line)
+{
+    vector<Point> poly1, poly2;
+    vector<Point> intersections;
     vector<Point> points = polygon1.getPoints();
+    int n = (int)points.size();
 
-    for (size_t i = 0; i < points.size(); i++)
+    for (int i = 0; i < points.size(); i++)
     {
         Point curr = points[i];
-        Point next = points[(i + 1) % points.size()];
+        Point next = points[(i + 1) % n];
 
         // Check if current point is on one side of the line
         double pos = (line.getX2() - line.getX1()) * (curr.getY() - line.getY1()) -

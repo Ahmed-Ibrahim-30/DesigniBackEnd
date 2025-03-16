@@ -12,8 +12,6 @@ LandDivisionBasedOnSidesConvergence::divideLand(const Polygon1 &land, double rat
 
     cout<<"Ans Size = "<<ans.size()<<"\n";
 
-
-
     int index = 0;
     if(!ans.empty())
     {

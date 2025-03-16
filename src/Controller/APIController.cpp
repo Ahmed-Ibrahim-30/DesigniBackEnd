@@ -553,7 +553,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                     }
                     index1++;
                 }
-
+                continue;
             }
 
             int index = 0;

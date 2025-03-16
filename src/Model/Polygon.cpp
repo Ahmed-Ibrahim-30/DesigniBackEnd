@@ -30,8 +30,8 @@ Polygon1::Polygon1(const vector<Point> &points_ , bool divisible_) : points(poin
     }
 
 
-    Point start = points[0];
-    Point end = points.back();
+//    Point start = points[0];
+//    Point end = points.back();
 
 //    if (start.getY() < end.getY())reverse(points.begin(), points.end());
 

@@ -100,6 +100,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 
     vector<pair<double , double>> ratios = {{1 , 1} , {1 , 2} , {2 , 1} , {3 , 2} , {1 , 3} , {2,5} , {1 , 4} , {3,4} , {4,3}};
 
+
     for(auto &rat : ratios)
     {
         ratioA = rat.first;
@@ -136,6 +137,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
             {
                 pY = a1.getY() + (a2.getY() - a1.getY() ) * (ratioB/(ratioA+ratioB));
             }
+
 
             Point a3 (pX , pY);
 
@@ -194,6 +196,7 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 
             pair<Polygon1  , Polygon1> newTwoPolygons = PolygonHelper::splitPolygons(polygon1 , intersectionLine);
 
+
             double area1 = newTwoPolygons.first.getArea();
             double area2 = newTwoPolygons.second.getArea();
 
@@ -201,139 +204,6 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
 
             ans.emplace_back(newTwoPolygons.first , newTwoPolygons.second);
             break;
-            if(a4.getX() != INT_MAX)
-            {
-                bool flag = false;
-                set<Line> newPolygonLine = polLines;
-
-                for(auto &pLine : newPolygonLine)
-                {
-                    if(PolygonHelper::isPointInSegment(a3 , pLine))
-                    {
-                        cout<<"YES A3\n";
-                        newPolygonLine.erase(pLine);
-                        newPolygonLine.emplace(a3.getX() , a3.getY() , pLine.getX1() , pLine.getY1());
-                        newPolygonLine.emplace(a3.getX() , a3.getY() , pLine.getX2() , pLine.getY2());
-                        flag = true;
-                        break;
-                    }
-                }
-
-                if(!flag) continue;
-                flag = false;
-                for(auto &pLine : newPolygonLine)
-                {
-                    if(PolygonHelper::isPointInSegment(a4 , pLine))
-                    {
-                        cout<<"YES A4\n";
-                        newPolygonLine.erase(pLine);
-                        newPolygonLine.emplace(a4.getX() , a4.getY() , pLine.getX1() , pLine.getY1());
-                        newPolygonLine.emplace(a4.getX() , a4.getY() , pLine.getX2() , pLine.getY2());
-                        flag = true;
-                        break;
-                    }
-                }
-
-
-                if(!flag) continue;
-                newPolygonLine.emplace(a3.getX() , a3.getY() , a4.getX() , a4.getY());
-
-                vector<Point> p1s , p2s;
-                a3.setX(MathUtils::roundingToDecimal(a3.getX()));
-                a3.setY(MathUtils::roundingToDecimal(a3.getY()));
-
-                a4.setX(MathUtils::roundingToDecimal(a4.getX()));
-                a4.setY(MathUtils::roundingToDecimal(a4.getY()));
-
-                p1s.push_back(a3);
-                Point curPoint = a3;
-                while(curPoint != a4)
-                {
-                    flag = false;
-                    for(auto &pLine : newPolygonLine)
-                    {
-                        Point p1(pLine.getX1() , pLine.getY1());
-                        Point p2(pLine.getX2() , pLine.getY2());
-
-                        if( (p1== a4  || p2 == a4) && p1s.size()==1) continue;
-
-                        if(p1 == curPoint)
-                        {
-                            p1s.push_back(p2);
-                            curPoint = p2;
-                            newPolygonLine.erase(pLine);
-                            flag = true;
-                            break;
-                        }
-                        else if(p2 == curPoint)
-                        {
-                            p1s.push_back(p1);
-                            curPoint = p1;
-                            newPolygonLine.erase(pLine);
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if(!flag) break;
-                }
-
-                cout<<"FIRST POLYGON --> "<<flag<<"\n";
-                Polygon1 tst1(p1s); tst1.print();
-
-
-                if(!flag) continue;
-                p2s.push_back(a3);
-                curPoint = a3;
-                while(curPoint != a4)
-                {
-                    flag = false;
-                    for(auto &pLine : newPolygonLine)
-                    {
-                        Point p1(pLine.getX1() , pLine.getY1());
-                        Point p2(pLine.getX2() , pLine.getY2());
-
-                        if( (p1== a4  || p2 == a4) && p2s.size()==1) continue;
-
-                        if(p1 == curPoint)
-                        {
-                            p2s.push_back(p2);
-                            curPoint = p2;
-                            newPolygonLine.erase(pLine);
-                            flag = true;
-                            break;
-                        }
-                        else if(p2 == curPoint)
-                        {
-                            p2s.push_back(p1);
-                            curPoint = p1;
-                            newPolygonLine.erase(pLine);
-                            flag = true;
-                            break;
-                        }
-
-                    }
-                    if(!flag) break;
-                }
-
-                cout<<"Second POLYGON --> "<<flag<<"\n";
-                if(!flag) continue;
-
-                Polygon1 po1 (p1s) , po2(p2s);
-
-                double area1 = po1.getArea();
-                double area2 = po2.getArea();
-
-                if(min(area1 , area2) / max(area1 , area2) < 0.5) continue;
-
-
-                // po1.print();
-                // po2.print();
-
-
-                ans.emplace_back(po1 , po2);
-                break;
-                // return {first , second};
-            }
         }
 
     }
