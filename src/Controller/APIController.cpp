@@ -508,7 +508,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
 
         ans = streets;
-        vector<Polygon1> ans2 = ans;
+        vector<Polygon1> ans2 ;
 
         for(int i = 0 ; i < ans.size() ; i++){
             auto pol = ans[i];
@@ -532,7 +532,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 vector<Polygon1 >pols2 =landDivisionRoads->divideLand(pol , 500 , static_cast<LandDivisionSortingStrategy>(strategy) )[0];
 
                 ans2.insert(ans2.end() , pols2.begin() , pols2.end());
-            }
+            }else ans2.push_back(ans[i]);
         }
 
         ans = ans2;
