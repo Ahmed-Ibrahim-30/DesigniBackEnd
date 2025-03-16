@@ -282,3 +282,20 @@ double Line::getAngle() const
 double Line::getLength() const {
     return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
+
+void Line::rotate(double angle)
+{
+    double angleRadians = angle * 3.14159 / 180;
+
+    Line line (x1 , y1 , x2, y2);
+
+    double _x1 = line.getX1() * cos(angleRadians) - line.getY1() * sin(angleRadians);
+    double _y1 = line.getX1() * sin(angleRadians) + line.getY1() * cos(angleRadians);
+    double _x2 = line.getX2() * cos(angleRadians) - line.getY2() * sin(angleRadians);
+    double _y2 = line.getX2() * sin(angleRadians) + line.getY2() * cos(angleRadians);
+
+    setX1(round(_x1*10)/10);
+    setY1(round(_y1*10)/10);
+    setX2(round(_x2*10)/10);
+    setY2(round(_y2*10)/10);
+}

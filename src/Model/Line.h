@@ -67,6 +67,8 @@ public:
 
     double getLength() const;
 
+    void rotate(double angle);
+
     [[nodiscard]] double getCenterX1() const;
     void setDir(char d);
     void setDir();

@@ -64,6 +64,17 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
 
 vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineHeight)
 {
+    Point minPoint = polygon.minPoint();
+    Point maxPoint = polygon.maxPoint();
+
+    double dx = maxPoint.getX() - minPoint.getX();
+    double dy = maxPoint.getY() - minPoint.getY();
+
+    if (dy > dx)
+    {
+        polygon.rotate(90);
+    }
+
     vector<Line> centerLines;
     Point centroid = polygon.calculateCentroid();
     vector<Point> points = polygon.getPoints();
@@ -147,6 +158,17 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         Point cur = centerPointsBottom[i];
         centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
     }
+
+
+    if(dy > dx)
+    {
+        polygon.rotate(270);
+        for(auto &l : centerLines)
+        {
+            l.rotate(270);
+        }
+    }
+
     return centerLines;
 }
 
