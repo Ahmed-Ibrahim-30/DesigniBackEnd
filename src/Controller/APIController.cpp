@@ -571,6 +571,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 };
             }
 
+            continue;
+
 
             DrawStreet drawStreet;
             drawStreet.drawStreets(pol);
