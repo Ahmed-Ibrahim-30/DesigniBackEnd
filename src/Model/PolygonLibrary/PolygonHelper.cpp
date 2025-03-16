@@ -73,7 +73,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     if (dy > dx)
     {
         cout<<"Y > X\n";
-//        polygon.rotate(90);
+        polygon.rotate(90);
     }
 
     vector<Line> centerLines;
