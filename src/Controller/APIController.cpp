@@ -510,7 +510,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         ans = streets;
         vector<Polygon1> ans2 ;
 
-        for(int i = 0 ; i < ans.size() ; i++){
+        for(int i = 0 ; i < ans.size() ; i++)
+        {
             auto pol = ans[i];
 
             vector<Line> polLines = pol.getLines();
@@ -528,7 +529,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             if (flag)
             {
-                vector<Polygon1 >pols2 =land.SplitLand(500 , static_cast<LandDivisionSortingStrategy>(strategy));
+                Land land2(pol);
+                vector<Polygon1 >pols2 =land2.SplitLand(500 , static_cast<LandDivisionSortingStrategy>(strategy));
 
                 ans2.insert(ans2.end() , pols2.begin() , pols2.end());
             }else ans2.push_back(ans[i]);
