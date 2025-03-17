@@ -442,6 +442,9 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
         double x_intersect = (m * x1 - m_perp * centroid.getX() + centroid.getY() - y1) / (m - m_perp);
         double y_intersect = y1 + m * (x_intersect - x1);
 
+        cout<<p.getX() <<" "<<p.getY()<<"\n";
+        cout<<x_intersect <<" "<<y_intersect<<"\n\n\n";
+
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
         Line vertical2 (centroid.getX() , centroid.getY() , x_intersect , y_intersect);
 
