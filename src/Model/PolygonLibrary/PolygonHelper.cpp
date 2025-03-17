@@ -129,6 +129,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 
     cout<<"sortCenterLines = "<<sortCenterLines[0].first <<" "<<sortCenterLines[1].first<<"\n";
     centerLines.push_back(sortCenterLines[1].second);
+    sortCenterLines[1].second.printJsonFormat();
 
     for(auto &p : points)
     {
@@ -143,7 +144,17 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 //        centerLines.push_back(line.second);
 //    }
 
+cout<<"-----------*******************\n";
+
     sortCenterLines[0].second.printJsonFormat();
+
+    for(auto &p : points)
+    {
+        Line path(p.getX() , p.getY() , sortCenterLines[0].second.getX1() , sortCenterLines[0].second.getY1());
+        Line path2(p.getX() , p.getY() , sortCenterLines[0].second.getX2() , sortCenterLines[0].second.getY2());
+
+        cout<<"P = "<<p.getX() <<" "<<p.getY()<<"\t -- "<<path.getLength()<<" "<<path2.getLength()<<"\n";
+    }
 
     return centerLines;
 
