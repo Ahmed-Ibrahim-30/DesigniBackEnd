@@ -709,20 +709,23 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<CityGrid> cities = drawStreet.getCities();
 
+        centerLines.clear();
+        centerLines.push_back(polygon1.centroidLine());
+
 //        vector<Line> ll = polygon1.getLines();
 //        centerLines.insert(centerLines.end() , ll.begin() , ll.end());
 //
 //        centerLines.push_back(polygon1.getCenterLine());
 
-//        for (int i = 0; i < centerLines.size(); ++i)
-//        {
-//            response["centerLines"][i] = {
-//                    {"x1" , centerLines[i].getX1()},
-//                    {"y1" , centerLines[i].getY1()},
-//                    {"x2" , centerLines[i].getX2()},
-//                    {"y2" , centerLines[i].getY2()},
-//            };
-//        }
+        for (int i = 0; i < centerLines.size(); ++i)
+        {
+            response["centerLines"][i] = {
+                    {"x1" , centerLines[i].getX1()},
+                    {"y1" , centerLines[i].getY1()},
+                    {"x2" , centerLines[i].getX2()},
+                    {"y2" , centerLines[i].getY2()},
+            };
+        }
 
 //        for(int i = 0 ; i < cities.size() ; i++)
 //        {

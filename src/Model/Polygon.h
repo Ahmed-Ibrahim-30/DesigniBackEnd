@@ -87,6 +87,8 @@ public:
      */
     Point calculateCentroid();
 
+    Line centroidLine ();
+
     /**
      * Get Center Line
      * @return

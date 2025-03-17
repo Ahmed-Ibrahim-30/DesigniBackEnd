@@ -387,6 +387,26 @@ void Polygon1::setId(const string &id) {
     Polygon1::id = id;
 }
 
+Line Polygon1::centroidLine() {
+    Point centroid = calculateCentroid();
+    vector<Line> lines = getLines();
+
+    Point minPoint1 = minPoint();
+    Point maxPoint1 = maxPoint();
+
+    double dx = maxPoint1.getX() - minPoint1.getX();
+    double dy = maxPoint1.getY() - minPoint1.getY();
+
+    if (dy > dx)
+    {
+        return {centroid.getX() , centroid.getY() * -10 , centroid.getX() , centroid.getY() * 10};
+    }
+    else
+    {
+        return {centroid.getX() * -10, centroid.getY() , centroid.getX() * 10, centroid.getY() };
+    }
+}
+
 
 
 
