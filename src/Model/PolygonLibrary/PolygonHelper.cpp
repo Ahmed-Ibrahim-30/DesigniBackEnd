@@ -127,6 +127,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     }
     sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
+    cout<<"sortCenterLines = "<<sortCenterLines[0].first <<" "<<sortCenterLines[1].first<<"\n";
     centerLines.push_back(sortCenterLines[1].second);
 
 //    for(auto &line : sortCenterLines)
