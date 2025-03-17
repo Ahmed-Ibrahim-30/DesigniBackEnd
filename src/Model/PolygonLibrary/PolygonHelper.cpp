@@ -129,6 +129,11 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 
     centerLines.push_back(sortCenterLines[0].second);
 
+    for(auto &line : sortCenterLines)
+    {
+        centerLines.push_back(line.second);
+    }
+
     sortCenterLines[0].second.printJsonFormat();
 
     return centerLines;
