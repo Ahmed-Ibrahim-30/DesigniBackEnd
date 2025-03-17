@@ -724,52 +724,52 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
 //            };
 //        }
 
-        for(int i = 0 ; i < cities.size() ; i++)
-        {
-            CityGrid city = cities[i];
-            vector<Line> roadExtension = city.getRoadExtension();
-            vector<Line> homeBorder = city.getHomeBorder();
-            vector<Line> roads = city.getInnerStreets();
+//        for(int i = 0 ; i < cities.size() ; i++)
+//        {
+//            CityGrid city = cities[i];
+//            vector<Line> roadExtension = city.getRoadExtension();
+//            vector<Line> homeBorder = city.getHomeBorder();
+//            vector<Line> roads = city.getInnerStreets();
+//
+//            for (int j = (int)roads.size() - 3; j < roads.size(); ++j) {
+//                response["roads"][i][j - ((int)roads.size() - 3)] = {
+//                        {"x1" , roads[j].getX1()},
+//                        {"y1" , roads[j].getY1()},
+//                        {"x2" , roads[j].getX2()},
+//                        {"y2" , roads[j].getY2()},
+//                };
+//            }
+//
+//            roads = city.getOuterStreets();
+//            for (int j = roads.size() - 3; j < roads.size(); ++j) {
+//                response["roads"][i][3 + j - ((int)roads.size() - 3)] = {
+//                        {"x1" , roads[j].getX1()},
+//                        {"y1" , roads[j].getY1()},
+//                        {"x2" , roads[j].getX2()},
+//                        {"y2" , roads[j].getY2()},
+//                };
+//            }
+//
+//            for (int j = 0; j < roadExtension.size(); ++j) {
+//                response["roadExtension"][i][j] = {
+//                        {"x1" , roadExtension[j].getX1()},
+//                        {"y1" , roadExtension[j].getY1()},
+//                        {"x2" , roadExtension[j].getX2()},
+//                        {"y2" , roadExtension[j].getY2()},
+//                };
+//            }
+//
+//            for (int j = 0; j < homeBorder.size(); ++j) {
+//                response["homeBorder"][i][j] = {
+//                        {"x1" , homeBorder[j].getX1()},
+//                        {"y1" , homeBorder[j].getY1()},
+//                        {"x2" , homeBorder[j].getX2()},
+//                        {"y2" , homeBorder[j].getY2()},
+//                };
+//            }
+//        }
 
-            for (int j = (int)roads.size() - 3; j < roads.size(); ++j) {
-                response["roads"][i][j - ((int)roads.size() - 3)] = {
-                        {"x1" , roads[j].getX1()},
-                        {"y1" , roads[j].getY1()},
-                        {"x2" , roads[j].getX2()},
-                        {"y2" , roads[j].getY2()},
-                };
-            }
-
-            roads = city.getOuterStreets();
-            for (int j = roads.size() - 3; j < roads.size(); ++j) {
-                response["roads"][i][3 + j - ((int)roads.size() - 3)] = {
-                        {"x1" , roads[j].getX1()},
-                        {"y1" , roads[j].getY1()},
-                        {"x2" , roads[j].getX2()},
-                        {"y2" , roads[j].getY2()},
-                };
-            }
-
-            for (int j = 0; j < roadExtension.size(); ++j) {
-                response["roadExtension"][i][j] = {
-                        {"x1" , roadExtension[j].getX1()},
-                        {"y1" , roadExtension[j].getY1()},
-                        {"x2" , roadExtension[j].getX2()},
-                        {"y2" , roadExtension[j].getY2()},
-                };
-            }
-
-            for (int j = 0; j < homeBorder.size(); ++j) {
-                response["homeBorder"][i][j] = {
-                        {"x1" , homeBorder[j].getX1()},
-                        {"y1" , homeBorder[j].getY1()},
-                        {"x2" , homeBorder[j].getX2()},
-                        {"y2" , homeBorder[j].getY2()},
-                };
-            }
-        }
-
-//        response["homeBorder"] = std::vector<crow::json::wvalue>{};
+        response["homeBorder"] = std::vector<crow::json::wvalue>{};
 
 
         crow::response finalRes (200 , response);
