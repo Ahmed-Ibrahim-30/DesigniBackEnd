@@ -410,6 +410,8 @@ Line Polygon1::centroidLine() {
 vector<Line> Polygon1::computeCentroidPerpendiculars()
 {
     Point centroid = calculateCentroid();
+
+    cout<<"centroid = "<<centroid.getX() <<" "<<centroid.getY()<<"\n";
     vector<Line> lines = getLines();
     vector<Line> perpendiculars;
 
