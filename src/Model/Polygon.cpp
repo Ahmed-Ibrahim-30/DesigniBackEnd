@@ -445,6 +445,12 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
         cout<<p.getX() <<" "<<p.getY()<<"\n";
         cout<<x_intersect <<" "<<y_intersect<<"\n\n\n";
 
+        double minX = std::min(x1, x2), maxX = std::max(x1, x2);
+        double minY = std::min(y1, y2), maxY = std::max(y1, y2);
+
+        x_intersect = std::max(minX, std::min(x_intersect, maxX));
+        y_intersect = std::max(minY, std::min(y_intersect, maxY));
+
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
         Line vertical2 (centroid.getX() , centroid.getY() , x_intersect , y_intersect);
 
