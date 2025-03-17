@@ -125,17 +125,17 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     }
     sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
-    cout<<"sortCenterLines = "<<sortCenterLines[0].first <<" "<<sortCenterLines[1].first<<"\n";
-    centerLines.push_back(sortCenterLines[1].second);
-    sortCenterLines[1].second.printJsonFormat();
-
-    for(auto &p : points)
-    {
-        Line path(p.getX() , p.getY() , sortCenterLines[1].second.getX1() , sortCenterLines[1].second.getY1());
-        Line path2(p.getX() , p.getY() , sortCenterLines[1].second.getX2() , sortCenterLines[1].second.getY2());
-
-        cout<<"P = "<<p.getX() <<" "<<p.getY()<<"\t -- "<<path.getLength()<<" "<<path2.getLength()<<"\n";
-    }
+//    cout<<"sortCenterLines = "<<sortCenterLines[0].first <<" "<<sortCenterLines[1].first<<"\n";
+    centerLines.push_back(sortCenterLines[0].second);
+//    sortCenterLines[1].second.printJsonFormat();
+//
+//    for(auto &p : points)
+//    {
+//        Line path(p.getX() , p.getY() , sortCenterLines[1].second.getX1() , sortCenterLines[1].second.getY1());
+//        Line path2(p.getX() , p.getY() , sortCenterLines[1].second.getX2() , sortCenterLines[1].second.getY2());
+//
+//        cout<<"P = "<<p.getX() <<" "<<p.getY()<<"\t -- "<<path.getLength()<<" "<<path2.getLength()<<"\n";
+//    }
 
 //    for(auto &line : sortCenterLines)
 //    {
