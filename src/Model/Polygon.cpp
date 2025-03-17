@@ -429,21 +429,9 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
 
         Point p = { x1 + t * dx, y1 + t * dy};
 
-        // Edge slope
-        double m = (y2 - y1) / (x2 - x1);
 
-        // Perpendicular slope
-        double m_perp = -1 / m;
-
-        // Equation of perpendicular line: y - C_y = m_perp * (x - C_x)
-        // Equation of edge: y - y1 = m * (x - x1)
-        // Solve for intersection
-
-        double x_intersect = (m * x1 - m_perp * centroid.getX() + centroid.getY() - y1) / (m - m_perp);
-        double y_intersect = y1 + m * (x_intersect - x1);
-
-        cout<<p.getX() <<" "<<p.getY()<<"\n";
-        cout<<x_intersect <<" "<<y_intersect<<"\n\n\n";
+        double x_intersect = p.getX();
+        double y_intersect = p.getY();
 
         double minX = std::min(x1, x2), maxX = std::max(x1, x2);
         double minY = std::min(y1, y2), maxY = std::max(y1, y2);
@@ -451,9 +439,13 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
         x_intersect = std::max(minX, std::min(x_intersect, maxX));
         y_intersect = std::max(minY, std::min(y_intersect, maxY));
 
+
+
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
         Line vertical2 (centroid.getX() , centroid.getY() , x_intersect , y_intersect);
 
+        vertical2.setX1(vertical2.getX1() - dx*1000);
+        vertical2.setY1(vertical2.getY1() - dy*1000);
         perpendiculars.push_back(vertical2);
     }
 
