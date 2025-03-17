@@ -439,7 +439,7 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
         // Equation of edge: y - y1 = m * (x - x1)
         // Solve for intersection
 
-        double x_intersect = (m * x1 - m_perp * centroid.x + centroid.y - y1) / (m - m_perp);
+        double x_intersect = (m * x1 - m_perp * centroid.getX() + centroid.getY() - y1) / (m - m_perp);
         double y_intersect = y1 + m * (x_intersect - x1);
 
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
