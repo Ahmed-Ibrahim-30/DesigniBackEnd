@@ -73,7 +73,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     if (dy > dx)
     {
         cout<<"Y > X\n";
-        polygon.rotate(90);
+//        polygon.rotate(90);
     }
 
     vector<Line> centerLines;
@@ -102,7 +102,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         {
             cout<<"Gre -- "<<cur.getX() << " "<<cur.getY()<<"\n";
 
-            centerLines.emplace_back(cur.getX() , cur.getY() , cur.getX()*(i+2) , cur.getY());
+//            centerLines.emplace_back(cur.getX() , cur.getY() , cur.getX()*(i+2) , cur.getY());
             Point centerPoint(0,0);
             Point centerPointT(0,0);
             Point centerPointB(0,0);
@@ -117,14 +117,14 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
             }
             else if (d3 >= 0)
             {
-                cout<<"Gre3\n";
+//                cout<<"Gre3\n";
                 centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
 
                 centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
                 centerPointB = getNextPoint(centerPoint , next , centerLineHeight/2);
             }
             else{
-                cout<<"HERE\n";
+//                cout<<"HERE\n";
                 Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
 
 
@@ -145,7 +145,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
                     }
                     cout<<"Cutting\n";
                 }
-                centerLines.emplace_back(straight);
+//                centerLines.emplace_back(straight);
                 centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
 
                 centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
