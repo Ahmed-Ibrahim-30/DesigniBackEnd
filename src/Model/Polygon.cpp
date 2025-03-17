@@ -427,11 +427,25 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
 
         double t = ((centroid.getX() - x1) * dx + (centroid.getY()- y1) * dy) / d;
 
-        Point p = {100 + x1 + t * dx,100 + y1 + t * dy};
+        Point p = { x1 + t * dx, y1 + t * dy};
+
+        // Edge slope
+        double m = (y2 - y1) / (x2 - x1);
+
+        // Perpendicular slope
+        double m_perp = -1 / m;
+
+        // Equation of perpendicular line: y - C_y = m_perp * (x - C_x)
+        // Equation of edge: y - y1 = m * (x - x1)
+        // Solve for intersection
+
+        double x_intersect = (m * x1 - m_perp * centroid.x + centroid.y - y1) / (m - m_perp);
+        double y_intersect = y1 + m * (x_intersect - x1);
 
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
+        Line vertical2 (centroid.getX() , centroid.getY() , x_intersect , y_intersect);
 
-        perpendiculars.push_back(vertical);
+        perpendiculars.push_back(vertical2);
     }
 
     return perpendiculars;
