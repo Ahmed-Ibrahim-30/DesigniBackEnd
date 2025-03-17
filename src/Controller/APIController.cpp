@@ -711,6 +711,9 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
 
         centerLines.clear();
         vector<Line> ll = polygon1.computeCentroidPerpendiculars();
+
+
+
         centerLines.insert(centerLines.end() , ll.begin() , ll.end());
 
 //        vector<Line> ll = polygon1.getLines();

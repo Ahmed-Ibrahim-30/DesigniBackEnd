@@ -426,6 +426,8 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
         Point p = {x1 + t * dx, y1 + t * dy};
 
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
+
+        perpendiculars.push_back(vertical);
     }
 
     return perpendiculars;
