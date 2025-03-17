@@ -85,8 +85,13 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     for(auto &line : centerLine)
     {
         double minLength = 1000000000000;
+        double x1 = min(line.getX1() , line.getX2()), x2 = max(line.getX1() , line.getX2());
+        double y1 = min(line.getY1() , line.getY2()), y2 = max(line.getY1() , line.getY2());
         for(auto &p : points)
         {
+            if (p.getX() >= x1 && p.getX() <= x2 &&
+                    p.getY() >= y1 && p.getY() <= y2)
+                continue;
             Line path(p.getX() , p.getY() , line.getX1() , line.getY1());
             Line path2(p.getX() , p.getY() , line.getX2() , line.getY2());
 
