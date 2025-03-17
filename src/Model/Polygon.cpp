@@ -427,8 +427,7 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
 
         double t = ((centroid.getX() - x1) * dx + (centroid.getY()- y1) * dy) / d;
 
-        t*=10;
-        Point p = {x1 + t * dx, y1 + t * dy};
+        Point p = {100 + x1 + t * dx,100 + y1 + t * dy};
 
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
 
