@@ -423,6 +423,8 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
         double dy = y2 - y1;
         double d = dx * dx + dy * dy;
 
+        d*=10;
+
         double t = ((centroid.getX() - x1) * dx + (centroid.getY()- y1) * dy) / d;
 
         Point p = {x1 + t * dx, y1 + t * dy};
