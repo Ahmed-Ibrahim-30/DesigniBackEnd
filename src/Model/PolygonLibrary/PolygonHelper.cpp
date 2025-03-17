@@ -84,6 +84,20 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 
     for(auto &line : centerLine)
     {
+        for(auto &line2 : lines)
+        {
+            Point intersectionPoint = getIntersectionPoint(line , line2);
+            if (intersectionPoint.getX() != INT_MAX)
+            {
+                line.setX1(intersectionPoint.getX());
+                line.setY1(intersectionPoint.getY());
+                break;
+            }
+        }
+    }
+
+    for(auto &line : centerLine)
+    {
         double minLength = 1000000000000;
         double x1 = min(line.getX1() , line.getX2()), x2 = max(line.getX1() , line.getX2());
         double y1 = min(line.getY1() , line.getY2()), y2 = max(line.getY1() , line.getY2());
