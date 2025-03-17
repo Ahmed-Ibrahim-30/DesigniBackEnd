@@ -117,6 +117,8 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
 
     centerLines.push_back(sortCenterLines[0].second);
 
+    sortCenterLines[0].second.printJsonFormat();
+
     return centerLines;
 
 
