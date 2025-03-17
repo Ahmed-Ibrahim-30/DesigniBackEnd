@@ -444,8 +444,8 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
         Line vertical2 (centroid.getX() , centroid.getY() , x_intersect , y_intersect);
 
-        vertical2.setX1(vertical2.getX1() - dx*1000);
-        vertical2.setY1(vertical2.getY1() - dy*1000);
+//        vertical2.setX1(vertical2.getX1() - dx*1000);
+//        vertical2.setY1(vertical2.getY1() - dy*1000);
         perpendiculars.push_back(vertical2);
     }
 
