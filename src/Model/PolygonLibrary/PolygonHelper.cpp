@@ -127,12 +127,12 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
     }
     sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
-    centerLines.push_back(sortCenterLines[0].second);
+    centerLines.push_back(sortCenterLines[1].second);
 
-    for(auto &line : sortCenterLines)
-    {
-        centerLines.push_back(line.second);
-    }
+//    for(auto &line : sortCenterLines)
+//    {
+//        centerLines.push_back(line.second);
+//    }
 
     sortCenterLines[0].second.printJsonFormat();
 
