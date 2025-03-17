@@ -710,7 +710,8 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         vector<CityGrid> cities = drawStreet.getCities();
 
         centerLines.clear();
-        centerLines.push_back(polygon1.centroidLine());
+        vector<Line> ll = polygon1.computeCentroidPerpendiculars();
+        centerLines.insert(centerLines.end() , ll.begin() , ll.end());
 
 //        vector<Line> ll = polygon1.getLines();
 //        centerLines.insert(centerLines.end() , ll.begin() , ll.end());

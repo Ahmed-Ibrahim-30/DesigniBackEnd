@@ -407,6 +407,30 @@ Line Polygon1::centroidLine() {
     }
 }
 
+vector<Line> Polygon1::computeCentroidPerpendiculars()
+{
+    Point centroid = calculateCentroid();
+    vector<Line> lines = getLines();
+    vector<Line> perpendiculars;
+
+    for(auto &line : lines)
+    {
+        double x1 = line.getX1() , x2 = line.getX2();
+        double y1 = line.getY1() , y2 = line.getY2();
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        double d = dx * dx + dy * dy;
+
+        double t = ((centroid.getX() - x1) * dx + (centroid.getY()- y1) * dy) / d;
+
+        Point p = {x1 + t * dx, y1 + t * dy};
+
+        Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
+    }
+
+    return perpendiculars;
+}
+
 
 
 

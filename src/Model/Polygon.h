@@ -87,6 +87,16 @@ public:
      */
     Point calculateCentroid();
 
+    /**
+     *
+     * @return
+     */
+    vector<Line> computeCentroidPerpendiculars();
+
+    /**
+     * Line pass to Centroid Point
+     * @return
+     */
     Line centroidLine ();
 
     /**
