@@ -113,7 +113,7 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         }
         sortCenterLines.emplace_back(minLength , line);
     }
-    sort(sortCenterLines.begin(), sortCenterLines.end());
+    sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
     centerLines.push_back(sortCenterLines[0].second);
 
