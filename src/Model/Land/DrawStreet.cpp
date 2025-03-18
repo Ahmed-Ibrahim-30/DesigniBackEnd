@@ -92,15 +92,15 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
                     break;
                 }
             }
-            cout<<"cuttingLine Length = "<<cuttingLine.getLength()<<"\n";
-            testLines.push_back(cuttingLine);
+            cout<<" "<<cuttingLine.getLength();
+            spacingLines.push_back(cuttingLine);
         }
+        cout<<"\n";
     }
 
     CityGrid cityGrid;
 
     cityGrid.setRoadExtension(spacingLines);
-    cityGrid.setHomeBorder(testLines);
 
     cities.push_back(cityGrid);
 
