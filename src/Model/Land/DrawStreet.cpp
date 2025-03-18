@@ -853,7 +853,7 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
 
     vector<Line> centerLine = polygon.computeCentroidPerpendiculars();
 
-    return centerLine;
+    if (polygon.getId() == "25")return centerLine;
 
     vector<Point> points = polygon.getPoints();
     vector<Line> lines = polygon.getLines();
