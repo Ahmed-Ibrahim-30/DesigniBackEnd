@@ -1000,7 +1000,7 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
     shiftLine1.setX1(shiftLine1.getX1() * 100);
     shiftLine1.setY1(shiftLine1.getY1() * 100);
     shiftLine1.setX2(shiftLine1.getX2() * 100);
-    shiftLine1.setY2(shiftLine1.getY2() * 10000);
+    shiftLine1.setY2(shiftLine1.getY2() * 100);
 
     shiftLine2.setX1(shiftLine2.getX1() * 100);
     shiftLine2.setY1(shiftLine2.getY1() * 100);
