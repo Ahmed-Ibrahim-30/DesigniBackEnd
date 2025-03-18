@@ -1013,13 +1013,54 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
     shiftLine2.setY2(shiftLine2.getY2() + dy * 5);
 
 
+    Line shift1 = shiftLine1;
+    for(auto &line2 : lines)
+    {
+        Point intersectionPoint = PolygonHelper::getIntersectionPoint(shiftLine1 , line2);
+
+        if (intersectionPoint.getX() != INT_MAX)
+        {
+            Line one (intersectionPoint.getX() , intersectionPoint.getY() , shift1.getX1() , shift1.getY1());
+            Line two (intersectionPoint.getX() , intersectionPoint.getY() , shift1.getX2() , shift1.getY2());
+
+            if (one.getLength() < two.getLength())
+            {
+                shiftLine1.setX1(intersectionPoint.getX());
+                shiftLine1.setY1(intersectionPoint.getY());
+            }
+            else{
+                shiftLine1.setX2(intersectionPoint.getX());
+                shiftLine1.setY2(intersectionPoint.getY());
+            }
+            break;
+        }
+    }
+
+    Line shift2 = shiftLine2;
+    for(auto &line2 : lines)
+    {
+        Point intersectionPoint = PolygonHelper::getIntersectionPoint(shiftLine2 , line2);
+
+        if (intersectionPoint.getX() != INT_MAX)
+        {
+            Line one (intersectionPoint.getX() , intersectionPoint.getY() , shift2.getX1() , shift2.getY1());
+            Line two (intersectionPoint.getX() , intersectionPoint.getY() , shift2.getX2() , shift2.getY2());
+
+            if (one.getLength() < two.getLength())
+            {
+                shiftLine2.setX1(intersectionPoint.getX());
+                shiftLine2.setY1(intersectionPoint.getY());
+            }
+            else{
+                shiftLine2.setX2(intersectionPoint.getX());
+                shiftLine2.setY2(intersectionPoint.getY());
+            }
+            break;
+        }
+    }
 
     centerLines.push_back(shiftLine1);
     centerLines.push_back(shiftLine2);
-
-    shiftLine1.printJsonFormat();
-    shiftLine2.printJsonFormat();
-    bestCenterLine.printJsonFormat();
     centerLines.push_back(bestCenterLine);
 
     return centerLines;
