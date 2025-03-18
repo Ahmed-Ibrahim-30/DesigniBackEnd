@@ -411,7 +411,7 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
 {
     Point centroid = calculateCentroid();
 
-    cout<<"centroid = "<<centroid.getX() <<" "<<centroid.getY()<<"\n";
+//    cout<<"centroid = "<<centroid.getX() <<" "<<centroid.getY()<<"\n";
     vector<Line> lines = getLines();
     vector<Line> perpendiculars;
 
@@ -438,7 +438,6 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
 
         x_intersect = std::max(minX, std::min(x_intersect, maxX));
         y_intersect = std::max(minY, std::min(y_intersect, maxY));
-
 
 
         Line vertical (centroid.getX() , centroid.getY() , p.getX() , p.getY());
