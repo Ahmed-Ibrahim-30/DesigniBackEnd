@@ -24,13 +24,13 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> testLines;
     vector<Line> lines = mainLand.getLines();
 
-    spacingLines.clear();
-
-    for(auto &line : mainLand.getLines())
-    {
-        Line shift = PolygonHelper::shiftLine(line , -20);
-        spacingLines.push_back(shift);
-    }
+//    spacingLines.clear();
+//
+//    for(auto &line : mainLand.getLines())
+//    {
+//        Line shift = PolygonHelper::shiftLine(line , -20);
+//        spacingLines.push_back(shift);
+//    }
 
 //    for(auto &line : spacingLines)
 //    {

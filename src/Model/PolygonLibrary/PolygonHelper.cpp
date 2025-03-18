@@ -62,7 +62,7 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
     return Point{px, py};
 }
 
-bool lineIntersection(Line l1, Line l2, Point &intersection)
+bool lineIntersection(const Line& l1, const Line& l2, Point &intersection)
 {
     double a1 = l1.getY2() - l1.getY1();
     double b1 = l1.getX1() - l1.getX2();
