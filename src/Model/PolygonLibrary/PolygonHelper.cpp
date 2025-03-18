@@ -62,28 +62,6 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
     return Point{px, py};
 }
 
-bool lineIntersection(const Line& l1, const Line& l2, Point &intersection)
-{
-    double a1 = l1.getY2() - l1.getY1();
-    double b1 = l1.getX1() - l1.getX2();
-    double c1 = a1 * l1.getX1() + b1 * l1.getY1();
-
-    double a2 = l2.getY2() - l2.getY1();
-    double b2 = l2.getX1() - l2.getX2();
-    double c2 = a2 * l2.getX1() + b2 * l2.getY1();
-
-    double det = a1 * b2 - a2 * b1;
-
-    if (std::fabs(det) < 0.1) {
-        return false; // Lines are parallel
-    }
-
-    intersection.setX( (b2 * c1 - b1 * c2) / det);
-    intersection.setY(a1 * c2 - a2 * c1 / det);
-
-    return true;
-}
-
 Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
 {
     std::vector<Line> offsetLines;
@@ -98,6 +76,14 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
         Point next = curPoints[(i + 1) % n];
 
         Line line (cur.getX() , cur.getY() , next.getX() , next.getY());
+
+        double dx = line.getX2() - line.getX1();
+        double dy = line.getY2() - line.getY1();
+
+        line.setX1(line.getX1() - dx * 5);
+        line.setY1(line.getY1() - dy * 5);
+        line.setX2(line.getX2() + dx * 5);
+        line.setY2(line.getY2() + dy * 5);
         offsetLines.push_back(shiftLine(line, distance)); // Negative X for inward shrinkage
     }
 
@@ -109,12 +95,6 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
             cout<<"DONE\n";
             newPoints.push_back(intersectionPoint);
         }
-
-//        Point intersection;
-//        if (lineIntersection(offsetLines[i], offsetLines[(i + 1) % n], intersection))
-//        {
-//            newPoints.push_back(intersection);
-//        }
     }
 
     Polygon1 polygon1(newPoints);
