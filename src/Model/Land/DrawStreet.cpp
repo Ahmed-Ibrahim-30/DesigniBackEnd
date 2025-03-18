@@ -92,8 +92,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
                     break;
                 }
             }
-            cout<<" "<<cuttingLine.getLength();
-            spacingLines.push_back(cuttingLine);
+            cout<<" "<<cuttingLine.getLength() <<" --> ";
+//            spacingLines.push_back(cuttingLine);
         }
         cout<<"\n";
     }
