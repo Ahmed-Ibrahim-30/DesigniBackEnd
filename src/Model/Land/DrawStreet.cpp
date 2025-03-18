@@ -997,15 +997,15 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
     Line shiftLine2 = PolygonHelper::shiftLine(bestCenterLine , -centerLineHeight/2);
 
 
-//    shiftLine1.setX1(shiftLine1.getX1() * 100);
-//    shiftLine1.setY1(shiftLine1.getY1() * 100);
-//    shiftLine1.setX2(shiftLine1.getX2() * 100);
-//    shiftLine1.setY2(shiftLine1.getY2() * 100);
-//
-//    shiftLine2.setX1(shiftLine2.getX1() * 100);
-//    shiftLine2.setY1(shiftLine2.getY1() * 100);
-//    shiftLine2.setX2(shiftLine2.getX2() * 100);
-//    shiftLine2.setY2(shiftLine2.getY2() * 100);
+    shiftLine1.setX1(shiftLine1.getX1() * 10);
+    shiftLine1.setY1(shiftLine1.getY1() * 10);
+    shiftLine1.setX2(shiftLine1.getX2() * 10);
+    shiftLine1.setY2(shiftLine1.getY2() * 10);
+
+    shiftLine2.setX1(shiftLine2.getX1() * 10);
+    shiftLine2.setY1(shiftLine2.getY1() * 10);
+    shiftLine2.setX2(shiftLine2.getX2() * 10);
+    shiftLine2.setY2(shiftLine2.getY2() * 10);
 
 
 
