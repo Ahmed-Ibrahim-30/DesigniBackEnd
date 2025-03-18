@@ -175,7 +175,22 @@ public:
      */
     static Point getOtherLinePoint(const Point &p , double slope , double y);
 
+    /**
+     * Get Other Point On Line with Specific Slope using distance
+     * @param p
+     * @param slope
+     * @param distance
+     * @return
+     */
     static Point getSecondLinePoint(const Point &p , double slope , double distance);
+
+    /**
+     * Shift Line with distance X
+     * @param line
+     * @param distance
+     * @return
+     */
+    static Line shiftLine (const Line &line , double distance);
 };
 
 

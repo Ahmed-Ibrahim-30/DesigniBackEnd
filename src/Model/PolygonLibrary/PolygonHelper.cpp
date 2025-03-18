@@ -768,6 +768,27 @@ Point PolygonHelper::getSecondLinePoint(const Point &p, double slope, double dis
     return p2;
 }
 
+Line PolygonHelper::shiftLine(const Line &line, double distance)
+{
+    double dx = line.getX2() - line.getX1();
+    double dy = line.getY2() - line.getY1();
+    double length = line.getLength();
+
+    // Calculate the perpendicular vector (normal vector)
+    double nx = -dy / length;  // Normalized perpendicular vector
+    double ny = dx / length;
+
+    // Shift the line by distance X
+    double x1 = line.getX1() + distance * nx;
+    double y1 = line.getY1() + distance * ny;
+
+    double x2 = line.getX2() + distance * nx;
+    double y2 = line.getY2() + distance * ny;
+
+    return {x1 , y1 , x2 , y2};
+
+}
+
 
 
 

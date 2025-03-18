@@ -990,7 +990,28 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
     }
     sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
-    centerLines.push_back(sortCenterLines[0].second);
+
+    Line bestCenterLine = sortCenterLines[0].second;
+
+    Line shiftLine1 = PolygonHelper::shiftLine(bestCenterLine , centerLineHeight/2);
+    Line shiftLine2 = PolygonHelper::shiftLine(bestCenterLine , -centerLineHeight/2);
+
+
+    shiftLine1.setX1(shiftLine1.getX1() * 10000);
+    shiftLine1.setY1(shiftLine1.getY1() * 10000);
+    shiftLine1.setX2(shiftLine1.getX2() * 10000);
+    shiftLine1.setY2(shiftLine1.getY2() * 10000);
+
+    shiftLine2.setX1(shiftLine2.getX1() * 10000);
+    shiftLine2.setY1(shiftLine2.getY1() * 10000);
+    shiftLine2.setX2(shiftLine2.getX2() * 10000);
+    shiftLine2.setY2(shiftLine2.getY2() * 10000);
+
+
+
+    centerLines.push_back(shiftLine1);
+    centerLines.push_back(shiftLine2);
+//    centerLines.push_back(sortCenterLines[0].second);
 
     return centerLines;
 }
