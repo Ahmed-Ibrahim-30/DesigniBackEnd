@@ -1011,7 +1011,10 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
 
     centerLines.push_back(shiftLine1);
     centerLines.push_back(shiftLine2);
-//    centerLines.push_back(sortCenterLines[0].second);
+
+    shiftLine1.printJsonFormat();
+    shiftLine2.printJsonFormat();
+    centerLines.push_back(sortCenterLines[0].second);
 
     return centerLines;
 }
