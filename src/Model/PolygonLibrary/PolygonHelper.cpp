@@ -98,7 +98,7 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
         Point next = curPoints[(i + 1) % n];
 
         Line line (cur.getX() , cur.getY() , next.getX() , next.getY());
-        offsetLines.push_back(shiftLine(line, -distance)); // Negative X for inward shrinkage
+        offsetLines.push_back(shiftLine(line, distance)); // Negative X for inward shrinkage
     }
 
     for (int i = 0; i < n; ++i)
