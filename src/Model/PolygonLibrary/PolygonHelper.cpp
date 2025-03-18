@@ -62,37 +62,99 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
     return Point{px, py};
 }
 
+bool lineIntersection(Line l1, Line l2, Point &intersection)
+{
+    double a1 = l1.getY2() - l1.getY1();
+    double b1 = l1.getX1() - l1.getX2();
+    double c1 = a1 * l1.getX1() + b1 * l1.getY1();
+
+    double a2 = l2.getY2() - l2.getY1();
+    double b2 = l2.getX1() - l2.getX2();
+    double c2 = a2 * l2.getX1() + b2 * l2.getY1();
+
+    double det = a1 * b2 - a2 * b1;
+
+    if (std::fabs(det) < 1e-9) {
+        return false; // Lines are parallel
+    }
+
+    intersection.setX( (b2 * c1 - b1 * c2) / det);
+    intersection.setY(a1 * c2 - a2 * c1 / det);
+
+    return true;
+}
+
 Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
 {
+    std::vector<Line> offsetLines;
     vector<Point> newPoints;
     vector<Point> curPoints = mainLand.getPoints();
+    int n = (int)curPoints.size();
 
-    for (int i = 0; i < curPoints.size(); ++i)
+    // Compute offset lines
+    for (int i = 0; i < n; ++i)
     {
-        Point a0 = curPoints[i==0?curPoints.size()-1 : i-1];
-        Point a1 = curPoints[i];
-        Point a2 = curPoints[(i + 1) % curPoints.size()];
+        Point cur = curPoints[i];
+        Point next = curPoints[(i + 1) % n];
 
-        // Compute the direction vectors of adjacent edges
-        Point v1 = (a1 - a0).normalize(); // Edge from a0 to a1
-        Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
+        Line line (cur.getX() , cur.getY() , next.getX() , next.getY());
+        offsetLines.push_back(shiftLine(line, -distance)); // Negative X for inward shrinkage
+    }
 
-        // Compute perpendicular vectors
-        Point perp1 = v1.perpendicular();
-        Point perp2 = v2.perpendicular();
+    for (int i = 0; i < n; ++i)
+    {
+//        Point intersectionPoint = getIntersectionPoint(offsetLines[i] , offsetLines[(i + 1) % n]);
+//        if (intersectionPoint.getX() != INT_MAX)
+//        {
+//            cout<<"DONE\n";
+//            newPoints.push_back(intersectionPoint);
+//        }
 
-        // Compute outward direction (average of two perpendicular vectors)
-        Point offsetDir = (perp1 + perp2).normalize();
-
-        // Move the point outward by X
-        Point newPoint = a1 + offsetDir * distance;
-        newPoints.push_back(newPoint);
+        Point intersection;
+        if (lineIntersection(offsetLines[i], offsetLines[(i + 1) % n], intersection))
+        {
+            newPoints.push_back(intersection);
+        }
     }
 
     Polygon1 polygon1(newPoints);
 
     return polygon1;
 }
+
+
+
+//Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
+//{
+//    vector<Point> newPoints;
+//    vector<Point> curPoints = mainLand.getPoints();
+//
+//    for (int i = 0; i < curPoints.size(); ++i)
+//    {
+//        Point a0 = curPoints[i==0?curPoints.size()-1 : i-1];
+//        Point a1 = curPoints[i];
+//        Point a2 = curPoints[(i + 1) % curPoints.size()];
+//
+//        // Compute the direction vectors of adjacent edges
+//        Point v1 = (a1 - a0).normalize(); // Edge from a0 to a1
+//        Point v2 = (a2 - a1).normalize(); // Edge from a1 to a2
+//
+//        // Compute perpendicular vectors
+//        Point perp1 = v1.perpendicular();
+//        Point perp2 = v2.perpendicular();
+//
+//        // Compute outward direction (average of two perpendicular vectors)
+//        Point offsetDir = (perp1 + perp2).normalize();
+//
+//        // Move the point outward by X
+//        Point newPoint = a1 + offsetDir * distance;
+//        newPoints.push_back(newPoint);
+//    }
+//
+//    Polygon1 polygon1(newPoints);
+//
+//    return polygon1;
+//}
 
 Point PolygonHelper::getNextPoint(const Point& current, const Point& destination, double step) {
     double dx = destination.getX() - current.getX();
