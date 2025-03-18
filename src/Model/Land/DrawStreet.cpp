@@ -1059,7 +1059,7 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
 
     centerLines.push_back(shiftLine1);
     centerLines.push_back(shiftLine2);
-    centerLines.push_back(bestCenterLine);
+//    centerLines.push_back(bestCenterLine);
 
     return centerLines;
 }
