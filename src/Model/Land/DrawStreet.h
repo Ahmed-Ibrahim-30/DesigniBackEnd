@@ -15,6 +15,11 @@ private:
 
     double startSpace = 20;
 
+    double step = 20;
+
+    /**
+     * Main Land
+     */
     Polygon1 mainLand;
 
     /**
@@ -45,8 +50,13 @@ private:
 
     vector<Line> SplitCenterLines(double startSpace ,double step1 , int divisions,const vector<Line> &centerLines2);
 
-
-    vector<Line> getCenterLines(Polygon1 &polygon ,double centerLineHeight);
+    /**
+     * Find Best Center Lines
+     * @param polygon
+     * @param centerLineHeight
+     * @return
+     */
+    vector<Line> buildCenterLines(Polygon1 &polygon ,double centerLineHeight);
 public:
     void drawStreets(Polygon1 &polygon1);
 

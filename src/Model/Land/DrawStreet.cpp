@@ -6,12 +6,9 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    double step1 = 40 ;
+    double step1 = step * 2 ;
     mainLand = polygon1;
-//    centerLines = PolygonHelper::getCenterLines(polygon1 , 10);
-    centerLines = getCenterLines(polygon1 , 10);
-
-    cout<<"CenterLine Size = "<<centerLines.size()<<"\n";
+    centerLines = buildCenterLines(polygon1 , 10);
 
     vector<Line> centerLinesTop , centerLinesBottom;
 
@@ -21,14 +18,17 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-//    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
-//
-//    vector<Line> spacingLines = innerPolygon.getLines();
-//
-////    vector<Line> topPoints = PolygonHelper::getTopLines(polygon1 , 30);
-////    vector<Line> bottomPoints = PolygonHelper::getBottomLines(polygon1 , 30);
-//
-//
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
+
+    vector<Line> spacingLines = innerPolygon.getLines();
+
+    CityGrid cityGrid;
+
+    cityGrid.setRoadExtension(spacingLines);
+
+    cities.push_back(cityGrid);
+
+
 //    int divisions = 0 , index = 0 , divisionsB = 1;
 //    vector<Line> bo;
 //    Point start = getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()} , index , centerLinesTop , startSpace , bo);
@@ -846,9 +846,8 @@ const vector<CityGrid> &DrawStreet::getCities() const {
     return cities;
 }
 
-vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeight)
+vector<Line> DrawStreet::buildCenterLines(Polygon1 &polygon, double centerLineHeight)
 {
-    double step1 = 20;
     vector<Line> cLines;
 
     vector<Line> centerLine = polygon.computeCentroidPerpendiculars();
@@ -912,7 +911,7 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
         while (true)
         {
             vector<Line> ll;
-            Point next = getNextPoint(start , index , {line} , step1/2 , ll);
+            Point next = getNextPoint(start , index , {line} , step/2 , ll);
             if (next.getX() == INT_MAX) break;
 
             Line nextLine(next.getX() , next.getY() , two.getX() , two.getY());
@@ -991,8 +990,11 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
     sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
 
+    //Center Line
     Line bestCenterLine = sortCenterLines[0].second;
 
+    //Create Street with Height = centerLineHeight
+    //Make bestCenterLine Double Lines
     Line shiftLine1 = PolygonHelper::shiftLine(bestCenterLine , centerLineHeight/2);
     Line shiftLine2 = PolygonHelper::shiftLine(bestCenterLine , -centerLineHeight/2);
 
@@ -1059,25 +1061,6 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
 
     centerLines.push_back(shiftLine1);
     centerLines.push_back(shiftLine2);
-//    centerLines.push_back(bestCenterLine);
 
     return centerLines;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

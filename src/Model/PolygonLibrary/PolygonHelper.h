@@ -129,13 +129,6 @@ public:
     static bool isPointInsidePolygon(const Point& point, const Polygon1& polygon);
 
     /**
-     * Get Center Lines
-     * @param polygon
-     * @return
-     */
-    static vector<Line> getCenterLines(Polygon1 &polygon ,double centerLineHeight = 10);
-
-    /**
      * Get Next Point for line
      * @param current
      * @param destination
@@ -143,20 +136,6 @@ public:
      * @return
      */
     static Point getNextPoint(const Point& current, const Point& destination, double step);
-
-    /**
-     * offsite any line above centroid Point under by 20
-     * @param polygon
-     * @return
-     */
-    static vector<Line> getTopLines(Polygon1 &polygon , double offsite);
-
-    /**
-     * offsite any line under centroid Point above by 20
-     * @param polygon
-     * @return
-     */
-    static vector<Line> getBottomLines(Polygon1 &polygon , double offsite);
 
     /**
      * getScalingPolygon
