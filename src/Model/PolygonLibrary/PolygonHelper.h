@@ -174,6 +174,8 @@ public:
      * @return
      */
     static Point getOtherLinePoint(const Point &p , double slope , double y);
+
+    static Point getSecondLinePoint(const Point &p , double slope , double distance);
 };
 
 

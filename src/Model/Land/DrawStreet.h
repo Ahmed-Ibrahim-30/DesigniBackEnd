@@ -45,6 +45,8 @@ private:
 
     vector<Line> SplitCenterLines(double startSpace ,double step1 , int divisions,const vector<Line> &centerLines2);
 
+
+    vector<Line> getCenterLines(Polygon1 &polygon ,double centerLineHeight);
 public:
     void drawStreets(Polygon1 &polygon1);
 

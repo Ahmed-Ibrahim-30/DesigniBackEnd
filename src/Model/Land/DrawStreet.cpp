@@ -845,6 +845,160 @@ const vector<CityGrid> &DrawStreet::getCities() const {
     return cities;
 }
 
+vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeight)
+{
+    double step1 = 20;
+    vector<Line> cLines;
+
+    vector<Line> centerLine = polygon.computeCentroidPerpendiculars();
+
+    vector<Point> points = polygon.getPoints();
+    vector<Line> lines = polygon.getLines();
+    int n = (int)points.size();
+    vector<Point> centerPoints ;
+    vector<Point> centerPointsTOP ;
+    vector<Point> centerPointsBottom ;
+
+    vector<pair<double , Line>> sortCenterLines;
+
+    for(auto &line : centerLine)
+    {
+        Point one(line.getX1() , line.getY1());
+        Point two(line.getX2() , line.getY2());
+
+        for(auto &line2 : lines)
+        {
+            double x1 = min(line2.getX1() , line2.getX2()), x2 = max(line2.getX1() , line2.getX2());
+            double y1 = min(line2.getY1() , line2.getY2()), y2 = max(line2.getY1() , line2.getY2());
+            if (one.getX() >= x1 && one.getX() <= x2 &&
+                one.getY() >= y1 && one.getY() <= y2)
+                continue;
+
+            if (two.getX() >= x1 && two.getX() <= x2 &&
+                two.getY() >= y1 && two.getY() <= y2)
+                continue;
+            Point intersectionPoint = PolygonHelper::getIntersectionPoint(line , line2);
+            if (intersectionPoint.getX() != INT_MAX)
+            {
+                line.setX1(intersectionPoint.getX());
+                line.setY1(intersectionPoint.getY());
+                break;
+            }
+        }
+    }
+
+    for(auto &line : centerLine)
+    {
+        double minLength = 1000000000000;
+        Point one(line.getX1() , line.getY1());
+        Point two(line.getX2() , line.getY2());
+
+        double slope = PolygonHelper::getSlope(line);
+
+        if (slope == 0)
+        {
+            if (line.getY1() == line.getY2()) slope = -1;
+        }
+        else {
+            slope = -1/slope;
+        }
+        /**
+         * Slope = 0 ? x1 = x2
+         * Slope = -1 ? y1 = y2
+         * else
+         */
+
+        int divisions = 0 , index = 0 ;
+        vector<Line> bo;
+        Point start = getNextPoint(one , index , {line} , startSpace , bo);
+
+        vector<Point> cPoints ;
+        while (true)
+        {
+            vector<Line> ll;
+            Point next = getNextPoint(start , index , {line} , step1/2 , ll);
+            if (next.getX() == INT_MAX) break;
+
+            Line nextLine(next.getX() , next.getY() , two.getX() , two.getY());
+
+
+            if ( nextLine.getLength() <= 20) break;
+            divisions++;
+            start = next;
+            cPoints.push_back(next);
+        }
+
+        for (int i = 0; i < divisions % 4 ; ++i)
+        {
+            cPoints.pop_back();
+        }
+
+        divisions/=4;
+
+        for (int i = 0; i < cPoints.size(); ++i)
+        {
+            Point cur = cPoints[i];
+            Line cuttingLine (cur.getX() , cur.getY() , cur.getX() , cur.getY());
+
+            if (slope == 0)
+            {
+                if (i%2 == 0)
+                {
+                    cuttingLine.setX2(cuttingLine.getX1() - 100000000);
+                }
+                else
+                {
+                    cuttingLine.setX2(cuttingLine.getX1() + 100000000);
+                }
+            }
+            else if (slope == -1)
+            {
+                if (i%2 == 0)
+                {
+                    cuttingLine.setY2(cuttingLine.getY1() + 100000000);
+                }
+                else
+                {
+                    cuttingLine.setY2(cuttingLine.getY1() - 100000000);
+                }
+            }
+            else{
+                Point second;
+                if (i%2 == 0)
+                {
+                    second = PolygonHelper::getSecondLinePoint(cur , slope , 10000);
+                }
+                else
+                {
+                    second = PolygonHelper::getSecondLinePoint(cur , slope , -10000);
+                }
+                cuttingLine.setX2(second.getX());
+                cuttingLine.setY2(second.getY());
+            }
+
+            for(auto &line2 : lines)
+            {
+                Point intersectionPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line2);
+                if (intersectionPoint.getX() != INT_MAX)
+                {
+                    cuttingLine.setX2(intersectionPoint.getX());
+                    cuttingLine.setY2(intersectionPoint.getY());
+                    break;
+                }
+            }
+
+            minLength = min(minLength , cuttingLine.getLength());
+        }
+
+        sortCenterLines.emplace_back(minLength * divisions, line);
+    }
+    sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
+
+    centerLines.push_back(sortCenterLines[0].second);
+    
+    return centerLines;
+}
+
 
 
 

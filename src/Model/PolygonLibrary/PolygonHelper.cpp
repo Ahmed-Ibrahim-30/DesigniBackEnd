@@ -64,15 +64,10 @@ Point PolygonHelper::getIntersectionPoint(const Line &line1 , const Line &line2)
 
 vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineHeight)
 {
-    Point minPoint = polygon.minPoint();
-    Point maxPoint = polygon.maxPoint();
-
-    double dx = maxPoint.getX() - minPoint.getX();
-    double dy = maxPoint.getY() - minPoint.getY();
-
-
     vector<Line> centerLines;
+
     vector<Line> centerLine = polygon.computeCentroidPerpendiculars();
+
     vector<Point> points = polygon.getPoints();
     vector<Line> lines = polygon.getLines();
     int n = (int)points.size();
@@ -92,11 +87,11 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
             double x1 = min(line2.getX1() , line2.getX2()), x2 = max(line2.getX1() , line2.getX2());
             double y1 = min(line2.getY1() , line2.getY2()), y2 = max(line2.getY1() , line2.getY2());
             if (one.getX() >= x1 && one.getX() <= x2 &&
-                    one.getY() >= y1 && one.getY() <= y2)
+                one.getY() >= y1 && one.getY() <= y2)
                 continue;
 
             if (two.getX() >= x1 && two.getX() <= x2 &&
-                    two.getY() >= y1 && two.getY() <= y2)
+                two.getY() >= y1 && two.getY() <= y2)
                 continue;
             Point intersectionPoint = getIntersectionPoint(line , line2);
             if (intersectionPoint.getX() != INT_MAX)
@@ -113,146 +108,221 @@ vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineH
         double minLength = 1000000000000;
         Point one(line.getX1() , line.getY1());
         Point two(line.getX2() , line.getY2());
-        for(auto &p : points)
-        {
-            if (p == one || p == two) continue;
-            Line path(p.getX() , p.getY() , line.getX1() , line.getY1());
-            Line path2(p.getX() , p.getY() , line.getX2() , line.getY2());
 
-            minLength = min({minLength , path.getLength() , path2.getLength()});
+        double slope = getSlope(line);
+
+        if (slope == 0)
+        {
+
         }
+        else {
+            slope = -1/slope;
+        }
+
+
+
         sortCenterLines.emplace_back(minLength , line);
     }
     sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
-//    cout<<"sortCenterLines = "<<sortCenterLines[0].first <<" "<<sortCenterLines[1].first<<"\n";
     centerLines.push_back(sortCenterLines[0].second);
-//    sortCenterLines[1].second.printJsonFormat();
-//
-//    for(auto &p : points)
-//    {
-//        Line path(p.getX() , p.getY() , sortCenterLines[1].second.getX1() , sortCenterLines[1].second.getY1());
-//        Line path2(p.getX() , p.getY() , sortCenterLines[1].second.getX2() , sortCenterLines[1].second.getY2());
-//
-//        cout<<"P = "<<p.getX() <<" "<<p.getY()<<"\t -- "<<path.getLength()<<" "<<path2.getLength()<<"\n";
-//    }
 
-//    for(auto &line : sortCenterLines)
-//    {
-//        centerLines.push_back(line.second);
-//    }
-
-cout<<"-----------*******************\n";
-
-    sortCenterLines[0].second.printJsonFormat();
-
-    for(auto &p : points)
-    {
-        Line path(p.getX() , p.getY() , sortCenterLines[0].second.getX1() , sortCenterLines[0].second.getY1());
-        Line path2(p.getX() , p.getY() , sortCenterLines[0].second.getX2() , sortCenterLines[0].second.getY2());
-
-        cout<<"P = "<<p.getX() <<" "<<p.getY()<<"\t -- "<<path.getLength()<<" "<<path2.getLength()<<"\n";
-    }
-
-    return centerLines;
-
-
-//    for (int i = 0; i < n; ++i)
-//    {
-//        Point prev = points[i == 0 ? n-1 : i-1];
-//        Point cur = points[i];
-//        Point next = points[(i+1) %n];
-//
-//        double d = (cur.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(cur.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
-//        double d2 = (prev.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(prev.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
-//        double d3 = (next.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(next.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
-//
-//        if (d < 0)
-//        {
-////            cout<<"Gre -- "<<cur.getX() << " "<<cur.getY()<<"\n";
-//
-////            centerLines.emplace_back(cur.getX() , cur.getY() , cur.getX()*(i+2) , cur.getY());
-//            Point centerPoint(0,0);
-//            Point centerPointT(0,0);
-//            Point centerPointB(0,0);
-//
-//            if (d2 >= 0)
-//            {
-////                cout<<"Gre2\n";
-//                centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
-//
-//                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
-//                centerPointB = getNextPoint(centerPoint , prev , centerLineHeight/2);
-//            }
-//            else if (d3 >= 0)
-//            {
-////                cout<<"Gre3\n";
-//                centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
-//
-//                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
-//                centerPointB = getNextPoint(centerPoint , next , centerLineHeight/2);
-//            }
-//            else{
-////                cout<<"HERE\n";
-//                Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
-//
-//
-//
-//                for(auto &line : lines)
-//                {
-//                    Point one(line.getX1() , line.getY1());
-//                    Point two(line.getX2() , line.getY2());
-//
-//                    if (one == cur || two == cur)continue;
-//
-//                    Point intersectionPoint = getIntersectionPoint(straight , line);
-//                    if (intersectionPoint.getX() != INT_MAX)
-//                    {
-//                        straight.setX2(intersectionPoint.getX());
-//                        straight.setY2(intersectionPoint.getY());
-//                        break;
-//                    }
-////                    cout<<"Cutting\n";
-//                }
-////                centerLines.emplace_back(straight);
-//                centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
-//
-//                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
-//                centerPointB = getNextPoint(centerPoint , {straight.getX2() , straight.getY2()} , centerLineHeight/2);
-//            }
-//            centerPoints.push_back(centerPoint);
-//            centerPointsTOP.push_back(centerPointT);
-//            centerPointsBottom.push_back(centerPointB);
-//        }
-//    }
-
-
-    for (int i = 1; i < centerPointsTOP.size(); ++i)
-    {
-        Point prev = centerPointsTOP[ i-1];
-        Point cur = centerPointsTOP[i];
-        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
-    }
-
-    for (int i = 1; i < centerPointsBottom.size(); ++i)
-    {
-        Point prev = centerPointsBottom[ i-1];
-        Point cur = centerPointsBottom[i];
-        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
-    }
-
-
-    if(dy > dx)
-    {
-//        polygon.rotate(270);
-//        for(auto &l : centerLines)
-//        {
-//            l.rotate(270);
-//        }
-    }
 
     return centerLines;
 }
+
+
+//vector<Line> PolygonHelper::getCenterLines(Polygon1 &polygon ,double centerLineHeight)
+//{
+//    Point minPoint = polygon.minPoint();
+//    Point maxPoint = polygon.maxPoint();
+//
+//    double dx = maxPoint.getX() - minPoint.getX();
+//    double dy = maxPoint.getY() - minPoint.getY();
+//
+//
+//    vector<Line> centerLines;
+//    vector<Line> centerLine = polygon.computeCentroidPerpendiculars();
+//    vector<Point> points = polygon.getPoints();
+//    vector<Line> lines = polygon.getLines();
+//    int n = (int)points.size();
+//    vector<Point> centerPoints ;
+//    vector<Point> centerPointsTOP ;
+//    vector<Point> centerPointsBottom ;
+//
+//    vector<pair<double , Line>> sortCenterLines;
+//
+//    for(auto &line : centerLine)
+//    {
+//        Point one(line.getX1() , line.getY1());
+//        Point two(line.getX2() , line.getY2());
+//
+//        for(auto &line2 : lines)
+//        {
+//            double x1 = min(line2.getX1() , line2.getX2()), x2 = max(line2.getX1() , line2.getX2());
+//            double y1 = min(line2.getY1() , line2.getY2()), y2 = max(line2.getY1() , line2.getY2());
+//            if (one.getX() >= x1 && one.getX() <= x2 &&
+//                    one.getY() >= y1 && one.getY() <= y2)
+//                continue;
+//
+//            if (two.getX() >= x1 && two.getX() <= x2 &&
+//                    two.getY() >= y1 && two.getY() <= y2)
+//                continue;
+//            Point intersectionPoint = getIntersectionPoint(line , line2);
+//            if (intersectionPoint.getX() != INT_MAX)
+//            {
+//                line.setX1(intersectionPoint.getX());
+//                line.setY1(intersectionPoint.getY());
+//                break;
+//            }
+//        }
+//    }
+//
+//    for(auto &line : centerLine)
+//    {
+//        double minLength = 1000000000000;
+//        Point one(line.getX1() , line.getY1());
+//        Point two(line.getX2() , line.getY2());
+//        for(auto &p : points)
+//        {
+//            if (p == one || p == two) continue;
+//            Line path(p.getX() , p.getY() , line.getX1() , line.getY1());
+//            Line path2(p.getX() , p.getY() , line.getX2() , line.getY2());
+//
+//            minLength = min({minLength , path.getLength() , path2.getLength()});
+//        }
+//        sortCenterLines.emplace_back(minLength , line);
+//    }
+//    sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
+//
+////    cout<<"sortCenterLines = "<<sortCenterLines[0].first <<" "<<sortCenterLines[1].first<<"\n";
+//    centerLines.push_back(sortCenterLines[0].second);
+////    sortCenterLines[1].second.printJsonFormat();
+////
+////    for(auto &p : points)
+////    {
+////        Line path(p.getX() , p.getY() , sortCenterLines[1].second.getX1() , sortCenterLines[1].second.getY1());
+////        Line path2(p.getX() , p.getY() , sortCenterLines[1].second.getX2() , sortCenterLines[1].second.getY2());
+////
+////        cout<<"P = "<<p.getX() <<" "<<p.getY()<<"\t -- "<<path.getLength()<<" "<<path2.getLength()<<"\n";
+////    }
+//
+////    for(auto &line : sortCenterLines)
+////    {
+////        centerLines.push_back(line.second);
+////    }
+//
+//cout<<"-----------*******************\n";
+//
+//    sortCenterLines[0].second.printJsonFormat();
+//
+//    for(auto &p : points)
+//    {
+//        Line path(p.getX() , p.getY() , sortCenterLines[0].second.getX1() , sortCenterLines[0].second.getY1());
+//        Line path2(p.getX() , p.getY() , sortCenterLines[0].second.getX2() , sortCenterLines[0].second.getY2());
+//
+//        cout<<"P = "<<p.getX() <<" "<<p.getY()<<"\t -- "<<path.getLength()<<" "<<path2.getLength()<<"\n";
+//    }
+//
+//    return centerLines;
+//
+//
+////    for (int i = 0; i < n; ++i)
+////    {
+////        Point prev = points[i == 0 ? n-1 : i-1];
+////        Point cur = points[i];
+////        Point next = points[(i+1) %n];
+////
+////        double d = (cur.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(cur.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
+////        double d2 = (prev.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(prev.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
+////        double d3 = (next.getX() - centerLine.getX1()) * (centerLine.getY2() - centerLine.getY1()) -(next.getY() - centerLine.getY1()) * (centerLine.getX2() - centerLine.getX1());
+////
+////        if (d < 0)
+////        {
+//////            cout<<"Gre -- "<<cur.getX() << " "<<cur.getY()<<"\n";
+////
+//////            centerLines.emplace_back(cur.getX() , cur.getY() , cur.getX()*(i+2) , cur.getY());
+////            Point centerPoint(0,0);
+////            Point centerPointT(0,0);
+////            Point centerPointB(0,0);
+////
+////            if (d2 >= 0)
+////            {
+//////                cout<<"Gre2\n";
+////                centerPoint = Point ((cur.getX()+prev.getX())/2 , (cur.getY()+prev.getY())/2);
+////
+////                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
+////                centerPointB = getNextPoint(centerPoint , prev , centerLineHeight/2);
+////            }
+////            else if (d3 >= 0)
+////            {
+//////                cout<<"Gre3\n";
+////                centerPoint = Point ((cur.getX()+next.getX())/2 , (cur.getY()+next.getY())/2);
+////
+////                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
+////                centerPointB = getNextPoint(centerPoint , next , centerLineHeight/2);
+////            }
+////            else{
+//////                cout<<"HERE\n";
+////                Line straight(cur.getX() , cur.getY() , cur.getX() , cur.getY() - 10000000);
+////
+////
+////
+////                for(auto &line : lines)
+////                {
+////                    Point one(line.getX1() , line.getY1());
+////                    Point two(line.getX2() , line.getY2());
+////
+////                    if (one == cur || two == cur)continue;
+////
+////                    Point intersectionPoint = getIntersectionPoint(straight , line);
+////                    if (intersectionPoint.getX() != INT_MAX)
+////                    {
+////                        straight.setX2(intersectionPoint.getX());
+////                        straight.setY2(intersectionPoint.getY());
+////                        break;
+////                    }
+//////                    cout<<"Cutting\n";
+////                }
+//////                centerLines.emplace_back(straight);
+////                centerPoint = Point ((straight.getX1()+straight.getX2())/2 , (straight.getY2()+straight.getY1())/2);
+////
+////                centerPointT = getNextPoint(centerPoint , cur , centerLineHeight/2);
+////                centerPointB = getNextPoint(centerPoint , {straight.getX2() , straight.getY2()} , centerLineHeight/2);
+////            }
+////            centerPoints.push_back(centerPoint);
+////            centerPointsTOP.push_back(centerPointT);
+////            centerPointsBottom.push_back(centerPointB);
+////        }
+////    }
+//
+//
+//    for (int i = 1; i < centerPointsTOP.size(); ++i)
+//    {
+//        Point prev = centerPointsTOP[ i-1];
+//        Point cur = centerPointsTOP[i];
+//        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+//    }
+//
+//    for (int i = 1; i < centerPointsBottom.size(); ++i)
+//    {
+//        Point prev = centerPointsBottom[ i-1];
+//        Point cur = centerPointsBottom[i];
+//        centerLines.emplace_back(prev.getX() , prev.getY() , cur.getX() , cur.getY());
+//    }
+//
+//
+//    if(dy > dx)
+//    {
+////        polygon.rotate(270);
+////        for(auto &l : centerLines)
+////        {
+////            l.rotate(270);
+////        }
+//    }
+//
+//    return centerLines;
+//}
 
 vector<Line> PolygonHelper::getTopLines(Polygon1 &polygon , double offsite)
 {
@@ -684,6 +754,18 @@ Point PolygonHelper::getOtherLinePoint(const Point &p, double slope, double y) {
 
     double x2 = (((p.getY() - y)/slope) - p.getX()) * -1;
     return {x2 , y};
+}
+
+Point PolygonHelper::getSecondLinePoint(const Point &p, double slope, double distance)
+{
+    double dx = distance / std::sqrt(1 + slope * slope);
+    double dy = slope * dx;
+
+    Point p2;
+    p2.setX( p.getX() + dx);
+    p2.setY( p.getY() + dy);
+
+    return p2;
 }
 
 
