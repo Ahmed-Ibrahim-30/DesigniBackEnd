@@ -92,7 +92,6 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
         Point intersectionPoint = getIntersectionPoint(offsetLines[i] , offsetLines[(i + 1) % n]);
         if (intersectionPoint.getX() != INT_MAX)
         {
-            cout<<"DONE\n";
             newPoints.push_back(intersectionPoint);
         }
     }

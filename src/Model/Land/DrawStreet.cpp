@@ -24,91 +24,80 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> testLines;
     vector<Line> lines = mainLand.getLines();
 
-//    spacingLines.clear();
-//
-//    for(auto &line : mainLand.getLines())
-//    {
-//        Line shift = PolygonHelper::shiftLine(line , -20);
-//        spacingLines.push_back(shift);
-//    }
+    for(auto &line : spacingLines)
+    {
+        Point one(line.getX1() , line.getY1());
+        Point two(line.getX2() , line.getY2());
 
-//    for(auto &line : spacingLines)
-//    {
-//        Point one(line.getX1() , line.getY1());
-//        Point two(line.getX2() , line.getY2());
-//        cout<<"one = "<<one.getX()<<" "<<one.getY()<<"\n";
-//        cout<<"two = "<<one.getX()<<" "<<two.getY()<<"\n";
-//
-//        double slope = PolygonHelper::getSlope(line);
-//
-//        if (slope == 0)
-//        {
-//            if (line.getY1() == line.getY2()) slope = -1;
-//        }
-//        else {
-//            slope = -1/slope;
-//        }
-//        /**
-//         * Slope = 0 ? x1 = x2
-//         * Slope = -1 ? y1 = y2
-//         * else
-//         */
-//
-//        int index = 0 ;
-//        vector<Line> bo;
-//        Point start = getNextPoint(one , index , {line} , startSpace , bo);
-//
-////        cout<<"Start = "<<start.getX()<<" "<<start.getY()<<"\n";
-//        vector<Point> cPoints ;
-////        while (true)
-////        {
-////            vector<Line> ll;
-////            Point next = getNextPoint(start , index , {line} , 40 , ll);
-////
-////            if (next.getX() == INT_MAX) break;
-////
-////            Line nextLine(next.getX() , next.getY() , two.getX() , two.getY());
-////
-////            start = next;
-////            cPoints.push_back(next);
-////        }
-//
-//        cout<<"cPoints = "<<cPoints.size()<<"\n";
-//
-////        for (const auto& cur : cPoints)
-////        {
-////            Line cuttingLine (cur.getX() , cur.getY() , cur.getX() , cur.getY());
-////
-////            if (slope == 0)
-////            {
-////                cuttingLine.setX2(cuttingLine.getX1() - 100000000);
-////            }
-////            else if (slope == -1)
-////            {
-////                cuttingLine.setY2(cuttingLine.getY1() + 100000000);
-////            }
-////            else{
-////                Point second = PolygonHelper::getSecondLinePoint(cur , slope , -10000);;
-////
-////                cuttingLine.setX2(second.getX());
-////                cuttingLine.setY2(second.getY());
-////            }
-////
-////            for(auto &line2 : lines)
-////            {
-////                Point intersectionPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line2);
-////                if (intersectionPoint.getX() != INT_MAX)
-////                {
-////                    cuttingLine.setX2(intersectionPoint.getX());
-////                    cuttingLine.setY2(intersectionPoint.getY());
-////                    break;
-////                }
-////            }
-////            cout<<"cuttingLine : "<<cuttingLine.getLength() <<"\n";
-////            if(cuttingLine.getLength() <= 20)spacingLines.push_back(cuttingLine);
-////        }
-////        cout<<"\n";
-//    }
+        double slope = PolygonHelper::getSlope(line);
+
+        if (slope == 0)
+        {
+            if (line.getY1() == line.getY2()) slope = -1;
+        }
+        else {
+            slope = -1/slope;
+        }
+        /**
+         * Slope = 0 ? x1 = x2
+         * Slope = -1 ? y1 = y2
+         * else
+         */
+
+        int index = 0 ;
+        vector<Line> bo;
+        Point start = getNextPoint(one , index , {line} , startSpace , bo);
+
+        vector<Point> cPoints ;
+        while (true)
+        {
+            vector<Line> ll;
+            Point next = getNextPoint(start , index , {line} , 40 , ll);
+
+            if (next.getX() == INT_MAX) break;
+
+            Line nextLine(next.getX() , next.getY() , two.getX() , two.getY());
+
+            start = next;
+            cPoints.push_back(next);
+        }
+
+        cout<<"cPoints = "<<cPoints.size()<<"\n";
+
+        for (const auto& cur : cPoints)
+        {
+            Line cuttingLine (cur.getX() , cur.getY() , cur.getX() , cur.getY());
+
+            if (slope == 0)
+            {
+                cuttingLine.setX2(cuttingLine.getX1() - 100000000);
+            }
+            else if (slope == -1)
+            {
+                cuttingLine.setY2(cuttingLine.getY1() + 100000000);
+            }
+            else{
+                Point second = PolygonHelper::getSecondLinePoint(cur , slope , -10000);;
+
+                cuttingLine.setX2(second.getX());
+                cuttingLine.setY2(second.getY());
+            }
+
+            for(auto &line2 : lines)
+            {
+                Point intersectionPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line2);
+                if (intersectionPoint.getX() != INT_MAX)
+                {
+                    cuttingLine.setX2(intersectionPoint.getX());
+                    cuttingLine.setY2(intersectionPoint.getY());
+                    break;
+                }
+            }
+            cout<<"cuttingLine : "<<cuttingLine.getLength() <<"\n";
+            spacingLines.push_back(cuttingLine);
+        }
+        cout<<"\n";
+    }
 
     CityGrid cityGrid;
 
