@@ -540,150 +540,150 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                             vector<Line> &extensionsLine , bool isTop) {
 
     vector<Line> homeBorderSol;
-    Point start = {streetsLinesInner[streetsLinesInner.size() -3 ].getX1() , streetsLinesInner[streetsLinesInner.size() -3 ].getY1()};
-    Point last = {streetsLinesInner[streetsLinesInner.size() -2 ].getX1() , streetsLinesInner[streetsLinesInner.size() -2 ].getY1()};
-    Point center = {extensionsLine[0 ].getX1() , extensionsLine[0 ].getY1()};
-
-    Point startTOP = {streetsLinesInner[streetsLinesInner.size() -3 ].getX2() , streetsLinesInner[streetsLinesInner.size() -3 ].getY2()};
-    Point lastTOP = {streetsLinesInner[streetsLinesInner.size() -2 ].getX2() , streetsLinesInner[streetsLinesInner.size() -2 ].getY2()};
-    Point centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
-
-    Line startLine (start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
-    Line endLine (lastTOP.getX() , lastTOP.getY() , last.getX() , last.getY() );
-    Line topLine (startTOP.getX() , startTOP.getY() , lastTOP.getX() , lastTOP.getY() );
-    Line centerLine (center.getX() , center.getY() , centerTOP.getX() , centerTOP.getY() );
-
-    double minLength = min({startLine.getLength() , endLine.getLength() , centerLine.getLength()});
-
-    double step = minLength / (int)(minLength/20);
-
-    while (true)
-    {
-        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
-        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
-        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , step);
-
-        if (nextPoint1 == startTOP || nextPoint2 == lastTOP || nextPoint3 == centerTOP)
-        {
-            break;
-        }
-
-        homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
-        homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
-
-        start = nextPoint1;
-        last = nextPoint2;
-        center = nextPoint3;
-    }
-
-
-    start = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -3 ].getY1()};
-    last = {streetsLinesOuter[streetsLinesOuter.size() -2 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -2 ].getY1()};
-
-    startTOP = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX2() , streetsLinesOuter[streetsLinesOuter.size() -3 ].getY2()};
-    lastTOP = {streetsLinesOuter[streetsLinesOuter.size() -2 ].getX2() , streetsLinesOuter[streetsLinesOuter.size() -2 ].getY2()};
-
-    startLine  = streetsLinesOuter[streetsLinesOuter.size() -3];
-    endLine = streetsLinesOuter[streetsLinesOuter.size() -2];
-    topLine = streetsLinesOuter[streetsLinesOuter.size() -1];
-
-
-    vector<Line> streetsOrder = {startLine , topLine , endLine};
-
-    double height = 100000000000;
-
-    int centerLineIndex = 0;
-    vector<Line> outsideBorder;
-    Point lastPoint = {streetsOrder[0].getX1() , streetsOrder[0].getY1() };
-
-    double length = startLine.getLength() + endLine.getLength() + topLine.getLength();
-
-    step = length / (int)(length/20);
-
-    vector<Line >topLines = isTop ? PolygonHelper::getTopLines(polygon1 , 10) : PolygonHelper::getBottomLines(polygon1 , 10) ;
-    vector<Line> polygonLines = polygon1.getLines();
-    while(centerLineIndex < streetsOrder.size())
-    {
-        vector<Line> bottomLines;
-
-        lastPoint = getNextPoint(lastPoint , centerLineIndex , streetsOrder , step , bottomLines);
-
-        if (lastPoint.getX() == INT_MAX) break;
-
-
-        Line st = {lastPoint.getX() , lastPoint.getY() , streetsOrder[centerLineIndex].getX2() , streetsOrder[centerLineIndex].getY2()};
-        if (centerLineIndex == 2 && st.getLength() < 20)break;
-
-        int index1 = -1;
-
-        for (int i = 0; i < streetsOrder.size(); ++i)
-        {
-            Line line = streetsOrder[i];
-            double minX = min(line.getX1() , line.getX2());
-            double maxX = max(line.getX1() , line.getX2());
-            double minY = min(line.getY1() , line.getY2());
-            double maxY = max(line.getY1() , line.getY2());
-
-            if (lastPoint.getX() >= minX && lastPoint.getX() <= maxX &&
-                    lastPoint.getY() >= minY && lastPoint.getY() <= maxY)
-            {
-                index1 = i;
-                break;
-            }
-        }
-
-
-        Point next1UP ;
-
-        bool foundIntersection = false;
-
-
-        if (index1 == 0 )
-        {
-            next1UP = {lastPoint.getX() - height , lastPoint.getY()};
-        }
-        else if (index1 == 1)
-        {
-            if (isTop)next1UP = {lastPoint.getX() , lastPoint.getY() + height};
-            else next1UP = {lastPoint.getX() , lastPoint.getY() - height};
-        }
-        else if (index1 == 2)
-        {
-            next1UP = {lastPoint.getX() + height , lastPoint.getY()};
-        }
-
-        foundIntersection = false;
-        Line nextLine (lastPoint.getX() , lastPoint.getY() , next1UP.getX() , next1UP.getY());
-        for(auto &upLine : extensionsLine)
-        {
-            Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
-
-            if (intersection.getX() != INT_MAX)
-            {
-                foundIntersection = true;
-                next1UP = intersection;
-                break;
-            }
-        }
-        if (!foundIntersection)
-        {
-            for(auto &upLine : polygonLines)
-            {
-                Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
-
-                if (intersection.getX() != INT_MAX)
-                {
-                    foundIntersection = true;
-                    next1UP = intersection;
-                    break;
-                }
-            }
-        }
-
-        vector<Line> homeLines;
-        homeLines.emplace_back(lastPoint.getX() , lastPoint.getY() , next1UP.getX() , next1UP.getY());
-        homeBorderSol.insert(homeBorderSol.end() , homeLines.begin() , homeLines.end());
-    }
+//    Point start = {streetsLinesInner[streetsLinesInner.size() -3 ].getX1() , streetsLinesInner[streetsLinesInner.size() -3 ].getY1()};
+//    Point last = {streetsLinesInner[streetsLinesInner.size() -2 ].getX1() , streetsLinesInner[streetsLinesInner.size() -2 ].getY1()};
+//    Point center = {extensionsLine[0 ].getX1() , extensionsLine[0 ].getY1()};
+//
+//    Point startTOP = {streetsLinesInner[streetsLinesInner.size() -3 ].getX2() , streetsLinesInner[streetsLinesInner.size() -3 ].getY2()};
+//    Point lastTOP = {streetsLinesInner[streetsLinesInner.size() -2 ].getX2() , streetsLinesInner[streetsLinesInner.size() -2 ].getY2()};
+//    Point centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
+//
+//    Line startLine (start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
+//    Line endLine (lastTOP.getX() , lastTOP.getY() , last.getX() , last.getY() );
+//    Line topLine (startTOP.getX() , startTOP.getY() , lastTOP.getX() , lastTOP.getY() );
+//    Line centerLine (center.getX() , center.getY() , centerTOP.getX() , centerTOP.getY() );
+//
+//    double minLength = min({startLine.getLength() , endLine.getLength() , centerLine.getLength()});
+//
+//    double step = minLength / (int)(minLength/20);
+//
+//    while (true)
+//    {
+//        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
+//        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
+//        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , step);
+//
+//        if (nextPoint1 == startTOP || nextPoint2 == lastTOP || nextPoint3 == centerTOP)
+//        {
+//            break;
+//        }
+//
+//        homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
+//        homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
+//
+//        start = nextPoint1;
+//        last = nextPoint2;
+//        center = nextPoint3;
+//    }
+//
+//
+//    start = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -3 ].getY1()};
+//    last = {streetsLinesOuter[streetsLinesOuter.size() -2 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -2 ].getY1()};
+//
+//    startTOP = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX2() , streetsLinesOuter[streetsLinesOuter.size() -3 ].getY2()};
+//    lastTOP = {streetsLinesOuter[streetsLinesOuter.size() -2 ].getX2() , streetsLinesOuter[streetsLinesOuter.size() -2 ].getY2()};
+//
+//    startLine  = streetsLinesOuter[streetsLinesOuter.size() -3];
+//    endLine = streetsLinesOuter[streetsLinesOuter.size() -2];
+//    topLine = streetsLinesOuter[streetsLinesOuter.size() -1];
+//
+//
+//    vector<Line> streetsOrder = {startLine , topLine , endLine};
+//
+//    double height = 100000000000;
+//
+//    int centerLineIndex = 0;
+//    vector<Line> outsideBorder;
+//    Point lastPoint = {streetsOrder[0].getX1() , streetsOrder[0].getY1() };
+//
+//    double length = startLine.getLength() + endLine.getLength() + topLine.getLength();
+//
+//    step = length / (int)(length/20);
+//
+//    vector<Line >topLines = isTop ? PolygonHelper::getTopLines(polygon1 , 10) : PolygonHelper::getBottomLines(polygon1 , 10) ;
+//    vector<Line> polygonLines = polygon1.getLines();
+//    while(centerLineIndex < streetsOrder.size())
+//    {
+//        vector<Line> bottomLines;
+//
+//        lastPoint = getNextPoint(lastPoint , centerLineIndex , streetsOrder , step , bottomLines);
+//
+//        if (lastPoint.getX() == INT_MAX) break;
+//
+//
+//        Line st = {lastPoint.getX() , lastPoint.getY() , streetsOrder[centerLineIndex].getX2() , streetsOrder[centerLineIndex].getY2()};
+//        if (centerLineIndex == 2 && st.getLength() < 20)break;
+//
+//        int index1 = -1;
+//
+//        for (int i = 0; i < streetsOrder.size(); ++i)
+//        {
+//            Line line = streetsOrder[i];
+//            double minX = min(line.getX1() , line.getX2());
+//            double maxX = max(line.getX1() , line.getX2());
+//            double minY = min(line.getY1() , line.getY2());
+//            double maxY = max(line.getY1() , line.getY2());
+//
+//            if (lastPoint.getX() >= minX && lastPoint.getX() <= maxX &&
+//                    lastPoint.getY() >= minY && lastPoint.getY() <= maxY)
+//            {
+//                index1 = i;
+//                break;
+//            }
+//        }
+//
+//
+//        Point next1UP ;
+//
+//        bool foundIntersection = false;
+//
+//
+//        if (index1 == 0 )
+//        {
+//            next1UP = {lastPoint.getX() - height , lastPoint.getY()};
+//        }
+//        else if (index1 == 1)
+//        {
+//            if (isTop)next1UP = {lastPoint.getX() , lastPoint.getY() + height};
+//            else next1UP = {lastPoint.getX() , lastPoint.getY() - height};
+//        }
+//        else if (index1 == 2)
+//        {
+//            next1UP = {lastPoint.getX() + height , lastPoint.getY()};
+//        }
+//
+//        foundIntersection = false;
+//        Line nextLine (lastPoint.getX() , lastPoint.getY() , next1UP.getX() , next1UP.getY());
+//        for(auto &upLine : extensionsLine)
+//        {
+//            Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+//
+//            if (intersection.getX() != INT_MAX)
+//            {
+//                foundIntersection = true;
+//                next1UP = intersection;
+//                break;
+//            }
+//        }
+//        if (!foundIntersection)
+//        {
+//            for(auto &upLine : polygonLines)
+//            {
+//                Point intersection = PolygonHelper::getIntersectionPoint(upLine , nextLine);
+//
+//                if (intersection.getX() != INT_MAX)
+//                {
+//                    foundIntersection = true;
+//                    next1UP = intersection;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        vector<Line> homeLines;
+//        homeLines.emplace_back(lastPoint.getX() , lastPoint.getY() , next1UP.getX() , next1UP.getY());
+//        homeBorderSol.insert(homeBorderSol.end() , homeLines.begin() , homeLines.end());
+//    }
 
     return homeBorderSol;
 }
