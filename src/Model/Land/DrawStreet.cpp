@@ -8,7 +8,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
     double step1 = 40 ;
     mainLand = polygon1;
-    centerLines = PolygonHelper::getCenterLines(polygon1 , 10);
+//    centerLines = PolygonHelper::getCenterLines(polygon1 , 10);
+    centerLines = getCenterLines(polygon1 , 10);
 
     cout<<"CenterLine Size = "<<centerLines.size()<<"\n";
 
@@ -995,7 +996,7 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
     sort(sortCenterLines.begin(), sortCenterLines.end() , greater<>());
 
     centerLines.push_back(sortCenterLines[0].second);
-    
+
     return centerLines;
 }
 
