@@ -74,7 +74,7 @@ bool lineIntersection(const Line& l1, const Line& l2, Point &intersection)
 
     double det = a1 * b2 - a2 * b1;
 
-    if (std::fabs(det) < 1e-9) {
+    if (std::fabs(det) < 0.1) {
         return false; // Lines are parallel
     }
 
