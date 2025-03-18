@@ -848,7 +848,7 @@ const vector<CityGrid> &DrawStreet::getCities() const {
 
 vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeight)
 {
-    double step1 = 20;
+    double step1 = 5;
     vector<Line> cLines;
 
     vector<Line> centerLine = polygon.computeCentroidPerpendiculars();
