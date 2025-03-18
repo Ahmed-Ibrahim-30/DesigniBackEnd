@@ -52,7 +52,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         while (true)
         {
             vector<Line> ll;
-            Point next = getNextPoint(start , index , {line} , 5 , ll);
+            Point next = getNextPoint(start , index , {line} , 40 , ll);
 
             if (next.getX() == INT_MAX) break;
 
@@ -75,7 +75,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
                 cuttingLine.setY2(cuttingLine.getY1() + 100000000);
             }
             else{
-                Point second = PolygonHelper::getSecondLinePoint(cur , slope , 10000);;
+                Point second = PolygonHelper::getSecondLinePoint(cur , slope , -10000);;
 
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
@@ -91,9 +91,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
                     break;
                 }
             }
-            cuttingLine.printJsonFormat();
-//            cout<<" "<<cuttingLine.getLength() <<" --> ";
-//            spacingLines.push_back(cuttingLine);
+            cout<<"cuttingLine : "<<cuttingLine.getLength() <<"\n";
+            if(cuttingLine.getLength() <= 20)spacingLines.push_back(cuttingLine);
         }
         cout<<"\n";
     }
