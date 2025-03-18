@@ -1032,7 +1032,6 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
                 shiftLine1.setX2(intersectionPoint.getX());
                 shiftLine1.setY2(intersectionPoint.getY());
             }
-            break;
         }
     }
 
@@ -1055,7 +1054,6 @@ vector<Line> DrawStreet::getCenterLines(Polygon1 &polygon, double centerLineHeig
                 shiftLine2.setX2(intersectionPoint.getX());
                 shiftLine2.setY2(intersectionPoint.getY());
             }
-            break;
         }
     }
 
