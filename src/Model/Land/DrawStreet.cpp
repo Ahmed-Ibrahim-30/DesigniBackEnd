@@ -100,7 +100,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     CityGrid cityGrid;
 
     cityGrid.setRoadExtension(spacingLines);
-    cityGrid.setInnerStreets(testLines);
+    cityGrid.setHomeBorder(testLines);
 
     cities.push_back(cityGrid);
 
