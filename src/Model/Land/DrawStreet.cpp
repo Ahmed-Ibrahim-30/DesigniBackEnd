@@ -62,9 +62,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
             cPoints.push_back(next);
         }
 
-        for (int i = 0; i < cPoints.size(); ++i)
+        for (const auto& cur : cPoints)
         {
-            Point cur = cPoints[i];
             Line cuttingLine (cur.getX() , cur.getY() , cur.getX() , cur.getY());
 
             if (slope == 0)
@@ -92,7 +91,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
                     break;
                 }
             }
-            cout<<" "<<cuttingLine.getLength() <<" --> ";
+            cuttingLine.printJsonFormat();
+//            cout<<" "<<cuttingLine.getLength() <<" --> ";
 //            spacingLines.push_back(cuttingLine);
         }
         cout<<"\n";
