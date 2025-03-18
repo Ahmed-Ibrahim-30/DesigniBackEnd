@@ -103,18 +103,18 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
 
     for (int i = 0; i < n; ++i)
     {
-//        Point intersectionPoint = getIntersectionPoint(offsetLines[i] , offsetLines[(i + 1) % n]);
-//        if (intersectionPoint.getX() != INT_MAX)
-//        {
-//            cout<<"DONE\n";
-//            newPoints.push_back(intersectionPoint);
-//        }
-
-        Point intersection;
-        if (lineIntersection(offsetLines[i], offsetLines[(i + 1) % n], intersection))
+        Point intersectionPoint = getIntersectionPoint(offsetLines[i] , offsetLines[(i + 1) % n]);
+        if (intersectionPoint.getX() != INT_MAX)
         {
-            newPoints.push_back(intersection);
+            cout<<"DONE\n";
+            newPoints.push_back(intersectionPoint);
         }
+
+//        Point intersection;
+//        if (lineIntersection(offsetLines[i], offsetLines[(i + 1) % n], intersection))
+//        {
+//            newPoints.push_back(intersection);
+//        }
     }
 
     Polygon1 polygon1(newPoints);
