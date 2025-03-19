@@ -99,7 +99,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = 20 + step1/2;
-    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 //    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
 
 
@@ -156,13 +156,13 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
     vector<vector<Line>> side1Streets;
 
     Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
-    Point centerLast = {centerL.back().getX2() , centerL.back().getY2()};
+    Point centerLast = {centerL[0].getX2() , centerL[0].getY2()};
 
     Line side1Line = PolygonHelper::getLineForPoint(polygonLines , centerFirst);
-    Line side2Line = PolygonHelper::getLineForPoint(polygonLines , centerLast);;
+    Line side2Line = PolygonHelper::getLineForPoint(polygonLines , centerLast);
 
     int centerLineIndex = 0;
-    Point lastPoint = {centerL[0].getX1() , centerL[0].getY1()};
+    Point lastPoint = centerFirst;
 
     int opp = 1;
 
