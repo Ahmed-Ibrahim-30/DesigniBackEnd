@@ -155,7 +155,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 //        double slope1 = centerLine.getSlope() ;
 //        double slope2 =  centerLine.getSlope() ;
 
-cout<<"Slope 1 = "<<slope1<<"\n";
+        cout<<"Slope 1 = "<<slope1<<"\n";
 
         Point next1UP ;
         Point next2UP ;
@@ -222,7 +222,7 @@ cout<<"Slope 1 = "<<slope1<<"\n";
 
 
         // next1UP , next2UP
-        Polygon1 outerStreet({startPoint1 , lastPoint});
+        Polygon1 outerStreet({startPoint1 ,next1UP , next2UP, lastPoint});
 
         Line first (last.getX() , last.getY() , startPoint1.getX() , startPoint1.getY());
         Line second (lastPoint.getX() , lastPoint.getY() , startPoint1.getX() , startPoint1.getY());

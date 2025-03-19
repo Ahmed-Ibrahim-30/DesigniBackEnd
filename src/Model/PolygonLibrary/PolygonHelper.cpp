@@ -491,13 +491,10 @@ Line PolygonHelper::getLineForPoint(const vector<Line> &lines, const Point &p)
 {
     for (auto &polLine : lines)
     {
-        double minX = min(polLine.getX1() , polLine.getX2());
-        double maxX = max(polLine.getX1() , polLine.getX2());
-        double minY = min(polLine.getY1() , polLine.getY2());
-        double maxY = max(polLine.getY1() , polLine.getY2());
+        Point one (polLine.getX1() , polLine.getY1());
+        Point two (polLine.getX2() , polLine.getY2());
 
-        if (p.getX() >= minX && p.getX() <= maxX &&
-                p.getY() >= minY && p.getY() <= maxY)
+        if (p == one || p == two || isPointOnLine(p , polLine))
         {
             return polLine;
         }
