@@ -321,11 +321,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     vector<Line> homeBorderSol;
     Point start = {streetsLinesInner[0 ].getX1() , streetsLinesInner[0 ].getY1()};
-    Point last = {streetsLinesInner.back().getX1() , streetsLinesInner.back().getY1()};
+    Point last = {streetsLinesInner.back().getX2() , streetsLinesInner.back().getY2()};
     Point center = {extensionsLine[0 ].getX1() , extensionsLine[0 ].getY1()};
 
-    Point startTOP  = {streetsLinesInner[1 ].getX2() , streetsLinesInner[1 ].getY2()};
-    Point lastTOP   = {streetsLinesInner[2 ].getX2() , streetsLinesInner[2 ].getY2()};
+    Point startTOP  = {streetsLinesInner[0 ].getX2() , streetsLinesInner[0 ].getY2()};
+    Point lastTOP   = {streetsLinesInner.back().getX1() , streetsLinesInner.back().getY1()};
     Point centerTOP = {extensionsLine[0 ].getX2() , extensionsLine[0 ].getY2()};
 
     Line startLine (start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
