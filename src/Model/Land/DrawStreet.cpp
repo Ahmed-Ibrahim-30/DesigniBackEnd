@@ -237,6 +237,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         Polygon1 outerStreet({startPoint1 , next1UP , next2UP , lastPoint});
 
         vector<Line> homeLinesOuter = outerStreet.getLines();
+
+        cout<<homeLinesOuter.size()<<"\n";
         vector<Line> homeLinesInner;
 
 //        homeLinesInner.insert(homeLinesInner.end() , bottomLines2.begin() , bottomLines2.end());
