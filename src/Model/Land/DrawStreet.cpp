@@ -31,12 +31,12 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-    int divisions = 0 , index = 0 , divisionsB = 1;
+    int divisions = 1 , index = 0 , divisionsB = 1;
     Point start = getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()} , index , centerLinesTop , startSpace );
 
     while (true)
     {
-        Point next = getNextPoint(start , index , centerLinesTop , step1/2 );
+        Point next = getNextPoint(start , index , centerLinesTop , step1 );
         if (next.getX() == INT_MAX) break;
 
         Line nextLine(next.getX() , next.getY() , centerLinesTop[index].getX2() , centerLinesTop[index].getY2());
@@ -47,10 +47,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         start = next;
     }
 
-    divisions/=4;
+    divisions/=2;
     index = 0;
 
-    start = getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()} , index , centerLinesTop , startSpace + step1/2);
+    start = getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()} , index , centerLinesBottom , startSpace + step1/2);
 
     while (true)
     {
@@ -67,7 +67,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         start = next;
     }
 
-    divisionsB/=4;
+    divisionsB/=2;
 
 //    cout<<"divisions = "<<divisions <<"\n";
 //    cout<<"divisionsB = "<<divisionsB <<"\n";
