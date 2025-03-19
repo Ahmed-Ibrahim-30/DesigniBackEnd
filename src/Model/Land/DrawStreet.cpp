@@ -221,7 +221,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
                     cout<<"CUtt "; cuttingLine.printJsonFormat();
                     cout<<"main "; line3.printJsonFormat();
 
-                    break;
+//                    break;
                 }
             }
 
