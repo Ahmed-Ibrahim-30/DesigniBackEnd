@@ -231,10 +231,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         // next1UP , next2UP
         Polygon1 outerStreet({startPoint1 ,next1UP , next2UP, lastPoint});
 
-        Line first (last.getX() , last.getY() , startPoint1.getX() , startPoint1.getY());
-        Line second (lastPoint.getX() , lastPoint.getY() , startPoint1.getX() , startPoint1.getY());
-        Line third (centerLast.getX() , centerLast.getY() , lastPoint.getX() , lastPoint.getY());
-
         vector<Line> homeLinesOuter = outerStreet.getLines();
 
         Polygon1 innerStreet = PolygonHelper::getScalingPolygon(outerStreet , -5);
@@ -243,6 +239,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         {
             innerStreet = PolygonHelper::getScalingPolygon(outerStreet , 5);
         }
+
+
         vector<Point> innerPoints = innerStreet.getPoints();
 
         double dx = innerPoints[1].getX() - innerPoints[0].getX();
@@ -254,8 +252,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         dx = innerPoints[2].getX() - innerPoints[3].getX();
         dy = innerPoints[2].getY() - innerPoints[3].getY();
 
-        innerPoints[3].setX(innerPoints[3].getX() + dx * -10);
-        innerPoints[3].setY(innerPoints[3].getY() + dy * -10);
+//        innerPoints[3].setX(innerPoints[3].getX() + dx * -10);
+//        innerPoints[3].setY(innerPoints[3].getY() + dy * -10);
 
         Line f1 (innerPoints[2].getX() , innerPoints[2].getY() , innerPoints[3].getX() , innerPoints[3].getY());
         Line f2 (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
@@ -265,12 +263,12 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         if (inter.getX() != INT_MAX)
         {
-            innerPoints[3] = inter;
+//            innerPoints[3] = inter;
         }
 
         if (inter2.getX() != INT_MAX)
         {
-            innerPoints[0] = inter2;
+//            innerPoints[0] = inter2;
         }
 
         innerStreet = Polygon1(innerPoints);
