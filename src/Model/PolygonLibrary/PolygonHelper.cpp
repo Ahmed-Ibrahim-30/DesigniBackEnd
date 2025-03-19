@@ -469,12 +469,19 @@ Line PolygonHelper::shiftLine(const Line &line, double distance)
     double nx = -dy / length;  // Normalized perpendicular vector
     double ny = dx / length;
 
-    // Shift the line by distance X
-    double x1 = line.getX1() + distance * nx;
-    double y1 = line.getY1() + distance * ny;
+    double shiftFactor = (distance > 0) ? 1.0 : -1.0;
+    double x1 = line.getX1() + shiftFactor * abs(distance) * nx;
+    double y1 = line.getY1() + shiftFactor * abs(distance) * ny;
 
-    double x2 = line.getX2() + distance * nx;
-    double y2 = line.getY2() + distance * ny;
+    double x2 = line.getX2() + shiftFactor * abs(distance) * nx;
+    double y2 = line.getY2() + shiftFactor * abs(distance) * ny;
+
+    // Shift the line by distance X
+//    double x1 = line.getX1() + distance * nx;
+//    double y1 = line.getY1() + distance * ny;
+//
+//    double x2 = line.getX2() + distance * nx;
+//    double y2 = line.getY2() + distance * ny;
 
     return {x1 , y1 , x2 , y2};
 
