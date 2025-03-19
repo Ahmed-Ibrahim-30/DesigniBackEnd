@@ -1166,5 +1166,7 @@ vector<Line> DrawStreet::buildCenterLines(Polygon1 &polygon, double centerLineHe
     centerLines.push_back(shiftLine1);
     centerLines.push_back(shiftLine2);
 
+    std::sort(centerLines.begin(), centerLines.end());
+
     return centerLines;
 }
