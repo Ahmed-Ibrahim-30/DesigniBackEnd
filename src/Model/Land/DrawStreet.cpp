@@ -147,10 +147,10 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         const Line& centerLine = centerL[centerLineIndex];
 
-//        double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
+        double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
         double slope2 = (m < divisions - 1 )? centerLine.getSlope() : side2Line.getSlope();
 
-        double slope1 = centerLine.getSlope() ;
+//        double slope1 = centerLine.getSlope() ;
 //        double slope2 =  centerLine.getSlope() ;
 
         Point next1UP ;
@@ -217,7 +217,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         next2UP = {streetsBorder[1].getX2() , streetsBorder[1].getY2()};
 
 
-        Polygon1 outerStreet({startPoint1 , next1UP , next2UP , lastPoint});
+        // next1UP , next2UP
+        Polygon1 outerStreet({startPoint1 , lastPoint});
 
         vector<Line> homeLinesOuter = outerStreet.getLines();
 
