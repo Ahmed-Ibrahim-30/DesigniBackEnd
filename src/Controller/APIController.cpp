@@ -600,8 +600,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 vector<Line> homeBorder = city.getHomeBorder();
                 vector<Line> roads = city.getInnerStreets();
 
-                for (int m = roads.size()-3; m < roads.size(); ++m) {
-                    response["Inner"][i]["roads"][j][m - roads.size() +3 ] = {
+                int n = roads.size();
+
+                for (int m = 0; m < roads.size(); ++m) {
+                    response["Inner"][i]["roads"][j][m] = {
                             {"x1" , roads[m].getX1()},
                             {"y1" , roads[m].getY1()},
                             {"x2" , roads[m].getX2()},
@@ -609,8 +611,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                     };
                 }
                 roads = city.getOuterStreets();
-                for (int m = roads.size()-3; m < roads.size(); ++m) {
-                    response["Inner"][i]["roads"][j][6 + m -roads.size()] = {
+                for (int m = 0; m < roads.size(); ++m) {
+                    response["Inner"][i]["roads"][j][n + m] = {
                             {"x1" , roads[m].getX1()},
                             {"y1" , roads[m].getY1()},
                             {"x2" , roads[m].getX2()},
