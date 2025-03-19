@@ -216,12 +216,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
                 {
                     cuttingLine.setX2(intersectionPoint.getX());
                     cuttingLine.setY2(intersectionPoint.getY());
-                    Line line3 = line2;
-
-                    cout<<"CUtt "; cuttingLine.printJsonFormat();
-                    cout<<"main "; line3.printJsonFormat();
-
-//                    break;
+                    break;
                 }
             }
 
