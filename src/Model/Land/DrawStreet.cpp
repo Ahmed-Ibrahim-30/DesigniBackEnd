@@ -19,7 +19,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 20);
 
     vector<Line> spacingLines = innerPolygon.getLines();
     vector<Line> testLines;
@@ -1166,7 +1166,7 @@ vector<Line> DrawStreet::buildCenterLines(Polygon1 &polygon, double centerLineHe
     centerLines.push_back(shiftLine1);
     centerLines.push_back(shiftLine2);
 
-    std::sort(centerLines.begin(), centerLines.end());
+    sort(centerLines.begin(), centerLines.end());
 
     return centerLines;
 }
