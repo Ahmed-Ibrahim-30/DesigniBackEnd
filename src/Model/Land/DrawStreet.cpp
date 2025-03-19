@@ -8,6 +8,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
     double step1 = step ;
     mainLand = polygon1;
+    vector<Line> polygonLines = polygon1.getLines();
     centerLines = buildCenterLines(polygon1 , 10);
 
     vector<Line> centerLinesTop , centerLinesBottom;
@@ -66,8 +67,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     divisionsB/=4;
 
-    cout<<"divisions = "<<divisions <<"\n";
-    cout<<"divisionsB = "<<divisionsB <<"\n";
+//    cout<<"divisions = "<<divisions <<"\n";
+//    cout<<"divisionsB = "<<divisionsB <<"\n";
 
     divisions = min(divisions , divisionsB);
 
@@ -94,13 +95,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
 
-//    vector<Line> polygonLines = polygon1.getLines();
-//
-//    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
 //    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
-//
-//
-////    streets.push_back(bottomPoints);
+
 
 
 //    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
@@ -184,7 +181,8 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
     }
 
     int centerLineIndex = 0;
-    Point lastPoint = {centerL[0].getX1() , centerL[0].getY1() };
+    vector<Line> bo;
+    Point lastPoint = {centerL[0].getX1() , centerL[0].getY1()};
     for (int m = 0; m < divisions; ++m)
     {
         vector<Line> bottomLines , bottomLines2;
@@ -323,13 +321,13 @@ vector<vector<Line>> DrawStreet::drawTopStreets(const vector<Line> &polygonLines
 
 
         //EXTENSIONS And Border
-        vector<Line> extensions = drawExtensions(polygonLines , bottomLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 +5, true, centerL);
-        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions , true);
+//        vector<Line> extensions = drawExtensions(polygonLines , bottomLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 +5, true, centerL);
+//        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions , true);
         CityGrid cityGrid;
-        cityGrid.setInnerStreets(homeLinesInner);
+//        cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
-        cityGrid.setRoadExtension(extensions);
-        cityGrid.setHomeBorder(homeBorder);
+//        cityGrid.setRoadExtension(extensions);
+//        cityGrid.setHomeBorder(homeBorder);
 
         cities.push_back(cityGrid);
     }
