@@ -31,46 +31,12 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-    int divisions = 1 , index = 0 , divisionsB = 1;
-    Point start = getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()} , index , centerLinesTop , startSpace );
-
-    while (true)
-    {
-        Point next = getNextPoint(start , index , centerLinesTop , step1 );
-        if (next.getX() == INT_MAX) break;
-
-        Line nextLine(next.getX() , next.getY() , centerLinesTop[index].getX2() , centerLinesTop[index].getY2());
+    int divisions = centerLinesTop[0].getLength()/80;
+    int divisionsB = centerLinesBottom[0].getLength() / 80;
 
 
-        if (index == centerLinesTop.size()-1 && nextLine.getLength() <= 20) break;
-        divisions++;
-        start = next;
-    }
-
-    divisions/=2;
-    index = 0;
-
-    start = getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()} , index , centerLinesBottom , startSpace + step1/2);
-
-    while (true)
-    {
-        vector<Line> ll;
-        Point next = getNextPoint(start , index , centerLinesBottom , step1/2 );
-        if (next.getX() == INT_MAX) break;
-
-        Line nextLine(next.getX() , next.getY() , centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2());
-
-
-        if (index == centerLinesBottom.size()-1 && nextLine.getLength() <= 20) break;
-
-        divisionsB++;
-        start = next;
-    }
-
-    divisionsB/=2;
-
-//    cout<<"divisions = "<<divisions <<"\n";
-//    cout<<"divisionsB = "<<divisionsB <<"\n";
+    cout<<"divisions = "<<divisions <<"\n";
+    cout<<"divisionsB = "<<divisionsB <<"\n";
 
     divisions = min(divisions , divisionsB);
 
@@ -80,9 +46,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         lengthC += line.getLength();
     }
 
-    lengthC-=40;
-
-    step1 = ((lengthC / (((int)(divisions*2)) - 1))) * 2;
+    step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
 
     cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 
@@ -93,10 +57,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     }
     lengthC-=40;
 
-    step1 = min(step1 , ((lengthC / (((int)(divisions*2)) - 1))) * 2);
+    step1 = min(step1 , ((lengthC / (((int)(divisions*2)) + 1))) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
 
+    startSpace = step;
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = 20 + step1/2;
 //    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
