@@ -15,7 +15,7 @@ private:
 
     double startSpace = 20;
 
-    double step = 20;
+    double step = 40;
 
     /**
      * Main Land

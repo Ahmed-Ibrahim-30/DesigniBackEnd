@@ -24,85 +24,76 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> testLines;
     vector<Line> lines = mainLand.getLines();
 
-    CityGrid cityGrid;
 
-    cityGrid.setRoadExtension(spacingLines);
+    int divisions = 0 , index = 0 , divisionsB = 1;
+    vector<Line> bo;
+    Point start = getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()} , index , centerLinesTop , startSpace , bo);
 
-    cities.push_back(cityGrid);
+    while (true)
+    {
+        vector<Line> ll;
+        Point next = getNextPoint(start , index , centerLinesTop , step1/2 , ll);
+        if (next.getX() == INT_MAX) break;
+
+        Line nextLine(next.getX() , next.getY() , centerLinesTop[index].getX2() , centerLinesTop[index].getY2());
 
 
-//    int divisions = 0 , index = 0 , divisionsB = 1;
-//    vector<Line> bo;
-//    Point start = getNextPoint({centerLinesTop[index].getX1() , centerLinesTop[index].getY1()} , index , centerLinesTop , startSpace , bo);
-//
-//    while (true)
-//    {
-//        vector<Line> ll;
-//        Point next = getNextPoint(start , index , centerLinesTop , step1/2 , ll);
-//        if (next.getX() == INT_MAX) break;
-//
-//        Line nextLine(next.getX() , next.getY() , centerLinesTop[index].getX2() , centerLinesTop[index].getY2());
-//
-//
-//        if (index == centerLinesTop.size()-1 && nextLine.getLength() <= 20) break;
-//        divisions++;
-//        start = next;
-//    }
-//
-//    divisions/=4;
-//    index = 0;
-//
-//    bo.clear();
-//    start = getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()} , index , centerLinesTop , startSpace + step1/2, bo);
-//
-//    while (true)
-//    {
-//        vector<Line> ll;
-//        Point next = getNextPoint(start , index , centerLinesBottom , step1/2 , ll);
-//        if (next.getX() == INT_MAX) break;
-//
-//        Line nextLine(next.getX() , next.getY() , centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2());
-//
-//
-//        if (index == centerLinesBottom.size()-1 && nextLine.getLength() <= 20) break;
-//
-//        divisionsB++;
-//        start = next;
-//    }
-//
-//    divisionsB/=4;
-//
-////    cout<<"divisions = "<<divisions <<"\n";
-////    cout<<"divisionsB = "<<divisionsB <<"\n";
-//
-//    divisions = min(divisions , divisionsB);
-//
-//
-//
-//    double lengthC = 0;
-//    for(auto &line : centerLinesTop)
-//    {
-//        lengthC += line.getLength();
-//    }
-//
-//    lengthC-=40;
-//
-//    step1 = ((lengthC / (((int)(divisions*4)) - 1))) * 2;
-//
-//    cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
-////    cout<<"Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
-//
-//    lengthC = 0;
-//    for(auto &line : centerLinesBottom)
-//    {
-//        lengthC += line.getLength();
-//    }
-//    lengthC-=40;
-//
-//    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) - 1))) * 2);
-//    cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
-//
-//
+        if (index == centerLinesTop.size()-1 && nextLine.getLength() <= 20) break;
+        divisions++;
+        start = next;
+    }
+
+    divisions/=4;
+    index = 0;
+
+    bo.clear();
+    start = getNextPoint({centerLinesBottom[index].getX1() , centerLinesBottom[index].getY1()} , index , centerLinesTop , startSpace + step1/2, bo);
+
+    while (true)
+    {
+        vector<Line> ll;
+        Point next = getNextPoint(start , index , centerLinesBottom , step1/2 , ll);
+        if (next.getX() == INT_MAX) break;
+
+        Line nextLine(next.getX() , next.getY() , centerLinesBottom[index].getX2() , centerLinesBottom[index].getY2());
+
+
+        if (index == centerLinesBottom.size()-1 && nextLine.getLength() <= 20) break;
+
+        divisionsB++;
+        start = next;
+    }
+
+    divisionsB/=4;
+
+    cout<<"divisions = "<<divisions <<"\n";
+    cout<<"divisionsB = "<<divisionsB <<"\n";
+
+    divisions = min(divisions , divisionsB);
+
+    double lengthC = 0;
+    for(auto &line : centerLinesTop)
+    {
+        lengthC += line.getLength();
+    }
+
+    lengthC-=40;
+
+    step1 = ((lengthC / (((int)(divisions*4)) - 1))) * 2;
+
+    cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
+
+    lengthC = 0;
+    for(auto &line : centerLinesBottom)
+    {
+        lengthC += line.getLength();
+    }
+    lengthC-=40;
+
+    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) - 1))) * 2);
+    cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
+
+
 //    vector<Line> polygonLines = polygon1.getLines();
 //
 //    vector<vector<Line>> topStreets = drawTopStreets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
