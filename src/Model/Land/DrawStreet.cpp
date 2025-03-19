@@ -338,24 +338,24 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     double step = minLength / (int)(minLength/20);
     cout<<"STEP = "<<step<<"\n";
 
-//    while (true)
-//    {
-//        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
-//        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
-//        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , step);
-//
-//        if (nextPoint1 == startTOP || nextPoint2 == lastTOP || nextPoint3 == centerTOP)
-//        {
-//            break;
-//        }
-//
-//        homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
-//        homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
-//
-//        start = nextPoint1;
-//        last = nextPoint2;
-//        center = nextPoint3;
-//    }
+    while (true)
+    {
+        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
+        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
+        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , step);
+
+        if (nextPoint1 == startTOP || nextPoint2 == lastTOP || nextPoint3 == centerTOP)
+        {
+            break;
+        }
+
+        homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
+        homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
+
+        start = nextPoint1;
+        last = nextPoint2;
+        center = nextPoint3;
+    }
 
 
 //    start = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -3 ].getY1()};
