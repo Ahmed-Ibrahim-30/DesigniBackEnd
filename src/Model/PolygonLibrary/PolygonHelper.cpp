@@ -480,6 +480,24 @@ Line PolygonHelper::shiftLine(const Line &line, double distance)
 
 }
 
+Line PolygonHelper::getLineForPoint(const vector<Line> &lines, const Point &p)
+{
+    for (auto &polLine : lines)
+    {
+        double minX = min(polLine.getX1() , polLine.getX2());
+        double maxX = max(polLine.getX1() , polLine.getX2());
+        double minY = min(polLine.getY1() , polLine.getY2());
+        double maxY = max(polLine.getY1() , polLine.getY2());
+
+        if (p.getX() >= minX && p.getX() <= maxX &&
+                p.getY() >= minY && p.getY() <= maxY)
+        {
+            return polLine;
+        }
+    }
+    return {INT_MAX,INT_MAX,INT_MAX,INT_MAX};
+}
+
 
 
 

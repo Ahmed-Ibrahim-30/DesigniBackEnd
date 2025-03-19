@@ -18,6 +18,16 @@ private:
     int sideNum;//1 2 3 4
     char face;
     double x1_Corr,x2_Corr,y1_Corr,y2_Corr;
+
+    string color;
+    double startAngle,endAngle;
+    string sideRight,sideLeft;
+    Point first,second;
+    /**
+     * external or internal
+     */
+    string relationToRectangles;
+
 public:
     const Point &getStart() const;
 
@@ -36,18 +46,6 @@ public:
         setY2( getY2() + yChanged);
     }
 
-
-private:
-    string color;
-    double startAngle,endAngle;
-    string sideRight,sideLeft;
-    Point first,second;
-    /**
-     * external or internal
-     */
-    string relationToRectangles;
-
-public:
     Line(){
         x1=0,y1=0,x2=0,y2=0;
         color="white";
@@ -62,10 +60,20 @@ public:
      * Get Line Angle
      * @return
      */
-    double getAngle() const;
+    [[nodiscard]] double getAngle() const;
 
 
-    double getLength() const;
+    /**
+     * Get Line Length
+     * @return
+     */
+    [[nodiscard]] double getLength() const;
+
+    /**
+     * Get Line Slope
+     * @return
+     */
+    [[nodiscard]] double getSlope() const;
 
     void rotate(double angle);
 

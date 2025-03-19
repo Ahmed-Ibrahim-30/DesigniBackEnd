@@ -299,3 +299,10 @@ void Line::rotate(double angle)
     setX2(round(_x2*10)/10);
     setY2(round(_y2*10)/10);
 }
+
+double Line::getSlope() const
+{
+    if(x2 == x1) return 0;
+
+    return (y2-y1) / (x2 - x1);
+}

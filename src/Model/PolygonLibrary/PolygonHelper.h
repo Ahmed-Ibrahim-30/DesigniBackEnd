@@ -170,6 +170,14 @@ public:
      * @return
      */
     static Line shiftLine (const Line &line , double distance);
+
+    /**
+     * Returns the first line from the given vector that contains the specified point, or nullptr if none is found.
+     * @param lines
+     * @param p
+     * @return
+     */
+    static Line getLineForPoint(const vector<Line> &lines , const Point &p);
 };
 
 
