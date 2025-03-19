@@ -249,8 +249,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         double dx = innerPoints[1].getX() - innerPoints[0].getX();
         double dy = innerPoints[1].getY() - innerPoints[0].getY();
 
-        innerPoints[0].setX(innerPoints[0].getX() - dx * 10);
-        innerPoints[0].setY(innerPoints[0].getY() - dy * 10);
+        innerPoints[0].setX(innerPoints[0].getX()+ 10);
+        innerPoints[0].setY(innerPoints[0].getY()+ 10);
 
         dx = innerPoints[2].getX() - innerPoints[3].getX();
         dy = innerPoints[2].getY() - innerPoints[3].getY();
