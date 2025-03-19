@@ -21,6 +21,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
 
+    if (innerPolygon.getArea() > polygon1.getArea())
+    {
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 20);
+    }
+
     vector<Line> spacingLines = innerPolygon.getLines();
     vector<Line> testLines;
     vector<Line> lines = mainLand.getLines();
