@@ -258,7 +258,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         innerPoints[3].setY(innerPoints[3].getY() + dy * -10);
 
         Line f1 (innerPoints[2].getX() , innerPoints[2].getY() , innerPoints[3].getX() , innerPoints[3].getY());
-        Line f2 (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[1].getX() , innerPoints[1].getY());
+        Line f2 (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
 
         Point inter = PolygonHelper::getIntersectionPoint(f1 , centerLine);
         Point inter2 = PolygonHelper::getIntersectionPoint(f2 , centerLine);
