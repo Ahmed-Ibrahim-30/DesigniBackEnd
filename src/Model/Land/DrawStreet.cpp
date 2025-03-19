@@ -59,8 +59,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
-
-    startSpace = step;
+    startSpace = step / 2;
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = 20 + step1/2;
 //    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
