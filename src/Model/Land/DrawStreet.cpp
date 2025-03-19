@@ -134,6 +134,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
     {
         double newStep = !m ? startSpace : step;
 
+        Point last = lastPoint;
+
         Point startPoint1 = getNextPoint(lastPoint , centerLineIndex , centerL , newStep );
 
         if (startPoint1.getX() == INT_MAX ) break;
@@ -220,6 +222,13 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         // next1UP , next2UP
         Polygon1 outerStreet({startPoint1 , lastPoint});
 
+        Line first (last.getX() , last.getY() , startPoint1.getX() , startPoint1.getY());
+        Line second (lastPoint.getX() , lastPoint.getY() , startPoint1.getX() , startPoint1.getY());
+        Line third (centerLast.getX() , centerLast.getY() , lastPoint.getX() , lastPoint.getY());
+
+        cout<<"L1 = "<<first.getLength()<<"\n";
+        cout<<"L2 = "<<second.getLength()<<"\n";
+        cout<<"L3 = "<<third.getLength()<<"\n";
         vector<Line> homeLinesOuter = outerStreet.getLines();
 
         vector<Line> homeLinesInner;
