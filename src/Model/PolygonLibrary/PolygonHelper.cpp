@@ -102,7 +102,7 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
             newPoints.push_back(intersectionPoint);
             int prevIndex = i==0?n-1 : i-1;
             if (indexDuplicate -1 == i){
-                newPoints.push_back(intersectionPoint);
+//                newPoints.push_back(intersectionPoint);
             }
         }
     }
