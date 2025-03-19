@@ -340,7 +340,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     double step = minLength / (int)(minLength/20);
     cout<<"STEP = "<<step<<"\n";
 
-    cout<<"MIN LENGTH = "<<minLength<<"\n";
+    cout<<"MIN LENGTH = "<<startLine.getLength()<<"\n";
+    cout<<"MIN LENGTH = "<<endLine.getLength()<<"\n";
+    cout<<"MIN LENGTH = "<<centerLine.getLength()<<"\n";
 
     while (true)
     {
