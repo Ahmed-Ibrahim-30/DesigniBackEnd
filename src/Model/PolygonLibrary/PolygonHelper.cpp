@@ -68,18 +68,12 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
     vector<Point> newPoints;
     vector<Point> curPoints = mainLand.getPoints();
     int n = (int)curPoints.size();
-    int indexDuplicate = -1;
 
     // Compute offset lines
     for (int i = 0; i < n; ++i)
     {
         Point cur = curPoints[i];
         Point next = curPoints[(i + 1) % n];
-
-        if (cur == next)
-        {
-            next.setX(next.getX() - 0.1);
-        }
 
         Line line (cur.getX() , cur.getY() , next.getX() , next.getY());
 
@@ -99,10 +93,6 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
         if (intersectionPoint.getX() != INT_MAX)
         {
             newPoints.push_back(intersectionPoint);
-            int prevIndex = i==0?n-1 : i-1;
-            if (indexDuplicate -1 == i){
-//                newPoints.push_back(intersectionPoint);
-            }
         }
     }
 

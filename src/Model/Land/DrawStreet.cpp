@@ -241,7 +241,17 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         vector<Line> homeLinesOuter = outerStreet.getLines();
 
-        Polygon1 innerStreet = PolygonHelper::getScalingPolygon(outerStreet , -5);
+        vector<Point> innerPoint;
+        if (next1UP == next2UP)
+        {
+            innerPoint = {startPoint1 , next1UP , lastPoint};
+        }
+        else{
+            innerPoint = {startPoint1 , next1UP, next2UP , lastPoint};
+        }
+
+        Polygon1 innerStreet (innerPoint);
+        innerStreet = PolygonHelper::getScalingPolygon(outerStreet , -5);
 
         if (innerStreet.getArea() > outerStreet.getArea())
         {
