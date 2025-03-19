@@ -61,7 +61,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     startSpace = step1 / 2;
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
-    startSpace = 20 + step1/2;
+    startSpace = step1;
 //    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 //    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
 
@@ -140,9 +140,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         Line testLine (startPoint1.getX(), startPoint1.getY() , lastPoint.getX() , lastPoint.getY());
 
-        cout<<"Length1 = "<<centerLines[0].getLength()<<"\n";
-        cout<<"Length2 = "<<centerLines[1].getLength()<<"\n";
-        cout<<"Length3 = "<<testLine.getLength()<<"\n";
 
         lastPoint = getNextPoint(startPoint1 , centerLineIndex , centerL , step );
 
@@ -150,11 +147,11 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         const Line& centerLine = centerL[centerLineIndex];
 
-        double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
-//        double slope2 = (m < divisions - 1 )? centerLine.getSlope() : side2Line.getSlope();
+//        double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
+        double slope2 = (m < divisions - 1 )? centerLine.getSlope() : side2Line.getSlope();
 
-//        double slope1 = centerLine.getSlope() ;
-        double slope2 =  centerLine.getSlope() ;
+        double slope1 = centerLine.getSlope() ;
+//        double slope2 =  centerLine.getSlope() ;
 
         Point next1UP ;
         Point next2UP ;
