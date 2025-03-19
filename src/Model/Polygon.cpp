@@ -131,10 +131,10 @@ void Polygon1::print()
         cout << "{ x1:" << a1.getX() << ", y1:" << a1.getY() << ", x2:" << a2.getX() << ", y2:" << a2.getY()<< "},\n";
     }
 
-    for(auto &p : poi1)
-    {
-        cout<<"{"<<p.getX() <<","<<p.getY()<<"},";
-    }
+//    for(auto &p : poi1)
+//    {
+//        cout<<"{"<<p.getX() <<","<<p.getY()<<"},";
+//    }
 }
 
 double Polygon1::getDifferenceBetweenMINMAXSideLength() {

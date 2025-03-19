@@ -62,7 +62,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     startSpace = step1 / 2;
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
-    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 //    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
 
 
@@ -243,40 +243,47 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         vector<Point> innerPoints = innerStreet.getPoints();
 
-        innerPoints = {innerPoints[3] , innerPoints[0] , innerPoints[1] , innerPoints[2]};
+        cout<<"Inner = "<<innerPoints.size()<<"\n";
+        cout<<"outerStreet = "<<outerStreet.getPoints().size()<<"\n";
 
-        Line test (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
-
-        test.printJsonFormat();
-        double dx = innerPoints[1].getX() - innerPoints[0].getX();
-        double dy = innerPoints[1].getY() - innerPoints[0].getY();
-
-        innerPoints[0].setX(innerPoints[1].getX() - dx * 10);
-        innerPoints[0].setY(innerPoints[1].getY() - dy * 10);
-
-        dx = innerPoints[2].getX() - innerPoints[3].getX();
-        dy = innerPoints[2].getY() - innerPoints[3].getY();
-
-        innerPoints[3].setX(innerPoints[3].getX() + dx * -10);
-        innerPoints[3].setY(innerPoints[3].getY() + dy * -10);
-
-        Line f1 (innerPoints[2].getX() , innerPoints[2].getY() , innerPoints[3].getX() , innerPoints[3].getY());
-        Line f2 (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
-
-        Point inter = PolygonHelper::getIntersectionPoint(f1 , centerLine);
-        Point inter2 = PolygonHelper::getIntersectionPoint(f2 , centerLine);
-
-        if (inter.getX() != INT_MAX)
+        if (innerPoints.size() == 3)
         {
-            innerPoints[3] = inter;
+            outerStreet.print();
+            cout<<" "<<"\n";
+            innerStreet.print();
         }
 
-        if (inter2.getX() != INT_MAX)
-        {
-            innerPoints[0] = inter2;
-        }
+//        innerPoints = {innerPoints[3] , innerPoints[0] , innerPoints[1] , innerPoints[2]};
 
-        innerStreet = Polygon1(innerPoints);
+//        double dx = innerPoints[1].getX() - innerPoints[0].getX();
+//        double dy = innerPoints[1].getY() - innerPoints[0].getY();
+//
+//        innerPoints[0].setX(innerPoints[1].getX() - dx * 10);
+//        innerPoints[0].setY(innerPoints[1].getY() - dy * 10);
+//
+//        dx = innerPoints[2].getX() - innerPoints[3].getX();
+//        dy = innerPoints[2].getY() - innerPoints[3].getY();
+//
+//        innerPoints[3].setX(innerPoints[3].getX() + dx * -10);
+//        innerPoints[3].setY(innerPoints[3].getY() + dy * -10);
+//
+//        Line f1 (innerPoints[2].getX() , innerPoints[2].getY() , innerPoints[3].getX() , innerPoints[3].getY());
+//        Line f2 (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
+//
+//        Point inter = PolygonHelper::getIntersectionPoint(f1 , centerLine);
+//        Point inter2 = PolygonHelper::getIntersectionPoint(f2 , centerLine);
+//
+//        if (inter.getX() != INT_MAX)
+//        {
+//            innerPoints[3] = inter;
+//        }
+//
+//        if (inter2.getX() != INT_MAX)
+//        {
+//            innerPoints[0] = inter2;
+//        }
+//
+//        innerStreet = Polygon1(innerPoints);
 
         vector<Line> homeLinesInner = innerStreet.getLines();
 
