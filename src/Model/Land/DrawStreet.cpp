@@ -226,25 +226,13 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             Point intersectionPoint1 = PolygonHelper::getIntersectionPoint(cuttingLine , otherCenter);
 
-            if (intersectionPoint1.getX() != INT_MAX)
+            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
             {
                 opp = -1;
                 cout<<"YES\n";
 
-                if (slopes[i] == 0)
-                {
-                    cuttingLine.setY2(cuttingLine.getY1() + 100000000);
-                }
-                else if (slopes[i] == -1)
-                {
-                    cuttingLine.setX2(cuttingLine.getX1() + 100000000);
-                }
-                else
-                {
-                    Point second = PolygonHelper::getSecondLinePoint(cur , -1/slopes[i] , -10000);
-                    cuttingLine.setX2(second.getX());
-                    cuttingLine.setY2(second.getY());
-                }
+                i--;
+                continue;
             }
 
             for(auto &line2 : topLine)
