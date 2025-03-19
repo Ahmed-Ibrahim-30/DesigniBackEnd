@@ -149,6 +149,8 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
 
 void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &topLine, double step ,int divisions)
 {
+    Line otherCenter = centerLines.back();
+
     vector<vector<Line>> side1Streets;
 
     Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
@@ -159,6 +161,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     int centerLineIndex = 0;
     Point lastPoint = {centerL[0].getX1() , centerL[0].getY1()};
+
+    int opp = 1;
 
 
     for (int m = 0; m < divisions; ++m)
@@ -207,17 +211,39 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             if (slopes[i] == 0)
             {
-                cuttingLine.setY2(cuttingLine.getY1() - 100000000);
+                cuttingLine.setY2(cuttingLine.getY1() - 100000000*opp);
             }
             else if (slopes[i] == -1)
             {
-                cuttingLine.setX2(cuttingLine.getX1() - 100000000);
+                cuttingLine.setX2(cuttingLine.getX1() - 100000000*opp);
             }
             else
             {
-                Point second = PolygonHelper::getSecondLinePoint(cur , -1/slopes[i] , 10000);
+                Point second = PolygonHelper::getSecondLinePoint(cur , -1/slopes[i] , 10000*opp);
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
+            }
+
+            Point intersectionPoint1 = PolygonHelper::getIntersectionPoint(cuttingLine , otherCenter);
+
+            if (intersectionPoint1.getX() != INT_MAX)
+            {
+                opp *= -1;
+
+                if (slopes[i] == 0)
+                {
+                    cuttingLine.setY2(cuttingLine.getY1() + 100000000);
+                }
+                else if (slopes[i] == -1)
+                {
+                    cuttingLine.setX2(cuttingLine.getX1() - 100000000);
+                }
+                else
+                {
+                    Point second = PolygonHelper::getSecondLinePoint(cur , -1/slopes[i] , -10000);
+                    cuttingLine.setX2(second.getX());
+                    cuttingLine.setY2(second.getY());
+                }
             }
 
             for(auto &line2 : topLine)
