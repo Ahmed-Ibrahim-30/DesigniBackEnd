@@ -98,6 +98,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
 
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+    startSpace = 20 + step1/2;
+    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 //    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
 
 
@@ -149,7 +151,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
 
 void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<Line> &centerL , const vector<Line> &topLine, double step ,int divisions)
 {
-    Line otherCenter = centerLines.back();
+    Line otherCenter = centerL[0]== centerLines[0] ? centerLines.back() : centerLines[0];
 
     vector<vector<Line>> side1Streets;
 
@@ -226,14 +228,12 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             Point intersectionPoint1 = PolygonHelper::getIntersectionPoint(cuttingLine , otherCenter);
 
-//            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
-//            {
-//                opp = -1;
-//                cout<<"YES\n";
-//
-//                i--;
-//                continue;
-//            }
+            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
+            {
+                opp = -1;
+                i--;
+                continue;
+            }
 
             for(auto &line2 : topLine)
             {
