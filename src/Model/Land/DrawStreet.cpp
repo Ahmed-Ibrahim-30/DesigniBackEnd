@@ -250,12 +250,12 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             innerPoint = {startPoint1 , next1UP, next2UP , lastPoint};
         }
 
-        Polygon1 innerStreet (innerPoint);
-        innerStreet = PolygonHelper::getScalingPolygon(outerStreet , -5);
+        Polygon1 innerStreet (innerPoint) , innerCopy(innerPoint);
+        innerStreet = PolygonHelper::getScalingPolygon(innerCopy , -5);
 
         if (innerStreet.getArea() > outerStreet.getArea())
         {
-            innerStreet = PolygonHelper::getScalingPolygon(outerStreet , 5);
+            innerStreet = PolygonHelper::getScalingPolygon(innerCopy , 5);
         }
 
 
