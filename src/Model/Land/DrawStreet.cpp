@@ -6,7 +6,7 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    double step1 = step * 2 ;
+    double step1 = step ;
     mainLand = polygon1;
     centerLines = buildCenterLines(polygon1 , 10);
 
