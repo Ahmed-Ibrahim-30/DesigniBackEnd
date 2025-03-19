@@ -725,9 +725,10 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             vector<Line> roadExtension = city.getRoadExtension();
             vector<Line> homeBorder = city.getHomeBorder();
             vector<Line> roads = city.getInnerStreets();
+            int n = roads.size();
 
-            for (int j = (int)roads.size() - 3; j < roads.size(); ++j) {
-                response["roads"][i][j - ((int)roads.size() - 3)] = {
+            for (int j = 0; j < roads.size(); ++j) {
+                response["roads"][i][j] = {
                         {"x1" , roads[j].getX1()},
                         {"y1" , roads[j].getY1()},
                         {"x2" , roads[j].getX2()},
@@ -736,8 +737,8 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             }
 
             roads = city.getOuterStreets();
-            for (int j = roads.size() - 3; j < roads.size(); ++j) {
-                response["roads"][i][3 + j - ((int)roads.size() - 3)] = {
+            for (int j = 0; j < roads.size(); ++j) {
+                response["roads"][i][n+j] = {
                         {"x1" , roads[j].getX1()},
                         {"y1" , roads[j].getY1()},
                         {"x2" , roads[j].getX2()},
