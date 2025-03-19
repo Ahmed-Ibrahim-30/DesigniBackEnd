@@ -228,7 +228,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             if (intersectionPoint1.getX() != INT_MAX)
             {
-                opp *= -1;
+                opp = -1;
 
                 if (slopes[i] == 0)
                 {
@@ -236,7 +236,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
                 }
                 else if (slopes[i] == -1)
                 {
-                    cuttingLine.setX2(cuttingLine.getX1() - 100000000);
+                    cuttingLine.setX2(cuttingLine.getX1() + 100000000);
                 }
                 else
                 {
