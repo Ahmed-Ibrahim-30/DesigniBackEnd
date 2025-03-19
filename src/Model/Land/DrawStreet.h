@@ -30,7 +30,7 @@ private:
      * @param step
      * @return
      */
-    vector<Line> drawExtensions(const vector<Line> &polygonLines ,const vector<Line> &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step, bool isTop,const vector<Line> &centerL);
+    vector<Line> drawExtensions(const vector<Line> &polygonLines ,const Line &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step,const vector<Line> &centerL);
     vector<Line> drawHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner  , vector<Line> &extensionsLine, bool isTop);
 
     /**
@@ -45,7 +45,6 @@ private:
     Point getPrevPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step);
 
     void drawSide1Streets(const vector<Line> &polygonLines , const vector<Line> &centerL , const vector<Line> &TopLine , double step  ,int divisions);
-    void drawSide2Streets(const vector<Line> &polygonLines ,const vector<Line> &centerL,const vector<Line> &bottomLine , double step ,int divisions);
 
 
     vector<Line> SplitCenterLines(double startSpace ,double step1 , int divisions,const vector<Line> &centerLines2);
