@@ -155,6 +155,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 //        double slope1 = centerLine.getSlope() ;
 //        double slope2 =  centerLine.getSlope() ;
 
+        side1Line.printJsonFormat();
         cout<<"Slope 1 = "<<slope1<<"\n";
 
         Point next1UP ;
