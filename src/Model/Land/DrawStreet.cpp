@@ -311,6 +311,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         cityGrid.setRoadExtension(extensions);
         cityGrid.setHomeBorder(homeBorder);
 
+        cout<<"Home border = "<<homeBorder.size()<<"\n";
+
         cities.push_back(cityGrid);
     }
 }
