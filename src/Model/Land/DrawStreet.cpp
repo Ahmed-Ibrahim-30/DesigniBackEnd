@@ -146,9 +146,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 {
     vector<vector<Line>> side1Streets;
 
-    double height = 1000000;
-
-
     Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
     Point centerLast = {centerL.back().getX2() , centerL.back().getY2()};
 
@@ -171,13 +168,16 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         if (lastPoint.getX() == INT_MAX) break;
 
-        Line centerLine = centerL[centerLineIndex];
+        Line testLine (startPoint1.getX() , startPoint1.getY() , lastPoint.getX() , lastPoint.getY());
+
+        cout<<"Length = testLine = "<<testLine.getLength()<<"\n";
+        const Line& centerLine = centerL[centerLineIndex];
 
         double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
         double slope2 = (m < divisions - 1 )? centerLine.getSlope() : side2Line.getSlope();
 
-        Point next1UP = {startPoint1.getX() , startPoint1.getY() + height};
-        Point next2UP = {lastPoint.getX() , lastPoint.getY() + height};
+        Point next1UP ;
+        Point next2UP ;
 
         vector<Point> cPoints = {startPoint1 , lastPoint};
         vector<double> slopes = {slope1 , slope2};
