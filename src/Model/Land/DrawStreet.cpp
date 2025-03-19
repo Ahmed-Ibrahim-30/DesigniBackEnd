@@ -31,8 +31,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
-    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
+    int divisions = ((int)((centerLinesTop[0].getLength()/22) - 1) / 4);
+    int divisionsB = ((int)((centerLinesBottom[0].getLength()/22)-1) / 4);
 
 
     cout<<"divisions = "<<divisions <<"\n";
