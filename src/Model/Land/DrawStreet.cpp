@@ -196,6 +196,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             }
             else
             {
+                cout<<"cur = "<<cur.getX() <<" "<<cur.getY()<<"\n";
                 Point second = PolygonHelper::getSecondLinePoint(cur , slopes[i] , 1000*opp);
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
@@ -235,9 +236,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         Line second (lastPoint.getX() , lastPoint.getY() , startPoint1.getX() , startPoint1.getY());
         Line third (centerLast.getX() , centerLast.getY() , lastPoint.getX() , lastPoint.getY());
 
-        cout<<"L1 = "<<first.getLength()<<"\n";
-        cout<<"L2 = "<<second.getLength()<<"\n";
-        cout<<"L3 = "<<third.getLength()<<"\n";
         vector<Line> homeLinesOuter = outerStreet.getLines();
 
         vector<Line> homeLinesInner;
