@@ -152,11 +152,15 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
         double slope2 = (m < divisions - 1 )? centerLine.getSlope() : side2Line.getSlope();
 
-//        double slope1 = centerLine.getSlope() ;
-//        double slope2 =  centerLine.getSlope() ;
+        if (slope1 == centerLine.getSlope() && slope1 != 0)
+        {
+            slope1 = -1 / slope1;
+        }
 
-        side1Line.printJsonFormat();
-        cout<<"Slope 1 = "<<slope1<<"\n";
+        if (slope2 == centerLine.getSlope() && slope2 != 0)
+        {
+            slope2 = -1 / slope2;
+        }
 
         Point next1UP ;
         Point next2UP ;
@@ -169,6 +173,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         {
             slope2 = -1;
         }
+
+
 
         vector<Point> cPoints = {startPoint1 , lastPoint};
         vector<double> slopes = {slope1 , slope2};
@@ -190,7 +196,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             }
             else
             {
-                Point second = PolygonHelper::getSecondLinePoint(cur , -1/slopes[i] , 10000*opp);
+                Point second = PolygonHelper::getSecondLinePoint(cur , slopes[i] , 10000*opp);
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
             }
