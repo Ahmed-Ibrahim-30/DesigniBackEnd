@@ -175,6 +175,9 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         if (startPoint1.getX() == INT_MAX ) break;
 
+        Line testLine (startPoint1.getX(), startPoint1.getY() , lastPoint.getX() , lastPoint.getY());
+        cout<<"Length = "<<testLine.getLength()<<"\n";
+
         lastPoint = getNextPoint(startPoint1 , centerLineIndex , centerL , step );
 
         if (lastPoint.getX() == INT_MAX) break;
