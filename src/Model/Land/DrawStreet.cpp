@@ -109,7 +109,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    centerLines.clear();
 //    centerLines = centerTop;
 //    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
-//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 
 }
 
@@ -144,6 +144,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
     stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 100, bottoms);
 
     centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+
 
     return centerTop;
 }
