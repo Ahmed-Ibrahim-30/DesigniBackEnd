@@ -196,7 +196,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             }
             else
             {
-                Point second = PolygonHelper::getSecondLinePoint(cur , slopes[i] , 1000*opp);
+                Point second = PolygonHelper::getSecondLinePoint(cur , slopes[i] , 200000*opp);
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
             }
