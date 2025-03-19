@@ -205,6 +205,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
             {
+                cout<<"YES\n";
                 opp = -1;
                 i--;
                 continue;
