@@ -229,6 +229,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             if (intersectionPoint1.getX() != INT_MAX)
             {
                 opp = -1;
+                cout<<"YES\n";
 
                 if (slopes[i] == 0)
                 {
