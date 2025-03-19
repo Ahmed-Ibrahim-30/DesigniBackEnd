@@ -178,10 +178,20 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         Point next1UP ;
         Point next2UP ;
+        if (slope1 == 0 && centerLine.getY1() == centerLine.getY2())
+        {
+           slope1 = -1;
+        }
+
+        if (slope2 == 0 && centerLine.getY1() == centerLine.getY2())
+        {
+            slope2 = -1;
+        }
 
         vector<Point> cPoints = {startPoint1 , lastPoint};
         vector<double> slopes = {slope1 , slope2};
         vector<Line> streetsBorder;
+
 
         for (int i = 0; i < cPoints.size(); ++i)
         {
@@ -190,15 +200,15 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             if (slopes[i] == 0)
             {
-                cuttingLine.setX2(cuttingLine.getX1() - 100000000);
+                cuttingLine.setY2(cuttingLine.getY1() - 100000000);
             }
             else if (slopes[i] == -1)
             {
-                cuttingLine.setY2(cuttingLine.getY1() + 100000000);
+                cuttingLine.setX2(cuttingLine.getX1() - 100000000);
             }
             else
             {
-                Point second = PolygonHelper::getSecondLinePoint(cur , -1/slopes[i] , 10000);;
+                Point second = PolygonHelper::getSecondLinePoint(cur , -1/slopes[i] , 10000);
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
             }
