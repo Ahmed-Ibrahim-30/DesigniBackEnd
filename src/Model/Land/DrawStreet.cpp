@@ -228,9 +228,18 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             streetsBorder.push_back(cuttingLine);
         }
 
-        next1UP = {streetsBorder[0].getX2() , streetsBorder[0].getY2()};
-        next2UP = {streetsBorder[1].getX2() , streetsBorder[1].getY2()};
+        Point testIntersect = PolygonHelper::getIntersectionPoint(streetsBorder[0] , streetsBorder[1]);
 
+        if (testIntersect.getX() != INT_MAX)
+        {
+            next1UP = testIntersect;
+            next2UP = testIntersect;
+        }
+        else
+        {
+            next1UP = {streetsBorder[0].getX2() , streetsBorder[0].getY2()};
+            next2UP = {streetsBorder[1].getX2() , streetsBorder[1].getY2()};
+        }
 
         // next1UP , next2UP
         Polygon1 outerStreet({startPoint1 ,next1UP , next2UP, lastPoint});
