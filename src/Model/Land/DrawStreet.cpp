@@ -178,7 +178,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         Line testLine (startPoint1.getX(), startPoint1.getY() , lastPoint.getX() , lastPoint.getY());
 
         cout<<"Length1 = "<<centerL[0].getLength()<<"\n";
-        cout<<"Length2 = "<<testLine.getLength()<<"\n";
+        cout<<"Length2 = "<<centerL[1].getLength()<<"\n";
+        cout<<"Length3 = "<<testLine.getLength()<<"\n";
 
         lastPoint = getNextPoint(startPoint1 , centerLineIndex , centerL , step );
 
