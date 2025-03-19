@@ -218,7 +218,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
 
         // next1UP , next2UP
-        Polygon1 outerStreet({startPoint1 , next1UP});
+        Polygon1 outerStreet({startPoint1 , lastPoint});
 
         vector<Line> homeLinesOuter = outerStreet.getLines();
 
