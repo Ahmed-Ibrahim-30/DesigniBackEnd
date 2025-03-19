@@ -78,8 +78,7 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
 
         if (cur == next)
         {
-            indexDuplicate = i;
-            continue;
+            next.setX(next.getX() + 0.1);
         }
 
         Line line (cur.getX() , cur.getY() , next.getX() , next.getY());
