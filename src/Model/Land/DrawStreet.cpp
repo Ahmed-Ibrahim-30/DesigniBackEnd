@@ -243,6 +243,9 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         vector<Point> innerPoints = innerStreet.getPoints();
 
+        Line test (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
+
+        test.printJsonFormat();
         double dx = innerPoints[1].getX() - innerPoints[0].getX();
         double dy = innerPoints[1].getY() - innerPoints[0].getY();
 
