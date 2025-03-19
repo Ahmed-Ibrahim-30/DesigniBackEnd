@@ -668,57 +668,57 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
 
     return extensions;
 
-    int lineIndex1 = 0 , lineIndex2 = 0;
-
-    for (int i = 0; i < centerL.size(); ++i) {
-        const Line& c = centerL[i];
-
-        double minX = min(c.getX1() , c.getX2());
-        double maxX = max(c.getX1() , c.getX2());
-        double minY = min(c.getY1() , c.getY2());
-        double maxY = max(c.getY1() , c.getY2());
-
-        if (start.getX() >= minX && start.getX() <= maxX &&
-        start.getY() >= minY && start.getY() <= maxY)
-        {
-            lineIndex1 = i;
-        }
-        if (end.getX() >= minX && end.getX() <= maxX &&
-                end.getY() >= minY && end.getY() <= maxY)
-        {
-            lineIndex2 = i;
-        }
-    }
-    Point nextEnd = getNextPoint(end , lineIndex2 , centerL , step );
-    Point prevStart = getPrevPoint(start , lineIndex1 , centerL , step );
-
-
-    Line rightExtension (nextEnd.getX() , nextEnd.getY() , nextEnd.getX() , nextEnd.getY() + (1000000000 * (isTop? 1 :-1)));
-    Line leftExtension (prevStart.getX() , prevStart.getY() , prevStart.getX() , prevStart.getY() + (1000000000 * (isTop? 1 :-1)));
-
-    for(auto &pLine : polygonLines)
-    {
-        Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
-
-        if (intersection.getX() != INT_MAX)
-        {
-            rightExtension.setY2(intersection.getY());
-            break;
-        }
-    }
-    extensions.push_back(rightExtension);
-
-    for(auto &pLine : polygonLines)
-    {
-        Point intersection = PolygonHelper::getIntersectionPoint(pLine , leftExtension);
-
-        if (intersection.getX() != INT_MAX)
-        {
-            leftExtension.setY2(intersection.getY());
-            break;
-        }
-    }
-    extensions.push_back(leftExtension);
+//    int lineIndex1 = 0 , lineIndex2 = 0;
+//
+//    for (int i = 0; i < centerL.size(); ++i) {
+//        const Line& c = centerL[i];
+//
+//        double minX = min(c.getX1() , c.getX2());
+//        double maxX = max(c.getX1() , c.getX2());
+//        double minY = min(c.getY1() , c.getY2());
+//        double maxY = max(c.getY1() , c.getY2());
+//
+//        if (start.getX() >= minX && start.getX() <= maxX &&
+//        start.getY() >= minY && start.getY() <= maxY)
+//        {
+//            lineIndex1 = i;
+//        }
+//        if (end.getX() >= minX && end.getX() <= maxX &&
+//                end.getY() >= minY && end.getY() <= maxY)
+//        {
+//            lineIndex2 = i;
+//        }
+//    }
+//    Point nextEnd = getNextPoint(end , lineIndex2 , centerL , step );
+//    Point prevStart = getPrevPoint(start , lineIndex1 , centerL , step );
+//
+//
+//    Line rightExtension (nextEnd.getX() , nextEnd.getY() , nextEnd.getX() , nextEnd.getY() + (1000000000 * (isTop? 1 :-1)));
+//    Line leftExtension (prevStart.getX() , prevStart.getY() , prevStart.getX() , prevStart.getY() + (1000000000 * (isTop? 1 :-1)));
+//
+//    for(auto &pLine : polygonLines)
+//    {
+//        Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
+//
+//        if (intersection.getX() != INT_MAX)
+//        {
+//            rightExtension.setY2(intersection.getY());
+//            break;
+//        }
+//    }
+//    extensions.push_back(rightExtension);
+//
+//    for(auto &pLine : polygonLines)
+//    {
+//        Point intersection = PolygonHelper::getIntersectionPoint(pLine , leftExtension);
+//
+//        if (intersection.getX() != INT_MAX)
+//        {
+//            leftExtension.setY2(intersection.getY());
+//            break;
+//        }
+//    }
+//    extensions.push_back(leftExtension);
 
     return extensions;
 }
