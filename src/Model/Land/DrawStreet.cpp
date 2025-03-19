@@ -226,14 +226,14 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             Point intersectionPoint1 = PolygonHelper::getIntersectionPoint(cuttingLine , otherCenter);
 
-            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
-            {
-                opp = -1;
-                cout<<"YES\n";
-
-                i--;
-                continue;
-            }
+//            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
+//            {
+//                opp = -1;
+//                cout<<"YES\n";
+//
+//                i--;
+//                continue;
+//            }
 
             for(auto &line2 : topLine)
             {
