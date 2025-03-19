@@ -196,20 +196,20 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             }
             else
             {
-                Point second = PolygonHelper::getSecondLinePoint(cur , slopes[i] , 10000*opp);
+                Point second = PolygonHelper::getSecondLinePoint(cur , slopes[i] , -10000*opp);
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
             }
 
             Point intersectionPoint1 = PolygonHelper::getIntersectionPoint(cuttingLine , otherCenter);
 
-            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
-            {
-                cout<<"YES\n";
-                opp = -1;
-                i--;
-                continue;
-            }
+//            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
+//            {
+//                cout<<"YES\n";
+//                opp = -1;
+//                i--;
+//                continue;
+//            }
 
             for(auto &line2 : topLine)
             {
