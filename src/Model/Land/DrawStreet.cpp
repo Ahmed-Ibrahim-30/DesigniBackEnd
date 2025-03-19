@@ -155,6 +155,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 //        double slope1 = centerLine.getSlope() ;
 //        double slope2 =  centerLine.getSlope() ;
 
+cout<<"Slope 1 = "<<slope1<<"\n";
+
         Point next1UP ;
         Point next2UP ;
         if (slope1 == 0 && centerLine.getY1() == centerLine.getY2())
