@@ -170,7 +170,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         Line testLine (startPoint1.getX() , startPoint1.getY() , lastPoint.getX() , lastPoint.getY());
 
-        cout<<"Length = testLine = "<<testLine.getLength()<<"\n";
         const Line& centerLine = centerL[centerLineIndex];
 
 //        double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
@@ -237,8 +236,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         Polygon1 outerStreet({startPoint1 , next1UP , next2UP , lastPoint});
 
         vector<Line> homeLinesOuter = outerStreet.getLines();
+        homeLinesOuter.emplace_back(0,0,0,0);
 
-        cout<<homeLinesOuter.size()<<"\n";
         vector<Line> homeLinesInner;
 
 //        homeLinesInner.insert(homeLinesInner.end() , bottomLines2.begin() , bottomLines2.end());
