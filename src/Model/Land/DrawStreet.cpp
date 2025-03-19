@@ -304,7 +304,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 +5, centerL);
-        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions);
+        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions , step);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
@@ -319,7 +319,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
 vector<Line>
 DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner ,
-                            vector<Line> &extensionsLine ) {
+                            vector<Line> &extensionsLine , double mainStep) {
 
     vector<Line> homeBorderSol;
     Point start = {streetsLinesInner[0 ].getX1() , streetsLinesInner[0 ].getY1()};
@@ -339,6 +339,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     double step = minLength / (int)(minLength/20);
     cout<<"STEP = "<<step<<"\n";
+
+    cout<<"MIN LENGTH = "<<minLength<<"\n";
 
     while (true)
     {
