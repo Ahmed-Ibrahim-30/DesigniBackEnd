@@ -148,8 +148,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         if (lastPoint.getX() == INT_MAX) break;
 
-        Line centerLine = centerL[centerLineIndex];
-        centerLine.printJsonFormat();
+        const Line& centerLine = centerL[centerLineIndex];
         double slope1 = m ? centerLine.getSlope() : side1Line.getSlope();
         double slope2 = (m < divisions - 1 )? centerLine.getSlope() : side2Line.getSlope();
 
@@ -197,8 +196,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             }
             else
             {
-//                cout<<"cur = "<<cur.getX() <<" "<<cur.getY()<<"\n";
-//                cout<<"slopes[i] = "<<slopes[i]<<"\n";
                 Point second = PolygonHelper::getSecondLinePoint(cur , slopes[i] , 1000*opp);
                 cuttingLine.setX2(second.getX());
                 cuttingLine.setY2(second.getY());
@@ -206,9 +203,9 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
             Point intersectionPoint1 = PolygonHelper::getIntersectionPoint(cuttingLine , otherCenter);
 
-            if (opp != -1 && intersectionPoint1.getX() != INT_MAX)
+            if ( intersectionPoint1.getX() != INT_MAX)
             {
-                opp = -1;
+                opp = opp==1?-1:1;
                 i--;
                 continue;
             }
