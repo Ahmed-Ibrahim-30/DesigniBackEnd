@@ -256,7 +256,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 //        vector<Line> extensions = drawExtensions(polygonLines , bottomLines2 , startPoint2 , lastPoint2 , next12UP , next22UP , step/2 +5, true, centerL);
 //        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions , true);
         CityGrid cityGrid;
-        cityGrid.setInnerStreets(homeLinesOuter);
+        cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
 //        cityGrid.setRoadExtension(extensions);
 //        cityGrid.setHomeBorder(homeBorder);
