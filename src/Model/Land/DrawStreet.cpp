@@ -243,20 +243,22 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         vector<Point> innerPoints = innerStreet.getPoints();
 
+        innerPoints = {innerPoints[3] , innerPoints[0] , innerPoints[1] , innerPoints[2]};
+
         Line test (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
 
         test.printJsonFormat();
         double dx = innerPoints[1].getX() - innerPoints[0].getX();
         double dy = innerPoints[1].getY() - innerPoints[0].getY();
 
-//        innerPoints[1].setX(innerPoints[1].getX()+ 10);
-//        innerPoints[1].setY(innerPoints[1].getY()+ 10);
+        innerPoints[0].setX(innerPoints[1].getX() - dx * 10);
+        innerPoints[0].setY(innerPoints[1].getY() - dy * 10);
 
         dx = innerPoints[2].getX() - innerPoints[3].getX();
         dy = innerPoints[2].getY() - innerPoints[3].getY();
 
-//        innerPoints[3].setX(innerPoints[3].getX() + dx * -10);
-//        innerPoints[3].setY(innerPoints[3].getY() + dy * -10);
+        innerPoints[3].setX(innerPoints[3].getX() + dx * -10);
+        innerPoints[3].setY(innerPoints[3].getY() + dy * -10);
 
         Line f1 (innerPoints[2].getX() , innerPoints[2].getY() , innerPoints[3].getX() , innerPoints[3].getY());
         Line f2 (innerPoints[1].getX() , innerPoints[1].getY() , innerPoints[0].getX() , innerPoints[0].getY());
@@ -266,12 +268,12 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         if (inter.getX() != INT_MAX)
         {
-//            innerPoints[3] = inter;
+            innerPoints[3] = inter;
         }
 
         if (inter2.getX() != INT_MAX)
         {
-//            innerPoints[0] = inter2;
+            innerPoints[0] = inter2;
         }
 
         innerStreet = Polygon1(innerPoints);
