@@ -302,6 +302,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 //        cityGrid.setHomeBorder(homeBorder);
 
         cities.push_back(cityGrid);
+
+        break;
     }
 }
 
