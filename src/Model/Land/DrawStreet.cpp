@@ -527,10 +527,27 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Line newLine (lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
         homeBorderSol.emplace_back(newLine);
 
-        vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , {prevLine.getX2() , prevLine.getY2()} , endUp , lastPoint};
+        if (newLine.getLength() >= 40)
+        {
+            Point center1 = newLine.getCenterPoint();
+            Point center2 = prevLine.getCenterPoint();
+
+            vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , center2 , center1 , lastPoint};
+            vector<Point> pnt6 = {center2 , center1 , endUp , {prevLine.getX1() , prevLine.getY1()}};
 
 
-        homeLands.emplace_back(pnt5);
+            homeLands.emplace_back(pnt5);
+            homeLands.emplace_back(pnt6);
+
+        }
+        else{
+            vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , {prevLine.getX2() , prevLine.getY2()} , endUp , lastPoint};
+
+
+            homeLands.emplace_back(pnt5);
+        }
+
+
 
         start = lastPoint;
         prevLine = newLine;

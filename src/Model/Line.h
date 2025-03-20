@@ -75,6 +75,12 @@ public:
      */
     [[nodiscard]] double getSlope() const;
 
+    /**
+     *
+     * @return
+     */
+    Point getCenterPoint();
+
     void rotate(double angle);
 
     [[nodiscard]] double getCenterX1() const;
