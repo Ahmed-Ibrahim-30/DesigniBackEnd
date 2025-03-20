@@ -507,14 +507,16 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             endUp = {cuttingLine.getX2() , cuttingLine.getY2()};
         }
+        Line newLine (lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
+        homeBorderSol.emplace_back(newLine);
 
-        vector<Point> pnt5 = {start , stUp , endUp , lastPoint};
+        vector<Point> pnt5 = {{newLine.getX1() , newLine.getY1()} , {newLine.getX2() , newLine.getY2()} , endUp , lastPoint};
 
-        homeBorderSol.emplace_back(lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
 
-//        homeLands.emplace_back(pnt5);
+        homeLands.emplace_back(pnt5);
 
         start = lastPoint;
+        prevLine = newLine;
 
     }
 
