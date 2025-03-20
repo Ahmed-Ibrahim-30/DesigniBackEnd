@@ -135,7 +135,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     for (int m = 0; m < divisions; ++m)
     {
-        if (m==2)break;
+        if (m==3)break;
         double newStep = !m ? startSpace : step;
 
         Point last = lastPoint;
@@ -316,7 +316,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + circleStreetWidth, centerLine , m ,divisions);
-        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine);
+        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
         vector<Polygon1> homes = homeSetter(homePolygons , home);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
@@ -336,7 +336,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
 vector<Line>
 DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner ,
-                            vector<Line> &extensionsLine , vector<Polygon1> &homeLands ,const Line &centerLine) {
+                            vector<Line> &extensionsLine , vector<Polygon1> &homeLands ,const Line &centerLine , int divisionIndex , int divisionsCount) {
 
     vector<Line> homeBorderSol;
     Point start = {streetsLinesInner[0 ].getX1() , streetsLinesInner[0 ].getY1()};
@@ -423,9 +423,13 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     Line prevLine ;
 
-    if(extensionsLine.size() == 2)
+    if(divisionIndex==0)
     {
         prevLine = Line(startPoint.getX() , startPoint.getY() , centerLine.getX1() , centerLine.getY1());
+    }
+    else if (divisionIndex == divisionsCount-1)
+    {
+        prevLine = Line(startPoint.getX() , startPoint.getY() , centerLine.getX2() , centerLine.getY2());
     }
     else{
         prevLine = Line(startPoint.getX() , startPoint.getY() , extensionsLine[2].getX1() , extensionsLine[2].getY1());
