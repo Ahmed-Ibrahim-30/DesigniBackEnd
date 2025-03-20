@@ -423,7 +423,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     Line prevLine (startPoint.getX() , startPoint.getY() , centerLine.getX1() , centerLine.getY1());
 
-    while(centerLineIndex < streetsOrder.size())
+    while(centerLineIndex < streetsOrder.size() && start != last)
     {
         vector<Line> bottomLines;
 
