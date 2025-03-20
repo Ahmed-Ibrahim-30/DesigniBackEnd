@@ -417,7 +417,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     vector<Line> polygonLines = polygon1.getLines();
     polygonLines.insert(polygonLines.begin() , extensionsLine.begin() , extensionsLine.end());
-    int steps = 0;
+
+    Line prevLine (startPoint.getX() , startPoint.getY() , centerLine.getX1() , centerLine.getY1());
+
     while(centerLineIndex < streetsOrder.size())
     {
         vector<Line> bottomLines;
@@ -435,79 +437,26 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Line stLine = streetsOrder[lineIndex1];
         Line eLine = streetsOrder[lineIndex2];
 
-        Point stUp (centerLine.getX1() , centerLine.getY1()), endUp (centerLine.getX2() , centerLine.getY2());
+        Point stUp (prevLine.getX2() , prevLine.getY2());
+        Point endUp (centerLine.getX2() , centerLine.getY2());
 
         Line oppositeLineStart = lineIndex1 == 0 ? streetsOrder[2] : lineIndex1==1?bottomLine : streetsOrder[0];
-        Line oppositeLineLast = lineIndex2 == 0 ? streetsOrder[2] : lineIndex1==2?bottomLine : streetsOrder[0];
+        Line oppositeLineLast = lineIndex2 == 0 ? endLine : lineIndex2 == 1 ?bottomLine : startLine;
 
         // Choose dx
         double dx = 10000;
-
-        if (steps)
-        {
-            // Determine the side of extraLine relative to mainLine
-            double sideCheck = DesignGeometryManager::crossProduct(stLine.getX1(), stLine.getY1(), stLine.getX1(), stLine.getY2(), oppositeLineStart.getX1(), oppositeLineStart.getY1());
-
-            if (sideCheck > 0) {
-                dx = dx;  // If extraLine is on the left, move perpendicular line to the right
-            } else {
-                dx = -dx;  // If extraLine is on the right, move perpendicular line to the left
-            }
-
-            double slope1 = stLine.getSlope();
-
-            if (slope1 != 0)
-            {
-                slope1 = -1 / slope1;
-            }
-
-
-            if (slope1 == 0 && stLine.getY1() == stLine.getY2())
-            {
-                slope1 = -1;
-            }
-
-            const Point& cur = start;
-            Line cuttingLine (cur.getX() , cur.getY() , cur.getX() , cur.getY());
-
-            if (slope1 == 0)
-            {
-                cuttingLine.setY2(cuttingLine.getY1() +dx);
-            }
-            else if (slope1 == -1)
-            {
-                cuttingLine.setX2(cuttingLine.getX1() +dx);
-            }
-            else
-            {
-                Point second = PolygonHelper::getSecondLinePoint(cur , slope1 , dx);
-                cuttingLine.setX2(second.getX());
-                cuttingLine.setY2(second.getY());
-            }
-
-            for(auto &line2 : polygonLines)
-            {
-                Point intersectionPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line2);
-                if (intersectionPoint.getX() != INT_MAX)
-                {
-                    cuttingLine.setX2(intersectionPoint.getX());
-                    cuttingLine.setY2(intersectionPoint.getY());
-                    break;
-                }
-            }
-
-            stUp = {cuttingLine.getX2() , cuttingLine.getY2()};
-
-        }
 
         if (lastPoint != endUp)
         {
             // Determine the side of extraLine relative to mainLine
             double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX1(), eLine.getY2(), oppositeLineLast.getX1(), oppositeLineLast.getY1());
 
-            if (sideCheck > 0) {
+            if (sideCheck > 0)
+            {
                 dx = dx;  // If extraLine is on the left, move perpendicular line to the right
-            } else {
+            }
+            else
+            {
                 dx = -dx;  // If extraLine is on the right, move perpendicular line to the left
             }
 
