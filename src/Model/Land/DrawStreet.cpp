@@ -517,8 +517,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     return homeBorderSol;
 }
 
-vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const Line &bottomLine , const Point &start, const Point &end, const Point &startUp, const Point &endUp,double step ,const Line &centerL, int divisionIndex , int divisionsCount)
+vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const Line &bottomLine , const Point &start, const Point &end, const Point &startUp, const Point &endUp,double step ,const Line &centerLine, int divisionIndex , int divisionsCount)
 {
+    Line otherCenter = centerLine == centerLines[0] ? centerLines[1] : centerLines[0];
     vector<Line> extensions;
     Point centerBottom((bottomLine.getX2() + bottomLine.getX1()) / 2,(bottomLine.getY2() + bottomLine.getY1()) / 2) , centerTop;
     double reqLength = bottomLine.getLength() / 2;
@@ -530,40 +531,82 @@ vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const 
 
     int lineIndex = 0;
 
-    Point nextEnd = getNextPoint(end , lineIndex , {centerL} , step );
+    Point nextEnd = getNextPoint(end , lineIndex , {centerLine} , step );
     lineIndex = 0;
-    Point prevStart = getPrevPoint(start , lineIndex , {centerL} , step );
+    Point prevStart = getPrevPoint(start , lineIndex , {centerLine} , step );
 
-    Line rightExtension (nextEnd.getX() , nextEnd.getY() , nextEnd.getX() , nextEnd.getY() + (1000000000 * (isTop? 1 :-1)));
-    Line leftExtension (prevStart.getX() , prevStart.getY() , prevStart.getX() , prevStart.getY() + (1000000000 * (isTop? 1 :-1)));
 
-    if (divisionIndex < divisionsCount-1)
+    double slope1 = centerLine.getSlope();
+
+    if (slope1 != 0)
     {
-        for(auto &pLine : polygonLines)
-        {
-            Point intersection = PolygonHelper::getIntersectionPoint(pLine , rightExtension);
+        slope1 = -1 / slope1;
+    }
 
-            if (intersection.getX() != INT_MAX)
+
+    Point next1UP ;
+    Point next2UP ;
+    if (slope1 == 0 && centerLine.getY1() == centerLine.getY2())
+    {
+        slope1 = -1;
+    }
+
+    vector<Point> cPoints = {nextEnd , prevStart};
+    vector<Line> extBorder;
+    int opp =1;
+    for (int i = 0; i < cPoints.size(); ++i)
+    {
+        Point cur = cPoints[i];
+        Line cuttingLine (cur.getX() , cur.getY() , cur.getX() , cur.getY());
+
+        if (slope1 == 0)
+        {
+            cuttingLine.setY2(cuttingLine.getY1() - 100000000*opp);
+        }
+        else if (slope1 == -1)
+        {
+            cuttingLine.setX2(cuttingLine.getX1() - 100000000*opp);
+        }
+        else
+        {
+            Point second = PolygonHelper::getSecondLinePoint(cur , slope1 , 200000*opp);
+            cuttingLine.setX2(second.getX());
+            cuttingLine.setY2(second.getY());
+        }
+
+        Point intersectionPoint1 = PolygonHelper::getIntersectionPoint(cuttingLine , otherCenter);
+
+        if ( intersectionPoint1.getX() != INT_MAX)
+        {
+            opp = opp==1?-1:1;
+            i--;
+            continue;
+        }
+
+        for(auto &line2 : polygonLines)
+        {
+            Point intersectionPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line2);
+            if (intersectionPoint.getX() != INT_MAX)
             {
-                rightExtension.setY2(intersection.getY());
+                cuttingLine.setX2(intersectionPoint.getX());
+                cuttingLine.setY2(intersectionPoint.getY());
                 break;
             }
         }
+
+        extBorder.push_back(cuttingLine);
+    }
+
+    Line rightExtension =extBorder[0];
+    Line leftExtension =extBorder[1];
+
+    if (divisionIndex < divisionsCount-1)
+    {
         extensions.push_back(rightExtension);
     }
 
     if(divisionIndex)
     {
-        for(auto &pLine : polygonLines)
-        {
-            Point intersection = PolygonHelper::getIntersectionPoint(pLine , leftExtension);
-
-            if (intersection.getX() != INT_MAX)
-            {
-                leftExtension.setY2(intersection.getY());
-                break;
-            }
-        }
         extensions.push_back(leftExtension);
     }
 
