@@ -33,8 +33,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-    int divisions = ((int)((centerLinesTop[0].getLength()/30) - 1) / 4);
-    int divisionsB = ((int)((centerLinesBottom[0].getLength()/30)-1) / 4);
+    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
+    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
     cout<<"divisions = "<<divisions <<"\n";
@@ -253,11 +253,11 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         }
 
         Polygon1 innerStreet (innerPoint) , innerCopy(innerPoint);
-        innerStreet = PolygonHelper::getScalingPolygon(innerCopy , -5);
+        innerStreet = PolygonHelper::getScalingPolygon(innerCopy , -2.5);
 
         if (innerStreet.getArea() > outerStreet.getArea())
         {
-            innerStreet = PolygonHelper::getScalingPolygon(innerCopy , 5);
+            innerStreet = PolygonHelper::getScalingPolygon(innerCopy , 2.5);
         }
 
 
@@ -355,9 +355,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     Point nextPoint1 , nextPoint2 , nextPoint3;
 
     Polygon1 home ({{0,  0},
-                    {20, 0},
-                    {20, 20},
-                    {0,  20}});
+                    {10, 0},
+                    {10, 14},
+                    {0,  14}});
 
     while (true)
     {
