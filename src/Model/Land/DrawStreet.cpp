@@ -429,7 +429,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     }
     else if (divisionIndex == divisionsCount-1)
     {
-        prevLine = Line(startPoint.getX() , startPoint.getY() , centerLine.getX2() , centerLine.getY2());
+        prevLine = Line(startPoint.getX() , startPoint.getY() , extensionsLine[1].getX1() , extensionsLine[1].getY1());
     }
     else{
         prevLine = Line(startPoint.getX() , startPoint.getY() , extensionsLine[2].getX1() , extensionsLine[2].getY1());
