@@ -435,7 +435,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         if (lastPoint.getX() == INT_MAX)
         {
-            break;
+//            break;
             lastPoint = {endLine.getX2() , endLine.getY2()};
             centerLineIndex--;
         }
