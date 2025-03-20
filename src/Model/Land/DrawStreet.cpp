@@ -424,7 +424,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     {
         vector<Line> bottomLines;
 
-        int lineIndex1 = centerLineIndex , lineIndex2 = -1;
+        int lineIndex2 = -1;
 
         Point lastPoint = getNextPoint(start , centerLineIndex , streetsOrder , step , bottomLines);
 
@@ -434,13 +434,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Line st = {lastPoint.getX() , lastPoint.getY() , streetsOrder[centerLineIndex].getX2() , streetsOrder[centerLineIndex].getY2()};
         if (centerLineIndex == 2 && st.getLength() < 20)break;
 
-        Line stLine = streetsOrder[lineIndex1];
         Line eLine = streetsOrder[lineIndex2];
 
         Point stUp (prevLine.getX2() , prevLine.getY2());
         Point endUp (centerLine.getX2() , centerLine.getY2());
 
-        Line oppositeLineStart = lineIndex1 == 0 ? streetsOrder[2] : lineIndex1==1?bottomLine : streetsOrder[0];
         Line oppositeLineLast = lineIndex2 == 0 ? endLine : lineIndex2 == 1 ?bottomLine : startLine;
 
         // Choose dx
@@ -449,7 +447,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         if (lastPoint != endUp)
         {
             // Determine the side of extraLine relative to mainLine
-            double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX1(), eLine.getY2(), oppositeLineLast.getX1(), oppositeLineLast.getY1());
+            double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX2(), eLine.getY2(), oppositeLineLast.getX1(), oppositeLineLast.getY1());
 
             if (sideCheck > 0)
             {
