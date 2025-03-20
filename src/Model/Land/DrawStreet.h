@@ -31,8 +31,14 @@ private:
      * @return
      */
     vector<Line> drawExtensions(const vector<Line> &polygonLines ,const Line &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step,const Line &centerL , int divisionIndex , int divisionsCount);
-    vector<Line> drawHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner  , vector<Line> &extensionsLin);
+    vector<Line> drawHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner  , vector<Line> &extensionsLin , vector<Polygon1> &homeLands);
 
+    /**
+     * Set Home inside each Land
+     * @param lands
+     * @param home
+     */
+    vector<Polygon1> homeSetter( vector<Polygon1> &lands , Polygon1 &home);
     /**
      * Get Next Point after start Point with step variable
      * @param start

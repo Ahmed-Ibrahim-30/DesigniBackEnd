@@ -260,8 +260,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             innerStreet = PolygonHelper::getScalingPolygon(innerCopy , circleStreetWidth);
         }
 
-        //
-
 
         vector<Point> innerPoints = innerStreet.getPoints();
 
@@ -303,19 +301,33 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         innerStreet = Polygon1(innerPoints);
 
+        vector<Polygon1> homePolygons;
+
+        double homeX = 10 , homeY = 14;
+
+        Polygon1 home ({{0,  0},
+                        {10, 0},
+                        {10, 14},
+                        {0,  14}});
+
         vector<Line> homeLinesInner = innerStreet.getLines();
         Line innerBottomLine = {innerPoints[0].getX() , innerPoints[0].getY() , innerPoints[3].getX() , innerPoints[3].getY()};
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + circleStreetWidth, centerLine , m ,divisions);
-        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions );
+        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons);
+        vector<Polygon1> homes = homeSetter(homePolygons , home);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
         cityGrid.setRoadExtension(extensions);
         cityGrid.setHomeBorder(homeBorder);
-
-        cout<<"Home border = "<<homeBorder.size()<<"\n";
+        
+        for(auto &h : homes)
+        {
+            vector<Line> ll = h.getLines();
+            centerLines.insert(centerLines.end() , ll.begin() , ll.end());
+        }
 
         cities.push_back(cityGrid);
     }
@@ -323,7 +335,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
 vector<Line>
 DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner ,
-                            vector<Line> &extensionsLine) {
+                            vector<Line> &extensionsLine , vector<Polygon1> &homeLands) {
 
     vector<Line> homeBorderSol;
     Point start = {streetsLinesInner[0 ].getX1() , streetsLinesInner[0 ].getY1()};
@@ -346,20 +358,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     double step = minLength / (int)(minLength/20);
     cout<<"STEP = "<<step<<"\n";
 
-    cout<<"MIN LENGTH = "<<startLine.getLength()<<"\n";
-    cout<<"MIN LENGTH = "<<endLine.getLength()<<"\n";
-    cout<<"MIN LENGTH = "<<centerLine.getLength()<<"\n";
-    cout<<"MIN LENGTH = "<<bottomLine1.getLength()<<"\n";
-    cout<<"MIN LENGTH = "<<bottomLine2.getLength()<<"\n";
-
     vector<Polygon1> homes;
 
     Point nextPoint1 , nextPoint2 , nextPoint3;
-
-    Polygon1 home ({{0,  0},
-                    {10, 0},
-                    {10, 14},
-                    {0,  14}});
 
     while (true)
     {
@@ -393,17 +394,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     homes.emplace_back(pnt1);
     homes.emplace_back(pnt2);
 
-    for(auto &h : homes)
-    {
-        Polygon1 homeCopy = home;
 
-        Point centerPoint = h.calculateCentroid();
-
-        homeCopy.transformPolygon(centerPoint.getX() -5, centerPoint.getY() -7);
-
-        vector<Line> ll = homeCopy.getLines();
-        centerLines.insert(centerLines.end() , ll.begin() , ll.end());
-    }
 
 
 
@@ -517,6 +508,24 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 //    }
 
     return homeBorderSol;
+}
+
+vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home)
+{
+    Point centroidHome = home.calculateCentroid();
+    vector<Polygon1> homes;
+    for(auto &land : lands)
+    {
+        Polygon1 homeCopy = home;
+
+        Point centerPoint = land.calculateCentroid();
+
+        homeCopy.transformPolygon(centerPoint.getX() -centroidHome.getX(), centerPoint.getY() -centroidHome.getY());
+
+        homes.push_back(homeCopy);
+
+    }
+    return homes;
 }
 
 vector<Line> DrawStreet::drawExtensions(const vector<Line> &polygonLines ,const Line &bottomLine , const Point &start, const Point &end, const Point &startUp, const Point &endUp,double step ,const Line &centerLine, int divisionIndex , int divisionsCount)
@@ -908,3 +917,5 @@ vector<Line> DrawStreet::buildCenterLines(Polygon1 &polygon, double centerLineHe
 
     return centerLines;
 }
+
+
