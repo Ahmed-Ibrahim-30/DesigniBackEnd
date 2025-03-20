@@ -31,7 +31,7 @@ private:
      * @return
      */
     vector<Line> drawExtensions(const vector<Line> &polygonLines ,const Line &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step,const Line &centerL , int divisionIndex , int divisionsCount);
-    vector<Line> drawHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner  , vector<Line> &extensionsLin , vector<Polygon1> &homeLands);
+    vector<Line> drawHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner  , vector<Line> &extensionsLin , vector<Polygon1> &homeLands,const Line &centerLine);
 
     /**
      * Set Home inside each Land
@@ -48,6 +48,7 @@ private:
      * @return
      */
     Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step );
+    Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step , vector<Line> &bottomLines));
     Point getPrevPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step);
 
     void drawSide1Streets(const vector<Line> &polygonLines , const vector<Line> &centerL , const vector<Line> &TopLine , double step  ,int divisions);

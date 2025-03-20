@@ -147,6 +147,34 @@ public:
     static bool isPointInsidePolygon(const vector<Point>& polygon, const Point& point);
     static bool doSegmentsIntersect(const Point& p1, const Point& q1, const Point& p2, const Point& q2) ;
     static bool isPolygonInsidePolygon(const Polygon1& inner, const Polygon1& outer) ;
+
+    static double crossProduct(double x1, double y1, double x2, double y2, double xp, double yp)
+    {
+        return (x2 - x1) * (yp - y1) - (y2 - y1) * (xp - x1);
+    };
+
+    static Line getPerpendicularLine(const Line& mainLine, const Line& extraLine, const Point &startP) {
+        double slope = mainLine.getSlope();
+        double perpSlope = -1 / slope;
+
+        // Choose dx
+        double dx = 10000;
+
+        // Determine the side of extraLine relative to mainLine
+        double sideCheck = crossProduct(mainLine.getX1(), mainLine.getY1(), mainLine.getX2(), mainLine.getY2(), extraLine.getX1(), extraLine.getY1());
+
+        if (sideCheck > 0) {
+            dx = dx;  // If extraLine is on the left, move perpendicular line to the right
+        } else {
+            dx = -dx;  // If extraLine is on the right, move perpendicular line to the left
+        }
+        double xp = startP.getX();
+        double yp = startP.getY();
+
+        double dy = perpSlope * dx;
+
+        return {xp, yp, xp + dx, yp + dy};
+    }
 };
 
 
