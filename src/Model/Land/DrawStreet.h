@@ -14,7 +14,7 @@ private:
     vector<CityGrid> cities;
 
     double startSpace = 20;
-
+    double circleStreetWidth = 2.5;
     double step = 40;
 
     /**
