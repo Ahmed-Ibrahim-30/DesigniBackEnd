@@ -322,7 +322,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         cityGrid.setOuterStreets(homeLinesOuter);
         cityGrid.setRoadExtension(extensions);
         cityGrid.setHomeBorder(homeBorder);
-        
+
         for(auto &h : homes)
         {
             vector<Line> ll = h.getLines();
@@ -358,8 +358,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     double step = minLength / (int)(minLength/20);
     cout<<"STEP = "<<step<<"\n";
 
-    vector<Polygon1> homes;
-
     Point nextPoint1 , nextPoint2 , nextPoint3;
 
     while (true)
@@ -379,8 +377,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         vector<Point> pnt1 = {start , nextPoint1 , nextPoint3 , center};
         vector<Point> pnt2 = {last , nextPoint2 , nextPoint3 , center};
 
-        homes.emplace_back(pnt1);
-        homes.emplace_back(pnt2);
+        homeLands.emplace_back(pnt1);
+        homeLands.emplace_back(pnt2);
 
         start = nextPoint1;
         last = nextPoint2;
@@ -391,8 +389,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     vector<Point> pnt1 = {start , nextPoint1 , nextPoint3 , center};
     vector<Point> pnt2 = {last , nextPoint2 , nextPoint3 , center};
 
-    homes.emplace_back(pnt1);
-    homes.emplace_back(pnt2);
+    homeLands.emplace_back(pnt1);
+    homeLands.emplace_back(pnt2);
 
 
 
