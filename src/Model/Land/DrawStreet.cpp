@@ -305,7 +305,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         Line innerBottomLine = {innerPoints[0].getX() , innerPoints[0].getY() , innerPoints[3].getX() , innerPoints[3].getY()};
 
         //EXTENSIONS And Border
-        vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2, centerLine , m ,divisions);
+        vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + 5, centerLine , m ,divisions);
         vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions );
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
