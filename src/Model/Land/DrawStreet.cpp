@@ -429,11 +429,13 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Point lastPoint = getNextPoint(start , centerLineIndex , streetsOrder , step , bottomLines);
 
-        Line curLine (start.getX() , start.getY() , lastPoint.getX() , lastPoint.getY());
+        Line curLine (last.getX() , last.getY() , lastPoint.getX() , lastPoint.getY());
+
+        if (curLine.getLength() < 20 && centerLineIndex ==2)lastPoint = last;
+
         if (lastPoint.getX() == INT_MAX)
         {
-
-            if (curLine.getLength() < 20)break;
+            break;
             lastPoint = {endLine.getX2() , endLine.getY2()};
             centerLineIndex--;
         }
