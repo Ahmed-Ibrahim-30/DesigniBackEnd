@@ -428,7 +428,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         prevLine = Line(startPoint.getX() , startPoint.getY() , centerLine.getX1() , centerLine.getY1());
     }
     else{
-        prevLine = Line(startPoint.getX() , startPoint.getY() , extensionsLine[1].getX1() , extensionsLine[1].getY1());
+        prevLine = Line(startPoint.getX() , startPoint.getY() , extensionsLine[2].getX1() , extensionsLine[2].getY1());
     }
 
     while(centerLineIndex < streetsOrder.size() && start != last)
