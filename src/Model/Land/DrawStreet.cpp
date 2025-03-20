@@ -510,10 +510,10 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Line newLine (lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
         homeBorderSol.emplace_back(newLine);
 
-        vector<Point> pnt5 = {{newLine.getX1() , newLine.getY1()} , {newLine.getX2() , newLine.getY2()} , endUp , lastPoint};
+        vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , {prevLine.getX2() , prevLine.getY2()} , endUp , lastPoint};
 
 
-//        homeLands.emplace_back(pnt5);
+        homeLands.emplace_back(pnt5);
 
         start = lastPoint;
         prevLine = newLine;
