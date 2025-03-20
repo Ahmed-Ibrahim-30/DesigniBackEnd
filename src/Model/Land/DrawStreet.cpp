@@ -416,6 +416,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     step = length / (int)(length/20);
 
     vector<Line> polygonLines = polygon1.getLines();
+    polygonLines.insert(polygonLines.begin() , extensionsLine.begin() , polygon1.getLines().end());
     int steps = 0;
     while(centerLineIndex < streetsOrder.size())
     {
