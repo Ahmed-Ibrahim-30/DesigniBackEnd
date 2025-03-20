@@ -431,7 +431,10 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Point lastPoint = getNextPoint(start , centerLineIndex , streetsOrder , step , bottomLines);
 
-        if (lastPoint.getX() == INT_MAX) break;
+        if (lastPoint.getX() == INT_MAX)
+        {
+            lastPoint = {endLine.getX2() , endLine.getY2()};
+        }
         lineIndex2 = centerLineIndex;
 
         Line eLine = streetsOrder[lineIndex2];
