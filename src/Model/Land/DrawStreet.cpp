@@ -557,7 +557,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         vector<Point> pnt5 = {start , stUp , endUp , lastPoint};
 
-        homeLands.emplace_back(pnt5);
+        homeBorderSol.emplace_back(lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
+
+//        homeLands.emplace_back(pnt5);
 
         start = lastPoint;
 
