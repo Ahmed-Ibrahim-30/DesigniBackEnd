@@ -488,9 +488,10 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             }
             else
             {
-                Point second = PolygonHelper::getSecondLinePoint(cur , slope1 , dx);
-                cuttingLine.setX2(second.getX());
-                cuttingLine.setY2(second.getY());
+                cuttingLine = DesignGeometryManager::getPerpendicularLine(eLine , oppositeLineLast,cur);
+//                Point second = PolygonHelper::getSecondLinePoint(cur , slope1 , dx);
+//                cuttingLine.setX2(second.getX());
+//                cuttingLine.setY2(second.getY());
             }
 
             for(auto &line2 : polygonLines)

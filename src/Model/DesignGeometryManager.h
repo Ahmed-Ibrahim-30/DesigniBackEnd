@@ -153,27 +153,39 @@ public:
         return (x2 - x1) * (yp - y1) - (y2 - y1) * (xp - x1);
     };
 
-    static Line getPerpendicularLine(const Line& mainLine, const Line& extraLine, const Point &startP) {
-        double slope = mainLine.getSlope();
-        double perpSlope = -1 / slope;
+    static Line getPerpendicularLine(const Line& mainLine, const Line& extraLine, const Point &point) {
+        double yp = point.getY() , xp = point.getX();
+        double dx = mainLine.getX2() - mainLine.getX1();
+        double dy = mainLine.getY2() - mainLine.getY1();
 
-        // Choose dx
-        double dx = 10000;
+        // Compute perpendicular direction
+        double normX = -dy;
+        double normY = dx;
 
-        // Determine the side of extraLine relative to mainLine
-        double sideCheck = crossProduct(mainLine.getX1(), mainLine.getY1(), mainLine.getX2(), mainLine.getY2(), extraLine.getX1(), extraLine.getY1());
+        // Normalize the normal vector
+        double length = sqrt(normX * normX + normY * normY);
+        normX /= length;
+        normY /= length;
 
+        // Find the side of extraLine
+        double midX = (extraLine.getX1() + extraLine.getX2()) / 2;
+        double midY = (extraLine.getY1() + extraLine.getY2()) / 2;
+        double sideCheck = crossProduct(mainLine.getX1(), mainLine.getY1(),
+                                        mainLine.getX2(), mainLine.getY2(), midX, midY);
+
+        // Adjust direction
+        double scale = 100000;
         if (sideCheck > 0) {
-            dx = dx;  // If extraLine is on the left, move perpendicular line to the right
-        } else {
-            dx = -dx;  // If extraLine is on the right, move perpendicular line to the left
+            scale = -scale;
         }
-        double xp = startP.getX();
-        double yp = startP.getY();
 
-        double dy = perpSlope * dx;
+        // Compute perpendicular line
+        double x1_perp = xp;
+        double y1_perp = yp;
+        double x2_perp = xp + scale * normX;
+        double y2_perp = yp + scale * normY;
 
-        return {xp, yp, xp + dx, yp + dy};
+        return Line(x1_perp, y1_perp, x2_perp, y2_perp);
     }
 };
 
