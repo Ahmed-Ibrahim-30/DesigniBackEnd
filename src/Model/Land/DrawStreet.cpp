@@ -335,6 +335,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     Line startLine (start.getX() , start.getY() , startTOP.getX() , startTOP.getY() );
     Line endLine (lastTOP.getX() , lastTOP.getY() , last.getX() , last.getY() );
     Line topLine (startTOP.getX() , startTOP.getY() , lastTOP.getX() , lastTOP.getY() );
+    Line bottomLine1 (center.getX() , center.getY() , start.getX() , start.getY() );
+    Line bottomLine2 (center.getX() , center.getY() , last.getX() , last.getY() );
     Line centerLine (center.getX() , center.getY() , centerTOP.getX() , centerTOP.getY() );
 
     double minLength = min({startLine.getLength() , endLine.getLength() , centerLine.getLength()});
@@ -345,6 +347,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     cout<<"MIN LENGTH = "<<startLine.getLength()<<"\n";
     cout<<"MIN LENGTH = "<<endLine.getLength()<<"\n";
     cout<<"MIN LENGTH = "<<centerLine.getLength()<<"\n";
+    cout<<"MIN LENGTH = "<<bottomLine1.getLength()<<"\n";
+    cout<<"MIN LENGTH = "<<bottomLine2.getLength()<<"\n";
 
     vector<Polygon1> homes;
 
