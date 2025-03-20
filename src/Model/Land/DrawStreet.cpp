@@ -397,7 +397,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Point centerPoint = h.calculateCentroid();
 
-        homeCopy.transformPolygon(centerPoint.getX() -10, centerPoint.getY() -10);
+        homeCopy.transformPolygon(centerPoint.getX() -5, centerPoint.getY() -7);
 
         vector<Line> ll = homeCopy.getLines();
         centerLines.insert(centerLines.end() , ll.begin() , ll.end());
