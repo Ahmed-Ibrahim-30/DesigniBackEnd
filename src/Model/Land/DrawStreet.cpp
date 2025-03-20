@@ -4,6 +4,8 @@
 
 #include "DrawStreet.h"
 
+#include "src/Model/DesignGeometryManager.h"
+
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
     double step1 = step ;
@@ -344,11 +346,20 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     cout<<"MIN LENGTH = "<<endLine.getLength()<<"\n";
     cout<<"MIN LENGTH = "<<centerLine.getLength()<<"\n";
 
+    vector<Polygon1> homes;
+
+    Point nextPoint1 , nextPoint2 , nextPoint3;
+
+    Polygon1 home ({{0,  0},
+                    {20, 0},
+                    {20, 20},
+                    {0,  20}});
+
     while (true)
     {
-        Point nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
-        Point nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
-        Point nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , step);
+        nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
+        nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
+        nextPoint3 = PolygonHelper::getNextPoint(center , centerTOP , step);
 
         if (nextPoint1 == startTOP || nextPoint2 == lastTOP || nextPoint3 == centerTOP)
         {
@@ -358,10 +369,35 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint3.getX() , nextPoint3.getY());
         homeBorderSol.emplace_back(nextPoint2.getX() , nextPoint2.getY() , nextPoint3.getX() , nextPoint3.getY());
 
+        vector<Point> pnt1 = {start , nextPoint1 , nextPoint3 , center};
+        vector<Point> pnt2 = {last , nextPoint2 , nextPoint3 , center};
+
+        homes.emplace_back(pnt1);
+        homes.emplace_back(pnt2);
+
         start = nextPoint1;
         last = nextPoint2;
         center = nextPoint3;
     }
+
+
+    vector<Point> pnt1 = {start , nextPoint1 , nextPoint3 , center};
+    vector<Point> pnt2 = {last , nextPoint2 , nextPoint3 , center};
+
+    homes.emplace_back(pnt1);
+    homes.emplace_back(pnt2);
+
+    for(auto &h : homes)
+    {
+        Polygon1 homeCopy = home;
+
+        DesignGeometryManager::positionPolygonInsideAnother(h , homeCopy);
+
+        vector<Line> ll = homeCopy.getLines();
+        centerLines.insert(centerLines.end() , ll.begin() , ll.end());
+    }
+
+
 
 
 //    start = {streetsLinesOuter[streetsLinesOuter.size() -3 ].getX1() , streetsLinesOuter[streetsLinesInner.size() -3 ].getY1()};
