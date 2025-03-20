@@ -421,7 +421,15 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     vector<Line> polygonLines = polygon1.getLines();
     polygonLines.insert(polygonLines.begin() , extensionsLine.begin() , extensionsLine.end());
 
-    Line prevLine (startPoint.getX() , startPoint.getY() , centerLine.getX1() , centerLine.getY1());
+    Line prevLine ;
+
+    if(extensionsLine.size() == 2)
+    {
+        prevLine = Line(startPoint.getX() , startPoint.getY() , centerLine.getX1() , centerLine.getY1());
+    }
+    else{
+        prevLine = Line(startPoint.getX() , startPoint.getY() , extensionsLine[1].getX1() , extensionsLine[1].getY1());
+    }
 
     while(centerLineIndex < streetsOrder.size() && start != last)
     {
