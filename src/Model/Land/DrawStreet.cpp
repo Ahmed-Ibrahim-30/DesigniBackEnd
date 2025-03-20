@@ -260,6 +260,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
             innerStreet = PolygonHelper::getScalingPolygon(innerCopy , circleStreetWidth);
         }
 
+        //
+
 
         vector<Point> innerPoints = innerStreet.getPoints();
 
