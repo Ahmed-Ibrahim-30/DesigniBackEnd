@@ -75,7 +75,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    centerLines.clear();
 //    centerLines = centerTop;
 //    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
-    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 
 }
 
