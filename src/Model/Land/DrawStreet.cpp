@@ -727,6 +727,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
 
     Point endPoint , startPoint = start;
     double mainStep = step;
+    step = MathUtils::roundingToDecimal(step);
     while (true)
     {
         const Line& line = lines[lineIndex];
