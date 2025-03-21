@@ -447,11 +447,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         if (lastPoint.getX() == INT_MAX)
         {
-//            break;
-            bottomLines.clear();
-            lastPoint = {endLine.getX2() , endLine.getY2()};
-            bottomLines.emplace_back(start.getX() , start.getY() , lastPoint.getX() , lastPoint.getY());
-            centerLineIndex--;
+            break;
+//            bottomLines.clear();
+//            lastPoint = {endLine.getX2() , endLine.getY2()};
+//            bottomLines.emplace_back(start.getX() , start.getY() , lastPoint.getX() , lastPoint.getY());
+//            centerLineIndex--;
         }
 
         int lineIndex2 = centerLineIndex;
