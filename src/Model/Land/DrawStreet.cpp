@@ -5,6 +5,7 @@
 #include "DrawStreet.h"
 
 #include "src/Model/DesignGeometryManager.h"
+#include "Land.h"
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
@@ -545,7 +546,16 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
-            homeLands.emplace_back(homeLand);
+
+            Land land(polygon1);
+            vector<Polygon1> ans;
+            ans = land.SplitLand({1,1}  , static_cast<LandDivisionSortingStrategy>(0));
+
+            if (ans.size()<2)homeLands.emplace_back(homeLand);
+            else{
+                homeLands.emplace_back(ans[0]);
+                homeLands.emplace_back(ans[1]);
+            }
 //            homeLands.emplace_back(pnt6);
 
         }
