@@ -641,7 +641,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
         Point st (line.getX1() , line.getY1());
         Point st2 (line.getX2() , line.getY2());
 
-        points.push_back(st2);
+        if (points.empty() || points.back() != st2)points.push_back(st2);
         points.push_back(st);
     }
 
