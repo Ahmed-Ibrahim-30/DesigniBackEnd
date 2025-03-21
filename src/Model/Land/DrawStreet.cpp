@@ -581,6 +581,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
     Line startLine (start.getX(), start.getY() , start2.getX() , start2.getY());
     Line endLine (end.getX(), end.getY() , end2.getX() , end2.getY());
     Point firstOnLine , secondOnLine;
+    bool flag1 = false, flag2 = false;
     for (int i = 0; i < mainLandLines.size(); ++i)
     {
         const Line& line = mainLandLines[i];
@@ -590,6 +591,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
         {
             if (line.getId() == "extensionsLine")
             {
+                flag1 = true;
                 firstOnLine = {mainLandLines[i].getX2() , mainLandLines[i].getY2()};
             }
             else{
@@ -608,6 +610,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
         {
             if (line.getId() == "extensionsLine")
             {
+                flag2 = true;
                 secondOnLine = {mainLandLines[i].getX2() , mainLandLines[i].getY2()};
             }
             else{
@@ -617,7 +620,16 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
         }
     }
 
-    vector<Point> points = PolygonHelper::getShortestPath(pol , firstOnLine , secondOnLine);
+    vector<Point> points ;
+
+    if (flag1 && flag2)
+    {
+        points = {start2 , end2};
+        firstOnLine  = start2, secondOnLine = end2;
+    }
+    else{
+        points = PolygonHelper::getShortestPath(pol , firstOnLine , secondOnLine);;
+    }
 
     cout<<"result Points = "<<points.size()<<"\n";
     if (secondOnLine != end2)points.push_back(end2);
