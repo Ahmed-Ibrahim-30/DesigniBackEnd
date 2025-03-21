@@ -564,7 +564,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             Point endH1 = {newLine.getX2() , newLine.getY2()};
             Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1);
 
-            cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n";
+            cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n\n";
             homeLands.emplace_back(homeLand);
         }
 
@@ -619,6 +619,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
 
     vector<Point> points = PolygonHelper::getShortestPath(pol , firstOnLine , secondOnLine);
 
+    cout<<"result Points = "<<points.size()<<"\n";
     if (secondOnLine != end2)points.push_back(end2);
     points.push_back(end);
     points.push_back(start);
