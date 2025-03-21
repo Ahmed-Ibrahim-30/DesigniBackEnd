@@ -728,7 +728,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
     Point endPoint , startPoint = start;
     double mainStep = step;
     step = (int)(step*10);
-    step/10;
+    step/=10;
     while (true)
     {
         const Line& line = lines[lineIndex];
