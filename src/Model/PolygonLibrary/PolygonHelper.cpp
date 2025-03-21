@@ -502,6 +502,77 @@ Line PolygonHelper::getLineForPoint(const vector<Line> &lines, const Point &p)
     return {INT_MAX,INT_MAX,INT_MAX,INT_MAX};
 }
 
+vector<Point> PolygonHelper::getShortestPath(Polygon1 &polygon1, const Point &start, const Point &end)
+{
+    vector<Point> points = polygon1.getPoints();
+    int n = (int)points.size() , index1 = 0, index2 = 0;
+
+    vector<Point> newPoints;
+    bool added1 = false, added2 = false;
+
+    for (int i = 0; i < n; ++i)
+    {
+        Point cur = points[i];
+        Point next = points[(i+1) %n];
+        Line line (cur.getX() , cur.getY() , next.getX() , next.getY());
+        if(newPoints.empty() || (!newPoints.empty() && newPoints.back() != cur))newPoints.push_back(cur);
+        double length1 = -1 , length2 = -1;
+        if (!added1 && isPointOnLine(start , line))
+        {
+            Line f1(start.getX() , start.getY() , cur.getX() , cur.getY());
+            length1 = f1.getLength();
+            added1 = true;
+        }
+        if (!added2 &&isPointOnLine(end , line))
+        {
+            Line f1(end.getX() , end.getY() , cur.getX() , cur.getY());
+            length2 = f1.getLength();
+            added2 = true;
+        }
+
+        if (length1 != -1 && length2 != -1)
+        {
+            if (length1 < length2){
+
+                index1 = newPoints.size();
+                newPoints.push_back(start);
+                index2 = newPoints.size() ;
+                newPoints.push_back(end);
+            }
+            else {
+                index2 = newPoints.size();
+                newPoints.push_back(end);
+                index1 = newPoints.size() ;
+                newPoints.push_back(start);
+            }
+        }
+        else if (length1 != -1)index1 = (int)newPoints.size(),newPoints.push_back(start);
+        else if (length2 != -1)index2 = (int)newPoints.size(),newPoints.push_back(end);
+    }
+
+    vector<Point> ans1 , ans2;
+
+    int i = index1;
+
+    while (true)
+    {
+        ans1.push_back(newPoints[i]);
+        if (i == index2) break;
+        i = (i+1) % (int)newPoints.size();
+    }
+
+    i = index1;
+    while (true)
+    {
+        ans2.push_back(newPoints[i]);
+        if (i == index2) break;
+        i = (i==0) ? (int)newPoints.size()-1 : (i-1);
+    }
+
+    if (ans1.size()<ans2.size()) return ans1;
+    else return ans2;
+}
+
 
 
 

@@ -178,6 +178,8 @@ public:
      * @return
      */
     static Line getLineForPoint(const vector<Line> &lines , const Point &p);
+
+    static vector<Point> getShortestPath(Polygon1 &polygon1  , const Point &start, const Point &end);
 };
 
 

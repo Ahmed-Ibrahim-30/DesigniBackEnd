@@ -63,12 +63,27 @@ private:
      * @return
      */
     vector<Line> buildCenterLines(Polygon1 &polygon ,double centerLineHeight);
+
+
+    /**
+     * Return new Polygon
+     * @param start
+     * @param end
+     * @param start2
+     * @param end2
+     * @param mainLandLines
+     * @return
+     */
+    Polygon1 getHomePolygon(const Point &start, const Point &end, const Point &start2, const Point &end2,
+                            const vector<Line> &mainLandLines, Polygon1 &pol));
 public:
     void drawStreets(Polygon1 &polygon1);
 
     [[nodiscard]] const vector<Line> &getCenterLines() const;
 
     const vector<CityGrid> &getCities() const;
+
+
 };
 
 

@@ -416,6 +416,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     step = length / (int)(length/20);
 
     vector<Line> polygonLines = polygon1.getLines();
+
+    for(auto &ex : extensionsLine)ex.setId("extensionsLine");
     polygonLines.insert(polygonLines.begin() , extensionsLine.begin() , extensionsLine.end());
 
     Line prevLine ;
@@ -445,10 +447,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         if (lastPoint.getX() == INT_MAX)
         {
             break;
-//            bottomLines.clear();
-//            lastPoint = {endLine.getX2() , endLine.getY2()};
-//            bottomLines.emplace_back(start.getX() , start.getY() , lastPoint.getX() , lastPoint.getY());
-//            centerLineIndex--;
         }
 
         int lineIndex2 = centerLineIndex;
@@ -523,6 +521,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             endUp = {cuttingLine.getX2() , cuttingLine.getY2()};
         }
+
+
+
         Line newLine (lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
         homeBorderSol.emplace_back(newLine);
 
@@ -542,7 +543,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         }
         else{
-            vector<Point> pnt5 ;//= {{prevLine.getX1() , prevLine.getY1()} , {prevLine.getX2() , prevLine.getY2()} , endUp , lastPoint};
+            vector<Point> pnt5 ;
 
             for(auto &line : bottomLines)
             {
@@ -556,10 +557,15 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             pnt5.push_back(endUp);
             pnt5.emplace_back(prevLine.getX2() , prevLine.getY2());
 
-            homeLands.emplace_back(pnt5);
+            Point startH = {prevLine.getX1() , prevLine.getY1()};
+            Point startH1 = {prevLine.getX2() , prevLine.getY2()};
+
+            Point endH = {newLine.getX1() , newLine.getY1()};
+            Point endH1 = {newLine.getX2() , newLine.getY2()};
+            Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1);
+
+            homeLands.emplace_back(homeLand);
         }
-
-
 
         start = lastPoint;
         prevLine = newLine;
@@ -567,6 +573,57 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     }
 
     return homeBorderSol;
+}
+
+Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , const Point &start2 , const Point &end2 , const vector<Line> &mainLandLines , Polygon1 &pol)
+{
+    Line startLine (start.getX(), start.getY() , start2.getX() , start2.getY());
+    Line endLine (end.getX(), end.getY() , end2.getX() , end2.getY());
+    Point firstOnLine , secondOnLine;
+    for (int i = 0; i < mainLandLines.size(); ++i)
+    {
+        const Line& line = mainLandLines[i];
+
+        Point intersectionPoint = PolygonHelper::getIntersectionPoint(startLine , line);
+        if (intersectionPoint.getX() != INT_MAX)
+        {
+            if (line.getId() == "extensionsLine")
+            {
+                firstOnLine = {mainLandLines[i].getX2() , mainLandLines[i].getY2()};
+            }
+            else{
+                firstOnLine = intersectionPoint;
+            }
+            break;
+        }
+    }
+
+    for (int i = 0; i < mainLandLines.size(); ++i)
+    {
+        const Line& line = mainLandLines[i];
+
+        Point intersectionPoint = PolygonHelper::getIntersectionPoint(endLine , line);
+        if (intersectionPoint.getX() != INT_MAX)
+        {
+            if (line.getId() == "extensionsLine")
+            {
+                secondOnLine = {mainLandLines[i].getX2() , mainLandLines[i].getY2()};
+            }
+            else{
+                secondOnLine = intersectionPoint;
+            }
+            break;
+        }
+    }
+
+    vector<Point> points = PolygonHelper::getShortestPath(pol , firstOnLine , secondOnLine);
+
+    if (secondOnLine != end2)points.push_back(end2);
+    points.push_back(end);
+    points.push_back(start);
+    if (firstOnLine != start2)points.push_back(start2);
+
+    return Polygon1(points);
 }
 
 vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home)
