@@ -527,6 +527,12 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Line newLine (lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
         homeBorderSol.emplace_back(newLine);
 
+        Point startH = {prevLine.getX1() , prevLine.getY1()};
+        Point startH1 = {prevLine.getX2() , prevLine.getY2()};
+
+        Point endH = {newLine.getX1() , newLine.getY1()};
+        Point endH1 = {newLine.getX2() , newLine.getY2()};
+
         if (newLine.getLength() >= 40)
         {
             Point center1 = newLine.getCenterPoint();
@@ -537,31 +543,28 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , center2 , center1 , lastPoint};
             vector<Point> pnt6 = {center2 , center1 , endUp , {prevLine.getX2() , prevLine.getY2()}};
 
+            Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
-            homeLands.emplace_back(pnt5);
-            homeLands.emplace_back(pnt6);
+            homeLands.emplace_back(homeLand);
+//            homeLands.emplace_back(pnt6);
 
         }
         else{
-            vector<Point> pnt5 ;
+//            vector<Point> pnt5 ;
+//
+//            for(auto &line : bottomLines)
+//            {
+//                Point one (line.getX1() , line.getY1());
+//                Point two (line.getX2() , line.getY2());
+//
+//                pnt5.push_back(one);
+//                if (!pnt5.empty() && two == pnt5[0])break;
+//                pnt5.push_back(two);
+//            }
+//            pnt5.push_back(endUp);
+//            pnt5.emplace_back(prevLine.getX2() , prevLine.getY2());
 
-            for(auto &line : bottomLines)
-            {
-                Point one (line.getX1() , line.getY1());
-                Point two (line.getX2() , line.getY2());
 
-                pnt5.push_back(one);
-                if (!pnt5.empty() && two == pnt5[0])break;
-                pnt5.push_back(two);
-            }
-            pnt5.push_back(endUp);
-            pnt5.emplace_back(prevLine.getX2() , prevLine.getY2());
-
-            Point startH = {prevLine.getX1() , prevLine.getY1()};
-            Point startH1 = {prevLine.getX2() , prevLine.getY2()};
-
-            Point endH = {newLine.getX1() , newLine.getY1()};
-            Point endH1 = {newLine.getX2() , newLine.getY2()};
             Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
             cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n\n";
