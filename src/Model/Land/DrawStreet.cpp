@@ -448,6 +448,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         if (lastPoint.getX() == INT_MAX)
         {
 //            break;
+            bottomLines.clear();
             lastPoint = {endLine.getX2() , endLine.getY2()};
             bottomLines.emplace_back(start.getX() , start.getY() , lastPoint.getX() , lastPoint.getY());
             centerLineIndex--;
@@ -728,6 +729,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
     }
 
     Point endPoint , startPoint = start;
+    double mainStep = step;
     while (true)
     {
         const Line& line = lines[lineIndex];
@@ -741,6 +743,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
             lineIndex ++;
             if (lineIndex == lines.size())
             {
+                cout<<"Main Step = "<<mainStep<<" "<<"Length = "<<length<<" "<<step<<"\n";
                 return {INT_MAX, INT_MAX};
             }
             bottomLines.push_back(partialLine);
