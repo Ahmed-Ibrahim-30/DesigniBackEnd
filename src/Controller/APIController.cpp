@@ -620,23 +620,23 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                     };
                 }
 
-//                for (int m = 0; m < roadExtension.size(); ++m) {
-//                    response["Inner"][i]["roadExtension"][j][m] = {
-//                            {"x1" , roadExtension[m].getX1()},
-//                            {"y1" , roadExtension[m].getY1()},
-//                            {"x2" , roadExtension[m].getX2()},
-//                            {"y2" , roadExtension[m].getY2()},
-//                    };
-//                }
-//
-//                for (int m = 0; m < homeBorder.size(); ++m) {
-//                    response["Inner"][i]["homeBorder"][j][m] = {
-//                            {"x1" , homeBorder[m].getX1()},
-//                            {"y1" , homeBorder[m].getY1()},
-//                            {"x2" , homeBorder[m].getX2()},
-//                            {"y2" , homeBorder[m].getY2()},
-//                    };
-//                }
+                for (int m = 0; m < roadExtension.size(); ++m) {
+                    response["Inner"][i]["roadExtension"][j][m] = {
+                            {"x1" , roadExtension[m].getX1()},
+                            {"y1" , roadExtension[m].getY1()},
+                            {"x2" , roadExtension[m].getX2()},
+                            {"y2" , roadExtension[m].getY2()},
+                    };
+                }
+
+                for (int m = 0; m < homeBorder.size(); ++m) {
+                    response["Inner"][i]["homeBorder"][j][m] = {
+                            {"x1" , homeBorder[m].getX1()},
+                            {"y1" , homeBorder[m].getY1()},
+                            {"x2" , homeBorder[m].getX2()},
+                            {"y2" , homeBorder[m].getY2()},
+                    };
+                }
             }
         }
 
