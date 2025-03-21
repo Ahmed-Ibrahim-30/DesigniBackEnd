@@ -562,7 +562,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             Point endH = {newLine.getX1() , newLine.getY1()};
             Point endH1 = {newLine.getX2() , newLine.getY2()};
-            Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1);
+            Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
             cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n\n";
             homeLands.emplace_back(homeLand);
@@ -576,7 +576,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     return homeBorderSol;
 }
 
-Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , const Point &start2 , const Point &end2 , const vector<Line> &mainLandLines , Polygon1 &pol)
+Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , const Point &start2 , const Point &end2 , const vector<Line> &mainLandLines , Polygon1 &pol , vector<Line> &bottomLines)
 {
     Line startLine (start.getX(), start.getY() , start2.getX() , start2.getY());
     Line endLine (end.getX(), end.getY() , end2.getX() , end2.getY());
@@ -621,8 +621,19 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
 
     cout<<"result Points = "<<points.size()<<"\n";
     if (secondOnLine != end2)points.push_back(end2);
-    points.push_back(end);
-    points.push_back(start);
+
+    vector<Line> btmLines = bottomLines;
+    for (int i = btmLines.size()-1; i  >= 0; i--)
+    {
+        Line line = btmLines [i];
+        Point st (line.getX1() , line.getY1());
+        Point st2 (line.getX2() , line.getY2());
+
+        points.push_back(st2);
+        points.push_back(st);
+    }
+    
+//    points.push_back(start);
     if (firstOnLine != start2)points.push_back(start2);
 
     return Polygon1(points);
