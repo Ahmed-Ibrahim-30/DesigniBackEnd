@@ -593,7 +593,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
                 firstOnLine = {mainLandLines[i].getX2() , mainLandLines[i].getY2()};
             }
             else{
-                firstOnLine = intersectionPoint;
+                firstOnLine = start2;
             }
             break;
         }
@@ -611,7 +611,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
                 secondOnLine = {mainLandLines[i].getX2() , mainLandLines[i].getY2()};
             }
             else{
-                secondOnLine = intersectionPoint;
+                secondOnLine = end2;
             }
             break;
         }
