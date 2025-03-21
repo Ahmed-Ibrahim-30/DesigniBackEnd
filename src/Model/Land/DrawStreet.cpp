@@ -449,6 +449,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         {
 //            break;
             lastPoint = {endLine.getX2() , endLine.getY2()};
+            bottomLines.emplace_back(start.getX() , start.getY() , lastPoint.getX() , lastPoint.getY());
             centerLineIndex--;
         }
 
