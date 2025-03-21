@@ -538,8 +538,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         {
             Point center1 = newLine.getCenterPoint();
             Point center2 = prevLine.getCenterPoint();
-
-            homeBorderSol.emplace_back(center1.getX() , center1.getY() , center2.getX() , center2.getY());
+//            homeBorderSol.emplace_back(center1.getX() , center1.getY() , center2.getX() , center2.getY());
 
             vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , center2 , center1 , lastPoint};
             vector<Point> pnt6 = {center2 , center1 , endUp , {prevLine.getX2() , prevLine.getY2()}};
@@ -553,6 +552,35 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             if (ans.size()<2)homeLands.emplace_back(homeLand);
             else{
+                Line cutting (INT_MAX, INT_MAX,INT_MAX,INT_MAX);
+
+                map<Point , int> pntCounter;
+                for(auto &p : ans[0].getPoints())
+                {
+                    pntCounter[p]++;
+                }
+                for(auto &p : ans[1].getPoints())
+                {
+                    pntCounter[p]++;
+                }
+                for(auto &p : pntCounter)
+                {
+                    if (p.second ==2)
+                    {
+                        if (cutting.getX1() == INT_MAX)
+                        {
+                            cutting.setX1(p.first.getX());
+                            cutting.setY1(p.first.getY());
+                        }
+                        else
+                        {
+                            cutting.setX2(p.first.getX());
+                            cutting.setY2(p.first.getY());
+                        }
+                    }
+                }
+
+                homeBorderSol.emplace_back(cutting);
                 homeLands.emplace_back(ans[0]);
                 homeLands.emplace_back(ans[1]);
             }
