@@ -75,7 +75,7 @@ private:
      * @return
      */
     Polygon1 getHomePolygon(const Point &start, const Point &end, const Point &start2, const Point &end2,
-                            const vector<Line> &mainLandLines, Polygon1 &pol));
+                            const vector<Line> &mainLandLines, Polygon1 &pol);
 public:
     void drawStreets(Polygon1 &polygon1);
 
