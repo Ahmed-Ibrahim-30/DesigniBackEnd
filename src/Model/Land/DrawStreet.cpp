@@ -407,9 +407,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     vector<Line> streetsOrder = {startLine , topLine , endLine };
 
-    startLine.printJsonFormat();
-    endLine.printJsonFormat();
-
     int centerLineIndex = 0;
     vector<Line> outsideBorder;
     Point startPoint = {streetsOrder[0].getX1() , streetsOrder[0].getY1() };
@@ -738,7 +735,7 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
 
         double length = partialLine.getLength();
 
-        if (length < step)
+        if (length + 0.1 < step)
         {
             lineIndex ++;
             if (lineIndex == lines.size())
