@@ -543,8 +543,19 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         }
         else{
-            vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , {prevLine.getX2() , prevLine.getY2()} , endUp , lastPoint};
+            vector<Point> pnt5 ;//= {{prevLine.getX1() , prevLine.getY1()} , {prevLine.getX2() , prevLine.getY2()} , endUp , lastPoint};
 
+            for(auto &line : bottomLines)
+            {
+                Point one (line.getX1() , line.getY1());
+                Point two (line.getX2() , line.getY2());
+
+                pnt5.push_back(one);
+                if (!pnt5.empty() && two == pnt5[0])break;
+                pnt5.push_back(two);
+            }
+            pnt5.push_back(endUp);
+            pnt5.emplace_back(prevLine.getX2() , prevLine.getY2());
 
             homeLands.emplace_back(pnt5);
         }
