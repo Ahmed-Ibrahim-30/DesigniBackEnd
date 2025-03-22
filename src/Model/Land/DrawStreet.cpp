@@ -581,6 +581,10 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 }
 
                 homeBorderSol.emplace_back(cutting);
+                if (homeLand.getPoints().size()==6)
+                {
+                    cutting.printJsonFormat();
+                }
                 homeLands.emplace_back(ans[0]);
                 homeLands.emplace_back(ans[1]);
             }
