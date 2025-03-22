@@ -201,7 +201,7 @@ bool PolygonHelper::isPointOnLine(const Point& p, const Line& line)
 
     // Normalize the cross product with line length
     double length = line.getLength();
-    if (std::abs(crossProduct) > 0.1 ) {
+    if (std::abs(crossProduct) > 0.1 * length) {
         return false;
     }
 
