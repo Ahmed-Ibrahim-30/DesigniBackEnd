@@ -552,42 +552,49 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             else{
                 Line cutting (INT_MAX, INT_MAX,INT_MAX,INT_MAX);
 
+                vector<Line> l1 = ans[0].getLines();
+                vector<Line> l2 = ans[1].getLines();
+                set<Point> shared;
+
                 map<Point , int> pntCounter;
                 for(auto &p : ans[0].getPoints())
                 {
-                    pntCounter[p]++;
+                    for(auto &line : l1)
+                    {
+                        bool isPointOnLine = PolygonHelper::isPointOnLine(p , line);
+                        if(isPointOnLine)shared.insert(p);
+                    }
                 }
                 for(auto &p : ans[1].getPoints())
                 {
-                    pntCounter[p]++;
-                }
-
-
-                for(auto &p : pntCounter)
-                {
-                    if (p.second >=2)
+                    for(auto &line : l2)
                     {
-                        if (cutting.getX1() == INT_MAX)
-                        {
-                            cutting.setX1(p.first.getX());
-                            cutting.setY1(p.first.getY());
-                        }
-                        else
-                        {
-                            cutting.setX2(p.first.getX());
-                            cutting.setY2(p.first.getY());
-                        }
+                        bool isPointOnLine = PolygonHelper::isPointOnLine(p , line);
+                        if(isPointOnLine)shared.insert(p);
                     }
                 }
 
-                homeBorderSol.emplace_back(cutting);
-                if (homeLand.getPoints().size()==6)
+                if (shared.size()>1)
                 {
-                    ans[0].print();
-                    ans[1].print();
+                    for(auto &p : shared)
+                    {
+                        if (cutting.getX1() == INT_MAX)
+                        {
+                            cutting.setX1(p.getX());
+                            cutting.setY1(p.getY());
+                        }
+                        else if (cutting.getX2() == INT_MAX)
+                        {
+                            cutting.setX2(p.getX());
+                            cutting.setY2(p.getY());
+                            break;
+                        }
+                    }
+                    homeBorderSol.emplace_back(cutting);
+                    homeLands.emplace_back(ans[0]);
+                    homeLands.emplace_back(ans[1]);
                 }
-                homeLands.emplace_back(ans[0]);
-                homeLands.emplace_back(ans[1]);
+
             }
 //            homeLands.emplace_back(pnt6);
 
