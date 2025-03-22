@@ -591,6 +591,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                         }
                     }
                     cutting.printJsonFormat();
+                    cout<<"Shared = "<<shared.size()<<"\n";
                     homeBorderSol.emplace_back(cutting);
                     homeLands.emplace_back(ans[0]);
                     homeLands.emplace_back(ans[1]);
