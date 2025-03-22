@@ -559,7 +559,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 map<Point , int> pntCounter;
                 for(auto &p : ans[0].getPoints())
                 {
-                    for(auto &line : l1)
+                    for(auto &line : l2)
                     {
                         bool isPointOnLine = PolygonHelper::isPointOnLine(p , line);
                         if(isPointOnLine)shared.insert(p);
@@ -567,7 +567,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 }
                 for(auto &p : ans[1].getPoints())
                 {
-                    for(auto &line : l2)
+                    for(auto &line : l1)
                     {
                         bool isPointOnLine = PolygonHelper::isPointOnLine(p , line);
                         if(isPointOnLine)shared.insert(p);
