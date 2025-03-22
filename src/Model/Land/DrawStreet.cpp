@@ -590,6 +590,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                             break;
                         }
                     }
+                    cutting.printJsonFormat();
                     homeBorderSol.emplace_back(cutting);
                     homeLands.emplace_back(ans[0]);
                     homeLands.emplace_back(ans[1]);
