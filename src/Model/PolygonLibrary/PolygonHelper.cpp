@@ -194,24 +194,24 @@ bool PolygonHelper::isPointInSegment(const Point &p, const Line &line)
     return true;
 }
 
-bool PolygonHelper::isPointOnLine(const Point& p, const Line& line) {
+bool PolygonHelper::isPointOnLine(const Point& p, const Line& line)
+{
     // Calculate the cross product to check if the point is collinear with the line
     double crossProduct = (p.getY() - line.getY1()) * (line.getX2() - line.getX1()) - (p.getX() - line.getX1()) * (line.getY2() - line.getY1());
 
     // Normalize the cross product with line length
-    double length = std::hypot(line.getX2() - line.getX1(), line.getY2() - line.getY1());
-    if (std::abs(crossProduct) > 0.1 * length) {
+    double length = line.getLength();
+    if (std::abs(crossProduct) > 0.1 ) {
         return false;
     }
 
-    // Check if the point lies within the bounding rectangle of the line segment
     double minX = min(line.getX1(), line.getX2());
     double maxX = max(line.getX1(), line.getX2());
     double minY = min(line.getY1(), line.getY2());
     double maxY = max(line.getY1(), line.getY2());
 
-    if(p.getX()+ 0.1 < min(line.getX1() , line.getX2()) || p.getX() > max(line.getX1() , line.getX2())+ 0.1) return false;
-    if(p.getY()+ 0.1 < min(line.getY1() , line.getY2()) || p.getY() > max(line.getY1() , line.getY2())+ 0.1) return false;
+    if(p.getX()+ 0.1 < minX|| p.getX() > maxX+ 0.1) return false;
+    if(p.getY()+ 0.1 < minY || p.getY() > maxY+ 0.1) return false;
 
     return true;
 }
