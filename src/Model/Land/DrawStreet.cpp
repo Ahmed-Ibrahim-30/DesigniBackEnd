@@ -561,16 +561,28 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 {
                     for(auto &line : l2)
                     {
-                        bool isPointOnLine = PolygonHelper::isPointOnLine(p , line);
-                        if(isPointOnLine)shared.insert(p);
+                        double minX = min(line.getX1(), line.getX2());
+                        double maxX = max(line.getX1(), line.getX2());
+                        double minY = min(line.getY1(), line.getY2());
+                        double maxY = max(line.getY1(), line.getY2());
+
+                        if(p.getX()+ 0.1 < minX|| p.getX() > maxX+ 0.1) continue;
+                        if(p.getY()+ 0.1 < minY || p.getY() > maxY+ 0.1) continue;
+                        shared.insert(p);
                     }
                 }
                 for(auto &p : ans[1].getPoints())
                 {
                     for(auto &line : l1)
                     {
-                        bool isPointOnLine = PolygonHelper::isPointOnLine(p , line);
-                        if(isPointOnLine)shared.insert(p);
+                        double minX = min(line.getX1(), line.getX2());
+                        double maxX = max(line.getX1(), line.getX2());
+                        double minY = min(line.getY1(), line.getY2());
+                        double maxY = max(line.getY1(), line.getY2());
+
+                        if(p.getX()+ 0.1 < minX|| p.getX() > maxX+ 0.1) continue;
+                        if(p.getY()+ 0.1 < minY || p.getY() > maxY+ 0.1) continue;
+                        shared.insert(p);
                     }
                 }
 
