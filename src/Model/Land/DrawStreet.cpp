@@ -566,8 +566,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                         double minY = min(line.getY1(), line.getY2());
                         double maxY = max(line.getY1(), line.getY2());
 
-                        if(p.getX()+ 0.1 < minX|| p.getX() > maxX+ 0.1) continue;
-                        if(p.getY()+ 0.1 < minY || p.getY() > maxY+ 0.1) continue;
+                        if(p.getX()+ 0.1 <= minX|| p.getX() >= maxX+ 0.1) continue;
+                        if(p.getY()+ 0.1 <= minY || p.getY() >= maxY+ 0.1) continue;
                         shared.insert(p);
                     }
                 }
@@ -580,8 +580,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                         double minY = min(line.getY1(), line.getY2());
                         double maxY = max(line.getY1(), line.getY2());
 
-                        if(p.getX()+ 0.1 < minX|| p.getX() > maxX+ 0.1) continue;
-                        if(p.getY()+ 0.1 < minY || p.getY() > maxY+ 0.1) continue;
+                        if(p.getX()+ 0.1 <= minX|| p.getX() >= maxX+ 0.1) continue;
+                        if(p.getY()+ 0.1 <= minY || p.getY() >= maxY+ 0.1) continue;
                         shared.insert(p);
                     }
                 }
