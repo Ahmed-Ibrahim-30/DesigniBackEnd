@@ -583,7 +583,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 homeBorderSol.emplace_back(cutting);
                 if (homeLand.getPoints().size()==6)
                 {
-                    cutting.printJsonFormat();
+                    ans[0].print();
+                    ans[1].print();
                 }
                 homeLands.emplace_back(ans[0]);
                 homeLands.emplace_back(ans[1]);
@@ -607,7 +608,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 //            pnt5.emplace_back(prevLine.getX2() , prevLine.getY2());
 
 
-            cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n\n";
+//            cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n\n";
             homeLands.emplace_back(homeLand);
         }
 
@@ -674,7 +675,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
         points = PolygonHelper::getShortestPath(pol , firstOnLine , secondOnLine);;
     }
 
-    cout<<"result Points = "<<points.size()<<"\n";
+//    cout<<"result Points = "<<points.size()<<"\n";
     if (secondOnLine != end2)points.push_back(end2);
 
     vector<Line> btmLines = bottomLines;
