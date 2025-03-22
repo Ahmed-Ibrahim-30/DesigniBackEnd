@@ -210,7 +210,10 @@ bool PolygonHelper::isPointOnLine(const Point& p, const Line& line) {
     double minY = min(line.getY1(), line.getY2());
     double maxY = max(line.getY1(), line.getY2());
 
-    return (p.getX() >= minX && p.getX() <= maxX && p.getY() >= minY && p.getY() <= maxY);
+    if(p.getX()+ 0.1 < min(line.getX1() , line.getX2()) || p.getX() > max(line.getX1() , line.getX2())+ 0.1) return false;
+    if(p.getY()+ 0.1 < min(line.getY1() , line.getY2()) || p.getY() > max(line.getY1() , line.getY2())+ 0.1) return false;
+
+    return true;
 }
 
 double PolygonHelper::getSlope(double x1, double x2, double y1, double y2) {
