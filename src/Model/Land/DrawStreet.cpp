@@ -686,12 +686,11 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
 //    points.push_back(start);
     if (firstOnLine != start2)points.push_back(start2);
 
+    Polygon1 ans(points);
+
     if (points.size() ==6)
     {
-        for(auto &p : points)
-        {
-            cout<<" ,("<<p.getX() <<" , "<<p.getY()<<"\n" ;
-        }
+        ans.print();
     }
 
 
