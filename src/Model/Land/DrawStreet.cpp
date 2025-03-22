@@ -63,7 +63,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
     startSpace = step1 / 2;
-//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
     drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 //    vector<vector<Line>> bottomStreets = drawBottomStreets(polygonLines ,centerLinesBottom, spacingLines , step1 , divisions);
@@ -586,7 +586,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                     }
                 }
 
-                cout<<"Shared = "<<shared.size()<<"\n";
+//                cout<<"Shared = "<<shared.size()<<"\n";
                 if (shared.size()>1)
                 {
                     for(auto &p : shared)
@@ -603,7 +603,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                             break;
                         }
                     }
-                    cutting.printJsonFormat();
                     homeBorderSol.emplace_back(cutting);
                     homeLands.emplace_back(ans[0]);
                     homeLands.emplace_back(ans[1]);
