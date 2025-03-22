@@ -670,6 +670,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
     }
 
     cout<<"result Points = "<<points.size()<<"\n";
+    cout<<"result Points = "<<bottomLines.size()<<"\n";
     if (secondOnLine != end2)points.push_back(end2);
 
     vector<Line> btmLines = bottomLines;
