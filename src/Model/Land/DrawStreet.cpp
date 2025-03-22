@@ -536,7 +536,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
-        if (homeLand.getArea() >= 40)
+        if (homeLand.getArea() >= 45)
         {
             Point center1 = newLine.getCenterPoint();
             Point center2 = prevLine.getCenterPoint();
