@@ -534,7 +534,9 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Point endH = {newLine.getX1() , newLine.getY1()};
         Point endH1 = {newLine.getX2() , newLine.getY2()};
 
-        if (newLine.getLength() >= 40)
+        Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
+
+        if (homeLand.getArea() >= 40)
         {
             Point center1 = newLine.getCenterPoint();
             Point center2 = prevLine.getCenterPoint();
@@ -542,9 +544,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , center2 , center1 , lastPoint};
             vector<Point> pnt6 = {center2 , center1 , endUp , {prevLine.getX2() , prevLine.getY2()}};
-
-            Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
-
 
             Land land(homeLand);
             vector<Polygon1> ans;
@@ -602,8 +601,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 //            pnt5.push_back(endUp);
 //            pnt5.emplace_back(prevLine.getX2() , prevLine.getY2());
 
-
-            Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
             cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n\n";
             homeLands.emplace_back(homeLand);
