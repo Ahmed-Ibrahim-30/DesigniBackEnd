@@ -77,12 +77,18 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     }
 
 
-//    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
-//    //Bottoms
-//    vector<Line> centerBottoms = SplitCenterLines(startSpace + step1/2 , step1 , divisions , centerLinesBottom);
-//    centerLines.clear();
+    startSpace = step1 / 2;
+    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
+    //Bottoms
+    vector<Line> centerBottoms = SplitCenterLines(startSpace + step1/2 , step1 , divisions , centerLinesBottom);
+
+    vector<Line> centerCopy = centerLines;
+    std::reverse(centerLines.begin(), centerLines.end());
+    centerLines.pop_back();
+    centerLines.pop_back();
 //    centerLines = centerTop;
-//    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
 //    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 
 }
@@ -91,32 +97,33 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
     int index = 0;
     Point stP = {centerLines2[index].getX1() , centerLines2[index].getY1()};
     vector<Line> centerTop;
-//    for (int i = 0; i < divisions; ++i)
-//    {
-//        Point next = getNextPoint(stP , index , centerLines2 , startSpace );
-//        startSpace = step1;
-//
-//        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
-//        bottoms.clear();
-//
-//        stP = next;
-//
-//        int index2 = index;
-//        next = getNextPoint(next , index2 , centerLines2 , 5 , bottoms);
-//        bottoms.clear();
-//
-//        Point next2 = getNextPoint(next , index2 , centerLines2 , startSpace - 10 , bottoms);
-//
-//        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
-//
-//        stP = getNextPoint(stP , index , centerLines2 , startSpace , bottoms);
-//    }
-//    Line l (stP.getX() , stP.getY() , centerLines2.back().getX2() , centerLines2.back().getY2());
-//
-//    vector<Line> bottoms;
-//    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 100, bottoms);
-//
-//    centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+    for (int i = 0; i < divisions; ++i)
+    {
+        vector<Line> bottoms;
+        Point next = getNextPoint(stP , index , centerLines2 , startSpace ,bottoms);
+        startSpace = step1;
+
+        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+        bottoms.clear();
+
+        stP = next;
+
+        int index2 = index;
+        next = getNextPoint(next , index2 , centerLines2 , 5 , bottoms);
+        bottoms.clear();
+
+        Point next2 = getNextPoint(next , index2 , centerLines2 , startSpace - 10 , bottoms);
+
+        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+
+        stP = getNextPoint(stP , index , centerLines2 , startSpace , bottoms);
+    }
+    Line l (stP.getX() , stP.getY() , centerLines2.back().getX2() , centerLines2.back().getY2());
+
+    vector<Line> bottoms;
+    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 100, bottoms);
+
+    centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
 
     return centerTop;
