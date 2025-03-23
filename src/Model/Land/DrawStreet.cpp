@@ -539,7 +539,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
-        if (homeLand.getArea() >= 850)
+        if (homeLand.getArea() >= 85000000)
         {
             Land land(homeLand);
             vector<Polygon1> ans;
