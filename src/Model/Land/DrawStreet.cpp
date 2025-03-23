@@ -412,6 +412,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     {
         streetsOrder = {startLine , bottomLine , endLine };
         bottomLine  = topLine;
+        topLine == streetsOrder[1];
     }
 
     int centerLineIndex = 0;
