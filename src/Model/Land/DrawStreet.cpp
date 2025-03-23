@@ -80,7 +80,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     startSpace = step1 / 2;
     vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
     //Bottoms
-    vector<Line> centerBottoms = SplitCenterLines(startSpace + step1/2 , step1 , divisions , centerLinesBottom);
+    startSpace = step1;
+    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
 
     vector<Line> centerCopy = centerLines;
     std::reverse(centerLines.begin(), centerLines.end());
@@ -109,10 +110,10 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
         stP = next;
 
         int index2 = index;
-        next = getNextPoint(next , index2 , centerLines2 , 5 , bottoms);
+        next = getNextPoint(next , index2 , centerLines2 , circleStreetWidth , bottoms);
         bottoms.clear();
 
-        Point next2 = getNextPoint(next , index2 , centerLines2 , startSpace - 10 , bottoms);
+        Point next2 = getNextPoint(next , index2 , centerLines2 , startSpace - circleStreetWidth*2 , bottoms);
 
         centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
