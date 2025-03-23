@@ -67,6 +67,22 @@ vector<Polygon1> Land::SplitLand(const Design &design,LandDivisionSortingStrateg
    return ans;
 }
 
+vector<Polygon1> Land::SplitLand(Polygon1 &innerHome,LandDivisionSortingStrategy  landDivisionStrategy)
+{
+    landDivision = new LandDivisionBasedOnInnerDesign();
+
+    vector<vector<Polygon1>>pols = landDivision->divideLand(land , innerHome , landDivisionStrategy);
+
+    // subLand = buildRoads(pols[0]);
+    subLand = pols[0];
+
+    const Polygon1& inner = innerHome;
+    vector<Polygon1> ans = setHomesInsideSubLands(inner , 0);
+
+    // cout<<"Sizes = "<<pols[0].size()<<"\n";
+    return ans;
+}
+
 vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivisionSortingStrategy  landDivisionStrategy) {
     landDivision = new LandDivisionBasedOnSidesConvergence();
 

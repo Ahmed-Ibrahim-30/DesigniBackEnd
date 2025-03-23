@@ -125,6 +125,8 @@ public:
     Polygon1 setHomesInsideLand(const Polygon1 &home , const Polygon1 &curLand , double preferDegree = 0 );
 
     map<int , map<Point , bool>> storePointsShared(const vector<Polygon1> &polys);
+
+    vector<Polygon1> SplitLand(Polygon1 &innerHome, LandDivisionSortingStrategy landDivisionStrategy);
 };
 
 
