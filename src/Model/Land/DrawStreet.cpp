@@ -510,11 +510,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             if (slope1 == 0)
             {
-                cuttingLine.setX2(cuttingLine.getY1() +dx);
+                cuttingLine.setX2(cuttingLine.getY1() -dx);
             }
             else if (slope1 == -1)
             {
-                cuttingLine.setY2(cuttingLine.getX1() +dx);
+                cuttingLine.setY2(cuttingLine.getX1() -dx);
             }
             else
             {
