@@ -38,7 +38,7 @@ private:
      * @param lands
      * @param home
      */
-    vector<Polygon1> homeSetter( vector<Polygon1> &lands , Polygon1 &home);
+    vector<Polygon1> homeSetter( vector<Polygon1> &lands , Polygon1 &home, Polygon1 &home2);
     /**
      * Get Next Point after start Point with step variable
      * @param start

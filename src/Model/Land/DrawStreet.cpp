@@ -327,13 +327,18 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
                         {10, 14},
                         {0,  14}});
 
+        Polygon1 home2 ({{0,  0},
+                        {14, 0},
+                        {14, 10},
+                        {0,  10}});
+
         vector<Line> homeLinesInner = innerStreet.getLines();
         Line innerBottomLine = {innerPoints[0].getX() , innerPoints[0].getY() , innerPoints[3].getX() , innerPoints[3].getY()};
 
         //EXTENSIONS And Border
         vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + circleStreetWidth, centerLine , m ,divisions);
         vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
-        vector<Polygon1> homes = homeSetter(homePolygons , home);
+        vector<Polygon1> homes = homeSetter(homePolygons , home , home2);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
@@ -766,7 +771,7 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
     return Polygon1(points);
 }
 
-vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home)
+vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home, Polygon1 &home2)
 {
     vector<Polygon1> homes;
     for(auto &land : lands)
@@ -784,8 +789,24 @@ vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home)
 
         homeCopy.transformPolygon(centerPoint.getX() -centroidHome.getX(), centerPoint.getY() -centroidHome.getY());
 
-        homes.push_back(homeCopy);
+        if (DesignGeometryManager::isPolygonInsidePolygon(land , homeCopy))
+        {
+            homes.push_back(homeCopy);
+        }
+        else{
+            homeCopy = home2;
+            tallestLine = land.getTallestLine();
 
+            angle = tallestLine.getAngle();
+            homeCopy.rotate(angle);
+
+            centroidHome = homeCopy.calculateCentroid();
+
+            centerPoint = land.calculateCentroid();
+
+            homeCopy.transformPolygon(centerPoint.getX() -centroidHome.getX(), centerPoint.getY() -centroidHome.getY());
+            homes.push_back(homeCopy);
+        }
     }
     return homes;
 }
