@@ -304,7 +304,9 @@ double Line::getSlope() const
 {
     if(x2 == x1) return 0;
 
-    return (y2-y1) / (x2 - x1);
+    double slope = (y2 - y1) / (x2-x1);
+
+    return slope;
 }
 
 Point Line::getCenterPoint() {
