@@ -439,7 +439,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     {
         index++;
         vector<Line> bottomLines;
-        if (index == 6) break;
+        if (index == 7) break;
 
         Point lastPoint = getNextPoint(start , centerLineIndex , streetsOrder , step , bottomLines);
 
