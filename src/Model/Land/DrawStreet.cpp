@@ -434,10 +434,12 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
     else{
         prevLine = Line(startPoint.getX() , startPoint.getY() , extensionsLine[2].getX1() , extensionsLine[2].getY1());
     }
-
+    int index = 0;
     while(centerLineIndex < streetsOrder.size() && start != last)
     {
+        index++;
         vector<Line> bottomLines;
+        if (index == 6) break;
 
         Point lastPoint = getNextPoint(start , centerLineIndex , streetsOrder , step , bottomLines);
 
