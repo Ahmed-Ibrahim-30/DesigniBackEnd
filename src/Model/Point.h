@@ -11,7 +11,7 @@ class Point {
 private:
     double x , y , z;
     string id;
-    double epsoln = 1e-1;
+    double epsoln = 0.2;
 public:
     Point(double x, double y);
     Point(double x, double y , double z);
