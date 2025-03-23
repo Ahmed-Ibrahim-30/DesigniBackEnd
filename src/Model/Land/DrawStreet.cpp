@@ -547,11 +547,16 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
 
+        Polygon1 home ({{0,  0},
+                        {10, 0},
+                        {10, 14},
+                        {0,  14}});
+
         if (homeLand.getArea() >= 850)
         {
             Land land(homeLand);
             vector<Polygon1> ans;
-            ans = land.SplitLand(400   , static_cast<LandDivisionSortingStrategy>(0));
+            ans = land.SplitLand(home   , static_cast<LandDivisionSortingStrategy>(0));
 
             if (ans.size()<2)homeLands.emplace_back(homeLand);
             else{
