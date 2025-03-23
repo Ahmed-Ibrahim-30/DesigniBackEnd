@@ -492,7 +492,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
             if (divisionIndex == 2 && lineIndex2==1)
             {
-                cout<<"Slope = "<<slope<<"\n";
+                cout<<"Slope = "<<slope1<<"\n";
             }
 
             if (slope1 != 0)
