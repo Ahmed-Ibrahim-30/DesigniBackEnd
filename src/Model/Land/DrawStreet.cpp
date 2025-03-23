@@ -564,6 +564,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 map<Point , int> pntCounter;
                 if (divisionIndex == divisionsCount-1 && index == 13)
                 {
+                    homeLand.print()
                     ans[0].print();
                     ans[1].print();
                 }
