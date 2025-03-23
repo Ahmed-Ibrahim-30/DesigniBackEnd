@@ -474,11 +474,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         if (lastPoint != endUp)
         {
             // Determine the side of extraLine relative to mainLine
-            double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX2(), eLine.getY2(), oppositeLineLast.getX2(), oppositeLineLast.getY2());
+            double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX2(), eLine.getY2(), oppositeLineLast.getCenterPoint().getX(), oppositeLineLast.getCenterPoint().getY());
 
             if (divisionIndex == 2 && lineIndex2==1)
             {
-
+                cout<<"sideCheck = "<<sideCheck<<"\n";
             }
             if (sideCheck > 0)
             {
