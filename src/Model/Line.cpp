@@ -137,8 +137,8 @@ void Line::setSecond(const Point &_second) {
 }
 
 bool Line::operator==(const Line &l) const {
-    return abs(x1 - l.x1) <= 0.2 && abs (y1 - l.y1) <= 0.2 &&
-            abs(x2 - l.x2) <= 0.2 && abs (y2 - l.y2) <= 0.2;
+    return abs(x1 - l.x1) <= 0.1 && abs (y1 - l.y1) <= 0.1 &&
+            abs(x2 - l.x2) <= 0.1 && abs (y2 - l.y2) <= 0.1;
 }
 
 const string &Line::getId() const {

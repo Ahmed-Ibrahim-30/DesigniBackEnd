@@ -10,23 +10,28 @@ Polygon1::Polygon1(const vector<Point> &points_ , bool divisible_) : points(poin
 
     if(points.size() >1)
     {
-        // vector<Point> newP ;
-        // newP.push_back(points[0]);
-        // newP.push_back(points[1]);
+        for (int i = 0; i < points.size(); ++i) {
+            Point cur = points[i];
+            Point next = points[(i+1) %points.size()];
 
-        // for (int i = 2; i < points.size(); ++i)
-        // {
-        //     if(abs(points[i].getX() - points[i-1].getX()) <= 0.1 && abs(points[i-1].getX() - points[i-2].getX()) <= 0.1)
-        //     {
-        //         newP.pop_back();
-        //     }
-        //     else if(abs(points[i].getY() - points[i-1].getY()) <= 0.1 && abs(points[i-1].getY() - points[i-2].getY()) <= 0.1)
-        //     {
-        //         newP.pop_back();
-        //     }
-        //     newP.push_back(points[i]);
-        // }
-        // points = newP;
+            if (cur.getX() - next.getX() > 0.1 && cur.getX() - next.getX() <= 0.2)
+            {
+                next.setX(cur.getX());
+            }
+            else if (next.getX() - cur.getX() > 0.1 && next.getX() - cur.getX() <= 0.2)
+            {
+                cur.setX(next.getX());
+            }
+
+            if (cur.getY() - next.getY() > 0.1 && cur.getY() - next.getY() <= 0.2)
+            {
+                next.setY(cur.getY());
+            }
+            else if (next.getY() - cur.getY() > 0.1 && next.getY() - cur.getY() <= 0.2)
+            {
+                cur.setY(next.getY());
+            }
+        }
     }
 
 
