@@ -10,7 +10,7 @@ LandDivisionBasedOnSidesConvergence::divideLand(const Polygon1 &land, double rat
     vector<vector<Polygon1>> ans;
     divideLand( ratioA , ratioB , maxDivisions , pols , ans , landDivisionStrategy);
 
-    cout<<"Ans Size = "<<ans.size()<<"\n";
+//    cout<<"Ans Size = "<<ans.size()<<"\n";
 
     int index = 0;
     if(!ans.empty())

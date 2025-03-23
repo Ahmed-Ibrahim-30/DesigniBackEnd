@@ -136,7 +136,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     for (int m = 0; m < divisions; ++m)
     {
-//        if (m==4)break;
+        if (m==3)break;
         double newStep = !m ? startSpace : step;
 
         Point last = lastPoint;
@@ -459,6 +459,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Line oppositeLineLast = lineIndex2 == 0 ? endLine : lineIndex2 == 1 ?bottomLine : startLine;
 
+        cout<<"oppositeLineLast = "<<lineIndex2<<"\n";
         // Choose dx
         double dx = 10000;
 
@@ -538,12 +539,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         if (homeLand.getArea() >= 850)
         {
-            Point center1 = newLine.getCenterPoint();
-            Point center2 = prevLine.getCenterPoint();
-
-            vector<Point> pnt5 = {{prevLine.getX1() , prevLine.getY1()} , center2 , center1 , lastPoint};
-            vector<Point> pnt6 = {center2 , center1 , endUp , {prevLine.getX2() , prevLine.getY2()}};
-
             Land land(homeLand);
             vector<Polygon1> ans;
             ans = land.SplitLand(2 , 1 , 1   , static_cast<LandDivisionSortingStrategy>(0));
@@ -609,8 +604,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 }
 
             }
-//            homeLands.emplace_back(pnt6);
-
         }
         else{
 //            vector<Point> pnt5 ;
