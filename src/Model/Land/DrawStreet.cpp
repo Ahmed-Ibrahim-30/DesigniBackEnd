@@ -461,6 +461,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Line oppositeLineLast = lineIndex2 == 0 ? endLine : lineIndex2 == 1 ?bottomLine : startLine;
 
+        if (divisionIndex == 6 && lineIndex2==1)
+        {
+            bottomLine.printJsonFormat();
+            topLine.printJsonFormat();
+        }
         cout<<"oppositeLineLast = "<<lineIndex2<<"\n";
         // Choose dx
         double dx = 10000;
