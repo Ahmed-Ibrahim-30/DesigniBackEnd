@@ -408,6 +408,12 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     vector<Line> streetsOrder = {startLine , topLine , endLine };
 
+    if (divisionIndex==2)
+    {
+        streetsOrder = {startLine , bottomLine , endLine };
+        bottomLine  = topLine;
+    }
+
     int centerLineIndex = 0;
     vector<Line> outsideBorder;
     Point startPoint = {streetsOrder[0].getX1() , streetsOrder[0].getY1() };
