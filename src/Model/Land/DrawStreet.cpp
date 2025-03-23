@@ -566,6 +566,13 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 {
                     for(auto &line : l2)
                     {
+                        Point a1 (line.getX1() , line.getY1());
+                        Point a2 (line.getX2() , line.getY2());
+                        if (p == a1 || p== a2)
+                        {
+                            shared.insert(p);
+                            continue;
+                        }
                         double minX = min(line.getX1(), line.getX2());
                         double maxX = max(line.getX1(), line.getX2());
                         double minY = min(line.getY1(), line.getY2());
@@ -580,6 +587,13 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 {
                     for(auto &line : l1)
                     {
+                        Point a1 (line.getX1() , line.getY1());
+                        Point a2 (line.getX2() , line.getY2());
+                        if (p == a1 || p== a2)
+                        {
+                            shared.insert(p);
+                            continue;
+                        }
                         double minX = min(line.getX1(), line.getX2());
                         double maxX = max(line.getX1(), line.getX2());
                         double minY = min(line.getY1(), line.getY2());
