@@ -475,7 +475,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         if (lastPoint != endUp)
         {
             // Determine the side of extraLine relative to mainLine
-            double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX2(), eLine.getY2(), oppositeLineLast.getCenterPoint().getX(), oppositeLineLast.getCenterPoint().getY());
+            double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX2(), eLine.getY2(), oppositeLineLast.getX1(), oppositeLineLast.getY1());
 
 
             if (sideCheck > 0)
@@ -486,7 +486,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             {
                 dx = -dx;  // If extraLine is on the right, move perpendicular line to the left
             }
-
 
             double slope1 = eLine.getSlope();
 
