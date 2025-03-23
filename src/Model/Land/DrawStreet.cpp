@@ -479,6 +479,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             if (divisionIndex == 2 && lineIndex2==1)
             {
                 cout<<"sideCheck = "<<sideCheck<<"\n";
+                sideCheck*=-1;
             }
             if (sideCheck > 0)
             {
