@@ -67,6 +67,15 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     startSpace = step1;
     drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 
+    for(auto &city : cities)
+    {
+        vector<Line> inner = city.getInnerStreets();
+        vector<Line> outer = city.getOuterStreets();
+        inner.pop_back();
+        outer.pop_back();
+        city.setStreets(inner , outer);
+    }
+
 
 //    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
 //    //Bottoms
