@@ -477,11 +477,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             // Determine the side of extraLine relative to mainLine
             double sideCheck = DesignGeometryManager::crossProduct(eLine.getX1(), eLine.getY1(), eLine.getX2(), eLine.getY2(), oppositeLineLast.getCenterPoint().getX(), oppositeLineLast.getCenterPoint().getY());
 
-            if (divisionIndex == 2 && lineIndex2==1)
-            {
-                cout<<"sideCheck = "<<sideCheck<<"\n";
-                sideCheck*=-1;
-            }
+
             if (sideCheck > 0)
             {
                 dx = dx;  // If extraLine is on the left, move perpendicular line to the right
@@ -493,6 +489,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
 
             double slope1 = eLine.getSlope();
+
+            if (divisionIndex == 2 && lineIndex2==1)
+            {
+                cout<<"Slope = "<<slope<<"\n";
+            }
 
             if (slope1 != 0)
             {
