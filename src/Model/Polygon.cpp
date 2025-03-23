@@ -463,6 +463,19 @@ vector<Line> Polygon1::computeCentroidPerpendiculars()
     return perpendiculars;
 }
 
+Line Polygon1::getTallestLine() {
+    vector<Line> lines = getLines();
+
+    vector<pair<double , Line>> tallestLines;
+
+    for(auto &line : lines)
+    {
+        tallestLines.emplace_back(line.getLength() , line);
+    }
+    std::sort(tallestLines.begin(), tallestLines.end() , greater<>());
+    return tallestLines[0].second;
+}
+
 
 
 

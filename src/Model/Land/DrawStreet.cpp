@@ -751,11 +751,17 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
 
 vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home)
 {
-    Point centroidHome = home.calculateCentroid();
     vector<Polygon1> homes;
     for(auto &land : lands)
     {
         Polygon1 homeCopy = home;
+
+        Line tallestLine = land.getTallestLine();
+
+        double angle = tallestLine.getAngle();
+        homeCopy.rotate(angle);
+
+        Point centroidHome = homeCopy.calculateCentroid();
 
         Point centerPoint = land.calculateCentroid();
 

@@ -41,6 +41,12 @@ public:
      */
     double getArea();
 
+    /**
+     * Get Tallest Line
+     * @return
+     */
+    Line getTallestLine();
+
     vector<Point> getOutsidePoints();
 
     /**
