@@ -1222,7 +1222,7 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
     Point nextPoint1 , nextPoint2;
     int count = 0;
 
-    while (nextPoint1 != startTOP && nextPoint2!= lastTOP)
+    while (nextPoint1 != startTOP || nextPoint2!= lastTOP)
     {
         count++;
         nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
