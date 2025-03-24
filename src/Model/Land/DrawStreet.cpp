@@ -1239,6 +1239,12 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
             Point center1 = line1.getCenterPoint();
             Point center2 = line2.getCenterPoint();
             homeBorderSol.emplace_back(center1.getX() , center1.getY() , center2.getX() , center2.getY());
+
+            pnt1 = {start , nextPoint1 , center2 , center1};
+            homeLands.emplace_back(pnt1);
+
+            pnt1 = {last , nextPoint2 , center2 , center1};
+            homeLands.emplace_back(pnt1);
         }
         else if (land.getArea() >= 400)
         {
