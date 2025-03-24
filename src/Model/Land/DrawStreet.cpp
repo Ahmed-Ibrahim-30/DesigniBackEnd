@@ -756,6 +756,8 @@ vector<Polygon1> DrawStreet::homeSetter(vector<HomeLand> &lands, Polygon1 &home,
             homes.push_back(homeCopy);
         }
         else{
+            homes.push_back(homeCopy);
+            continue;
             homeCopy = home2;
             tallestLine = land.getTallestLine();
 
