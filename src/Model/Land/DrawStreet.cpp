@@ -99,6 +99,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
     vector<Line> centerTop;
     while(stP!= enP && stP.getX() != INT_MAX)
     {
+        cout<<"Start = \n";
         vector<Line> bottoms;
         Point next = getNextPoint(stP , index , centerLines2 , startSpace ,bottoms);
         startSpace = step1;
@@ -108,8 +109,10 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
 
         stP = next;
         if (stP.getX() == INT_MAX || stP == enP){
+            cout<<"break = \n";
             break;
         }
+        cout<<"Start2 = \n";
 
         int index2 = index;
         next = getNextPoint(next , index2 , centerLines2 , circleStreetWidth , bottoms);
