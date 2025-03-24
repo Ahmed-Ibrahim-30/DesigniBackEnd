@@ -95,8 +95,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
     int index = 0;
     Point stP = {centerLines2[index].getX1() , centerLines2[index].getY1()};
+    Point enP = {centerLines2[index].getX2() , centerLines2[index].getY2()};
     vector<Line> centerTop;
-    for (int i = 0; i < divisions; ++i)
+    while(stP!= enP)
     {
         vector<Line> bottoms;
         Point next = getNextPoint(stP , index , centerLines2 , startSpace ,bottoms);
@@ -106,6 +107,9 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
         bottoms.clear();
 
         stP = next;
+        if (stP.getX() == INT_MAX){
+            break;
+        }
 
         int index2 = index;
         next = getNextPoint(next , index2 , centerLines2 , circleStreetWidth , bottoms);
