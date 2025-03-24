@@ -1226,7 +1226,10 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
         nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
         nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
 
-        homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint2.getX() , nextPoint2.getY());
+        if (nextPoint1 != startTOP && nextPoint2!= lastTOP)
+        {
+            homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint2.getX() , nextPoint2.getY());
+        }
 
         vector<Point> pnt1 = {start , nextPoint1 , nextPoint2 , last};
 
