@@ -107,7 +107,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
         bottoms.clear();
 
         stP = next;
-        if (stP.getX() == INT_MAX){
+        if (stP.getX() == INT_MAX || stP == enP){
             break;
         }
 
@@ -121,7 +121,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
 
         stP = getNextPoint(stP , index , centerLines2 , startSpace , bottoms);
     }
-    Line l (stP.getX() , stP.getY() , centerLines2.back().getX2() , centerLines2.back().getY2());
+//    Line l (stP.getX() , stP.getY() , centerLines2.back().getX2() , centerLines2.back().getY2());
 
 //    vector<Line> bottoms;
 //    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 100, bottoms);
