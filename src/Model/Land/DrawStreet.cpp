@@ -97,13 +97,14 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
     Point stP = {centerLines2[index].getX1() , centerLines2[index].getY1()};
     Point enP = {centerLines2[index].getX2() , centerLines2[index].getY2()};
     vector<Line> centerTop;
+    cout<<"END = "<<enP.getX() <<" "<<enP.getY()<<"\n";
     while(stP!= enP && stP.getX() != INT_MAX)
     {
         cout<<"Start = "<<stP.getX() <<" "<<stP.getY()<<" Index = "<<index<<"\n";
         vector<Line> bottoms;
         Point next = getNextPoint(stP , index , centerLines2 , startSpace ,bottoms);
         startSpace = step1;
-        cout<<"Start3 = "<<stP.getX() <<" "<<stP.getY()<<" Index = "<<index<<"\n";
+        cout<<"Start3 = "<<next.getX() <<" "<<next.getY()<<" Index = "<<index<<"\n";
 
 
 
