@@ -104,14 +104,15 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
         Point next = getNextPoint(stP , index , centerLines2 , startSpace ,bottoms);
         startSpace = step1;
 
-        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
-        bottoms.clear();
+
 
         stP = next;
         if (stP.getX() == INT_MAX || stP == enP){
             cout<<"break = \n";
             break;
         }
+        centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+        bottoms.clear();
         cout<<"Start2 = \n";
 
         int index2 = index;
