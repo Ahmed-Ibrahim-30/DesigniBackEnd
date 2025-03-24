@@ -97,7 +97,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
     Point stP = {centerLines2[index].getX1() , centerLines2[index].getY1()};
     Point enP = {centerLines2[index].getX2() , centerLines2[index].getY2()};
     vector<Line> centerTop;
-    while(stP!= enP)
+    while(stP!= enP && stP.getX() != INT_MAX)
     {
         vector<Line> bottoms;
         Point next = getNextPoint(stP , index , centerLines2 , startSpace ,bottoms);
@@ -122,16 +122,12 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
         stP = getNextPoint(stP , index , centerLines2 , startSpace , bottoms);
     }
 
-    Line l (stP.getX() , stP.getY() , enP.getX() , enP.getY());
-
-    vector<Line> bottoms;
-    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 10000, bottoms);
-
-    centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
-
-    centerTop.clear();
-
-    centerTop.push_back(centerLines2[0]);
+//    Line l (stP.getX() , stP.getY() , enP.getX() , enP.getY());
+//
+//    vector<Line> bottoms;
+//    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 10000, bottoms);
+//
+//    centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
     return centerTop;
 }
@@ -954,7 +950,6 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
             lineIndex ++;
             if (lineIndex == lines.size())
             {
-                cout<<"Main Step = "<<mainStep<<" "<<"Length = "<<length<<" "<<step<<"\n";
                 return {INT_MAX, INT_MAX};
             }
             bottomLines.push_back(partialLine);
