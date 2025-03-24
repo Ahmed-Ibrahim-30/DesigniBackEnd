@@ -951,12 +951,12 @@ Point DrawStreet::getNextPoint(const Point &start, int &lineIndex, const vector<
 
         if (length + 0.1 < step)
         {
+            bottomLines.push_back(partialLine);
             lineIndex ++;
             if (lineIndex == lines.size())
             {
                 return {INT_MAX, INT_MAX};
             }
-            bottomLines.push_back(partialLine);
             step -= length;
             startPoint = {line.getX2() , line.getY2()};
         }
