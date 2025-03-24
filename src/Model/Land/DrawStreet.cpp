@@ -67,29 +67,29 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
     drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
-//
-//    for(auto &city : cities)
-//    {
-//        vector<Line> inner = city.getInnerStreets();
-//        vector<Line> outer = city.getOuterStreets();
-//        inner.pop_back();
-//        outer.pop_back();
-//        city.setStreets(inner , outer);
-//    }
-//
-//
-//    startSpace = step1 / 2;
-//    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
-//    //Bottoms
-//    startSpace = step1;
-//    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
-//
-//    vector<Line> centerCopy = centerLines;
-//    std::reverse(centerLines.begin(), centerLines.end());
-//    centerLines.pop_back();
-//    centerLines.pop_back();
-//    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
-//    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
+
+    for(auto &city : cities)
+    {
+        vector<Line> inner = city.getInnerStreets();
+        vector<Line> outer = city.getOuterStreets();
+        inner.pop_back();
+        outer.pop_back();
+        city.setStreets(inner , outer);
+    }
+
+
+    startSpace = step1 / 2;
+    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
+    //Bottoms
+    startSpace = step1;
+    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
+
+    vector<Line> centerCopy = centerLines;
+    std::reverse(centerLines.begin(), centerLines.end());
+    centerLines.pop_back();
+    centerLines.pop_back();
+    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
