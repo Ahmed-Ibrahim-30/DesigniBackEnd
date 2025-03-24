@@ -1265,7 +1265,96 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
     vector<Point> pnt1 = {start , startTOP , lastTOP , last};
     Polygon1 newPol(pnt1);
 
-    if (newPol.getArea() >= 400)
+    if (newPol.getArea() >= 800)
+    {
+        homeBorderSol.emplace_back(start.getX() , start.getY() , last.getX() , last.getY());
+
+        Land land(newPol);
+        vector<Polygon1> ans;
+        ans = land.SplitLand(2, 1 , 1  , static_cast<LandDivisionSortingStrategy>(0));
+
+        if (ans.size()<2)homeLands.emplace_back(newPol);
+        else{
+            Line cutting (INT_MAX, INT_MAX,INT_MAX,INT_MAX);
+
+            vector<Line> l1 = ans[0].getLines();
+            vector<Line> l2 = ans[1].getLines();
+            set<Point> shared;
+
+            map<Point , int> pntCounter;
+
+            for(auto &p : ans[0].getPoints())
+            {
+                for(auto &line : l2)
+                {
+                    Point a1 (line.getX1() , line.getY1());
+                    Point a2 (line.getX2() , line.getY2());
+                    if (p == a1 || p== a2)
+                    {
+                        shared.insert(p);
+                        continue;
+                    }
+                    double minX = min(line.getX1(), line.getX2());
+                    double maxX = max(line.getX1(), line.getX2());
+                    double minY = min(line.getY1(), line.getY2());
+                    double maxY = max(line.getY1(), line.getY2());
+
+                    if(p.getX()+ 0.1 < minX|| p.getX() > maxX+ 0.1) continue;
+                    if(p.getY()+ 0.1 < minY || p.getY() > maxY+ 0.1) continue;
+                    shared.insert(p);
+                }
+            }
+            for(auto &p : ans[1].getPoints())
+            {
+                for(auto &line : l1)
+                {
+                    Point a1 (line.getX1() , line.getY1());
+                    Point a2 (line.getX2() , line.getY2());
+                    if (p == a1 || p== a2)
+                    {
+                        shared.insert(p);
+                        continue;
+                    }
+                    double minX = min(line.getX1(), line.getX2());
+                    double maxX = max(line.getX1(), line.getX2());
+                    double minY = min(line.getY1(), line.getY2());
+                    double maxY = max(line.getY1(), line.getY2());
+
+                    if(p.getX()+ 0.1 < minX|| p.getX() > maxX+ 0.1) continue;
+                    if(p.getY()+ 0.1 < minY || p.getY() > maxY+ 0.1) continue;
+                    shared.insert(p);
+                }
+            }
+
+            if (shared.size()>1)
+            {
+                for(auto &p : shared)
+                {
+                    if (cutting.getX1() == INT_MAX)
+                    {
+                        cutting.setX1(p.getX());
+                        cutting.setY1(p.getY());
+                    }
+                    else if (cutting.getX2() == INT_MAX)
+                    {
+                        cutting.setX2(p.getX());
+                        cutting.setY2(p.getY());
+                        break;
+                    }
+                }
+                homeBorderSol.emplace_back(cutting);
+                homeLands.emplace_back(ans[0]);
+                homeLands.emplace_back(ans[1]);
+            }
+            else{
+                homeLands.emplace_back(newPol);
+            }
+
+        }
+
+    }
+
+    else if (newPol.getArea() >= 400)
     {
         homeBorderSol.emplace_back(start.getX() , start.getY() , last.getX() , last.getY());
         homeLands.emplace_back(pnt1);
