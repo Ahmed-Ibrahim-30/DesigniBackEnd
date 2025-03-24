@@ -759,6 +759,15 @@ vector<Polygon1> DrawStreet::homeSetter(vector<HomeLand> &lands, Polygon1 &home,
             homeCopy = home2;
             tallestLine = land.getTallestLine();
 
+            circleLines = land.getCircleStreets();
+
+            sort(circleLines.begin(), circleLines.end() , [](const Line &l1 ,const Line &l2){return l1.getLength() > l2.getLength();});
+
+            if (!circleLines.empty())
+            {
+                tallestLine = circleLines[0];
+            }
+
             angle = tallestLine.getAngle();
             homeCopy.rotate(angle);
 
