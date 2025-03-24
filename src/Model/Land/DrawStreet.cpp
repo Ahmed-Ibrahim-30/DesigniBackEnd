@@ -315,7 +315,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
         innerStreet = Polygon1(innerPoints);
 
-        vector<Polygon1> homePolygons;
+        vector<HomeLand> homePolygons;
 
         double homeX = 10 , homeY = 14;
 
@@ -354,7 +354,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
 vector<Line>
 DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner ,
-                            vector<Line> &extensionsLine , vector<Polygon1> &homeLands ,const Line &centerLine , int divisionIndex , int divisionsCount) {
+                            vector<Line> &extensionsLine , vector<HomeLand> &homeLands ,const Line &centerLine , int divisionIndex , int divisionsCount) {
 
     vector<Line> homeBorderSol;
     Point start = {streetsLinesInner[0 ].getX1() , streetsLinesInner[0 ].getY1()};
@@ -523,7 +523,11 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Point endH = {newLine.getX1() , newLine.getY1()};
         Point endH1 = {newLine.getX2() , newLine.getY2()};
 
+        Line circleStreet (startH , endH);
+
         Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
+        HomeLand homeLand2 (homeLand.getPoints());
+        homeLand2.setCircleStreets({circleStreet});
 
         if (homeLand.getArea() >= 850)
         {
@@ -531,7 +535,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             vector<Polygon1> ans;
             ans = land.SplitLand(2, 1 , 1  , static_cast<LandDivisionSortingStrategy>(0));
 
-            if (ans.size()<2)homeLands.emplace_back(homeLand);
+            if (ans.size()<2)homeLands.emplace_back(homeLand2);
             else{
                 Line cutting (INT_MAX, INT_MAX,INT_MAX,INT_MAX);
 
@@ -588,8 +592,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                         shared.insert(p);
                     }
                 }
-
-//                cout<<"Shared = "<<shared.size()<<"\n";
                 if (shared.size()>1)
                 {
                     for(auto &p : shared)
@@ -607,33 +609,24 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                         }
                     }
                     homeBorderSol.emplace_back(cutting);
-                    homeLands.emplace_back(ans[0]);
-                    homeLands.emplace_back(ans[1]);
+
+                    HomeLand homeLand3(ans[0].getPoints());
+                    HomeLand homeLand4(ans[1].getPoints());
+
+                    homeLand3.setCircleStreets({circleStreet });
+                    homeLand4.setCircleStreets({circleStreet });
+
+                    homeLands.push_back(homeLand3);
+                    homeLands.push_back(homeLand4);
                 }
                 else{
-                    homeLands.emplace_back(homeLand);
+                    homeLands.push_back(homeLand2);
                 }
 
             }
         }
         else{
-//            vector<Point> pnt5 ;
-//
-//            for(auto &line : bottomLines)
-//            {
-//                Point one (line.getX1() , line.getY1());
-//                Point two (line.getX2() , line.getY2());
-//
-//                pnt5.push_back(one);
-//                if (!pnt5.empty() && two == pnt5[0])break;
-//                pnt5.push_back(two);
-//            }
-//            pnt5.push_back(endUp);
-//            pnt5.emplace_back(prevLine.getX2() , prevLine.getY2());
-
-
-//            cout<<"hOME POINTS  = "<<homeLand.getPoints().size()<<"\n\n";
-            homeLands.emplace_back(homeLand);
+            homeLands.push_back(homeLand2);
         }
 
         start = lastPoint;
@@ -727,14 +720,25 @@ Polygon1 DrawStreet::getHomePolygon(const Point &start , const Point &end , cons
     return Polygon1(points);
 }
 
-vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home, Polygon1 &home2)
+vector<Polygon1> DrawStreet::homeSetter(vector<HomeLand> &lands, Polygon1 &home, Polygon1 &home2)
 {
     vector<Polygon1> homes;
     for(auto &land : lands)
     {
         Polygon1 homeCopy = home;
+        Polygon1 landCopy(land.getPoints());
+        vector<Line> circleLines = land.getCircleStreets();
+
+        sort(circleLines.begin(), circleLines.end() , [](const Line &l1 ,const Line &l2){return l1.getLength() > l2.getLength();});
 
         Line tallestLine = land.getTallestLine();
+
+        if (!circleLines.empty())
+        {
+            tallestLine = circleLines[0];
+            cout<<"tallestLine = "<<tallestLine.getLength()<<"\n";
+        }
+
 
         double angle = tallestLine.getAngle();
         homeCopy.rotate(angle);
@@ -745,7 +749,7 @@ vector<Polygon1> DrawStreet::homeSetter(vector<Polygon1> &lands, Polygon1 &home,
 
         homeCopy.transformPolygon(centerPoint.getX() -centroidHome.getX(), centerPoint.getY() -centroidHome.getY());
 
-        if (DesignGeometryManager::isPolygonInsidePolygon(land , homeCopy))
+        if (DesignGeometryManager::isPolygonInsidePolygon(landCopy , homeCopy))
         {
             homes.push_back(homeCopy);
         }
@@ -1199,7 +1203,7 @@ vector<Line> DrawStreet::buildCenterLines(Polygon1 &polygon, double centerLineHe
 }
 
 vector<Line>
-DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner, vector<Line> &extensionsLine, vector<Polygon1> &homeLands, const Line &centerLine, int divisionIndex, int divisionsCount)
+DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner, vector<Line> &extensionsLine, vector<HomeLand> &homeLands, const Line &centerLine, int divisionIndex, int divisionsCount)
 {
     vector<Line> homeBorderSol;
 
@@ -1229,6 +1233,8 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
         nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
 
         vector<Point> pnt1 = {start , nextPoint1 , nextPoint2 , last};
+        Line circleLine1(start , nextPoint1);
+        Line circleLine2(last , nextPoint2);
 
         Polygon1 land(pnt1);
 
@@ -1241,14 +1247,20 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
             homeBorderSol.emplace_back(center1.getX() , center1.getY() , center2.getX() , center2.getY());
 
             pnt1 = {start , nextPoint1 , center2 , center1};
-            homeLands.emplace_back(pnt1);
+            HomeLand homeLand1(pnt1);
+            homeLand1.setCircleStreets({circleLine1});
+            homeLands.emplace_back(homeLand1);
 
             pnt1 = {last , nextPoint2 , center2 , center1};
+            HomeLand homeLand2(pnt1);
+            homeLand2.setCircleStreets({circleLine2});
             homeLands.emplace_back(pnt1);
         }
         else if (land.getArea() >= 400)
         {
-            homeLands.emplace_back(pnt1);
+            HomeLand homeLand2(pnt1);
+            homeLand2.setCircleStreets({circleLine1, circleLine2});
+            homeLands.emplace_back(homeLand2);
         }
         else break;
 
@@ -1263,7 +1275,11 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
 
 
     vector<Point> pnt1 = {start , startTOP , lastTOP , last};
+    Line circleLine1(start , startTOP);
+    Line circleLine2(last , lastTOP);
     Polygon1 newPol(pnt1);
+    HomeLand newPol2(pnt1);
+    newPol2.setCircleStreets({circleLine1 , circleLine2});
 
     if (newPol.getArea() >= 800)
     {
@@ -1273,7 +1289,7 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
         vector<Polygon1> ans;
         ans = land.SplitLand(2, 1 , 1  , static_cast<LandDivisionSortingStrategy>(0));
 
-        if (ans.size()<2)homeLands.emplace_back(newPol);
+        if (ans.size()<2)homeLands.push_back(newPol2);
         else{
             Line cutting (INT_MAX, INT_MAX,INT_MAX,INT_MAX);
 
@@ -1343,11 +1359,18 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
                     }
                 }
                 homeBorderSol.emplace_back(cutting);
-                homeLands.emplace_back(ans[0]);
-                homeLands.emplace_back(ans[1]);
+
+                HomeLand homeLand1(ans[0].getPoints());
+                HomeLand homeLand2(ans[1].getPoints());
+
+                homeLand1.setCircleStreets({circleLine1 , circleLine2});
+                homeLand2.setCircleStreets({circleLine1 , circleLine2});
+
+                homeLands.push_back(homeLand1);
+                homeLands.push_back(homeLand2);
             }
             else{
-                homeLands.emplace_back(newPol);
+                homeLands.push_back(newPol2);
             }
 
         }
@@ -1357,9 +1380,9 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
     else if (newPol.getArea() >= 400)
     {
         homeBorderSol.emplace_back(start.getX() , start.getY() , last.getX() , last.getY());
-        homeLands.emplace_back(pnt1);
+
+        homeLands.emplace_back(newPol2);
         count++;
     }
-    cout<<"Count = "<<count<<"\n";
     return homeBorderSol;
 }
