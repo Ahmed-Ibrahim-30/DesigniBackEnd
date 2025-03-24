@@ -384,7 +384,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
     vector<Line> streetsOrder = {startLine , topLine , endLine };
 
-    int centerLineIndex = 0;
+    int centerLineIndex = 0  , lastLineIndex = 0;
     vector<Line> outsideBorder;
     Point startPoint = {streetsOrder[0].getX1() , streetsOrder[0].getY1() };
 
@@ -417,6 +417,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         vector<Line> bottomLines;
 //        if (index == 7) break;
 
+        lastLineIndex = centerLineIndex;
         Point lastPoint = getNextPoint(start , centerLineIndex , streetsOrder , step , bottomLines);
 
         Line curLine (last.getX() , last.getY() , lastPoint.getX() , lastPoint.getY());
@@ -527,7 +528,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
 
         Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
         HomeLand homeLand2 (homeLand.getPoints());
-        homeLand2.setCircleStreets({circleStreet});
+//        homeLand2.setCircleStreets({circleStreet});
+        homeLand2.setCircleStreets({streetsOrder[lastLineIndex]});
 
         if (homeLand.getArea() >= 850)
         {
@@ -613,8 +615,8 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                     HomeLand homeLand3(ans[0].getPoints());
                     HomeLand homeLand4(ans[1].getPoints());
 
-                    homeLand3.setCircleStreets({circleStreet });
-                    homeLand4.setCircleStreets({circleStreet });
+                    homeLand3.setCircleStreets({streetsOrder[lastLineIndex] });
+                    homeLand4.setCircleStreets({streetsOrder[lastLineIndex] });
 
                     homeLands.push_back(homeLand3);
                     homeLands.push_back(homeLand4);
@@ -1225,6 +1227,8 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
 
     Point nextPoint1 , nextPoint2;
     int count = 0;
+    Line circleLine1(start , startTOP);
+    Line circleLine2(last , lastTOP);
 
     while (nextPoint1 != startTOP && nextPoint2!= lastTOP)
     {
@@ -1233,8 +1237,7 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
         nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
 
         vector<Point> pnt1 = {start , nextPoint1 , nextPoint2 , last};
-        Line circleLine1(start , nextPoint1);
-        Line circleLine2(last , nextPoint2);
+
 
         Polygon1 land(pnt1);
 
@@ -1275,8 +1278,7 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
 
 
     vector<Point> pnt1 = {start , startTOP , lastTOP , last};
-    Line circleLine1(start , startTOP);
-    Line circleLine2(last , lastTOP);
+
     Polygon1 newPol(pnt1);
     HomeLand newPol2(pnt1);
     newPol2.setCircleStreets({circleLine1 , circleLine2});
