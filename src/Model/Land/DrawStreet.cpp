@@ -121,12 +121,13 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
 
         stP = getNextPoint(stP , index , centerLines2 , startSpace , bottoms);
     }
-//    Line l (stP.getX() , stP.getY() , centerLines2.back().getX2() , centerLines2.back().getY2());
 
-//    vector<Line> bottoms;
-//    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 100, bottoms);
-//
-//    centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
+    Line l (stP.getX() , stP.getY() , enP.getX() , enP.getY());
+
+    vector<Line> bottoms;
+    stP = getNextPoint(stP , index , centerLines2 , l.getLength() + 10000, bottoms);
+
+    centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
 
     return centerTop;
