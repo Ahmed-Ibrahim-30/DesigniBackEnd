@@ -1222,7 +1222,7 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
     Point nextPoint1 , nextPoint2;
     int count = 0;
 
-    while (nextPoint1 != startTOP || nextPoint2!= lastTOP)
+    while (nextPoint1 != startTOP && nextPoint2!= lastTOP)
     {
         count++;
         nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
@@ -1239,6 +1239,17 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
 
         start = nextPoint1;
         last = nextPoint2;
+    }
+
+
+    vector<Point> pnt1 = {start , startTOP , lastTOP , last};
+    Polygon1 newPol(pnt1);
+
+    if (newPol.getArea() >= 400)
+    {
+        homeBorderSol.emplace_back(start.getX() , start.getY() , last.getX() , last.getY());
+        homeLands.emplace_back(pnt1);
+        count++;
     }
     cout<<"Count = "<<count<<"\n";
     return homeBorderSol;
