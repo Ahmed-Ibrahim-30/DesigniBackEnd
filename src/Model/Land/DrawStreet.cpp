@@ -62,10 +62,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
-//    startSpace = step1 / 2;
-//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
-//    startSpace = step1;
-//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+    startSpace = step1 / 2;
+    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+    startSpace = step1;
+    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 //
 //    for(auto &city : cities)
 //    {
@@ -333,20 +333,20 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         Line innerBottomLine = {innerPoints[0].getX() , innerPoints[0].getY() , innerPoints[3].getX() , innerPoints[3].getY()};
 
         //EXTENSIONS And Border
-        vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + circleStreetWidth, centerLine , m ,divisions);
-        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
-        vector<Polygon1> homes = homeSetter(homePolygons , home , home2);
+//        vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + circleStreetWidth, centerLine , m ,divisions);
+//        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
+//        vector<Polygon1> homes = homeSetter(homePolygons , home , home2);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
-        cityGrid.setRoadExtension(extensions);
-        cityGrid.setHomeBorder(homeBorder);
+//        cityGrid.setRoadExtension(extensions);
+//        cityGrid.setHomeBorder(homeBorder);
 
-        for(auto &h : homes)
-        {
-            vector<Line> ll = h.getLines();
-            centerLines.insert(centerLines.end() , ll.begin() , ll.end());
-        }
+//        for(auto &h : homes)
+//        {
+//            vector<Line> ll = h.getLines();
+//            centerLines.insert(centerLines.end() , ll.begin() , ll.end());
+//        }
 
         cities.push_back(cityGrid);
     }
