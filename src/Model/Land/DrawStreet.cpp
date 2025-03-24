@@ -1228,14 +1228,28 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
         nextPoint1 = PolygonHelper::getNextPoint(start , startTOP , step);
         nextPoint2 = PolygonHelper::getNextPoint(last , lastTOP , step);
 
+        vector<Point> pnt1 = {start , nextPoint1 , nextPoint2 , last};
+
+        Polygon1 land(pnt1);
+
+        if (land.getArea() >= 800)
+        {
+            Line line1 (start , last);
+            Line line2 (nextPoint1 , nextPoint1);
+            Point center1 = line1.getCenterPoint();
+            Point center2 = line2.getCenterPoint();
+            homeBorderSol.emplace_back(center1.getX() , center1.getY() , center2.getX() , center2.getY());
+        }
+        else if (land.getArea() >= 400)
+        {
+            homeLands.emplace_back(pnt1);
+        }
+        else break;
+
         if (nextPoint1 != startTOP && nextPoint2!= lastTOP)
         {
             homeBorderSol.emplace_back(nextPoint1.getX() , nextPoint1.getY() , nextPoint2.getX() , nextPoint2.getY());
         }
-
-        vector<Point> pnt1 = {start , nextPoint1 , nextPoint2 , last};
-
-        homeLands.emplace_back(pnt1);
 
         start = nextPoint1;
         last = nextPoint2;
