@@ -513,8 +513,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
             endUp = {cuttingLine.getX2() , cuttingLine.getY2()};
         }
 
-
-
         Line newLine (lastPoint.getX() , lastPoint.getY() , endUp.getX() , endUp.getY());
         homeBorderSol.emplace_back(newLine);
 
@@ -529,6 +527,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
         Polygon1 homeLand = getHomePolygon(startH , endH ,startH1 ,  endH1 ,polygonLines , polygon1 , bottomLines);
         HomeLand homeLand2 (homeLand.getPoints());
 //        homeLand2.setCircleStreets({circleStreet});
+        cout<<"lastLineIndex = "<<lastLineIndex<<"\n";
         homeLand2.setCircleStreets({streetsOrder[lastLineIndex]});
 
         if (homeLand.getArea() >= 850)
