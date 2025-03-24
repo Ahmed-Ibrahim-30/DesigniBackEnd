@@ -65,7 +65,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     startSpace = step1 / 2;
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
-    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 
     for(auto &city : cities)
     {
@@ -740,7 +740,6 @@ vector<Polygon1> DrawStreet::homeSetter(vector<HomeLand> &lands, Polygon1 &home,
             tallestLine = circleLines[0];
             cout<<"tallestLine = "<<tallestLine.getLength()<<"\n";
         }
-
 
         double angle = tallestLine.getAngle();
         homeCopy.rotate(angle);
