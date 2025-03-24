@@ -589,7 +589,7 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                     }
                 }
 
-                cout<<"Shared = "<<shared.size()<<"\n";
+//                cout<<"Shared = "<<shared.size()<<"\n";
                 if (shared.size()>1)
                 {
                     for(auto &p : shared)
