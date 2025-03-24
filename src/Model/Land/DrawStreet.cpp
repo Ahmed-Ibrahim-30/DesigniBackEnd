@@ -129,6 +129,9 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
 
     centerTop.insert(centerTop.end() , bottoms.begin() , bottoms.end());
 
+    centerTop.clear();
+
+    centerTop.push_back(centerLines2[index]);
 
     return centerTop;
 }
