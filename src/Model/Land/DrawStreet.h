@@ -32,6 +32,7 @@ private:
      */
     vector<Line> drawExtensions(const vector<Line> &polygonLines ,const Line &topLines ,const Point &start , const Point &end , const Point &startUp , const Point &endUp , double step,const Line &centerL , int divisionIndex , int divisionsCount);
     vector<Line> drawHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner  , vector<Line> &extensionsLin , vector<Polygon1> &homeLands,const Line &centerLine, int divisionIndex , int divisionsCount);
+    vector<Line> drawInnerHomeBorders(Polygon1 &polygon1 , vector<Line> &streetsLinesOuter, vector<Line> &streetsLinesInner  , vector<Line> &extensionsLin , vector<Polygon1> &homeLands,const Line &centerLine, int divisionIndex , int divisionsCount);
 
     /**
      * Set Home inside each Land

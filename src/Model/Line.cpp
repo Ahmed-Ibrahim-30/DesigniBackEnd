@@ -24,6 +24,29 @@ Line::Line(double x1, double y1, double x2, double y2) {
     end.setX(x2);
     end.setY(y2);
 }
+
+
+Line::Line(const Point &start1, const Point &end1)
+{
+    setX1(start1.getX());
+    setX2(end1.getX());
+    setY1(start1.getY());
+    setY2(end1.getY());
+
+    start = start1;
+    end = end1;
+
+    if (x1==x2)dir='v';
+    else dir='h';
+    id="0";
+    id2="0";
+    sideNum=0;
+    color="#ffffff";
+    startAngle=0,endAngle=0;
+    z1=0,z2=0;
+    face='0';
+}
+
 Line::Line(double x1, double x2, double y1, double y2,double z1,double z2){
 
     setX1(x1);
@@ -312,3 +335,5 @@ double Line::getSlope() const
 Point Line::getCenterPoint() {
     return Point((x2+x1)/2 , (y2 + y1)/2);
 }
+
+

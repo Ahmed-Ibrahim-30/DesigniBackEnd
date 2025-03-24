@@ -53,6 +53,12 @@ public:
         endAngle=0;
     }
     Line(double x1, double y1, double x2, double y2);
+    /**
+     * Parametrized Constructor that get Two Points
+     * @param start
+     * @param end
+     */
+    Line(const Point & start , const Point &end);
     Line(double x1, double x2, double y1, double y2,double z1,double z2);
     [[nodiscard]] const string &getId() const;
 
