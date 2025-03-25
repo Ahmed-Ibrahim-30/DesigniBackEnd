@@ -9,7 +9,7 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    if (!(polygon1.getId() == "1" || polygon1.getId() == "6" || polygon1.getId() == "3"))return;
+    if (!(polygon1.getId() == "1" || polygon1.getId() == "3"))return;
     double step1 = step ;
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
