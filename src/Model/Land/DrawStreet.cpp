@@ -9,99 +9,99 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    if (!(polygon1.getId() == "1" || polygon1.getId() == "5"))return;
+    if (!(polygon1.getId() == "5"))return;
     double step1 = step ;
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
     centerLines = buildCenterLines(polygon1 , 10);
 
-    vector<Line> centerLinesTop , centerLinesBottom;
-    vector<Line> centerLinesTopInner , centerLinesBottomOuter;
-
-    for (int i = 0; i < centerLines.size(); ++i)
-    {
-        if (i<centerLines.size()/2)centerLinesTop.push_back(centerLines[i]);
-        else centerLinesBottom.push_back(centerLines[i]);
-    }
-
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.8);
-
-    if (innerPolygon.getArea() > polygon1.getArea())
-    {
-        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
-    }
-
-    vector<Line>centerInner = buildCenterLines(innerPolygon , 10);
-    for (int i = 0; i < centerLines.size(); ++i)
-    {
-        if (i<centerLines.size()/2)centerLinesTopInner.push_back(centerInner[i]);
-        else centerLinesBottomOuter.push_back(centerInner[i]);
-    }
-
-    vector<Line> spacingLines = innerPolygon.getLines();
-    vector<Line> testLines;
-    vector<Line> lines = mainLand.getLines();
-
-
-//    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
-//    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
-
-
-    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
-    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
-
-    cout<<"divisions = "<<divisions <<"\n";
-    cout<<"divisionsB = "<<divisionsB <<"\n";
-
-    divisions = min(divisions , divisionsB);
-
-    double lengthC = 0;
-    for(auto &line : centerLinesTopInner)
-    {
-        lengthC += line.getLength();
-    }
-
-    step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
-
-    cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
-
-    lengthC = 0;
-    for(auto &line : centerLinesBottomOuter)
-    {
-        lengthC += line.getLength();
-    }
-
-    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
-    cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
-
-    startSpace = step1 / 2;
-    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
-    startSpace = step1;
-    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
-
-    for(auto &city : cities)
-    {
-        vector<Line> inner = city.getInnerStreets();
-        vector<Line> outer = city.getOuterStreets();
-        inner.pop_back();
-        outer.pop_back();
-        city.setStreets(inner , outer);
-    }
-
-
-    startSpace = step1 / 2;
-    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
-    //Bottoms
-    startSpace = step1;
-    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
-
-    vector<Line> centerCopy = centerLines;
-    std::reverse(centerLines.begin(), centerLines.end());
-    centerLines.pop_back();
-    centerLines.pop_back();
-    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
-    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
-    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+//    vector<Line> centerLinesTop , centerLinesBottom;
+//    vector<Line> centerLinesTopInner , centerLinesBottomOuter;
+//
+//    for (int i = 0; i < centerLines.size(); ++i)
+//    {
+//        if (i<centerLines.size()/2)centerLinesTop.push_back(centerLines[i]);
+//        else centerLinesBottom.push_back(centerLines[i]);
+//    }
+//
+//    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.8);
+//
+//    if (innerPolygon.getArea() > polygon1.getArea())
+//    {
+//        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
+//    }
+//
+//    vector<Line>centerInner = buildCenterLines(innerPolygon , 10);
+//    for (int i = 0; i < centerLines.size(); ++i)
+//    {
+//        if (i<centerLines.size()/2)centerLinesTopInner.push_back(centerInner[i]);
+//        else centerLinesBottomOuter.push_back(centerInner[i]);
+//    }
+//
+//    vector<Line> spacingLines = innerPolygon.getLines();
+//    vector<Line> testLines;
+//    vector<Line> lines = mainLand.getLines();
+//
+//
+////    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
+////    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
+//
+//
+//    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
+//    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
+//
+//    cout<<"divisions = "<<divisions <<"\n";
+//    cout<<"divisionsB = "<<divisionsB <<"\n";
+//
+//    divisions = min(divisions , divisionsB);
+//
+//    double lengthC = 0;
+//    for(auto &line : centerLinesTopInner)
+//    {
+//        lengthC += line.getLength();
+//    }
+//
+//    step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
+//
+//    cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
+//
+//    lengthC = 0;
+//    for(auto &line : centerLinesBottomOuter)
+//    {
+//        lengthC += line.getLength();
+//    }
+//
+//    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
+//    cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
+//
+//    startSpace = step1 / 2;
+//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+//    startSpace = step1;
+//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+//
+//    for(auto &city : cities)
+//    {
+//        vector<Line> inner = city.getInnerStreets();
+//        vector<Line> outer = city.getOuterStreets();
+//        inner.pop_back();
+//        outer.pop_back();
+//        city.setStreets(inner , outer);
+//    }
+//
+//
+//    startSpace = step1 / 2;
+//    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
+//    //Bottoms
+//    startSpace = step1;
+//    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
+//
+//    vector<Line> centerCopy = centerLines;
+//    std::reverse(centerLines.begin(), centerLines.end());
+//    centerLines.pop_back();
+//    centerLines.pop_back();
+//    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+//    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
+//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
