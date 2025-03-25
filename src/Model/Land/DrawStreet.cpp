@@ -1470,10 +1470,11 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
     double curStep = 40;
 
     double st = startSearch , end = 100;
+    const double EPS = 1e-6;
 
-    while (st <= end)
+    while (end - st > EPS)
     {
-        double mid = (st+end)/2;
+        double mid = st + (end - st) / 2.0;
 
         double initialStart = startSearch == 20 ? mid/2 : mid;
 
@@ -1483,9 +1484,9 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
         if(divisions >= divisionsCount)
         {
             curStep = mid;
-            st = mid+1;
+            st = mid;
         }else{
-            end = mid-1;
+            end = mid;
         }
     }
     return curStep;
