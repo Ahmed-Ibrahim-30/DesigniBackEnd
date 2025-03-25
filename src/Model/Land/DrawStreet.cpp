@@ -1491,7 +1491,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
         double initialStart = isTop ? mid/2 : mid;
 
         int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
-        cout<<"MID = "<<mid<<"  Div = "<<divisions<<"\n";
+        cout<<"st = "<<st<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
 
         if(divisions >= divisionsCount)
         {
