@@ -35,7 +35,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     Line centerLineInner1 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesTop[0]);
     Line centerLineInner2 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesBottom[0]);
 
-
+    centerLines.push_back(centerLineInner1);
+    centerLines.push_back(centerLineInner2);
 
     vector<Line> spacingLines = innerPolygon.getLines();
     vector<Line> testLines;
