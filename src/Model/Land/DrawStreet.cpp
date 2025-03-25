@@ -39,8 +39,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 20 , innerPolygon);
-    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 20 , innerPolygon);
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 20 , 20 , innerPolygon);
+    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 20 , 30 , innerPolygon);
 
     cout<<"divisions = "<<divisions <<"\n";
     cout<<"divisionsB = "<<divisionsB <<"\n";
@@ -1413,7 +1413,7 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
     return homeBorderSol;
 }
 
-int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, Polygon1 &boundaryPolygon)
+int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, double initialStartStep, Polygon1 &boundaryPolygon)
 {
     int divisions = 0;
 
@@ -1424,7 +1424,8 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
     while (start != end && start.getX() != INT_MAX)
     {
-        Point other = getNextPoint(start , index , {line} , initialStep );
+        Point other = getNextPoint(start , index , {line} , initialStartStep );
+        initialStartStep = initialStep;
 
         if (flag)
         {
