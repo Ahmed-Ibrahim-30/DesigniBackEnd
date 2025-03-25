@@ -53,7 +53,7 @@ private:
     Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step , vector<Line> &bottomLines);
     Point getPrevPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step);
 
-    void drawSide1Streets(const vector<Line> &polygonLines , const vector<Line> &centerL , const vector<Line> &TopLine , double step  ,int divisions);
+    void drawSide1Streets(const vector<Line> &polygonLines , const vector<Line> &centerL , vector<Line> &TopLine , double step  ,int divisions);
 
 
     vector<Line> SplitCenterLines(double startSpace ,double step1 , int divisions,const vector<Line> &centerLines2);
