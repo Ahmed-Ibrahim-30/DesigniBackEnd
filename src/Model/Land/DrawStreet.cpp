@@ -1429,15 +1429,17 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
         if (other.getX() == INT_MAX)continue;
 
+        Line curLine(start , other);
         if (flag)
         {
-            cout<<"Here\n";
             bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
             if (!isPointInsidePol) return divisions;
 
             isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
             if (!isPointInsidePol) return divisions;
 
+            cout<<"Here\n";
+            curLine.printJsonFormat();
             divisions++;
         }
 
