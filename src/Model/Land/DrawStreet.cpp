@@ -100,7 +100,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    centerLines.pop_back();
 ////    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
 ////    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
-//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 //
 //    centerLines.push_back(centerLineInner1);
 //    centerLines.push_back(centerLineInner2);
