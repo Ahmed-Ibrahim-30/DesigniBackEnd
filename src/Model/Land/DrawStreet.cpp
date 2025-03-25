@@ -95,15 +95,15 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
 //
 //    vector<Line> centerCopy = centerLines;
-//    std::reverse(centerLines.begin(), centerLines.end());
-//    centerLines.pop_back();
-//    centerLines.pop_back();
+    std::reverse(centerLines.begin(), centerLines.end());
+    centerLines.pop_back();
+    centerLines.pop_back();
 ////    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
 ////    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
     centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 //
-//    centerLines.push_back(centerLineInner1);
-//    centerLines.push_back(centerLineInner2);
+    centerLines.push_back(centerLineInner1);
+    centerLines.push_back(centerLineInner2);
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
