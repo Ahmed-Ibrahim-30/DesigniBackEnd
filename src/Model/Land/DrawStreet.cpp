@@ -164,7 +164,8 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     vector<vector<Line>> side1Streets;
 
-    Point centerFirst = {innerCenterLine.getX1() , innerCenterLine.getY1()};
+//    Point centerFirst = {innerCenterLine.getX1() , innerCenterLine.getY1()};
+    Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
     Point centerLast = {centerL[0].getX2() , centerL[0].getY2()};
 
     Line side1Line = PolygonHelper::getLineForPoint(polygonLines , centerL[0].getStart());
