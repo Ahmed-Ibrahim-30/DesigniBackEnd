@@ -70,9 +70,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     cout<<"ST1 = "<<st1<<" "<<st2<<"\n";
 
-    Point firstPoint = PolygonHelper::getNextPoint(centerLinesTop[0].getStart() , centerLinesTop[0].getAnEnd() , 32);
-
-    centerLines.emplace_back(firstPoint , Point{0,0});
+//    Point firstPoint = PolygonHelper::getNextPoint(centerLinesTop[0].getStart() , centerLinesTop[0].getAnEnd() , 32);
+//
+//    centerLines.emplace_back(firstPoint , Point{0,0});
 
 //    step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
 
@@ -82,7 +82,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
 
     double startSpace = step1 / 2;
-//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 ,startSpace, divisions , centerLineInner1);
+    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 ,startSpace, divisions , centerLineInner1);
     startSpace = step1;
 //    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , startSpace , divisions , centerLineInner2);
 
