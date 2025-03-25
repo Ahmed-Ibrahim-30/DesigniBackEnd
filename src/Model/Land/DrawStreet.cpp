@@ -1467,9 +1467,9 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
 double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine ,const Line &centerLineInner , Polygon1 &innerPolygon , double startSearch)
 {
-    double curStep = 0;
+    double curStep = 40;
 
-    double st = startSearch , end = 500;
+    double st = startSearch , end = 100;
 
     while (st <= end)
     {
@@ -1479,7 +1479,8 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
 
         int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
 
-        if(divisions == divisionsCount)
+        if (mainLand.getId() == "5")cout<<"Div = "<<divisions<<"\n";
+        if(divisions >= divisionsCount)
         {
             curStep = mid;
             st = mid+1;
