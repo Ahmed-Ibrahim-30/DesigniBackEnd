@@ -68,9 +68,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     step1 = min(st1, st2);
 
-    startSpace = 0;
-    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions , centerLineInner1);
     startSpace = step1 / 2;
+    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions , centerLineInner1);
+    startSpace = step1;
     drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions , centerLineInner2);
 
     for(auto &city : cities)
