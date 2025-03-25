@@ -226,9 +226,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         vector<double> slopes = {slope1 , slope2};
         vector<Line> streetsBorder;
 
-        cout<<"SLOPE1 = "<<slope1<<" Slope2 = "<<slope2<<"\n";
-
-
         for (int i = 0; i < cPoints.size(); ++i)
         {
             Point cur = cPoints[i];
@@ -268,9 +265,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
                     break;
                 }
             }
-
-            cout<<"cuttingLine \t";
-            cuttingLine.printJsonFormat();
 
             streetsBorder.push_back(cuttingLine);
         }
