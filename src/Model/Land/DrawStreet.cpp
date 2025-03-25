@@ -23,14 +23,14 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         if (i<centerLines.size()/2)centerLinesTop.push_back(centerLines[i]);
         else centerLinesBottom.push_back(centerLines[i]);
     }
-//
-//    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.8);
-//
-//    if (innerPolygon.getArea() > polygon1.getArea())
-//    {
-//        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
-//    }
-//
+
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.8);
+
+    if (innerPolygon.getArea() > polygon1.getArea())
+    {
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
+    }
+
 //    vector<Line>centerInner = buildCenterLines(innerPolygon , 10);
 //    for (int i = 0; i < centerLines.size(); ++i)
 //    {
