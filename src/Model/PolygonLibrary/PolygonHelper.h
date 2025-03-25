@@ -179,7 +179,22 @@ public:
      */
     static Line getLineForPoint(const vector<Line> &lines , const Point &p);
 
+    /**
+     *
+     * @param polygon1
+     * @param start
+     * @param end
+     * @return
+     */
     static vector<Point> getShortestPath(Polygon1 &polygon1  , const Point &start, const Point &end);
+
+    /**
+     * Clips an extended line to the boundaries of a polygon.
+     * @param polygon1
+     * @param line
+     * @return
+     */
+    static Line clipLineToPolygon(Polygon1 &polygon1 , const Line &line);
 };
 
 

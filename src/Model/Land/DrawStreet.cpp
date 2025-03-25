@@ -32,12 +32,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
     }
 
-    vector<Line>centerInner = buildCenterLines(innerPolygon , 10);
-    for (int i = 0; i < centerInner.size(); ++i)
-    {
-        if (i<centerInner.size()/2)centerLinesTopInner.push_back(centerInner[i]);
-        else centerLinesBottomOuter.push_back(centerInner[i]);
-    }
+    Line centerLineInner1 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesTop[0]);
+    Line centerLineInner2 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesBottom[0]);
 
 
 
@@ -46,33 +42,25 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
+//    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-//    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
-    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon , centerLineInner1);
+    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon , centerLineInner2);
 
     cout<<"divisions = "<<divisions <<"\n";
     cout<<"divisionsB = "<<divisionsB <<"\n";
 
     divisions = min(divisions , divisionsB);
 
-    double lengthC = 0;
-    for(auto &line : centerLinesTopInner)
-    {
-        lengthC += line.getLength();
-    }
+    double lengthC = centerLineInner1.getLength();
 
     step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
 
     cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 
-    lengthC = 0;
-    for(auto &line : centerLinesBottomOuter)
-    {
-        lengthC += line.getLength();
-    }
+    lengthC = centerLineInner2.getLength();
 
     step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
@@ -106,8 +94,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
     centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 
-    centerLines.insert(centerLines.end() , centerLinesTopInner.begin() , centerLinesTopInner.end());
-    centerLines.insert(centerLines.end() , centerLinesBottomOuter.begin() , centerLinesBottomOuter.end());
+//    centerLines.insert(centerLines.end() , centerLinesTopInner.begin() , centerLinesTopInner.end());
+//    centerLines.insert(centerLines.end() , centerLinesBottomOuter.begin() , centerLinesBottomOuter.end());
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
@@ -1442,7 +1430,7 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
     return homeBorderSol;
 }
 
-int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, double initialStartStep, Polygon1 &boundaryPolygon)
+int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, double initialStartStep, Polygon1 &boundaryPolygon, const Line &innerCenterLine)
 {
     int divisions = 0;
 

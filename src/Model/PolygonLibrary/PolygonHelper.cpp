@@ -576,6 +576,25 @@ vector<Point> PolygonHelper::getShortestPath(Polygon1 &polygon1, const Point &st
     else return ans2;
 }
 
+Line PolygonHelper::clipLineToPolygon(Polygon1 &polygon1, const Line &line)
+{
+    vector<Line> lines = polygon1.getLines();
+    vector<Point> result;
+
+    for(auto &line2 : lines)
+    {
+        Point point = getIntersectionPoint(line , line2);
+
+        if (point.getX() != INT_MAX)
+        {
+            result.push_back(point);
+        }
+    }
+    if (result.size() ==2) return  {result[0] , result[1]};
+
+    return line;
+}
+
 
 
 
