@@ -31,22 +31,22 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
     }
 
-//    vector<Line>centerInner = buildCenterLines(innerPolygon , 10);
-//    for (int i = 0; i < centerLines.size(); ++i)
-//    {
-//        if (i<centerLines.size()/2)centerLinesTopInner.push_back(centerInner[i]);
-//        else centerLinesBottomOuter.push_back(centerInner[i]);
-//    }
-//
-//    vector<Line> spacingLines = innerPolygon.getLines();
-//    vector<Line> testLines;
-//    vector<Line> lines = mainLand.getLines();
-//
-//
-////    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
-////    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
-//
-//
+    vector<Line>centerInner = buildCenterLines(innerPolygon , 10);
+    for (int i = 0; i < centerInner.size(); ++i)
+    {
+        if (i<centerInner.size()/2)centerLinesTopInner.push_back(centerInner[i]);
+        else centerLinesBottomOuter.push_back(centerInner[i]);
+    }
+
+    vector<Line> spacingLines = innerPolygon.getLines();
+    vector<Line> testLines;
+    vector<Line> lines = mainLand.getLines();
+
+
+//    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
+//    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
+
+
 //    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
 //    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
 //
