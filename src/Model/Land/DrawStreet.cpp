@@ -10,7 +10,7 @@
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
 //    if (!(polygon1.getId() == "2" || polygon1.getId() == "1" || polygon1.getId() == "6"))return;
-    if (!(polygon1.getId() == "5"))return;
+//    if (!(polygon1.getId() == "5"))return;
     double step1 = step ;
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
@@ -67,7 +67,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
-    startSpace = (step1 / 2) + 0.5;
+    startSpace = (step1 / 2);
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
 //    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
