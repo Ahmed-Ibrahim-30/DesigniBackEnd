@@ -23,11 +23,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.5);
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.8);
 
     if (innerPolygon.getArea() > polygon1.getArea())
     {
-        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.5);
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
     }
 
     vector<Line> spacingLines = innerPolygon.getLines();
@@ -66,7 +66,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     startSpace = step1 / 2;
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
-//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 
     for(auto &city : cities)
     {
@@ -154,7 +154,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     for (int m = 0; m < divisions; ++m)
     {
-        if (m==1)break;
+//        if (m==1)break;
         double newStep = !m ? startSpace : step;
 
         Point last = lastPoint;
