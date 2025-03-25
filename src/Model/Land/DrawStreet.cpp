@@ -23,11 +23,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.5);
 
     if (innerPolygon.getArea() > polygon1.getArea())
     {
-        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 20);
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.5);
     }
 
     vector<Line> spacingLines = innerPolygon.getLines();
