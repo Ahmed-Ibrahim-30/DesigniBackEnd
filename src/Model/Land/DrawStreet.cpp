@@ -44,11 +44,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-//    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
+    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
+//    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
     int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
 
     cout<<"divisions = "<<divisions <<"\n";
@@ -1454,6 +1454,8 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         if (other.getX() == INT_MAX)break;
 
         Line curLine(start , other);
+        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
+        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
         if (flag)
         {
             bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
