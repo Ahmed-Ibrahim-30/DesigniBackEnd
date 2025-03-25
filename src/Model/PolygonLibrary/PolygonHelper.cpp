@@ -595,7 +595,12 @@ Line PolygonHelper::clipLineToPolygon(Polygon1 &polygon1, const Line &line)
         Line dis1 (result[0] , line.getStart());
         Line dis2 (result[0] , line.getAnEnd());
 
+        Line dis3 (result[1] , line.getStart());
+        Line dis4 (result[1] , line.getAnEnd());
+
         cout<<"Dist = "<<min(dis1.getLength() , dis2.getLength())<<"\n";
+        cout<<"Dist2 = "<<min(dis3.getLength() , dis4.getLength())<<"\n";
+        cout<<"***************************\n";
 
         if (dis2.getLength() < dis1.getLength())
         {
