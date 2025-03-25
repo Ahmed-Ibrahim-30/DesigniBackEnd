@@ -1230,12 +1230,13 @@ vector<Line> DrawStreet::buildCenterLines(Polygon1 &polygon, double centerLineHe
         }
     }
 
-    centerLines.push_back(shiftLine1);
-    centerLines.push_back(shiftLine2);
+    vector<Line> centers;
+    centers.push_back(shiftLine1);
+    centers.push_back(shiftLine2);
 
-    sort(centerLines.begin(), centerLines.end());
+    sort(centers.begin(), centers.end());
 
-    return centerLines;
+    return centers;
 }
 
 vector<Line>
