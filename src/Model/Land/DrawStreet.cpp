@@ -41,6 +41,14 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     vector<Line> spacingLines = innerPolygon.getLines();
 
+    Line otherLine1Inner (centerLineInner1.getStart() , centerLinesTop[0].getStart());
+    Line otherLine2Inner (centerLineInner2.getStart() , centerLinesBottom[0].getStart());
+
+    double startStepTop = otherLine1Inner.getLength();
+    double startStepBottom = otherLine2Inner.getLength();
+
+    cout<<"Dist3 = "<<startStepTop<<"\n";
+    cout<<"Dist4 = "<<startStepBottom<<"\n";
 //    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
