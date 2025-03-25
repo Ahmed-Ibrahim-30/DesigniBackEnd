@@ -62,7 +62,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     cout<<"ST1 = "<<st1<<" "<<st2<<"\n";
 
-    Point firstPoint = PolygonHelper::getNextPoint(centerLinesTop[0].getStart() , centerLinesTop[0].getAnEnd() , 20);
+    Point firstPoint = PolygonHelper::getNextPoint(centerLinesTop[0].getStart() , centerLinesTop[0].getAnEnd() , 32);
 
     centerLines.emplace_back(firstPoint , Point{0,0});
 
