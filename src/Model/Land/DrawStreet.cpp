@@ -96,8 +96,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //
 //    vector<Line> centerCopy = centerLines;
     std::reverse(centerLines.begin(), centerLines.end());
-    centerLines.pop_back();
-    centerLines.pop_back();
+//    centerLines.pop_back();
+//    centerLines.pop_back();
 ////    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
 ////    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
     centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
