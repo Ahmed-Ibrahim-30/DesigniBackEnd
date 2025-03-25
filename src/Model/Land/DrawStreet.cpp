@@ -47,9 +47,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-//    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
-//    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
-//
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
+    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
+
 //    cout<<"divisions = "<<divisions <<"\n";
 //    cout<<"divisionsB = "<<divisionsB <<"\n";
 //
