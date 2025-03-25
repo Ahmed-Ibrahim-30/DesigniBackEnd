@@ -52,21 +52,21 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     divisions = min(divisions , divisionsB);
 
-    double lengthC = centerLineInner1.getLength();
+    double lengthC = centerLinesTop[0].getLength();
 
     step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
 
     cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 
-    lengthC = centerLineInner2.getLength();
+    lengthC = centerLinesBottom[0].getLength();
 
     step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
     startSpace = step1 / 2;
-//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
-    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 
     for(auto &city : cities)
     {
