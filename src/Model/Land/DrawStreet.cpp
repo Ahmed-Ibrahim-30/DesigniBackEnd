@@ -25,11 +25,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.0);
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
 
     if (innerPolygon.getArea() > polygon1.getArea())
     {
-        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.0);
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 20);
     }
 
     Line centerLineInner1 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesTop[0]);
@@ -69,10 +69,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     step1 = min(st1, st2);
 
-    startSpace = (step1 / 2);
-    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
-    startSpace = step1;
-    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+    startSpace = 0;
+    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions , centerLineInner1);
+    startSpace = step1 / 2;
+    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions , centerLineInner2);
 
     for(auto &city : cities)
     {
@@ -144,7 +144,7 @@ vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int d
     return centerTop;
 }
 
-void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<Line> &centerL , vector<Line> &topLine, double step ,int divisions)
+void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<Line> &centerL , vector<Line> &topLine, double step ,int divisions , const Line &innerCenterLine)
 {
     Line otherCenter = centerL[0]== centerLines[0] ? centerLines.back() : centerLines[0];
 
@@ -165,7 +165,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     vector<vector<Line>> side1Streets;
 
-    Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
+    Point centerFirst = {innerCenterLine.getX1() , innerCenterLine.getY1()};
     Point centerLast = {centerL[0].getX2() , centerL[0].getY2()};
 
     Line side1Line = PolygonHelper::getLineForPoint(polygonLines , centerFirst);

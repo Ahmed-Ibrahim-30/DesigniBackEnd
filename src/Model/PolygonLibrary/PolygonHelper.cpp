@@ -590,7 +590,18 @@ Line PolygonHelper::clipLineToPolygon(Polygon1 &polygon1, const Line &line)
             result.push_back(point);
         }
     }
-    if (result.size() ==2) return  {result[0] , result[1]};
+    if (result.size() ==2)
+    {
+        Line dis1 (result[0] , line.getStart());
+        Line dis2 (result[0] , line.getAnEnd());
+
+        if (dis2.getLength() < dis1.getLength())
+        {
+            return  {result[1] , result[0]};
+        }
+
+        return  {result[0] , result[1]};
+    }
 
     return line;
 }
