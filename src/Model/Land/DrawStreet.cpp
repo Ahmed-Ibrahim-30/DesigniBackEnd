@@ -1421,6 +1421,7 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
     const Point& end = line.getAnEnd();
     int index = 0;
     bool flag = false;
+    boundaryPolygon.print();
 
     while (start != end && start.getX() != INT_MAX)
     {
