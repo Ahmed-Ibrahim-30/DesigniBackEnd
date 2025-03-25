@@ -77,9 +77,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
     startSpace = step1 / 2;
-//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
+    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
     startSpace = step1;
-//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
+    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions);
 
     for(auto &city : cities)
     {
@@ -1439,8 +1439,8 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
         if (other.getX() == INT_MAX)continue;
 
-        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
-        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
+//        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
+//        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
 
         Line curLine(start , other);
         if (flag)
