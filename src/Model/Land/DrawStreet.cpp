@@ -9,13 +9,11 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    if (polygon1.getId() != "1")return;
+//    if (polygon1.getId() != "1")return;
     double step1 = step ;
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
     centerLines = buildCenterLines(polygon1 , 10);
-
-
 
     vector<Line> centerLinesTop , centerLinesBottom;
     vector<Line> centerLinesTopInner , centerLinesBottomOuter;
@@ -45,11 +43,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
+//    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-//    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon);
     int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon);
 
     cout<<"divisions = "<<divisions <<"\n";
@@ -1440,9 +1438,6 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
         if (other.getX() == INT_MAX)continue;
 
-//        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
-//        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
-
         Line curLine(start , other);
         if (flag)
         {
@@ -1451,9 +1446,6 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
             isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
             if (!isPointInsidePol) return divisions;
-
-            cout<<"Here\n";
-            curLine.printJsonFormat();
             divisions++;
         }
 
