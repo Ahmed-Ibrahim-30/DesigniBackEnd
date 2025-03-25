@@ -39,6 +39,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottomOuter.push_back(centerInner[i]);
     }
 
+
+
     vector<Line> spacingLines = innerPolygon.getLines();
     vector<Line> testLines;
     vector<Line> lines = mainLand.getLines();
@@ -103,6 +105,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
     centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
     centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+
+    centerLines.insert(centerLines.end() , centerLinesTopInner.begin() , centerLinesTopInner.end());
+    centerLines.insert(centerLines.end() , centerLinesBottomOuter.begin() , centerLinesBottomOuter.end());
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
@@ -1454,8 +1459,8 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         if (other.getX() == INT_MAX)break;
 
         Line curLine(start , other);
-        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
-        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
+//        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
+//        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
         if (flag)
         {
             bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
