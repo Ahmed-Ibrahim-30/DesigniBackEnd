@@ -149,6 +149,18 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 {
     Line otherCenter = centerL[0]== centerLines[0] ? centerLines.back() : centerLines[0];
 
+    vector<Line> topLinesExtended = topLine;
+
+    for(auto &line : topLinesExtended)
+    {
+        double dx = line.getX2() - line.getX1();
+        double dy = line.getY2() - line.getY1();
+
+        line.setX1(line.getX1() - dx*1000);
+        line.setY1(line.getY1() - dy*1000);
+        line.setX2(line.getX2() + dx*1000);
+        line.setY2(line.getY2() + dy*1000);
+    }
 
     vector<vector<Line>> side1Streets;
 
@@ -245,7 +257,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
                 continue;
             }
 
-            for(auto &line2 : topLine)
+            for(auto &line2 : topLinesExtended)
             {
                 Point intersectionPoint = PolygonHelper::getIntersectionPoint(cuttingLine , line2);
                 if (intersectionPoint.getX() != INT_MAX)
