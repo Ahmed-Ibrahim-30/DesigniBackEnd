@@ -1455,10 +1455,10 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 //        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
         if (flag)
         {
-            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
-            if (!isPointInsidePol) return divisions;
+//            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
+//            if (!isPointInsidePol) return divisions;
 
-            isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
+            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
             if (!isPointInsidePol) return divisions;
             divisions++;
         }
