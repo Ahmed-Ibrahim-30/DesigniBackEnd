@@ -35,9 +35,12 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> lines = mainLand.getLines();
 
 
-    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
-    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
+//    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
+//    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
+
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 20 , innerPolygon);
+    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 20 , innerPolygon);
 
     cout<<"divisions = "<<divisions <<"\n";
     cout<<"divisionsB = "<<divisionsB <<"\n";
@@ -1408,4 +1411,34 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
         count++;
     }
     return homeBorderSol;
+}
+
+int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, Polygon1 &boundaryPolygon)
+{
+    int divisions = 0;
+
+    Point start = line.getStart();
+    const Point& end = line.getAnEnd();
+    int index = 0;
+    bool flag = false;
+
+    while (start != end && start.getX() != INT_MAX)
+    {
+        Point other = getNextPoint(start , index , {line} , initialStep );
+
+        if (flag)
+        {
+            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
+            if (!isPointInsidePol) return divisions;
+
+            isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
+            if (!isPointInsidePol) return divisions;
+
+            divisions++;
+        }
+
+        flag = !flag;
+        start = other;
+    }
+    return divisions;
 }
