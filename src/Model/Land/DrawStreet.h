@@ -85,7 +85,7 @@ private:
      * @param centerLine
      * @return
      */
-    double getAppropriateStep(int divisionsCount , const Line &centerLine,const Line &centerLineInner , Polygon1 &innerPolygon ,double startSearch = 40);
+    double getAppropriateStep(int divisionsCount , const Line &centerLine,const Line &centerLineInner , Polygon1 &innerPolygon ,double startSearch = 40, bool isTop = true);
 public:
     void drawStreets(Polygon1 &polygon1);
 

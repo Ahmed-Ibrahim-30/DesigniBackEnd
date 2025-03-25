@@ -65,8 +65,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     /**
      * Select BEST Step
      */
-    double st1 = getAppropriateStep(divisions , centerLinesTop[0] , centerLineInner1 , innerPolygon , 20);
-    double st2 = getAppropriateStep(divisions , centerLinesBottom[0] , centerLineInner2 , innerPolygon , 40);
+    double st1 = getAppropriateStep(divisions , centerLinesTop[0] , centerLineInner1 , innerPolygon , 20 , true);
+    double st2 = getAppropriateStep(divisions , centerLinesBottom[0] , centerLineInner2 , innerPolygon , 40 , false);
 
     cout<<"ST1 = "<<st1<<" "<<st2<<"\n";
 
@@ -1462,10 +1462,10 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 //        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
         if (flag)
         {
-//            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
-//            if (!isPointInsidePol) return divisions;
+            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
+            if (!isPointInsidePol) return divisions;
 
-            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
+            isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
             if (!isPointInsidePol) return divisions;
             divisions++;
         }
@@ -1476,22 +1476,21 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
     return divisions;
 }
 
-double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine ,const Line &centerLineInner , Polygon1 &innerPolygon , double startSearch)
+double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine ,const Line &centerLineInner , Polygon1 &innerPolygon , double startSearch , bool isTop)
 {
     double curStep = 40;
 
-    double st = startSearch , end = 100;
+    double st = curStep , end = 500;
     const double EPS = 1e-6;
 
     while (end - st > EPS)
     {
         double mid = st + (end - st) / 2.0;
 
-        double initialStart = startSearch == 20 ? mid/2 : mid;
+        double initialStart = isTop ? mid/2 : mid;
 
         int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
 
-        if (mainLand.getId() == "6")cout<<"Div = "<<divisions<<"\n";
         if(divisions >= divisionsCount)
         {
             curStep = mid;
