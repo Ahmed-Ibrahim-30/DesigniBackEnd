@@ -71,7 +71,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     startSpace = 0;
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions , centerLineInner1);
     startSpace = step1 / 2;
-//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions , centerLineInner2);
+    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , divisions , centerLineInner2);
 
     for(auto &city : cities)
     {
@@ -178,7 +178,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     for (int m = 0; m < divisions; ++m)
     {
-        if (m==1)break;
+//        if (m==1)break;
         double newStep = !m ? startSpace : step;
 
         Point last = lastPoint;
