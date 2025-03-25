@@ -1436,7 +1436,7 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         Point other = getNextPoint(start , index , {line} , initialStartStep );
         initialStartStep = initialStep;
 
-        if (other.getX() == INT_MAX)continue;
+        if (other.getX() == INT_MAX)break;
 
         Line curLine(start , other);
         if (flag)
