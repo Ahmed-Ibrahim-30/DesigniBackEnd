@@ -122,11 +122,11 @@ void Polygon1::print()
 
     cout<<"minX = "<<minX<<" "<<minY<<"\n";
 
-//    for(auto &p : poi1)
-//    {
-//        if (minX < 0)p.setX(p.getX() + (minX * -1));
-//        if (minY < 0)p.setY(p.getY() + (minY * -1));
-//    }
+    for(auto &p : poi1)
+    {
+        if (minX < 0)p.setX(p.getX() + (minX * -1));
+        if (minY < 0)p.setY(p.getY() + (minY * -1));
+    }
 
     // cout<<"Polygon -- .. \n";
     int n = (int)poi1.size();
