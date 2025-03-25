@@ -10,7 +10,7 @@
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
 //    if (!(polygon1.getId() == "2" || polygon1.getId() == "1" || polygon1.getId() == "6"))return;
-    if (!(polygon1.getId() == "3"))return;
+//    if (!(polygon1.getId() == "3"))return;
     double step1 = step ;
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
@@ -102,7 +102,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     centerLines.pop_back();
     centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
     centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
-    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
