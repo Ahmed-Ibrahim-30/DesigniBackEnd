@@ -35,9 +35,6 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     Line centerLineInner1 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesTop[0]);
     Line centerLineInner2 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesBottom[0]);
 
-    centerLines.push_back(centerLineInner1);
-    centerLines.push_back(centerLineInner2);
-
     vector<Line> spacingLines = innerPolygon.getLines();
     vector<Line> testLines;
     vector<Line> lines = mainLand.getLines();
@@ -93,8 +90,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     centerLines.pop_back();
 //    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
 //    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
-//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 
+    centerLines.push_back(centerLineInner1);
+    centerLines.push_back(centerLineInner2);
 //    centerLines.insert(centerLines.end() , centerLinesTopInner.begin() , centerLinesTopInner.end());
 //    centerLines.insert(centerLines.end() , centerLinesBottomOuter.begin() , centerLinesBottomOuter.end());
 }
