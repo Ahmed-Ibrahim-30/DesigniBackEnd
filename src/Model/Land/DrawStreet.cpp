@@ -1479,7 +1479,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
 
         int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
 
-        if (mainLand.getId() == "5")cout<<"Div = "<<divisions<<"\n";
+        if (mainLand.getId() == "6")cout<<"Div = "<<divisions<<"\n";
         if(divisions >= divisionsCount)
         {
             curStep = mid;
