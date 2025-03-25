@@ -14,9 +14,7 @@ private:
 
     vector<CityGrid> cities;
 
-    double startSpace = 20;
     double circleStreetWidth = 2.5;
-    double step = 40;
 
     /**
      * Main Land
@@ -53,7 +51,7 @@ private:
     Point getNextPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step , vector<Line> &bottomLines);
     Point getPrevPoint(const Point &start, int &lineIndex ,const vector<Line> &lines, double step);
 
-    void drawSide1Streets(const vector<Line> &polygonLines , const vector<Line> &centerL , vector<Line> &TopLine , double step  ,int divisions, const Line &innerCenterLine);
+    void drawSide1Streets(const vector<Line> &polygonLines , const vector<Line> &centerL , vector<Line> &TopLine , double step  ,double startSpace,int divisions, const Line &innerCenterLine);
 
 
     vector<Line> SplitCenterLines(double startSpace ,double step1 , int divisions,const vector<Line> &centerLines2);
@@ -64,7 +62,7 @@ private:
      * @param centerLineHeight
      * @return
      */
-    vector<Line> buildCenterLines(Polygon1 &polygon ,double centerLineHeight);
+    vector<Line> buildCenterLines(Polygon1 &polygon ,double centerLineHeight, double startSpace , double step);
 
 
     /**
