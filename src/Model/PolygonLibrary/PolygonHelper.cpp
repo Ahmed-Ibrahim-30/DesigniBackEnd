@@ -150,7 +150,7 @@ Point PolygonHelper::getNextPoint(const Point& current, const Point& destination
     Point unitDirection = {dx / length, dy / length};
 
     // Compute the new point
-    return {current.getX()  + unitDirection.getX()  * step, current.getY() + unitDirection.getY() * step};
+    return {current.getX()  + (unitDirection.getX()  * step), current.getY() + (unitDirection.getY() * step)};
 }
 
 
