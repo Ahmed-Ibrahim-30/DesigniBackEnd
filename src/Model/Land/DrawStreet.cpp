@@ -1488,7 +1488,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
             curStep = mid;
             st = mid+1;
         }else{
-            st = mid-1;
+            end = mid-1;
         }
     }
     return curStep;
