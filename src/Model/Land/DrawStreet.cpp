@@ -242,6 +242,9 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
                 }
             }
 
+            cout<<"cuttingLine \t";
+            cuttingLine.printJsonFormat();
+
             streetsBorder.push_back(cuttingLine);
         }
 
@@ -559,12 +562,6 @@ DrawStreet::drawHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesOuter,
                 set<Point> shared;
 
                 map<Point , int> pntCounter;
-                if (divisionIndex == divisionsCount-1 && index == 13)
-                {
-                    homeLand.print();
-                    ans[0].print();
-                    ans[1].print();
-                }
                 for(auto &p : ans[0].getPoints())
                 {
                     for(auto &line : l2)
