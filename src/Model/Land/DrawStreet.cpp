@@ -102,7 +102,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     centerLines.pop_back();
     centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
     centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
-//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
