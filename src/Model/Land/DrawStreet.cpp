@@ -9,20 +9,20 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-    if (!(polygon1.getId() == "5"))return;
+//    if (!(polygon1.getId() == "5"))return;
     double step1 = step ;
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
     centerLines = buildCenterLines(polygon1 , 10);
 
-//    vector<Line> centerLinesTop , centerLinesBottom;
-//    vector<Line> centerLinesTopInner , centerLinesBottomOuter;
-//
-//    for (int i = 0; i < centerLines.size(); ++i)
-//    {
-//        if (i<centerLines.size()/2)centerLinesTop.push_back(centerLines[i]);
-//        else centerLinesBottom.push_back(centerLines[i]);
-//    }
+    vector<Line> centerLinesTop , centerLinesBottom;
+    vector<Line> centerLinesTopInner , centerLinesBottomOuter;
+
+    for (int i = 0; i < centerLines.size(); ++i)
+    {
+        if (i<centerLines.size()/2)centerLinesTop.push_back(centerLines[i]);
+        else centerLinesBottom.push_back(centerLines[i]);
+    }
 //
 //    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.8);
 //
