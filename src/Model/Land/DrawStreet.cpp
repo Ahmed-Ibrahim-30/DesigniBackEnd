@@ -44,14 +44,18 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 40 , innerPolygon , centerLineInner1);
-    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 60 , innerPolygon , centerLineInner2);
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , 20 , innerPolygon , centerLineInner1);
+    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , 40 , innerPolygon , centerLineInner2);
+
 
     cout<<"divisions = "<<divisions <<"\n";
     cout<<"divisionsB = "<<divisionsB <<"\n";
 
     divisions = min(divisions , divisionsB);
+    double st1 = getAppropriateStep(divisions , centerLinesTop[0] , centerLineInner1 , innerPolygon , 20);
+    double st2 = getAppropriateStep(divisions , centerLinesBottom[0] , centerLineInner2 , innerPolygon , 40);
 
+    cout<<"ST1 = "<<st1<<" "<<st2<<"\n";
     double lengthC = centerLinesTop[0].getLength();
 
     step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
@@ -1463,4 +1467,29 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         start = other;
     }
     return divisions;
+}
+
+double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine ,const Line &centerLineInner , Polygon1 &innerPolygon , double startSearch)
+{
+    double curStep = 0;
+
+    double st = startSearch , end = 500;
+
+    while (st <= end)
+    {
+        double mid = (st+end)/2;
+
+        double initialStart = startSearch == 20 ? mid/2 : mid;
+
+        int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
+
+        if(divisions == divisionsCount)
+        {
+            curStep = mid;
+            st = mid+1;
+        }else{
+            st = mid-1;
+        }
+    }
+    return curStep;
 }

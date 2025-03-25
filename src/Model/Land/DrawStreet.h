@@ -80,6 +80,14 @@ private:
                             const vector<Line> &mainLandLines, Polygon1 &pol, vector<Line> &bottomLines);
 
     int getMaxNumberOfDivisionsForLine(const Line &line , double initialStep , double initialStartStep, Polygon1 &boundaryPolygon , const Line &innerCenterLine);
+
+    /**
+     *
+     * @param divisionsCount
+     * @param centerLine
+     * @return
+     */
+    double getAppropriateStep(int divisionsCount , const Line &centerLine,const Line &centerLineInner , Polygon1 &innerPolygon ,double startSearch = 40);
 public:
     void drawStreets(Polygon1 &polygon1);
 
