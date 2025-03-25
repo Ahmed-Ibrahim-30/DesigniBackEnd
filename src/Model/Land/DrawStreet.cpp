@@ -25,11 +25,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.8);
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.5);
 
     if (innerPolygon.getArea() > polygon1.getArea())
     {
-        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.5);
     }
 
     Line centerLineInner1 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesTop[0]);
@@ -58,16 +58,16 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"ST1 = "<<st1<<" "<<st2<<"\n";
     double lengthC = centerLinesTop[0].getLength();
 
-    step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
+//    step1 = ((lengthC / (((int)(divisions*4)) + 1))) * 2;
 
     cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 
     lengthC = centerLinesBottom[0].getLength();
 
-    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
+//    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
     cout<<"Length = "<<lengthC<<" --New Step = "<<step1<<"\n";
 
-    if (st1 != 0 && st2!= 0)step1 = min(st1, st2);
+    step1 = min(st1, st2);
 
     startSpace = (step1 / 2);
     drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 , divisions);
