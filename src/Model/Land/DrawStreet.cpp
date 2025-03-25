@@ -25,11 +25,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
         else centerLinesBottom.push_back(centerLines[i]);
     }
 
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.5);
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -19.0);
 
     if (innerPolygon.getArea() > polygon1.getArea())
     {
-        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.5);
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.0);
     }
 
     Line centerLineInner1 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesTop[0]);
