@@ -15,7 +15,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     vector<Line> polygonLines = polygon1.getLines();
     centerLines = buildCenterLines(polygon1 , 10);
 
+
+
     vector<Line> centerLinesTop , centerLinesBottom;
+    vector<Line> centerLinesTopInner , centerLinesBottomOuter;
 
     for (int i = 0; i < centerLines.size(); ++i)
     {
@@ -28,6 +31,13 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     if (innerPolygon.getArea() > polygon1.getArea())
     {
         innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 19.8);
+    }
+
+    vector<Line>centerInner = buildCenterLines(innerPolygon , 10);
+    for (int i = 0; i < centerLines.size(); ++i)
+    {
+        if (i<centerLines.size()/2)centerLinesTopInner.push_back(centerInner[i]);
+        else centerLinesBottomOuter.push_back(centerInner[i]);
     }
 
     vector<Line> spacingLines = innerPolygon.getLines();
@@ -48,7 +58,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     divisions = min(divisions , divisionsB);
 
     double lengthC = 0;
-    for(auto &line : centerLinesTop)
+    for(auto &line : centerLinesTopInner)
     {
         lengthC += line.getLength();
     }
@@ -58,7 +68,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Id = "<<polygon1.getId()<<"  divisions = "<<divisions << " -- "<<divisionsB<<"  Length = "<<lengthC<<" -- New Step = "<<step1<<"\n";
 
     lengthC = 0;
-    for(auto &line : centerLinesBottom)
+    for(auto &line : centerLinesBottomOuter)
     {
         lengthC += line.getLength();
     }
