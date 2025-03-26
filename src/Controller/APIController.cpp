@@ -390,7 +390,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
-            greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 900000);
+            greenSelector->select(polygon1 , streets , percGreenArea/100.0 , 900000);
         }
 
         else if(jsonData.count("slots"))
@@ -411,7 +411,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
-            greenSelector->select(polygon1 , ans , percGreenArea/100.0 , 900000);
+            greenSelector->select(polygon1 , streets , percGreenArea/100.0 , 900000);
 
         }
 
