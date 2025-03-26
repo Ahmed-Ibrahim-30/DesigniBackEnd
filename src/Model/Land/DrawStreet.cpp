@@ -180,7 +180,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
     vector<vector<Line>> side1Streets;
 
 //    Point centerFirst = {innerCenterLine.getX1() , innerCenterLine.getY1()};
-    Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
+    Point  centerFirst= {centerL[0].getX1() , centerL[0].getY1()};
     Point centerLast = {centerL[0].getX2() , centerL[0].getY2()};
 
     Line side1Line = PolygonHelper::getLineForPoint(polygonLines , centerFirst);
@@ -193,7 +193,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     for (int m = 0; m < divisions; ++m)
     {
-        if (m==1)break;
+//        if (m==1)break;
         double newStep = !m ? startSpace : step;
 
         Point last = lastPoint;
