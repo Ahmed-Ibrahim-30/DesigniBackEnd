@@ -522,10 +522,10 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             else  streets = pols[0];
         }
 
-
+        int solutionIndex = 0;
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)
         {
-            response["outerLand"][i] = {
+            response[solutionIndex]["outerLand"][i] = {
                     {"x" , polygon1.getPoints()[i].getX()} ,
                     {"y" , polygon1.getPoints()[i].getY()}
             };
@@ -591,15 +591,15 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             }
 
             int index = 0;
-            response["Inner"][i]["id"] =  pol.getId();
-            response["Inner"][i]["area"] = pol.getArea();
-            response["Inner"][i]["green_area"] = !pol.isDivisible();
-            response["Inner"][i]["roadExtension"] = std::vector<crow::json::wvalue>{};
-            response["Inner"][i]["homeBorder"] = std::vector<crow::json::wvalue>{};
+            response[solutionIndex]["Inner"][i]["id"] =  pol.getId();
+            response[solutionIndex]["Inner"][i]["area"] = pol.getArea();
+            response[solutionIndex]["Inner"][i]["green_area"] = !pol.isDivisible();
+            response[solutionIndex]["Inner"][i]["roadExtension"] = std::vector<crow::json::wvalue>{};
+            response[solutionIndex]["Inner"][i]["homeBorder"] = std::vector<crow::json::wvalue>{};
 
             for(auto &p : pol.getPoints())
             {
-                response["Inner"][i]["Points"][index++] = {
+                response[solutionIndex]["Inner"][i]["Points"][index++] = {
                         {"x" , p.getX()} ,
                         {"y" , p.getY()}
                 };
@@ -614,7 +614,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             for (int j = 0; j < centerLines.size(); ++j)
             {
-                response["Inner"][i]["centerLines"][j] = {
+                response[solutionIndex]["Inner"][i]["centerLines"][j] = {
                         {"x1" , centerLines[j].getX1()},
                         {"y1" , centerLines[j].getY1()},
                         {"x2" , centerLines[j].getX2()},
@@ -633,7 +633,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 int n = roads.size();
 
                 for (int m = 0; m < roads.size(); ++m) {
-                    response["Inner"][i]["roads"][j][m] = {
+                    response[solutionIndex]["Inner"][i]["roads"][j][m] = {
                             {"x1" , roads[m].getX1()},
                             {"y1" , roads[m].getY1()},
                             {"x2" , roads[m].getX2()},
@@ -642,7 +642,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 }
                 roads = city.getOuterStreets();
                 for (int m = 0; m < roads.size(); ++m) {
-                    response["Inner"][i]["roads"][j][n + m] = {
+                    response[solutionIndex]["Inner"][i]["roads"][j][n + m] = {
                             {"x1" , roads[m].getX1()},
                             {"y1" , roads[m].getY1()},
                             {"x2" , roads[m].getX2()},
@@ -651,7 +651,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 }
 
                 for (int m = 0; m < roadExtension.size(); ++m) {
-                    response["Inner"][i]["roadExtension"][j][m] = {
+                    response[solutionIndex]["Inner"][i]["roadExtension"][j][m] = {
                             {"x1" , roadExtension[m].getX1()},
                             {"y1" , roadExtension[m].getY1()},
                             {"x2" , roadExtension[m].getX2()},
@@ -660,7 +660,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 }
 
                 for (int m = 0; m < homeBorder.size(); ++m) {
-                    response["Inner"][i]["homeBorder"][j][m] = {
+                    response[solutionIndex]["Inner"][i]["homeBorder"][j][m] = {
                             {"x1" , homeBorder[m].getX1()},
                             {"y1" , homeBorder[m].getY1()},
                             {"x2" , homeBorder[m].getX2()},
@@ -672,16 +672,16 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
 
-        response["Inner"][ans.size()]["id"] =  "";
-        response["Inner"][ans.size()]["area"] = outerLand.getArea();
-        response["Inner"][ans.size()]["green_area"] = !outerLand.isDivisible();
-        response["Inner"][ans.size()]["roadExtension"] = std::vector<crow::json::wvalue>{};
-        response["Inner"][ans.size()]["homeBorder"] = std::vector<crow::json::wvalue>{};
+        response[solutionIndex]["Inner"][ans.size()]["id"] =  "";
+        response[solutionIndex]["Inner"][ans.size()]["area"] = outerLand.getArea();
+        response[solutionIndex]["Inner"][ans.size()]["green_area"] = !outerLand.isDivisible();
+        response[solutionIndex]["Inner"][ans.size()]["roadExtension"] = std::vector<crow::json::wvalue>{};
+        response[solutionIndex]["Inner"][ans.size()]["homeBorder"] = std::vector<crow::json::wvalue>{};
 
         int index1 = 0;
         for(auto &p : outerLand.getPoints())
         {
-            response["Inner"][ans.size()]["Points"][index1++] = {
+            response[solutionIndex]["Inner"][ans.size()]["Points"][index1++] = {
                     {"x" , p.getX()} ,
                     {"y" , p.getY()}
             };
@@ -691,12 +691,12 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         {
             auto pol = streets[i];
             int index = 0;
-            response["streets"][i]["id"] = i + 1;
-            response["streets"][i]["area"] = pol.getArea();
-            response["streets"][i]["green_area"] = !pol.isDivisible();
+            response[solutionIndex]["streets"][i]["id"] = i + 1;
+            response[solutionIndex]["streets"][i]["area"] = pol.getArea();
+            response[solutionIndex]["streets"][i]["green_area"] = !pol.isDivisible();
             for(auto &p : pol.getPoints())
             {
-                response["streets"][i]["Points"][index++] = {
+                response[solutionIndex]["streets"][i]["Points"][index++] = {
                         {"x" , p.getX()} ,
                         {"y" , p.getY()}
                 };
