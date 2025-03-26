@@ -1462,6 +1462,7 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 //        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
         if (flag)
         {
+            cout<<"TRUE\n";
             bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
             if (!isPointInsidePol) return divisions;
 
@@ -1491,7 +1492,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
         double initialStart = isTop ? mid/2 : mid;
 
         int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
-        cout<<"st = "<<st<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
+//        cout<<"st = "<<st<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
 
         if(divisions >= divisionsCount)
         {
