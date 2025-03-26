@@ -1455,9 +1455,9 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
     const Point& end = {line.getX2() , line.getY2()};
     bool flag = false;
 
-    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
-    Line test4 = innerCenterLine;
-    test4.printJsonFormat();
+//    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
+//    Line test4 = innerCenterLine;
+//    test4.printJsonFormat();
     double minX = min(innerCenterLine.getX1() , innerCenterLine.getX2());
     double maxX = max(innerCenterLine.getX1() , innerCenterLine.getX2());
 
