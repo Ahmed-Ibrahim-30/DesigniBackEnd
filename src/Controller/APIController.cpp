@@ -567,7 +567,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         Polygon1 outerLand = PolygonHelper::getScalingPolygon(polygon1 , -20);
 
-        if (outerLand.getArea() > polygon1.getArea())
+        if (outerLand.getArea() < polygon1.getArea())
         {
             outerLand = PolygonHelper::getScalingPolygon(polygon1 , 20);
         }
