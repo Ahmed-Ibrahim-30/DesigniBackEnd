@@ -1454,12 +1454,12 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
     const Point& end = {innerCenterLine.getX2() , innerCenterLine.getY2()};
     bool flag = isTop;
 
-    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
-    Line test4 = innerCenterLine;
-    test4.printJsonFormat();
-
-    test4 = line;
-    test4.printJsonFormat();
+//    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
+//    Line test4 = innerCenterLine;
+//    test4.printJsonFormat();
+//
+//    test4 = line;
+//    test4.printJsonFormat();
     double minX = min(innerCenterLine.getX1() , innerCenterLine.getX2());
     double maxX = max(innerCenterLine.getX1() , innerCenterLine.getX2());
 
@@ -1474,10 +1474,10 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         if (other == end)break;
 
         Line test(start , other);
-        cout<<"Length = "<<test.getLength()<<"\n";
-
-        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
-        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
+//        cout<<"Length = "<<test.getLength()<<"\n";
+//
+//        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
+//        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
 
         Line curLine(start , other);
 //        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
@@ -1575,7 +1575,9 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
             continue;
         }
 
-        int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner , isTop);
+        double diff = initialStart - startSearch;
+
+        int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , diff , innerPolygon , centerLineInner , false);
 //        cout<<"st = "<<st<<" MID = "<<mid<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
 
         if(divisions >= divisionsCount)
