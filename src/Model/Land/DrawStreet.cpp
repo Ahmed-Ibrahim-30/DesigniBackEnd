@@ -39,6 +39,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     Line centerLineInner1 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesTop[0]);
     Line centerLineInner2 = PolygonHelper::clipLineToPolygon(innerPolygon , centerLinesBottom[0]);
 
+    cout<<"CenterLine Lengths = "<<centerLineInner1.getLength() <<" "<<centerLineInner2.getLength()<<"\n";
     vector<Line> spacingLines = innerPolygon.getLines();
 
     Line otherLine1Inner (centerLineInner1.getStart() , centerLinesTop[0].getStart());
@@ -82,9 +83,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
 
     double startSpace = step1 / 2;
-    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 ,startSpace, divisions , centerLineInner1);
+//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 ,startSpace, divisions , centerLineInner1);
     startSpace = step1;
-    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , startSpace , divisions , centerLineInner2);
+//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , startSpace , divisions , centerLineInner2);
 
 //    for(auto &city : cities)
 //    {
@@ -1462,11 +1463,11 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 //        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
         if (flag)
         {
-            cout<<"TRUE\n";
-            bool isPointInsidePol = PolygonHelper::isPointInsidePolygon(start ,boundaryPolygon);
+
+            bool isPointInsidePol = PolygonHelper::isPointOnLine(start , innerCenterLine);
             if (!isPointInsidePol) return divisions;
 
-            isPointInsidePol = PolygonHelper::isPointInsidePolygon(other ,boundaryPolygon);
+            isPointInsidePol = PolygonHelper::isPointOnLine(other , innerCenterLine);
             if (!isPointInsidePol) return divisions;
             divisions++;
         }
