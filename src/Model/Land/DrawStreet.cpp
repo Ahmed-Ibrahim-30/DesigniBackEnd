@@ -1449,9 +1449,8 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 {
     int divisions = 0;
 
-    Point start = line.getStart();
-    const Point& end = line.getAnEnd();
-    int index = 0;
+    Point start = {line.getX1() , line.getY1()};
+    const Point& end = {line.getX2() , line.getY2()};
     bool flag = false;
 
     double minX = min(innerCenterLine.getX1() , innerCenterLine.getX2());
@@ -1462,13 +1461,13 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
     while (start != end && start.getX() != INT_MAX)
     {
-        Point other = getNextPoint(start , index , {line} , initialStartStep );
+        Point other = PolygonHelper::getNextPoint(start , end , initialStartStep);
         initialStartStep = initialStep;
 
 //        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
 //        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
 
-        if (other.getX() == INT_MAX)break;
+        if (other == end)break;
 
         Line curLine(start , other);
 //        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
@@ -1494,7 +1493,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
 {
     double curStep = 40;
 
-    double st = curStep , end = 500;
+    double st = curStep , end = centerLine.getLength();
     const double EPS = 1e-6;
 
     while (end - st > EPS)
