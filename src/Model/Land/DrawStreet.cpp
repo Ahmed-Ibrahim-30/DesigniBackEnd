@@ -183,7 +183,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
     Point centerFirst = {centerL[0].getX1() , centerL[0].getY1()};
     Point centerLast = {centerL[0].getX2() , centerL[0].getY2()};
 
-    Line side1Line = PolygonHelper::getLineForPoint(polygonLines , centerL[0].getStart());
+    Line side1Line = PolygonHelper::getLineForPoint(polygonLines , centerFirst);
     Line side2Line = PolygonHelper::getLineForPoint(polygonLines , centerLast);
 
     int centerLineIndex = 0;
