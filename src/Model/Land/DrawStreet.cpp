@@ -11,7 +11,6 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
     if (!(polygon1.getId() == "5"))return;
 
-    double step1 = 40 ;
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
 
@@ -53,12 +52,14 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 
     startStepTop += 0.5;
     startStepBottom += 0.5;
+
+    double step1 = max(startStepTop*2 , startStepBottom*2) ;
 //    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , 40 , startStepTop , innerPolygon , centerLineInner1);
-    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , 40 , startStepBottom + 20 , innerPolygon , centerLineInner2);
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , step1 , startStepTop , innerPolygon , centerLineInner1);
+    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , step1 , startStepBottom + step1/2 , innerPolygon , centerLineInner2);
 
     cout<<"divisions = "<<divisions <<"\n";
     cout<<"divisionsB = "<<divisionsB <<"\n";
@@ -1496,18 +1497,24 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
 {
     double curStep = 40;
 
-    double st = isTop ? startSearch*2 : curStep , end = centerLine.getLength();
+    double st = curStep , end = centerLine.getLength();
     const double EPS = 1e-6;
 
     while (end - st > EPS)
     {
         double mid = st + (end - st) / 2.0;
 
-
         double initialStart = isTop ? mid/2 : mid;
 
+        if (initialStart < startSearch)
+        {
+            curStep = mid;
+            st = mid;
+            continue;
+        }
+
         int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
-        cout<<"st = "<<st<<" MID = "<<mid<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
+//        cout<<"st = "<<st<<" MID = "<<mid<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
 
         if(divisions >= divisionsCount)
         {
