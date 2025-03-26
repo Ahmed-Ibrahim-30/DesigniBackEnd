@@ -179,7 +179,6 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     vector<vector<Line>> side1Streets;
 
-//    Point centerFirst = {innerCenterLine.getX1() , innerCenterLine.getY1()};
     Point  centerFirst= {centerL[0].getX1() , centerL[0].getY1()};
     Point centerLast = {centerL[0].getX2() , centerL[0].getY2()};
 
@@ -383,7 +382,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 //        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
 //        vector<Polygon1> homes = homeSetter(homePolygons , home , home2);
         CityGrid cityGrid;
-        cityGrid.setInnerStreets(homeLinesInner);
+//        cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
 //        cityGrid.setRoadExtension(extensions);
 //        cityGrid.setHomeBorder(homeBorder);
