@@ -77,7 +77,7 @@ private:
     Polygon1 getHomePolygon(const Point &start, const Point &end, const Point &start2, const Point &end2,
                             const vector<Line> &mainLandLines, Polygon1 &pol, vector<Line> &bottomLines);
 
-    int getMaxNumberOfDivisionsForLine(const Line &line , double initialStep , double initialStartStep, Polygon1 &boundaryPolygon , const Line &innerCenterLine);
+    int getMaxNumberOfDivisionsForLine(const Line &line , double initialStep , double initialStartStep, Polygon1 &boundaryPolygon , const Line &innerCenterLine, bool isTop);
 
     /**
      *

@@ -9,7 +9,7 @@
 
 void DrawStreet::drawStreets(Polygon1 &polygon1)
 {
-//    if (!(polygon1.getId() == "2"))return;
+//    if (!(polygon1.getId() == "1"))return;
 
     mainLand = polygon1;
     vector<Line> polygonLines = polygon1.getLines();
@@ -50,17 +50,16 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Dist3 = "<<startStepTop<<"\n";
     cout<<"Dist4 = "<<startStepBottom<<"\n";
 
-    startStepTop += 2;
-    startStepBottom += 2;
+//    startStepTop += 2;
+//    startStepBottom += 2;
 
     double step1 = max(startStepTop*2 , startStepBottom*2) ;
 //    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
 
-    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , step1 , startStepTop , innerPolygon , centerLineInner1);
-    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , step1 , startStepBottom + step1/2 , innerPolygon , centerLineInner2);
-//    int divisionsB = 0;
+    int divisions = getMaxNumberOfDivisionsForLine(centerLinesTop[0] , step1 , step1 , innerPolygon , centerLineInner1 , true);
+    int divisionsB = getMaxNumberOfDivisionsForLine(centerLinesBottom[0] , step1 , step1/2 , innerPolygon , centerLineInner2 , false);
 
     cout<<"divisions = "<<divisions <<"\n";
     cout<<"divisionsB = "<<divisionsB <<"\n";
@@ -1447,17 +1446,20 @@ DrawStreet::drawInnerHomeBorders(Polygon1 &polygon1, vector<Line> &streetsLinesO
     return homeBorderSol;
 }
 
-int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, double initialStartStep, Polygon1 &boundaryPolygon, const Line &innerCenterLine)
+int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, double initialStartStep, Polygon1 &boundaryPolygon, const Line &innerCenterLine , bool isTop)
 {
     int divisions = 0;
 
-    Point start = {line.getX1() , line.getY1()};
-    const Point& end = {line.getX2() , line.getY2()};
-    bool flag = false;
+    Point start = {innerCenterLine.getX1() , innerCenterLine.getY1()};
+    const Point& end = {innerCenterLine.getX2() , innerCenterLine.getY2()};
+    bool flag = isTop;
 
-//    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
-//    Line test4 = innerCenterLine;
-//    test4.printJsonFormat();
+    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
+    Line test4 = innerCenterLine;
+    test4.printJsonFormat();
+
+    test4 = line;
+    test4.printJsonFormat();
     double minX = min(innerCenterLine.getX1() , innerCenterLine.getX2());
     double maxX = max(innerCenterLine.getX1() , innerCenterLine.getX2());
 
@@ -1469,31 +1471,19 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         Point other = PolygonHelper::getNextPoint(start , end , initialStartStep);
         initialStartStep = initialStep;
 
-        other.setX(round(other.getX()));
-        other.setY(round(other.getY()));
-
         if (other == end)break;
 
         Line test(start , other);
-//        cout<<"Length = "<<test.getLength()<<"\n";
-//
-//        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
-//        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
+        cout<<"Length = "<<test.getLength()<<"\n";
+
+        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
+        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
 
         Line curLine(start , other);
 //        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
 //        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
         if (flag)
         {
-//            cout<<"TRUE\n";
-            bool isPointInsidePol = start.getX() >= minX && start.getX() <= maxX && start.getY() >= minY && start.getY() <= maxY;
-            if (!isPointInsidePol) return divisions;
-
-//            cout<<"TRUE4\n";
-
-            isPointInsidePol = other.getX() >= minX && other.getX() <= maxX && other.getY() >= minY && other.getY() <= maxY;
-            if (!isPointInsidePol) return divisions;
-//            cout<<"TRUE6\n";
             divisions++;
         }
 
@@ -1503,6 +1493,67 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
     }
     return divisions;
 }
+
+
+//int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialStep, double initialStartStep, Polygon1 &boundaryPolygon, const Line &innerCenterLine)
+//{
+//    int divisions = 0;
+//
+//    Point start = {line.getX1() , line.getY1()};
+//    const Point& end = {line.getX2() , line.getY2()};
+//    bool flag = false;
+//
+//    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
+//    Line test4 = innerCenterLine;
+//    test4.printJsonFormat();
+//
+//    test4 = line;
+//    test4.printJsonFormat();
+//    double minX = min(innerCenterLine.getX1() , innerCenterLine.getX2());
+//    double maxX = max(innerCenterLine.getX1() , innerCenterLine.getX2());
+//
+//    double minY = min(innerCenterLine.getY1() , innerCenterLine.getY2());
+//    double maxY = max(innerCenterLine.getY1() , innerCenterLine.getY2());
+//
+//    while (start != end && start.getX() != INT_MAX)
+//    {
+//        Point other = PolygonHelper::getNextPoint(start , end , initialStartStep);
+//        initialStartStep = initialStep;
+//
+//        other.setX(round(other.getX()));
+//        other.setY(round(other.getY()));
+//
+//        if (other == end)break;
+//
+//        Line test(start , other);
+//        cout<<"Length = "<<test.getLength()<<"\n";
+//
+//        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
+//        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
+//
+//        Line curLine(start , other);
+////        centerLines.emplace_back(start.getX() , start.getY() , 0,0);
+////        centerLines.emplace_back(other.getX() , other.getY() , 0,0);
+//        if (flag)
+//        {
+//            cout<<"TRUE\n";
+//            bool isPointInsidePol = start.getX() >= minX && start.getX() <= maxX && start.getY() >= minY && start.getY() <= maxY;
+//            if (!isPointInsidePol) return divisions;
+//
+//            cout<<"TRUE4\n";
+//
+//            isPointInsidePol = other.getX() >= minX && other.getX() <= maxX && other.getY() >= minY && other.getY() <= maxY;
+//            if (!isPointInsidePol) return divisions;
+//            cout<<"TRUE6\n";
+//            divisions++;
+//        }
+//
+//        flag = !flag;
+//        start = other;
+//
+//    }
+//    return divisions;
+//}
 
 double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine ,const Line &centerLineInner , Polygon1 &innerPolygon , double startSearch , bool isTop)
 {
@@ -1524,7 +1575,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
             continue;
         }
 
-        int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
+        int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner , isTop);
 //        cout<<"st = "<<st<<" MID = "<<mid<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
 
         if(divisions >= divisionsCount)
