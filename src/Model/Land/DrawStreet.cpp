@@ -193,7 +193,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 
     for (int m = 0; m < divisions; ++m)
     {
-        if (m==1)break;
+//        if (m==1)break;
         double newStep = !m ? startSpace : step;
 
         Point last = lastPoint;
