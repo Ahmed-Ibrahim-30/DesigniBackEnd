@@ -383,7 +383,7 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
 //        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
 //        vector<Polygon1> homes = homeSetter(homePolygons , home , home2);
         CityGrid cityGrid;
-//        cityGrid.setInnerStreets(homeLinesInner);
+        cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
 //        cityGrid.setRoadExtension(extensions);
 //        cityGrid.setHomeBorder(homeBorder);
