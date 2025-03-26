@@ -91,32 +91,32 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     startSpace = step1;
     drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , startSpace , divisions , centerLineInner2);
 
-//    for(auto &city : cities)
-//    {
-//        vector<Line> inner = city.getInnerStreets();
-//        vector<Line> outer = city.getOuterStreets();
-//        inner.pop_back();
-//        outer.pop_back();
-//        city.setStreets(inner , outer);
-//    }
-//
-//
-//    startSpace = step1 / 2;
-//    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
-//    //Bottoms
-//    startSpace = step1;
-//    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
-//
-//    vector<Line> centerCopy = centerLines;
+    for(auto &city : cities)
+    {
+        vector<Line> inner = city.getInnerStreets();
+        vector<Line> outer = city.getOuterStreets();
+        inner.pop_back();
+        outer.pop_back();
+        city.setStreets(inner , outer);
+    }
+
+
+    startSpace = step1 / 2;
+    vector<Line> centerTop = SplitCenterLines(startSpace , step1 , divisions ,centerLinesTop);
+    //Bottoms
+    startSpace = step1;
+    vector<Line> centerBottoms = SplitCenterLines(startSpace , step1 , divisions , centerLinesBottom);
+
+    vector<Line> centerCopy = centerLines;
     std::reverse(centerLines.begin(), centerLines.end());
     centerLines.pop_back();
     centerLines.pop_back();
-////    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
-////    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
-    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
+    centerLines.insert(centerLines.end() , centerBottoms.begin() , centerBottoms.end());
+    centerLines.insert(centerLines.end() , centerTop.begin() , centerTop.end());
+//    centerLines.insert(centerLines.end() , spacingLines.begin() , spacingLines.end());
 //
-    centerLines.push_back(centerLineInner1);
-    centerLines.push_back(centerLineInner2);
+//    centerLines.push_back(centerLineInner1);
+//    centerLines.push_back(centerLineInner2);
 }
 
 vector<Line> DrawStreet::SplitCenterLines(double startSpace,double step1 , int divisions, const vector<Line> &centerLines2) {
@@ -379,20 +379,20 @@ void DrawStreet::drawSide1Streets(const vector<Line> &polygonLines,const vector<
         Line innerBottomLine = {innerPoints[0].getX() , innerPoints[0].getY() , innerPoints[3].getX() , innerPoints[3].getY()};
 
         //EXTENSIONS And Border
-//        vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + circleStreetWidth, centerLine , m ,divisions);
-//        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
-//        vector<Polygon1> homes = homeSetter(homePolygons , home , home2);
+        vector<Line> extensions = drawExtensions(polygonLines , innerBottomLine , innerPoints[0] , innerPoints[3] , innerPoints[1] , innerPoints[2] , step/2 + circleStreetWidth, centerLine , m ,divisions);
+        vector<Line> homeBorder = drawHomeBorders( mainLand, homeLinesOuter , homeLinesInner , extensions ,homePolygons , centerLine, m ,divisions);
+        vector<Polygon1> homes = homeSetter(homePolygons , home , home2);
         CityGrid cityGrid;
         cityGrid.setInnerStreets(homeLinesInner);
         cityGrid.setOuterStreets(homeLinesOuter);
-//        cityGrid.setRoadExtension(extensions);
-//        cityGrid.setHomeBorder(homeBorder);
+        cityGrid.setRoadExtension(extensions);
+        cityGrid.setHomeBorder(homeBorder);
 
-//        for(auto &h : homes)
-//        {
-//            vector<Line> ll = h.getLines();
-//            centerLines.insert(centerLines.end() , ll.begin() , ll.end());
-//        }
+        for(auto &h : homes)
+        {
+            vector<Line> ll = h.getLines();
+            centerLines.insert(centerLines.end() , ll.begin() , ll.end());
+        }
 
         cities.push_back(cityGrid);
     }
