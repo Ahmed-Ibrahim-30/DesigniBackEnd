@@ -50,8 +50,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Dist3 = "<<startStepTop<<"\n";
     cout<<"Dist4 = "<<startStepBottom<<"\n";
 
-    startStepTop += 1;
-    startStepBottom += 1;
+    startStepTop += 2;
+    startStepBottom += 2;
 
     double step1 = max(startStepTop*2 , startStepBottom*2) ;
 //    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
