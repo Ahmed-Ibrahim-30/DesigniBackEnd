@@ -50,10 +50,10 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Dist3 = "<<startStepTop<<"\n";
     cout<<"Dist4 = "<<startStepBottom<<"\n";
 
-    startStepTop += 0.5;
-    startStepBottom += 0.5;
+//    startStepTop += 1;
+//    startStepBottom += 1;
 
-    double step1 = max(startStepTop*2 , startStepBottom*2) + 0.5;
+    double step1 = max(startStepTop*2 , startStepBottom*2) ;
 //    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
@@ -1455,9 +1455,9 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
     const Point& end = {line.getX2() , line.getY2()};
     bool flag = false;
 
-//    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
-//    Line test4 = innerCenterLine;
-//    test4.printJsonFormat();
+    cout<<"STEP = "<<initialStep<<" initialStartStep = "<<initialStartStep<<"\n";
+    Line test4 = innerCenterLine;
+    test4.printJsonFormat();
     double minX = min(innerCenterLine.getX1() , innerCenterLine.getX2());
     double maxX = max(innerCenterLine.getX1() , innerCenterLine.getX2());
 
@@ -1469,11 +1469,14 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         Point other = PolygonHelper::getNextPoint(start , end , initialStartStep);
         initialStartStep = initialStep;
 
+        other.setX(round(other.getX()));
+        other.setY(round(other.getY()));
+
         if (other == end)break;
 
         Line test(start , other);
 //        cout<<"Length = "<<test.getLength()<<"\n";
-
+//
 //        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
 //        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
 
@@ -1490,6 +1493,7 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
 
             isPointInsidePol = other.getX() >= minX && other.getX() <= maxX && other.getY() >= minY && other.getY() <= maxY;
             if (!isPointInsidePol) return divisions;
+//            cout<<"TRUE6\n";
             divisions++;
         }
 

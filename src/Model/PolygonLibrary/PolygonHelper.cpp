@@ -138,8 +138,11 @@ Polygon1 PolygonHelper::getScalingPolygon(Polygon1 &mainLand , double distance)
 Point PolygonHelper::getNextPoint(const Point& current, const Point& destination, double step) {
     double dx = destination.getX() - current.getX();
     double dy = destination.getY() - current.getY();
-    Line line (current.getX() , current.getY() , destination.getX() , destination.getY());
-    double length = line.getLength();
+
+    double x1 = current.getX() , y1 = current.getY();
+    double x2 = destination.getX() , y2 = destination.getY();
+
+    double length = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 
 
     if (length < step) {
