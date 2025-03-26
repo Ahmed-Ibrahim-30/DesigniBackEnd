@@ -498,6 +498,30 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             else  streets = pols[0];
         }
 
+        else
+        {
+            vector<double> ratios;
+
+            int landSlots = (int)ratios.size();
+            double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
+
+            ans = land.SplitLand(30000 , static_cast<LandDivisionSortingStrategy>(strategy)) ;
+            GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
+            greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
+
+
+            vector<vector<Polygon1>> pols ;
+
+            cout<<"landSlots = "<<landSlots<<"\n";
+
+            landDivisionRoads = new LandDivisionRoadsByArea();
+            pols =landDivisionRoads->divideLand(polygon1 , 30000 , static_cast<LandDivisionSortingStrategy>(strategy) );
+
+
+            if (pols.empty()) streets = land.buildRoads(ans);
+            else  streets = pols[0];
+        }
+
 
         for(int i = 0 ; i< polygon1.getPoints().size() ; i++)
         {
