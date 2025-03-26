@@ -564,7 +564,13 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
-        Polygon1 outerLand = landDivisionRoads->getOuterLand(polygon1);
+
+        Polygon1 outerLand = PolygonHelper::getScalingPolygon(polygon1 , -20);
+
+        if (outerLand.getArea() > polygon1.getArea())
+        {
+            outerLand = PolygonHelper::getScalingPolygon(polygon1 , 20);
+        }
 
 
         for(int i = 0 ; i < ans.size() ; i++)
