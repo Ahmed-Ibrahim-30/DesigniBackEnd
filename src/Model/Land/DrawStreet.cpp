@@ -51,8 +51,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     cout<<"Dist3 = "<<startStepTop<<"\n";
     cout<<"Dist4 = "<<startStepBottom<<"\n";
 
-    startStepTop += 0.5;
-    startStepBottom += 0.5;
+//    startStepTop += 0.5;
+//    startStepBottom += 0.5;
 //    int divisions = ((int)((centerLinesTop[0].getLength()/20) - 1) / 4);
 //    int divisionsB = ((int)((centerLinesBottom[0].getLength()/20)-1) / 4);
 
