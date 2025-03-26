@@ -69,8 +69,8 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     /**
      * Select BEST Step
      */
-    double st1 = getAppropriateStep(divisions , centerLinesTop[0] , centerLineInner1 , innerPolygon , 20 , true);
-    double st2 = getAppropriateStep(divisions , centerLinesBottom[0] , centerLineInner2 , innerPolygon , 40 , false);
+    double st1 = getAppropriateStep(divisions , centerLinesTop[0] , centerLineInner1 , innerPolygon , startStepTop , true);
+    double st2 = getAppropriateStep(divisions , centerLinesBottom[0] , centerLineInner2 , innerPolygon , startStepBottom , false);
 
     cout<<"ST1 = "<<st1<<" "<<st2<<"\n";
 
@@ -86,9 +86,9 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
 //    step1 = min(step1 , ((lengthC / (((int)(divisions*4)) + 1))) * 2);
 
     double startSpace = step1 / 2;
-    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 ,startSpace, divisions , centerLineInner1);
+//    drawSide1Streets(polygonLines ,centerLinesTop ,  spacingLines , step1 ,startSpace, divisions , centerLineInner1);
     startSpace = step1;
-//    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , startSpace , divisions , centerLineInner2);
+    drawSide1Streets(polygonLines ,centerLinesBottom ,  spacingLines , step1 , startSpace , divisions , centerLineInner2);
 
 //    for(auto &city : cities)
 //    {
@@ -1496,7 +1496,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
 {
     double curStep = 40;
 
-    double st = curStep , end = centerLine.getLength();
+    double st = isTop ? startSearch*2 : curStep , end = centerLine.getLength();
     const double EPS = 1e-6;
 
     while (end - st > EPS)
@@ -1507,7 +1507,7 @@ double DrawStreet::getAppropriateStep(int divisionsCount, const Line &centerLine
         double initialStart = isTop ? mid/2 : mid;
 
         int divisions = getMaxNumberOfDivisionsForLine(centerLine , mid  , initialStart , innerPolygon , centerLineInner);
-//        cout<<"st = "<<st<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
+        cout<<"st = "<<st<<" MID = "<<mid<<"  END = "<<end<<"  Div = "<<divisions<<"\n";
 
         if(divisions >= divisionsCount)
         {
