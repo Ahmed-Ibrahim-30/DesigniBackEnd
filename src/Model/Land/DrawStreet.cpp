@@ -1464,10 +1464,13 @@ int DrawStreet::getMaxNumberOfDivisionsForLine(const Line &line, double initialS
         Point other = PolygonHelper::getNextPoint(start , end , initialStartStep);
         initialStartStep = initialStep;
 
+        if (other == end)break;
+
+//        Line test(start , other);
+//        cout<<"Length = "<<test.getLength()<<"\n";
+//
 //        cout<<"START = "<<start.getX() <<" "<<start.getY()<<"\n";
 //        cout<<"other = "<<other.getX() <<" "<<other.getY()<<"\n";
-
-        if (other == end)break;
 
         Line curLine(start , other);
 //        centerLines.emplace_back(start.getX() , start.getY() , 0,0);

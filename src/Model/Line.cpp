@@ -3,8 +3,8 @@
 //
 
 #include "Line.h"
-Line::Line(double x1, double y1, double x2, double y2) {
-
+Line::Line(double x1, double y1, double x2, double y2)
+{
     setX1(x1);
     setX2(x2);
     setY1(y1);
@@ -19,10 +19,12 @@ Line::Line(double x1, double y1, double x2, double y2) {
     startAngle=0,endAngle=0;
     z1=0,z2=0;
     face='0';
-    start.setX(x1);
-    start.setY(y1);
-    end.setX(x2);
-    end.setY(y2);
+
+    start.setX(getX1());
+    start.setY(getY1());
+    end.setX(getX2());
+    end.setY(getY2());
+
 }
 
 
@@ -33,8 +35,10 @@ Line::Line(const Point &start1, const Point &end1)
     setY1(start1.getY());
     setY2(end1.getY());
 
-    start = start1;
-    end = end1;
+    start.setX(getX1());
+    start.setY(getY1());
+    end.setX(getX2());
+    end.setY(getY2());
 
     if (x1==x2)dir='v';
     else dir='h';
@@ -82,6 +86,7 @@ void Line::setDir(){
 
 void Line::setX1(double _x1) {
     Line::x1 = MathUtils::roundingToDecimal(_x1);
+    start.setX(x1);
 }
 
 double Line::getX2() const {
@@ -90,6 +95,7 @@ double Line::getX2() const {
 
 void Line::setX2(double _x2) {
     Line::x2 = MathUtils::roundingToDecimal(_x2);
+    end.setX(x2);
 }
 
 double Line::getY1() const {
@@ -98,6 +104,7 @@ double Line::getY1() const {
 
 void Line::setY1(double _y1) {
     Line::y1 = MathUtils::roundingToDecimal(_y1);
+    start.setY(y1);
 }
 
 double Line::getY2() const {
@@ -106,6 +113,7 @@ double Line::getY2() const {
 
 void Line::setY2(double _y2) {
     Line::y2 = MathUtils::roundingToDecimal(_y2);
+    end.setY(y2);
 }
 
 void Line::print() const {
