@@ -136,7 +136,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         limits["46"] = {5,7};
         limits["47"] = {5,7};
         limits["48"] = {5,7};
-        limits["49"] = {5,7};
+        limits["49"] = {7,7};
         limits["50"] = {5,7};
 
         BuildingDesigner buildingDesigner(zone1 , zone2 , conn , limits);
