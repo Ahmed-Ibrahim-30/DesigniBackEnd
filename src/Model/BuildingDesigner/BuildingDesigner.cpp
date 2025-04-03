@@ -42,26 +42,26 @@ BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids,
 
 Design BuildingDesigner::generateDesign() {
 
-    cout<<"ZONE1 = "<<"\n";
-    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
-    cout<<"\n";
-
-    cout<<"ZONE2 = "<<"\n";
-    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
-    cout<<"\n";
+//    cout<<"ZONE1 = "<<"\n";
+//    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
+//    cout<<"\n";
+//
+//    cout<<"ZONE2 = "<<"\n";
+//    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
+//    cout<<"\n";
 
     zone1 = sortZone(zone1);
     zone2 = sortZone(zone2);
 
     reverse(zone1.begin(), zone1.end());
 
-    cout<<"ZONE1 = "<<"\n";
-    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
-    cout<<"\n";
-
-    cout<<"ZONE2 = "<<"\n";
-    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
-    cout<<"\n";
+//    cout<<"ZONE1 = "<<"\n";
+//    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
+//    cout<<"\n";
+//
+//    cout<<"ZONE2 = "<<"\n";
+//    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
+//    cout<<"\n";
 
     Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
@@ -172,7 +172,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double curWidth = roomE[i].getDimensionLimit().first;
         double curDiff = topRoomsLimitDiff[i] + 1;
         double increaseRatio = ((width - sumWidths) * curDiff) / sumTopRoomsLimitDiff;
-        if (width > sumWidths && increaseRatio< 5)curWidth += increaseRatio;
+        curWidth += increaseRatio;
         newCorridorWidth+=curWidth;
 
         string id = roomE[i].getRoomId();
