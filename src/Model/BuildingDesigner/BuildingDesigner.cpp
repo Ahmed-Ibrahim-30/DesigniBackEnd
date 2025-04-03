@@ -68,10 +68,6 @@ Design BuildingDesigner::generateDesign() {
     Room Living ("Living" , -5 , -2.5 , 0 , 4.5);
     rooms.push_back(Living);
 
-    rooms[rooms.size()-1].addDoor(0,0,0,0);
-    rooms[rooms.size()-1].addWindow(0,0,0,0);
-    rooms[rooms.size()-1].addOpening(0,0,0,0);
-
     Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
 
@@ -186,6 +182,9 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     cout<<"newCorridorWidth = "<<newCorridorWidth<<"\n";
 
     Room corridor("" , 0 , 0 , newCorridorWidth , height);
+    corridor.addDoor(0 , 0.4 , 0 , 1.6);
+    corridor.addDoor(newCorridorWidth , 0.4 , newCorridorWidth , 1.6);
+
     ans.push_back(corridor);
 
     Room rightRoom (roomE[topRoomsSize].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[topRoomsSize].getDimensionLimit().second , corridor.getX2() + roomE[topRoomsSize+1].getDimensionLimit().second , corridor.getY2());
