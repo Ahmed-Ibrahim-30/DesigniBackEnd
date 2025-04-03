@@ -140,8 +140,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         limits["45"] = {5,7};
 
         BuildingDesigner buildingDesigner(zone1 , zone2 , conn , limits);
-        Design res = buildingDesigner.generateDesign();
-        design1 = res;
+        Design resD = buildingDesigner.generateDesign();
+        design1 = resD;
 
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();
