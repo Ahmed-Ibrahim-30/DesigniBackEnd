@@ -211,6 +211,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         curWidth += increaseRatio;
 
         string id = roomE[i].getRoomId();
+        cout<<"ID = "<<id <<" increaseRatio = "<<increaseRatio<<"  curWidth = "<<curWidth<<"\n";
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
