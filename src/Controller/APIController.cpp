@@ -137,7 +137,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         limits["47"] = {5,7};
         limits["48"] = {5,7};
         limits["49"] = {5,7};
-        limits["45"] = {5,7};
+        limits["50"] = {5,7};
 
         BuildingDesigner buildingDesigner(zone1 , zone2 , conn , limits);
         Design resD = buildingDesigner.generateDesign();

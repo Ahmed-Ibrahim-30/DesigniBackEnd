@@ -223,8 +223,8 @@ void JsonExtraction::outputJsonFile(crow::json::wvalue &jsonFile,
     jsonFile[solutionIndex]["spaces"]={};
     jsonFile[solutionIndex]["roofs"] = {} ;
     jsonFile[solutionIndex]["lines"]={};
-    jsonFile[solutionIndex]["doors"]={};
-    jsonFile[solutionIndex]["windows"]={};
+    jsonFile[solutionIndex]["doors"]= std::vector<crow::json::wvalue>{};
+    jsonFile[solutionIndex]["windows"]= std::vector<crow::json::wvalue>{};
     //jsonFile[solutionIndex]["furnitures"]={};
     jsonFile[solutionIndex]["surfaces"]={};
     jsonFile[solutionIndex]["rooms"]={};
