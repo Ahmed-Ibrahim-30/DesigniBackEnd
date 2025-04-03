@@ -212,11 +212,12 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     {
         double curWidth = roomE[i].getDimensionLimit().first;
         double curDiff = bottomRoomsLimitDiff[i] ;
-        double increaseRatio = ((newCorridorWidth - sumWidths) * curDiff) / sumBottomRoomsLimitDiff;
+        double diff = (newCorridorWidth - sumWidths);
+        double increaseRatio = (diff * curDiff) / sumBottomRoomsLimitDiff;
         curWidth += increaseRatio;
 
         string id = roomE[i].getRoomId();
-        cout<<"ID = "<<id <<" increaseRatio = "<<increaseRatio<<"  curWidth = "<<curWidth<<"\n";
+        cout<<"ID = "<<id <<" increaseRatio = "<<increaseRatio<<"  curWidth = "<<curWidth<<"  curDiff = "<<curDiff<<"  sumBottomRoomsLimitDiff = "<<sumBottomRoomsLimitDiff<<"\n";
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
