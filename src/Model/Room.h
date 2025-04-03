@@ -54,7 +54,6 @@ private:
      */
     string surfaceSide;
 
-private:
 
     Room(RoomType roomType , const string &roomId , double area,double width, double height, double x1, double y1, double x2, double y2,
          const vector<char> &requiredView = {});
@@ -62,12 +61,6 @@ public:
     Room(const string &id1, double x1,double y1,double x2,double y2 , double z1 , double z2)
     {
         changeId(id1);
-        // setX1(x1);
-        // setX2(x2);
-        // setY1(y1);
-        // setY2(y2);
-        // setZ1(z1);
-        // setZ2(z2);
 
         setX1(x1);
         setX2(y1);

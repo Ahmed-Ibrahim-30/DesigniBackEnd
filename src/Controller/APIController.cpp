@@ -1,7 +1,7 @@
 //
 // Created by ahmed Ibrahim on 11-Feb-25.
 //
-
+#include "src/Model/BuildingDesigner/BuildingDesigner.h"
 #include "APIController.h"
 #include "HomeDesignController.h"
 #include "src/View/JsonExtraction.h"
@@ -49,6 +49,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         if (!jsonData) {
             return crow::response(400, "Invalid JSON format");
         }
+
+
         crow::json::wvalue response;
         int bedrooms = -1 , rooms = -1 , spaces = -1 , home = -1; double area = - 1;
         Design design1;
@@ -115,6 +117,31 @@ void APIController::templateRoutes(crow::SimpleApp &app)
             general[0]++;
         }
         design1.scaleDesign(105);
+
+
+
+
+        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
+        vector<string> zone2 {"47", "48", "49", "50"};
+
+        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
+
+        map<string , pair<double, double>> limits ;
+
+        limits["41"] = {5,7};
+        limits["42"] = {3,7};
+        limits["43"] = {4,6};
+        limits["44"] = {6,8};
+        limits["45"] = {5,7};
+        limits["46"] = {5,7};
+        limits["47"] = {5,7};
+        limits["48"] = {5,7};
+        limits["49"] = {5,7};
+        limits["45"] = {5,7};
+
+        BuildingDesigner buildingDesigner(zone1 , zone2 , conn , limits);
+        Design res = buildingDesigner.generateDesign();
+        design1 = res;
 
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();

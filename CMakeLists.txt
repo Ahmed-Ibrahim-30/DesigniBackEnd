@@ -31,6 +31,9 @@ file(GLOB_RECURSE SRC_FILES
 add_executable(Designi_BackEnd
         main.cpp
         ${SRC_FILES}
+        src/Model/BuildingDesigner/BuildingDesigner.cpp
+        src/Model/BuildingDesigner/BuildingDesigner.h
+        src/Model/BuildingDesigner/RoomEntity.h
 )
 
 find_package(Threads REQUIRED)
