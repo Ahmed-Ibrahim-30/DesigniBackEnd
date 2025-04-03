@@ -156,7 +156,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double curWidth = roomE[i].getDimensionLimit().first;
         double curDiff = topRoomsLimitDiff[i] + 1;
         double increaseRatio = ((width - sumWidths) * curDiff) / sumTopRoomsLimitDiff;
-        curWidth += increaseRatio;
+        if (width > sumWidths && increaseRatio< 5)curWidth += increaseRatio;
         newCorridorWidth+=curWidth;
 
         string id = roomE[i].getRoomId();
