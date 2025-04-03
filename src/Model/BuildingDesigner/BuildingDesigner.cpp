@@ -135,7 +135,7 @@ void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity>
         {
             if (!visited.count(room.getRoomId()))
             {
-                RoomEntity newRoom = zone[mapRoomIndex[room.getRoomId()]];
+                RoomEntity newRoom = room;
                 sortZoneRoomsDFS(newRoom , ans , zone , mapRoomIndex);
                 break;
             }
