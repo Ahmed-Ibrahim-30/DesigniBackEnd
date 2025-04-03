@@ -145,7 +145,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         sumWidths+=roomE[i].getDimensionLimit().first;
     }
 
-    double newCorridorWidth = corridorWidth;
+    double newCorridorWidth = 0.0;
     double curX = 0.0;
 
     for (int i = 0; i < topRoomsSize; ++i)
