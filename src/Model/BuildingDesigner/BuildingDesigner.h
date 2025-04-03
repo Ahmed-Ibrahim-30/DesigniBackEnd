@@ -42,6 +42,8 @@ public:
      * @return
      */
     Design generateDesign();
+
+    vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom);
 };
 
 

@@ -68,6 +68,9 @@ Design BuildingDesigner::generateDesign() {
     Room Living ("Living" , -5 , -2.5 , 0 , 4.5);
     rooms.push_back(Living);
 
+    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
+    rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
+
     Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
 
@@ -216,6 +219,72 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
+    }
+
+    return ans;
+}
+
+
+vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom)
+{
+    vector<Room> ans;
+    double width = mainRoom.getWidth();
+    double height = mainRoom.getHeight();
+
+    int n = (int)roomE.size();
+
+    double curX = mainRoom.getX2();
+    int index = 0;
+
+    for (int i = index; i < roomE.size(); ++i)
+    {
+        double curWidth = roomE[i].getDimensionLimit().first;
+
+        string id = roomE[i].getRoomId();
+        Room newRoom(id , curX - curWidth , mainRoom.getY2() , curX , mainRoom.getY2() + 5);
+        curX = newRoom.getX1();
+        ans.push_back(newRoom);
+
+        if (curX - mainRoom.getX1() < 1)
+        {
+            index = i+1;
+            break;
+        }
+    }
+
+    double curY = mainRoom.getY2();
+
+    for (int i = index; i < roomE.size(); ++i)
+    {
+        double curHeight = roomE[i].getDimensionLimit().first;
+
+        string id = roomE[i].getRoomId();
+        Room newRoom(id , mainRoom.getX1() - 5 , curY - curHeight , mainRoom.getX1() , curY);
+        curY = newRoom.getY1();
+        ans.push_back(newRoom);
+
+        if (curY - mainRoom.getY1() < 1)
+        {
+            index = i + 1;
+            break;
+        }
+    }
+
+    curX = mainRoom.getX1();
+
+    for (int i = index; i < n; ++i)
+    {
+        double curWidth = roomE[i].getDimensionLimit().first;
+
+        string id = roomE[i].getRoomId();
+        Room newRoom(id , curX , mainRoom.getY1() , curX+curWidth, mainRoom.getY1() - 5);
+        curX = newRoom.getX2();
+        ans.push_back(newRoom);
+
+        if (mainRoom.getX2() - curX  < 1)
+        {
+            break;
+        }
     }
 
     return ans;
