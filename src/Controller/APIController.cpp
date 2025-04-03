@@ -743,7 +743,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
 
         for (int i = 0; i < centerLines.size(); ++i)
         {
-            response["centerLines"][i] = {
+            response[0]["centerLines"][i] = {
                     {"x1" , centerLines[i].getX1()},
                     {"y1" , centerLines[i].getY1()},
                     {"x2" , centerLines[i].getX2()},
@@ -760,7 +760,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             int n = roads.size();
 
             for (int j = 0; j < roads.size(); ++j) {
-                response["roads"][i][j] = {
+                response[0]["roads"][i][j] = {
                         {"x1" , roads[j].getX1()},
                         {"y1" , roads[j].getY1()},
                         {"x2" , roads[j].getX2()},
@@ -770,7 +770,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
 
             roads = city.getOuterStreets();
             for (int j = 0; j < roads.size(); ++j) {
-                response["roads"][i][n+j] = {
+                response[0]["roads"][i][n+j] = {
                         {"x1" , roads[j].getX1()},
                         {"y1" , roads[j].getY1()},
                         {"x2" , roads[j].getX2()},
@@ -779,7 +779,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             }
 
             for (int j = 0; j < roadExtension.size(); ++j) {
-                response["roadExtension"][i][j] = {
+                response[0]["roadExtension"][i][j] = {
                         {"x1" , roadExtension[j].getX1()},
                         {"y1" , roadExtension[j].getY1()},
                         {"x2" , roadExtension[j].getX2()},
@@ -788,7 +788,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             }
 
             for (int j = 0; j < homeBorder.size(); ++j) {
-                response["homeBorder"][i][j] = {
+                response[0]["homeBorder"][i][j] = {
                         {"x1" , homeBorder[j].getX1()},
                         {"y1" , homeBorder[j].getY1()},
                         {"x2" , homeBorder[j].getX2()},
