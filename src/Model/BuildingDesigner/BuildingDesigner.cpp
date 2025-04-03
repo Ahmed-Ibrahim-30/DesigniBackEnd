@@ -49,8 +49,9 @@ Design BuildingDesigner::generateDesign() {
     Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
 
-    rooms[rooms.size()-1].addDoor(0,0,1,1);
-    rooms[rooms.size()-1].addWindow(0,0,1,1);
+    rooms[rooms.size()-1].addDoor(0,0,0,0);
+    rooms[rooms.size()-1].addWindow(0,0,0,0);
+    rooms[rooms.size()-1].addOpening(0,0,0,0);
 
     Design design("" , rooms);
     design.scaleDesign(105);
