@@ -109,6 +109,7 @@ vector<RoomEntity> BuildingDesigner::sortZone(vector<RoomEntity> &zone)
 
     vector<RoomEntity> roomSorted;
     visited.clear();
+    cout<<"StartRoom = "<<startRoom.getRoomId()<<"\n";
     sortZoneRoomsDFS(startRoom , roomSorted , zone , mapRoomIndex);
 
     return roomSorted;
