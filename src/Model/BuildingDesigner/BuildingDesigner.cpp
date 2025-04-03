@@ -160,7 +160,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         newCorridorWidth+=curWidth;
 
         string id = roomE[i].getRoomId();
-        Room newRoom(id , 0 , -5 , curX + curWidth , 0);
+        Room newRoom(id , curX , -5 , curX + curWidth , 0);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
     }
@@ -183,7 +183,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         curWidth += increaseRatio;
 
         string id = roomE[i].getRoomId();
-        Room newRoom(id , 0 , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
+        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
     }
