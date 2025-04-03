@@ -98,13 +98,14 @@ vector<RoomEntity> BuildingDesigner::sortZone(vector<RoomEntity> &zone)
         if (flag) break;
     }
 
-    vector<RoomEntity> roomSorted; set<string> visited;
-    sortZoneRoomsDFS(startRoom , roomSorted , visited , zone , mapRoomIndex);
+    vector<RoomEntity> roomSorted;
+    visited.clear();
+    sortZoneRoomsDFS(startRoom , roomSorted , zone , mapRoomIndex);
 
     return roomSorted;
 }
 
-void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity> &ans , set<string> &visited , vector<RoomEntity> &zone , map<string  ,int> &mapRoomIndex)
+void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity> &ans , vector<RoomEntity> &zone , map<string  ,int> &mapRoomIndex)
 {
     ans.push_back(curRoom);
     const string& id = curRoom.getRoomId();
