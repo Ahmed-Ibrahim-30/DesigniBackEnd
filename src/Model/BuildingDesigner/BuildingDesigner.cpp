@@ -277,7 +277,7 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
         double curWidth = roomE[i].getDimensionLimit().first;
 
         string id = roomE[i].getRoomId();
-        Room newRoom(id , curX , mainRoom.getY1() , curX+curWidth, mainRoom.getY1() - 5);
+        Room newRoom(id , curX , mainRoom.getY1() -5, curX+curWidth, mainRoom.getY1() );
         curX = newRoom.getX2();
         ans.push_back(newRoom);
 
