@@ -785,7 +785,6 @@ vector<Polygon1> DrawStreet::homeSetter(vector<HomeLand> &lands, Polygon1 &home,
         if (!circleLines.empty())
         {
             tallestLine = circleLines[0];
-            cout<<"tallestLine = "<<tallestLine.getLength()<<"\n";
         }
 
         double angle = tallestLine.getAngle();

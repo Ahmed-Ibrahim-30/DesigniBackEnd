@@ -164,6 +164,15 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         if (!jsonData) {
             return crow::response(400, "Invalid JSON format");
         }
+
+        double divisionArea = 0.0;
+        double externalRoad = 0.0;
+        double centralRoad = 0.0;
+        double circularStreet = 0.0;
+        double landDepth = 0.0;
+        double streetCut = 0.0; // for circular Streets
+
+
         crow::json::wvalue response;
         int strategy = (int)jsonData["strategy"].i();
         auto polygon = jsonData["polygon"];
