@@ -200,10 +200,13 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         bottomRoomsLimitDiff.push_back(roomE[i].getDimensionLimit().second - roomE[i].getDimensionLimit().first);
         sumBottomRoomsLimitDiff+=bottomRoomsLimitDiff.back();
 
+        cout<<"bottomRoomsLimitDiff = "<<bottomRoomsLimitDiff.back()<<"\n";
+
         sumWidths += roomE[i].getDimensionLimit().first;
     }
 
     cout<<"sumWidths = "<<sumWidths<<"\n";
+    cout<<"sumBottomRoomsLimitDiff = "<<sumBottomRoomsLimitDiff<<"\n";
 
     for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
     {
