@@ -110,34 +110,34 @@ vector<RoomEntity> BuildingDesigner::sortZone(vector<RoomEntity> &zone)
     vector<RoomEntity> roomSorted;
     visited.clear();
     cout<<"StartRoom = "<<startRoom.getRoomId()<<"\n";
-    sortZoneRoomsDFS(startRoom , roomSorted , zone , mapRoomIndex);
+    sortZoneRoomsDFS(startRoom , roomSorted ,zoneIds, zone , mapRoomIndex);
 
     return roomSorted;
 }
 
-void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity> &ans , vector<RoomEntity> &zone , map<string  ,int> &mapRoomIndex)
+void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity> &ans ,set<string>&zonesIds, vector<RoomEntity> &zone , map<string  ,int> &mapRoomIndex)
 {
     ans.push_back(curRoom);
     const string& id = curRoom.getRoomId();
-    visited.insert(id);
+    zonesIds.erase(id);
     bool found = false;
     for(auto &connRoom : connections[id])
     {
-        if (!visited.count(connRoom))
+        if (zonesIds.count(connRoom))
         {
             found = true;
             RoomEntity newRoom = zone[mapRoomIndex[connRoom]];
-            sortZoneRoomsDFS(newRoom , ans , zone , mapRoomIndex);
+            sortZoneRoomsDFS(newRoom , ans ,zonesIds, zone , mapRoomIndex);
         }
     }
     if (!found)
     {
         for(auto &room : zone)
         {
-            if (!visited.count(room.getRoomId()))
+            if (zonesIds.count(room.getRoomId()))
             {
                 RoomEntity newRoom = room;
-                sortZoneRoomsDFS(newRoom , ans , zone , mapRoomIndex);
+                sortZoneRoomsDFS(newRoom , ans ,zonesIds, zone , mapRoomIndex);
                 break;
             }
         }

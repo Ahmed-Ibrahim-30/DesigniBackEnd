@@ -24,8 +24,7 @@ private:
 
     vector<RoomEntity> sortZone(vector<RoomEntity> &zone);
 
-    void sortZoneRoomsDFS(RoomEntity &curRoom, vector<RoomEntity> &ans, vector<RoomEntity> &zone,
-                          map<string, int> &mapRoomIndex);
+    void sortZoneRoomsDFS(RoomEntity &curRoom, vector<RoomEntity> &ans,set<string>&zonesIds, vector<RoomEntity> &zone,map<string, int> &mapRoomIndex);
 
     vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE , Room &mainRoom);
 
