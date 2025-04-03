@@ -174,6 +174,9 @@ void APIController::templateRoutes(crow::SimpleApp &app)
                 area,
                 room3DPrinting
                 );
+
+        BuildingDesigner buildingDesigner2(zone1 , zone2 , conn , limits);
+        Design resD2 = buildingDesigner2.generateDesign();
         crow::response res (200 , response);
         res.add_header("Access-Control-Allow-Origin", "*");
         res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
