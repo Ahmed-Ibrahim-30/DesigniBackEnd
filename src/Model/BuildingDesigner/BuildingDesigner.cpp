@@ -51,6 +51,8 @@ Design BuildingDesigner::generateDesign() {
 
     Design design("" , rooms);
     design.scaleDesign(100);
+    design.addDoors();
+    design.addWindows();
     return design;
 }
 
