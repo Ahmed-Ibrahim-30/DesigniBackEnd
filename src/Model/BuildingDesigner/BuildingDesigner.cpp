@@ -50,10 +50,7 @@ Design BuildingDesigner::generateDesign() {
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
 
     rooms[rooms.size()-1].addDoor(0,0,0,0);
-    rooms[rooms.size()-1].addDoor(0,0,0,0);
     rooms[rooms.size()-1].addWindow(0,0,0,0);
-    rooms[rooms.size()-1].addWindow(0,0,0,0);
-    rooms[rooms.size()-1].addOpening(0,0,0,0);
     rooms[rooms.size()-1].addOpening(0,0,0,0);
 
     Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
