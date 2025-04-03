@@ -117,7 +117,7 @@ void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity>
         {
             found = true;
             RoomEntity newRoom = zone[mapRoomIndex[connRoom]];
-            sortZoneRoomsDFS(newRoom , ans , visited , zone , mapRoomIndex);
+            sortZoneRoomsDFS(newRoom , ans , zone , mapRoomIndex);
         }
     }
     if (!found)
@@ -127,7 +127,7 @@ void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity>
             if (!visited.count(room.getRoomId()))
             {
                 RoomEntity newRoom = zone[mapRoomIndex[room.getRoomId()]];
-                sortZoneRoomsDFS(newRoom , ans , visited , zone , mapRoomIndex);
+                sortZoneRoomsDFS(newRoom , ans , zone , mapRoomIndex);
                 break;
             }
         }
