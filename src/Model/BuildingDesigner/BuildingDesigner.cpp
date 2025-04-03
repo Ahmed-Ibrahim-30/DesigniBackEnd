@@ -193,11 +193,21 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     curX = 0.0;
 
+    vector<double>bottomRoomsLimitDiff; double sumBottomRoomsLimitDiff = 0 ;
+    sumWidths = 0;
+    for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
+    {
+        bottomRoomsLimitDiff.push_back(roomE[i].getDimensionLimit().second - roomE[i].getDimensionLimit().first);
+        sumBottomRoomsLimitDiff+=bottomRoomsLimitDiff.back();
+
+        sumWidths += roomE[i].getDimensionLimit().first;
+    }
+
     for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
     {
         double curWidth = roomE[i].getDimensionLimit().first;
-        double curDiff = topRoomsLimitDiff[i] + 1;
-        double increaseRatio = ((width - sumWidths) * curDiff) / sumTopRoomsLimitDiff;
+        double curDiff = bottomRoomsLimitDiff[i] + 1;
+        double increaseRatio = ((width - sumWidths) * curDiff) / sumBottomRoomsLimitDiff;
         curWidth += increaseRatio;
 
         string id = roomE[i].getRoomId();
