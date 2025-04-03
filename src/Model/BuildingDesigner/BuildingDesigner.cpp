@@ -65,6 +65,8 @@ Design BuildingDesigner::generateDesign() {
 
     Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
+    Room Living ("Living" , -5 , -2.5 , 0 , 4.5);
+    rooms.push_back(Living);
 
     rooms[rooms.size()-1].addDoor(0,0,0,0);
     rooms[rooms.size()-1].addWindow(0,0,0,0);
@@ -183,7 +185,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     cout<<"newCorridorWidth = "<<newCorridorWidth<<"\n";
 
-    Room corridor("" , 0 , 0 , newCorridorWidth , 2);
+    Room corridor("" , 0 , 0 , newCorridorWidth , height);
     ans.push_back(corridor);
 
     Room rightRoom (roomE[topRoomsSize].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[topRoomsSize].getDimensionLimit().second , corridor.getX2() + roomE[topRoomsSize+1].getDimensionLimit().second , corridor.getY2());
@@ -200,13 +202,8 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         bottomRoomsLimitDiff.push_back(roomE[i].getDimensionLimit().second - roomE[i].getDimensionLimit().first);
         sumBottomRoomsLimitDiff+=bottomRoomsLimitDiff.back();
 
-        cout<<"bottomRoomsLimitDiff = "<<bottomRoomsLimitDiff.back()<<"\n";
-
         sumWidths += roomE[i].getDimensionLimit().first;
     }
-
-    cout<<"sumWidths = "<<sumWidths<<"\n";
-    cout<<"sumBottomRoomsLimitDiff = "<<sumBottomRoomsLimitDiff<<"\n";
 
     for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
     {
@@ -217,7 +214,6 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         curWidth += increaseRatio;
 
         string id = roomE[i].getRoomId();
-        cout<<"ID = "<<id <<" increaseRatio = "<<increaseRatio<<"  curWidth = "<<curWidth<<"  curDiff = "<<curDiff<<"  sumBottomRoomsLimitDiff = "<<sumBottomRoomsLimitDiff<<"\n";
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
