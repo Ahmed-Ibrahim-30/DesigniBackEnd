@@ -41,6 +41,15 @@ BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids,
 }
 
 Design BuildingDesigner::generateDesign() {
+
+    cout<<"ZONE1 = "<<"\n";
+    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
+    cout<<"\n";
+
+    cout<<"ZONE2 = "<<"\n";
+    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
+    cout<<"\n";
+
     zone1 = sortZone(zone1);
     zone2 = sortZone(zone2);
 
