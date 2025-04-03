@@ -49,10 +49,12 @@ Design BuildingDesigner::generateDesign() {
     Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
 
+    rooms[0].addDoor(0,0,0,0);
+    rooms[0].addWindow(0,0,0,0);
+
     Design design("" , rooms);
     design.scaleDesign(100);
-    design.addDoors();
-    design.addWindows();
+
     return design;
 }
 
