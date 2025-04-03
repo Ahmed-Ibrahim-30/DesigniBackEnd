@@ -76,7 +76,7 @@ vector<RoomEntity> BuildingDesigner::sortZone(vector<RoomEntity> &zone)
     for(auto &room : zone)zoneIds.insert(room.getRoomId());
 
     map<string  ,int> mapRoomIndex;
-    for (int i = 0; i <zone.size() ; ++i)
+    for (int i = 0; i < zone.size() ; ++i)
     {
         mapRoomIndex[zone[i].getRoomId()] = i;
     }
@@ -173,14 +173,14 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     Room corridor("" , 0 , 0 , newCorridorWidth , 2);
     ans.push_back(corridor);
 
-    Room rightRoom (roomE[topRoomsSize+1].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[topRoomsSize+1].getDimensionLimit().second , corridor.getX2() + roomE[topRoomsSize+1].getDimensionLimit().second , corridor.getY2());
+    Room rightRoom (roomE[topRoomsSize].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[topRoomsSize].getDimensionLimit().second , corridor.getX2() + roomE[topRoomsSize+1].getDimensionLimit().second , corridor.getY2());
 
     ans.push_back(rightRoom);
     corridorWidth = newCorridorWidth;
 
     curX = 0.0;
 
-    for (int i = roomE.size()-1; i > roomE.size() - bottomRoomsSize; --i)
+    for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
     {
         double curWidth = roomE[i].getDimensionLimit().first;
         double curDiff = topRoomsLimitDiff[i] + 1;
