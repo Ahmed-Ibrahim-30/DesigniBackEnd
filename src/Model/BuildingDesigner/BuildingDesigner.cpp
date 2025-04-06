@@ -539,5 +539,8 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
     }
 
     auto it = dp.upper_bound({x , vector<double>()});
+
+    if (it == dp.end()) it --;
+
     return *it;
 }
