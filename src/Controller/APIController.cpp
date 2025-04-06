@@ -123,10 +123,10 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
         vector<pair<string , string>> conn {
                 {"3", "5"},
-                {"3", "10"},
+                {"1", "3"},
                 {"7", "11"},
                 {"1", "2"},
-                {"1", "4"},
+                {"2", "4"},
         };
 
         map<string , pair<double, double>> limits;
@@ -144,8 +144,6 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         limits["10"] = {2,4};
         limits["11"] = {4,7};
         limits["12"] = {4,6};
-
-
 
 
 //        vector<string> zone1 {"11", "12", "13", "14", "15"};
