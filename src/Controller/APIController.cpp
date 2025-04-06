@@ -141,9 +141,9 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
         limits["8"] = {2,10};
         limits["9"] = {6,8};
-        limits["10"] = {3,4};
+        limits["10"] = {5,10};
         limits["11"] = {1,7};
-        limits["12"] = {4,6};
+        limits["12"] = {5,8};
 
 
 //        vector<string> zone1 {"11", "12", "13", "14", "15"};
