@@ -56,9 +56,9 @@ Design BuildingDesigner::generateDesign()
 
     reverse(zone1.begin(), zone1.end());
 
-//    cout<<"ZONE1 = "<<"\n";
-//    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
-//    cout<<"\n";
+    cout<<"ZONE1 = "<<"\n";
+    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
+    cout<<"\n";
 //
 //    cout<<"ZONE2 = "<<"\n";
 //    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
