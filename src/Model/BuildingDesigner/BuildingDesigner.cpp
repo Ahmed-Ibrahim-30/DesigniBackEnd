@@ -179,7 +179,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         pair<double , vector<double>> res = findClosestSum(width , tempV);
         if (res.first >= width)
         {
-            index = i;
+            index = i + 1;
             vector<double> out = res.second;
             for (int j = 0; j < out.size(); ++j)
             {
