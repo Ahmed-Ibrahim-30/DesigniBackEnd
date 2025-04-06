@@ -219,16 +219,16 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     pair<double , vector<double>> res = findClosestSum(width , tempV);
     vector<double> out = res.second;
-    index = index+1;
-    for (int j = 0; j < out.size(); ++j)
-    {
-        double curWidth = roomE[index].getDimensionLimit().first;
-        string id = roomE[index].getRoomId();
-        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
-        curX = newRoom.getX2();
-        ans.push_back(newRoom);
-        index++;
-    }
+//    index = index+1;
+//    for (int j = 0; j < out.size(); ++j)
+//    {
+//        double curWidth = roomE[index].getDimensionLimit().first;
+//        string id = roomE[index].getRoomId();
+//        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
+//        curX = newRoom.getX2();
+//        ans.push_back(newRoom);
+//        index++;
+//    }
     return ans;
 }
 
