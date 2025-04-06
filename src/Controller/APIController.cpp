@@ -118,27 +118,36 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         }
         design1.scaleDesign(105);
 
-        vector<string> zone1 {"111", "112", "113", "114", "115"};
-        vector<string> zone2 {"121", "122", "123"};
+        vector<string> zone1 {"311", "312", "313", "314", "315", "316", "317"};
+        vector<string> zone2 {"321", "322", "323", "324", "325"};
 
         vector<pair<string , string>> conn {
-                {"111" , "112"},
-                {"112" , "114"},
-                {"113" , "115"},
-                {"121" , "122"},
-                {"114" , "123"}
+                {"311", "312"},
+                {"312", "313"},
+                {"313", "314"},
+                {"315", "316"},
+                {"316", "317"},
+                {"321", "322"},
+                {"323", "324"},
+                {"314", "325"}
         };
 
         map<string , pair<double, double>> limits;
 
-        limits["111"] = {5,7};
-        limits["112"] = {4,6};
-        limits["113"] = {3,5};
-        limits["114"] = {6,7};
-        limits["115"] = {4,6};
-        limits["121"] = {5,7};
-        limits["122"] = {6,7};
-        limits["123"] = {5,6};
+        limits["311"] = {3,5};
+        limits["312"] = {4,6};
+        limits["313"] = {5,6};
+        limits["314"] = {6,7};
+        limits["315"] = {5,7};
+        limits["316"] = {4,6};
+        limits["317"] = {2,5};
+
+        limits["321"] = {5,7};
+        limits["322"] = {5,7};
+        limits["323"] = {6,7};
+        limits["324"] = {5,6};
+        limits["325"] = {5,7};
+
 
 
 
