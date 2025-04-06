@@ -190,15 +190,15 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     curX = 0.0;
 
-    for (int i = index+1; i < n; ++i)
-    {
-        double curWidth = roomE[i].getDimensionLimit().first;
-
-        string id = roomE[i].getRoomId();
-        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
-        curX = newRoom.getX2();
-        ans.push_back(newRoom);
-    }
+//    for (int i = index+1; i < n; ++i)
+//    {
+//        double curWidth = roomE[i].getDimensionLimit().first;
+//
+//        string id = roomE[i].getRoomId();
+//        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
+//        curX = newRoom.getX2();
+//        ans.push_back(newRoom);
+//    }
 
     return ans;
 }
