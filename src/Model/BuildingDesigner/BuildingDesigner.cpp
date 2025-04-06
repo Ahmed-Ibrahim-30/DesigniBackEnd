@@ -234,8 +234,6 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     curX = 0.0;
 
-
-
     for (int i = 0; i < n; ++i)
     {
         double curWidth = appropriateValue[roomE[i].getRoomId()];
@@ -246,10 +244,10 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
             break;
         }
 
-        newCorridorWidth+=curWidth;
 
         string id = roomE[i].getRoomId();
         Room newRoom(id , curX , -5 , curX + curWidth , 0);
+        newCorridorWidth = curX + curWidth;
         curX = newRoom.getX2();
         ans.push_back(newRoom);
     }
