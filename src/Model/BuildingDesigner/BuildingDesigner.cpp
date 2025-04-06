@@ -255,8 +255,8 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     cout<<"newCorridorWidth = "<<newCorridorWidth<<"\n";
 
     corridor = Room("" , 0 , 0 , newCorridorWidth , height);
-    corridor.addDoor(0 , 0.4 , 0 , 1.6);
-    corridor.addDoor(newCorridorWidth , 0.4 , newCorridorWidth , 1.6);
+    corridor.addDoor(0 , 0.25 , 0 , 1.75);
+    corridor.addDoor(newCorridorWidth , 0.25 , newCorridorWidth , 1.75);
 
     ans.push_back(corridor);
 
