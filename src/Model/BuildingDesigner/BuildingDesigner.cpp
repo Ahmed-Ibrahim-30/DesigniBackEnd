@@ -40,7 +40,8 @@ BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids,
     }
 }
 
-Design BuildingDesigner::generateDesign() {
+Design BuildingDesigner::generateDesign()
+{
 
 //    cout<<"ZONE1 = "<<"\n";
 //    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
@@ -110,7 +111,7 @@ vector<RoomEntity> BuildingDesigner::sortZone(vector<RoomEntity> &zone)
 
     vector<RoomEntity> roomSorted;
     visited.clear();
-    cout<<"StartRoom = "<<startRoom.getRoomId()<<"\n";
+//    cout<<"StartRoom = "<<startRoom.getRoomId()<<"\n";
     sortZoneRoomsDFS(startRoom , roomSorted ,zoneIds, zone , mapRoomIndex);
 
     return roomSorted;
@@ -151,29 +152,21 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     double width = mainRoom.getWidth();
     double height = mainRoom.getHeight();
 
-    int n = (int)roomE.size();
-
-    int topRoomsSize = (n-1)/2;
-    int bottomRoomsSize = n/2;
-
-    vector<double>topRoomsLimitDiff; double sumTopRoomsLimitDiff = 0 , sumWidths = 0;
-    for (int i = 0; i < topRoomsSize; ++i)
-    {
-        topRoomsLimitDiff.push_back(roomE[i].getDimensionLimit().second - roomE[i].getDimensionLimit().first);
-        sumTopRoomsLimitDiff+=topRoomsLimitDiff.back();
-
-        sumWidths += roomE[i].getDimensionLimit().first;
-    }
+    int n = (int)roomE.size() , index ;
 
     double newCorridorWidth = 0.0;
     double curX = 0.0;
 
-    for (int i = 0; i < topRoomsSize; ++i)
+    for (int i = 0; i < n; ++i)
     {
         double curWidth = roomE[i].getDimensionLimit().first;
-        double curDiff = topRoomsLimitDiff[i];
-        double increaseRatio = ((width - sumWidths) * curDiff) / sumTopRoomsLimitDiff;
-        curWidth += increaseRatio;
+
+        if (newCorridorWidth < corridorWidth)
+        {
+            index = i;
+            break;
+        }
+
         newCorridorWidth+=curWidth;
 
         string id = roomE[i].getRoomId();
@@ -190,30 +183,24 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     ans.push_back(corridor);
 
-    Room rightRoom (roomE[topRoomsSize].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[topRoomsSize].getDimensionLimit().second , corridor.getX2() + roomE[topRoomsSize+1].getDimensionLimit().second , corridor.getY2());
+    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[index].getDimensionLimit().second , corridor.getX2() + roomE[index].getDimensionLimit().second , corridor.getY2());
 
     ans.push_back(rightRoom);
     corridorWidth = newCorridorWidth;
 
     curX = 0.0;
 
-    vector<double>bottomRoomsLimitDiff; double sumBottomRoomsLimitDiff = 0 ;
-    sumWidths = 0;
-    for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
-    {
-        bottomRoomsLimitDiff.push_back(roomE[i].getDimensionLimit().second - roomE[i].getDimensionLimit().first);
-        sumBottomRoomsLimitDiff+=bottomRoomsLimitDiff.back();
-
-        sumWidths += roomE[i].getDimensionLimit().first;
-    }
-
-    for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
+    for (int i = index+1; i < n; ++i)
     {
         double curWidth = roomE[i].getDimensionLimit().first;
-        double curDiff = bottomRoomsLimitDiff[roomE.size() - 1 - i] ;
-        double diff = (newCorridorWidth - sumWidths);
-        double increaseRatio = (diff * curDiff) / sumBottomRoomsLimitDiff;
-        curWidth += increaseRatio;
+
+        if (newCorridorWidth < corridorWidth)
+        {
+            index = i;
+            break;
+        }
+
+        newCorridorWidth+=curWidth;
 
         string id = roomE[i].getRoomId();
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
@@ -223,6 +210,86 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     return ans;
 }
+
+
+//vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom)
+//{
+//    vector<Room> ans;
+//    double width = mainRoom.getWidth();
+//    double height = mainRoom.getHeight();
+//
+//    int n = (int)roomE.size();
+//
+//    int topRoomsSize = (n-1)/2;
+//    int bottomRoomsSize = n/2;
+//
+//    vector<double>topRoomsLimitDiff; double sumTopRoomsLimitDiff = 0 , sumWidths = 0;
+//    for (int i = 0; i < topRoomsSize; ++i)
+//    {
+//        topRoomsLimitDiff.push_back(roomE[i].getDimensionLimit().second - roomE[i].getDimensionLimit().first);
+//        sumTopRoomsLimitDiff+=topRoomsLimitDiff.back();
+//
+//        sumWidths += roomE[i].getDimensionLimit().first;
+//    }
+//
+//    double newCorridorWidth = 0.0;
+//    double curX = 0.0;
+//
+//    for (int i = 0; i < topRoomsSize; ++i)
+//    {
+//        double curWidth = roomE[i].getDimensionLimit().first;
+//        double curDiff = topRoomsLimitDiff[i];
+//        double increaseRatio = ((width - sumWidths) * curDiff) / sumTopRoomsLimitDiff;
+//        curWidth += increaseRatio;
+//        newCorridorWidth+=curWidth;
+//
+//        string id = roomE[i].getRoomId();
+//        Room newRoom(id , curX , -5 , curX + curWidth , 0);
+//        curX = newRoom.getX2();
+//        ans.push_back(newRoom);
+//    }
+//
+//    cout<<"newCorridorWidth = "<<newCorridorWidth<<"\n";
+//
+//    Room corridor("" , 0 , 0 , newCorridorWidth , height);
+//    corridor.addDoor(0 , 0.4 , 0 , 1.6);
+//    corridor.addDoor(newCorridorWidth , 0.4 , newCorridorWidth , 1.6);
+//
+//    ans.push_back(corridor);
+//
+//    Room rightRoom (roomE[topRoomsSize].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[topRoomsSize].getDimensionLimit().second , corridor.getX2() + roomE[topRoomsSize+1].getDimensionLimit().second , corridor.getY2());
+//
+//    ans.push_back(rightRoom);
+//    corridorWidth = newCorridorWidth;
+//
+//    curX = 0.0;
+//
+//    vector<double>bottomRoomsLimitDiff; double sumBottomRoomsLimitDiff = 0 ;
+//    sumWidths = 0;
+//    for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
+//    {
+//        bottomRoomsLimitDiff.push_back(roomE[i].getDimensionLimit().second - roomE[i].getDimensionLimit().first);
+//        sumBottomRoomsLimitDiff+=bottomRoomsLimitDiff.back();
+//
+//        sumWidths += roomE[i].getDimensionLimit().first;
+//    }
+//
+//    for (int i = roomE.size()-1; i >= roomE.size() - bottomRoomsSize; --i)
+//    {
+//        double curWidth = roomE[i].getDimensionLimit().first;
+//        double curDiff = bottomRoomsLimitDiff[roomE.size() - 1 - i] ;
+//        double diff = (newCorridorWidth - sumWidths);
+//        double increaseRatio = (diff * curDiff) / sumBottomRoomsLimitDiff;
+//        curWidth += increaseRatio;
+//
+//        string id = roomE[i].getRoomId();
+//        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
+//        curX = newRoom.getX2();
+//        ans.push_back(newRoom);
+//    }
+//
+//    return ans;
+//}
 
 
 vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom)
