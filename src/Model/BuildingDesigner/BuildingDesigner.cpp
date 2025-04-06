@@ -166,6 +166,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         {
             val.push_back(i);
         }
+        values.push_back(val);
     }
 
     double newCorridorWidth = 0.0;
