@@ -141,7 +141,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
         limits["8"] = {2,10};
         limits["9"] = {6,8};
-        limits["10"] = {2,4};
+        limits["10"] = {5,4};
         limits["11"] = {1,7};
         limits["12"] = {4,6};
 
