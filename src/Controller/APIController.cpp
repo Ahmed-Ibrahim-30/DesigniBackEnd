@@ -118,28 +118,28 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         }
         design1.scaleDesign(105);
 
-        vector<string> zone1 {"51", "52", "53", "54"};
-        vector<string> zone2 {"61", "62", "63", "64", "65"};
+        vector<string> zone1 {"111", "112", "113", "114", "115"};
+        vector<string> zone2 {"121", "122", "123"};
 
         vector<pair<string , string>> conn {
-                {"51" , "52"},
-                {"52" , "53"},
-                {"53" , "54"},
-                {"61" , "62"},
-                {"54" , "64"}
+                {"111" , "112"},
+                {"112" , "114"},
+                {"113" , "115"},
+                {"121" , "122"},
+                {"114" , "123"}
         };
 
         map<string , pair<double, double>> limits;
 
-        limits["51"] = {3,5};
-        limits["52"] = {4,6};
-        limits["53"] = {5,7};
-        limits["54"] = {5,6};
-        limits["61"] = {5,7};
-        limits["62"] = {6,7};
-        limits["63"] = {5,7};
-        limits["64"] = {5,7};
-        limits["65"] = {5,7};
+        limits["111"] = {5,7};
+        limits["112"] = {4,6};
+        limits["113"] = {3,5};
+        limits["114"] = {6,7};
+        limits["115"] = {4,6};
+        limits["121"] = {5,7};
+        limits["122"] = {6,7};
+        limits["123"] = {5,6};
+
 
 
 //        vector<string> zone1 {"11", "12", "13", "14", "15"};
