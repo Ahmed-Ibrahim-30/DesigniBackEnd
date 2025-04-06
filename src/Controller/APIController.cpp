@@ -118,26 +118,51 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         }
         design1.scaleDesign(105);
 
+        vector<string> zone1 {"11", "12", "13", "14", "15"};
+        vector<string> zone2 {"21", "22", "23"};
+
+        vector<pair<string , string>> conn {
+                {"11" , "12"},
+                {"12" , "14"},
+                {"14" , "15"},
+                {"21" , "22"},
+                {"13" , "23"}
+        };
+
+        map<string , pair<double, double>> limits;
+
+        limits["11"] = {4,6};
+        limits["12"] = {3,7};
+        limits["13"] = {5,7};
+        limits["14"] = {2,5};
+        limits["15"] = {6,7};
+        limits["21"] = {5,7};
+        limits["22"] = {6,7};
+        limits["23"] = {5,7};
 
 
 
-        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
-        vector<string> zone2 {"47", "48", "49", "50"};
 
-        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
 
-        map<string , pair<double, double>> limits ;
+//        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
+//        vector<string> zone2 {"47", "48", "49", "50"};
+//
+//        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
+//
+//        map<string , pair<double, double>> limits ;
+//
+//        limits["41"] = {5,7};
+//        limits["42"] = {3,7};
+//        limits["43"] = {4,6};
+//        limits["44"] = {6,8};
+//        limits["45"] = {5,7};
+//        limits["46"] = {5,7};
+//        limits["47"] = {5,7};
+//        limits["48"] = {5,7};
+//        limits["49"] = {7,7};
+//        limits["50"] = {5,7};
 
-        limits["41"] = {5,7};
-        limits["42"] = {3,7};
-        limits["43"] = {4,6};
-        limits["44"] = {6,8};
-        limits["45"] = {5,7};
-        limits["46"] = {5,7};
-        limits["47"] = {5,7};
-        limits["48"] = {5,7};
-        limits["49"] = {7,7};
-        limits["50"] = {5,7};
+
 
         BuildingDesigner buildingDesigner(zone1 , zone2 , conn , limits);
         Design resD = buildingDesigner.generateDesign();
