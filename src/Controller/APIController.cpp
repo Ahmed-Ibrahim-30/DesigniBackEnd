@@ -131,18 +131,18 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
         map<string , pair<double, double>> limits;
 
-        limits["1"] = {5,10};
+        limits["1"] = {3,10};
         limits["2"] = {3,8};
         limits["3"] = {2,6};
-        limits["4"] = {4,8};
+        limits["4"] = {3,8};
         limits["5"] = {3,9};
         limits["6"] = {5,7};
         limits["7"] = {2,4};
 
-        limits["8"] = {5,10};
+        limits["8"] = {2,10};
         limits["9"] = {6,8};
         limits["10"] = {2,4};
-        limits["11"] = {4,7};
+        limits["11"] = {1,7};
         limits["12"] = {4,6};
 
 
