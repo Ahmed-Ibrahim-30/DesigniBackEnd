@@ -118,6 +118,30 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         }
         design1.scaleDesign(105);
 
+        vector<string> zone1 {"51", "52", "53", "54"};
+        vector<string> zone2 {"61", "62", "63", "64", "65"};
+
+        vector<pair<string , string>> conn {
+                {"51" , "52"},
+                {"52" , "53"},
+                {"53" , "54"},
+                {"61" , "62"},
+                {"54" , "64"}
+        };
+
+        map<string , pair<double, double>> limits;
+
+        limits["51"] = {3,5};
+        limits["52"] = {4,6};
+        limits["53"] = {5,7};
+        limits["54"] = {5,6};
+        limits["61"] = {5,7};
+        limits["62"] = {6,7};
+        limits["63"] = {5,7};
+        limits["64"] = {5,7};
+        limits["65"] = {5,7};
+
+
 //        vector<string> zone1 {"11", "12", "13", "14", "15"};
 //        vector<string> zone2 {"21", "22", "23"};
 //
@@ -168,28 +192,26 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 //        limits["42"] = {5,7};
 //        limits["43"] = {7,7};
 
+//        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
+//        vector<string> zone2 {"47", "48", "49", "50"};
+//
+//        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
+//
+//        map<string , pair<double, double>> limits ;
+//
+//        limits["41"] = {5,7};
+//        limits["42"] = {3,7};
+//        limits["43"] = {4,6};
+//        limits["44"] = {6,8};
+//        limits["45"] = {5,7};
+//        limits["46"] = {5,7};
+//        limits["47"] = {5,7};
+//        limits["48"] = {5,7};
+//        limits["49"] = {7,7};
+//        limits["50"] = {5,7};
 
 
 
-
-
-        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
-        vector<string> zone2 {"47", "48", "49", "50"};
-
-        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
-
-        map<string , pair<double, double>> limits ;
-
-        limits["41"] = {5,7};
-        limits["42"] = {3,7};
-        limits["43"] = {4,6};
-        limits["44"] = {6,8};
-        limits["45"] = {5,7};
-        limits["46"] = {5,7};
-        limits["47"] = {5,7};
-        limits["48"] = {5,7};
-        limits["49"] = {7,7};
-        limits["50"] = {5,7};
 
 
 
