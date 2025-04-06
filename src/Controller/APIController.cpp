@@ -143,53 +143,53 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 //        limits["23"] = {5,7};
 
 
-        vector<string> zone1 {"31", "32", "33", "34", "35", "36"};
-        vector<string> zone2 {"41", "42", "43"};
-
-        vector<pair<string , string>> conn {
-                {"31" , "32"},
-                {"32" , "34"},
-                {"34" , "35"},
-                {"41" , "42"},
-                {"33" , "43"}
-        };
-
-        map<string , pair<double, double>> limits;
-
-        limits["31"] = {3,5};
-        limits["32"] = {4,6};
-        limits["33"] = {2,5};
-
-
-        limits["34"] = {5,6};
-        limits["35"] = {5,7};
-        limits["36"] = {6,7};
-        limits["41"] = {5,7};
-        limits["42"] = {5,7};
-        limits["43"] = {7,7};
-
-
-
-
-
-
-//        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
-//        vector<string> zone2 {"47", "48", "49", "50"};
+//        vector<string> zone1 {"31", "32", "33", "34", "35", "36"};
+//        vector<string> zone2 {"41", "42", "43"};
 //
-//        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
+//        vector<pair<string , string>> conn {
+//                {"31" , "32"},
+//                {"32" , "34"},
+//                {"34" , "35"},
+//                {"41" , "42"},
+//                {"33" , "43"}
+//        };
 //
-//        map<string , pair<double, double>> limits ;
+//        map<string , pair<double, double>> limits;
 //
+//        limits["31"] = {3,5};
+//        limits["32"] = {4,6};
+//        limits["33"] = {2,5};
+//
+//
+//        limits["34"] = {5,6};
+//        limits["35"] = {5,7};
+//        limits["36"] = {6,7};
 //        limits["41"] = {5,7};
-//        limits["42"] = {3,7};
-//        limits["43"] = {4,6};
-//        limits["44"] = {6,8};
-//        limits["45"] = {5,7};
-//        limits["46"] = {5,7};
-//        limits["47"] = {5,7};
-//        limits["48"] = {5,7};
-//        limits["49"] = {7,7};
-//        limits["50"] = {5,7};
+//        limits["42"] = {5,7};
+//        limits["43"] = {7,7};
+
+
+
+
+
+
+        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
+        vector<string> zone2 {"47", "48", "49", "50"};
+
+        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
+
+        map<string , pair<double, double>> limits ;
+
+        limits["41"] = {5,7};
+        limits["42"] = {3,7};
+        limits["43"] = {4,6};
+        limits["44"] = {6,8};
+        limits["45"] = {5,7};
+        limits["46"] = {5,7};
+        limits["47"] = {5,7};
+        limits["48"] = {5,7};
+        limits["49"] = {7,7};
+        limits["50"] = {5,7};
 
 
 
