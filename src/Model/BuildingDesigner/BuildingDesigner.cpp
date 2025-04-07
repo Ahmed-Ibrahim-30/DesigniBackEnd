@@ -402,7 +402,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
     if (it == dp.end() && !dp.empty()) it --;
     else if (it == dp.end())
     {
-        return {-1 , vector<double>()};
+        return {INT_MAX , vector<double>()};
     }
 
     return *it;
