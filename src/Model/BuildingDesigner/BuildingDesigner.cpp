@@ -114,16 +114,19 @@ Design BuildingDesigner::generateDesign()
 //    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
 //    cout<<"\n";
 
-    Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
-    vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
-    Room Living ("Living" , -5 , -2.5 , 0 , 4.5);
-    rooms.push_back(Living);
+//    Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
+//    vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
+//    Room Living ("Living" , -5 , -2.5 , 0 , 4.5);
+//    rooms.push_back(Living);
+//
+//    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
+//    rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
+//
+//    Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
+//    design.scaleDesign(105);
 
-    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
-    rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
-
-    Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
-    design.scaleDesign(105);
+    vector<Room> newRooms;
+    Design design("" , newRooms , 1 , 0 , 28 , 0 ,36);
 
     return design;
 }
