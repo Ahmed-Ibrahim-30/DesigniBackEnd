@@ -4,6 +4,47 @@
 
 #include "BuildingDesigner.h"
 #include "queue"
+
+BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids, const vector<string> &zone2Ids, const vector<pair<string, string>> &_connections, map<string, double> &roomsAreas)
+{
+    for(auto &room : roomsAreas)
+    {
+        double area = room.second;
+        string id = room.first;
+        double minRange = sqrt(area / dimensionDiffFactor);
+        double maxRange = area / minRange;
+        dimensionsLimits[id] = {minRange , maxRange};
+    }
+
+    map<string , set<string>> roomMapConnections;
+    for(auto &room :_connections )
+    {
+        roomMapConnections[room.first].insert(room.second);
+        roomMapConnections[room.second].insert(room.first);
+    }
+    connections = roomMapConnections;
+    map<string , vector<string>> roomVecConnections;
+    for(auto &room :roomMapConnections )
+    {
+        for(auto &conn : room.second)
+        {
+            roomVecConnections[room.first].push_back(conn);
+        }
+    }
+
+    for(const string &roomId : zone1Ids)
+    {
+        RoomEntity roomEntity(roomId , roomVecConnections[roomId] , dimensionsLimits[roomId]);
+        zone1.push_back(roomEntity);
+    }
+
+    for(const string &roomId : zone2Ids)
+    {
+        RoomEntity roomEntity(roomId , roomVecConnections[roomId] , dimensionsLimits[roomId]);
+        zone2.push_back(roomEntity);
+    }
+}
+
 BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids,
                                    const vector<string> &zone2Ids,
                                    const vector<pair<string, string>> &_connections,
@@ -162,7 +203,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double secL = room.getDimensionLimit().second;
 
         vector<double> val;
-        for (double i = firstL; i < secL; i+= 0.5)
+        for (double i = firstL; i <= secL; i+= 0.5)
         {
             val.push_back(i);
         }
@@ -544,3 +585,5 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
 
     return *it;
 }
+
+

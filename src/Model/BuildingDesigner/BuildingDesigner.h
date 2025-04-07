@@ -12,6 +12,8 @@ private:
     double corridorWidth = 10;
     double corridorHeight = 2;
 
+    double dimensionDiffFactor = 1.5;
+
     vector<RoomEntity> zone1;
 
     set<string> visited;
@@ -39,6 +41,7 @@ public:
      * @param dimensionsLimits
      */
     BuildingDesigner(const vector<string>& zone1Ids , const vector<string>& zone2Ids ,const vector<pair<string , string>> &connections , map<string , pair<double , double>> &dimensionsLimits);
+    BuildingDesigner(const vector<string>& zone1Ids , const vector<string>& zone2Ids ,const vector<pair<string , string>> &connections , map<string , double> &roomsAreas);
     /**
      * Generate Design
      * @return

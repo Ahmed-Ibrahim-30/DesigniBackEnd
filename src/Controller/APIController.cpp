@@ -119,34 +119,32 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         design1.scaleDesign(105);
 
         vector<string> zone1 {"Bedroom1", "Bedroom2", "Bedroom3", "Bedroom4", "Bedroom5" , "Bath1" , "Bath2" , "Bath3"};
-        vector<string> zone2 {"1", "2", "4", "6", "7" , "8" , "11"};
+        vector<string> zone2 {"Dining", "Kitchen", "GBath", "Family", "Office" , "Garage"};
 
         vector<pair<string , string>> conn {
                 {"Bedroom1", "Bedroom2"},
-                {"1", "Bedroom5"},
-                {"7", "11"},
-                {"1", "2"},
-                {"2", "4"},
+                {"Dining", "Bedroom5"},
+                {"Kitchen", "GBath"},
+                {"Family", "Office"},
         };
 
-        map<string , pair<double, double>> limits;
+        map<string , double> areas;
 
-        limits["1"] = {3,10};
-        limits["2"] = {3,8};
-        limits["4"] = {3,8};
-        limits["6"] = {5,7};
-        limits["7"] = {2,4};
-        limits["8"] = {2,10};
-        limits["11"] = {1,7};
+        areas["Dining"] = 20;
+        areas["Kitchen"] = 16;
+        areas["GBath"] = 4;
+        areas["Family"] = 24;
+        areas["Office"] = 20;
+        areas["Garage"] = 18;
 
-        limits["Bedroom1"] = {4,6};
-        limits["Bedroom2"] = {4,6};
-        limits["Bedroom3"] = {4,6};
-        limits["Bedroom4"] = {4,6};
-        limits["Bedroom5"] = {4,6};
-        limits["Bath1"] = {2,3};
-        limits["Bath2"] = {2,3};
-        limits["Bath3"] = {2,3};
+        areas["Bedroom1"] = 20;
+        areas["Bedroom2"] = 20;
+        areas["Bedroom3"] = 20;
+        areas["Bedroom4"] = 20;
+        areas["Bedroom5"] = 20;
+        areas["Bath1"] = 6;
+        areas["Bath2"] = 6;
+        areas["Bath3"] = 6;
 
 
 //        vector<string> zone1 {"11", "12", "13", "14", "15"};
@@ -222,7 +220,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
 
 
-        BuildingDesigner buildingDesigner(zone1 , zone2 , conn , limits);
+        BuildingDesigner buildingDesigner(zone1 , zone2 , conn , areas);
         Design resD = buildingDesigner.generateDesign();
         design1 = resD;
 
@@ -258,7 +256,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
                 room3DPrinting
                 );
 
-        BuildingDesigner buildingDesigner2(zone1 , zone2 , conn , limits);
+        BuildingDesigner buildingDesigner2(zone1 , zone2 , conn , areas);
         Design resD2 = buildingDesigner2.generateDesign();
         crow::response res (200 , response);
         res.add_header("Access-Control-Allow-Origin", "*");
