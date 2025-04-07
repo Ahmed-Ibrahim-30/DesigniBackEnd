@@ -228,10 +228,13 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         values.push_back(val);
     }
 
-    double curTopLimits = 0.0;
+    double curTopLimits = 0.0 , diffLimits = 0.0;
     for (int i = 0; i < n - 2; ++i)
     {
         double firstL = roomE[i].getDimensionLimit().first;
+        double secL = roomE[i].getDimensionLimit().second;
+
+        diffLimits+= (secL - firstL);
         double firstL2 = roomE[i+1].getDimensionLimit().first;
         curTopLimits += firstL;
         double remaining = (minLimitsSum - curTopLimits - firstL2);
@@ -241,7 +244,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
         if (curTopLimits >= remaining)
         {
-            width = curTopLimits;
+            width = curTopLimits + (diffLimits * 0.5);
             break;
         }
     }
