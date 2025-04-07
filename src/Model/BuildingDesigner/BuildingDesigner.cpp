@@ -208,11 +208,15 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     int n = (int)roomE.size() , index = -1;
 
     vector<vector<double>> values;
+    vector<double> minLimits;
+    double minLimitsSum = 0.0;
 
     for(auto &room : roomE)
     {
         double firstL = room.getDimensionLimit().first;
         double secL = room.getDimensionLimit().second;
+        minLimitsSum += firstL;
+        minLimits.push_back(firstL);
 
         double counter = (secL -firstL) / 5;
 
@@ -222,6 +226,20 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
             val.push_back(i);
         }
         values.push_back(val);
+    }
+
+    double curTopLimits = 0.0;
+    for (int i = 0; i < n - 2; ++i)
+    {
+        double firstL = roomE[i].getDimensionLimit().first;
+        double firstL2 = roomE[i+1].getDimensionLimit().first;
+        curTopLimits += firstL;
+        double remaining = (minLimitsSum - curTopLimits - firstL2);
+
+        remaining -= roomE.back().getDimensionLimit().first;
+        remaining += 1.5;
+
+        if (curTopLimits >= remaining) width = curTopLimits;
     }
 
     double newCorridorWidth = 0.0;
