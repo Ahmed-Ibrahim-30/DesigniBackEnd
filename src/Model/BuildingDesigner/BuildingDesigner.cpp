@@ -286,7 +286,14 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     for (int i = index+1; i < n; ++i)
     {
+        cout<<"id = "<<roomE[i].getRoomId()<<" ---> ";
         tempV.push_back(values[i]);
+        for(auto &value : values[i])
+        {
+            cout<<"TEMP = "<<value<<" ";
+        }
+
+        cout<<"\n";
     }
 
     pair<double , vector<double>> res = findClosestSum(width , tempV);
@@ -298,7 +305,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double curWidth = out[j];
         double curHeight = roomsArea[id] / curWidth;
 
-        cout<<"ID = "<<id <<" "<<curWidth <<" "<<curWidth<<"\n";
+        cout<<"ID = "<<id <<" "<<curWidth <<" "<<curHeight<<"\n";
 
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
         curX = newRoom.getX2();
