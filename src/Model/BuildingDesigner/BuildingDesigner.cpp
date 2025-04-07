@@ -299,7 +299,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     double rightRoomWidth = roomsArea[rightRoomId] / preferHeight;
 
-    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - lastTopRoomHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
+    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - preferHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
 
 
     ans.push_back(rightRoom);
