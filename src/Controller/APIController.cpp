@@ -118,12 +118,12 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         }
         design1.scaleDesign(105);
 
-        vector<string> zone1 {"3", "5", "9", "10", "12"};
+        vector<string> zone1 {"Bedroom1", "Bedroom2", "Bedroom3", "Bedroom4", "Bedroom5" , "Bath1" , "Bath2" , "Bath3"};
         vector<string> zone2 {"1", "2", "4", "6", "7" , "8" , "11"};
 
         vector<pair<string , string>> conn {
-                {"3", "5"},
-                {"1", "3"},
+                {"Bedroom1", "Bedroom2"},
+                {"1", "Bedroom5"},
                 {"7", "11"},
                 {"1", "2"},
                 {"2", "4"},
@@ -133,17 +133,20 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
         limits["1"] = {3,10};
         limits["2"] = {3,8};
-        limits["3"] = {2,6};
         limits["4"] = {3,8};
-        limits["5"] = {3,9};
         limits["6"] = {5,7};
         limits["7"] = {2,4};
-
         limits["8"] = {2,10};
-        limits["9"] = {6,8};
-        limits["10"] = {5,10};
         limits["11"] = {1,7};
-        limits["12"] = {5,8};
+
+        limits["Bedroom1"] = {4,6};
+        limits["Bedroom2"] = {4,6};
+        limits["Bedroom3"] = {4,6};
+        limits["Bedroom4"] = {4,6};
+        limits["Bedroom5"] = {4,6};
+        limits["Bath1"] = {2,3};
+        limits["Bath2"] = {2,3};
+        limits["Bath3"] = {2,3};
 
 
 //        vector<string> zone1 {"11", "12", "13", "14", "15"};
