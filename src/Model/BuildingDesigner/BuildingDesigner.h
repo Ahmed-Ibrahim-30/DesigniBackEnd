@@ -23,6 +23,7 @@ private:
     map<string , set<string>> connections;
 
     map<string, pair<double, double>> dimensionsLimits;
+    map<string, double> roomsArea;
 
     vector<RoomEntity> sortZone(vector<RoomEntity> &zone);
 

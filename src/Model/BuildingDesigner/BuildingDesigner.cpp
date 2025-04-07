@@ -5,9 +5,9 @@
 #include "BuildingDesigner.h"
 #include "queue"
 
-BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids, const vector<string> &zone2Ids, const vector<pair<string, string>> &_connections, map<string, double> &roomsAreas)
+BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids, const vector<string> &zone2Ids, const vector<pair<string, string>> &_connections, map<string, double> &_roomsAreas)
 {
-    for(auto &room : roomsAreas)
+    for(auto &room : _roomsAreas)
     {
         double area = room.second;
         string id = room.first;
@@ -15,6 +15,8 @@ BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids, const vector<
         double maxRange = area / minRange;
         dimensionsLimits[id] = {minRange , maxRange};
     }
+
+    roomsArea = _roomsAreas;
 
     map<string , set<string>> roomMapConnections;
     for(auto &room :_connections )
@@ -51,6 +53,13 @@ BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids,
                                    map<string, pair<double, double>> &_dimensionsLimits
                                    ){
     dimensionsLimits = _dimensionsLimits;
+
+    for(auto &room : dimensionsLimits)
+    {
+        double a = room.second.first;
+        double b = room.second.second;
+        roomsArea[room.first] = a*b;
+    }
 
     map<string , set<string>> roomMapConnections;
     for(auto &room :_connections )
@@ -97,9 +106,9 @@ Design BuildingDesigner::generateDesign()
 
     reverse(zone1.begin(), zone1.end());
 
-    cout<<"ZONE1 = "<<"\n";
-    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
-    cout<<"\n";
+//    cout<<"ZONE1 = "<<"\n";
+//    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
+//    cout<<"\n";
 //
 //    cout<<"ZONE2 = "<<"\n";
 //    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
@@ -202,8 +211,10 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double firstL = room.getDimensionLimit().first;
         double secL = room.getDimensionLimit().second;
 
+        double counter = (secL -firstL) / 5;
+
         vector<double> val;
-        for (double i = firstL; i <= secL; i+= 0.5)
+        for (double i = firstL; i <= secL; i+= counter)
         {
             val.push_back(i);
         }
@@ -213,6 +224,8 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     double newCorridorWidth = 0.0;
     double curX = 0.0;
     vector<vector<double>>tempV;
+
+    Room lastTopRoom;
 
     for (int i = 0; i < n; ++i)
     {
@@ -224,10 +237,12 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
             vector<double> out = res.second;
             for (int j = 0; j < out.size(); ++j)
             {
-                double curWidth = out[j];
-                newCorridorWidth+=curWidth;
                 string id = roomE[j].getRoomId();
-                Room newRoom(id , curX , -5 , curX + curWidth , 0);
+                double curWidth = out[j];
+                double curHeight = roomsArea[id] / curWidth;
+                newCorridorWidth+=curWidth;
+                Room newRoom(id , curX , -curHeight , curX + curWidth , 0);
+                lastTopRoom = newRoom;
                 curX = newRoom.getX2();
                 ans.push_back(newRoom);
             }
@@ -243,14 +258,27 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     ans.push_back(corridor);
 
-    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - roomE[index].getDimensionLimit().second , corridor.getX2() + roomE[index].getDimensionLimit().second , corridor.getY2());
+    string rightRoomId = roomE[index].getRoomId();
+    double minLimit = dimensionsLimits[rightRoomId].first;
+    double maxLimit = dimensionsLimits[rightRoomId].second;
+
+    double lastTopRoomHeight = lastTopRoom.getHeight();
+
+    double preferHeight = lastTopRoomHeight + height;
+
+    if (preferHeight < minLimit) preferHeight = minLimit;
+    else if (preferHeight > maxLimit) preferHeight = maxLimit;
+
+    double rightRoomWidth = roomsArea[rightRoomId] / preferHeight;
+
+    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - lastTopRoomHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
+
 
     ans.push_back(rightRoom);
     corridorWidth = newCorridorWidth;
     width = newCorridorWidth;
 
     curX = 0.0;
-    newCorridorWidth = 0.0;
     tempV.clear();
 
     for (int i = index+1; i < n; ++i)
@@ -263,9 +291,10 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     index = n-1;
     for (int j = 0; j < out.size(); ++j)
     {
+        string id = roomE[j].getRoomId();
         double curWidth = out[j];
-        string id = roomE[index].getRoomId();
-        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + 5);
+        double curHeight = roomsArea[id] / curWidth;
+        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
         index--;
