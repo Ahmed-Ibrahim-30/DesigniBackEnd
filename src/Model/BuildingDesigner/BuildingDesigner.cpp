@@ -239,7 +239,11 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         remaining -= roomE.back().getDimensionLimit().first;
         remaining += 1.5;
 
-        if (curTopLimits >= remaining) width = curTopLimits;
+        if (curTopLimits >= remaining)
+        {
+            width = curTopLimits;
+            break;
+        }
     }
 
     double newCorridorWidth = 0.0;
