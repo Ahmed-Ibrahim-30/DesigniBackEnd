@@ -34,6 +34,8 @@ add_executable(Designi_BackEnd
         src/Model/BuildingDesigner/BuildingDesigner.cpp
         src/Model/BuildingDesigner/BuildingDesigner.h
         src/Model/BuildingDesigner/RoomEntity.h
+        src/Model/BuildingDesigner/CorridorDesigner.cpp
+        src/Model/BuildingDesigner/CorridorDesigner.h
 )
 
 find_package(Threads REQUIRED)

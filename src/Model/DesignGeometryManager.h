@@ -153,6 +153,9 @@ public:
         return (x2 - x1) * (yp - y1) - (y2 - y1) * (xp - x1);
     };
 
+    static pair<double , vector<double>> findClosestSum(double x , const vector<vector<double>> &values);
+
+
     static Line getPerpendicularLine(const Line& mainLine, const Line& extraLine, const Point &point) {
         double yp = point.getY() , xp = point.getX();
         double dx = mainLine.getX2() - mainLine.getX1();

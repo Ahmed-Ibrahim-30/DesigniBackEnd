@@ -1495,3 +1495,34 @@ bool DesignGeometryManager::isPointOnPolygon(double x, double y,const vector<Lin
         if (x==point.getX() && y==point.getY())return true;
     return false;
 }
+
+pair<double , vector<double>> DesignGeometryManager::findClosestSum(double x, const vector<vector<double>> &values)
+{
+    vector<double> output;
+
+    set<pair<double, vector<double>>> dp;
+    dp.emplace(0 , vector<double>());
+
+    for(auto &value : values)
+    {
+        set<pair<double,vector<double>>> newDp;
+        for(auto &sum : dp)
+        {
+            vector<double> curArr = sum.second;
+
+            for(auto &v : value)
+            {
+                curArr.push_back(v);
+                newDp.emplace(v + sum.first , curArr);
+                curArr.pop_back();
+            }
+        }
+        dp = newDp;
+    }
+
+    auto it = dp.upper_bound({x , vector<double>()});
+
+    if (it == dp.end()) it --;
+
+    return *it;
+}
