@@ -297,6 +297,9 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         string id = roomE[index].getRoomId();
         double curWidth = out[j];
         double curHeight = roomsArea[id] / curWidth;
+
+        cout<<"ID = "<<id <<" "<<curWidth <<" "<<curWidth<<"\n";
+
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
