@@ -9,7 +9,7 @@
 #include "RoomEntity.h"
 class BuildingDesigner{
 private:
-    double corridorWidth = 10;
+    double corridorWidth = 14;
     double corridorHeight = 2;
 
     double dimensionDiffFactor = 1.5;
