@@ -578,6 +578,7 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
 
     for (int i = index; i < index + roomSize; ++i)
     {
+        cout<<"Test = "<<roomE[i].getRoomId()<<"\n";
         tempV.push_back(values[i]);
         pair<double , vector<double>> res = findClosestSum(height , tempV , newRooms);
         if (i == index + roomSize-1)
