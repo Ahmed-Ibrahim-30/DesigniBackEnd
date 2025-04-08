@@ -200,162 +200,6 @@ void BuildingDesigner::sortZoneRoomsDFS(RoomEntity &curRoom , vector<RoomEntity>
 }
 
 
-vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom)
-{
-    vector<Room> ans;
-    double width = mainRoom.getWidth();
-    double height = mainRoom.getHeight();
-
-    int n = (int)roomE.size() , index = -1;
-
-    vector<vector<double>> values;
-    vector<double> minLimits;
-    double minLimitsSum = 0.0;
-
-    for(auto &room : roomE)
-    {
-        double firstL = room.getDimensionLimit().first;
-        double secL = room.getDimensionLimit().second;
-        minLimitsSum += firstL;
-        minLimits.push_back(firstL);
-
-        double counter = (secL -firstL) / 5;
-
-        vector<double> val;
-        for (double i = firstL; i <= secL; i+= counter)
-        {
-            val.push_back(i);
-        }
-        values.push_back(val);
-    }
-
-    double curTopLimits = 0.0 , diffLimits = 0.0;
-    for (int i = 0; i < n - 2; ++i)
-    {
-        double firstL = roomE[i].getDimensionLimit().first;
-        double secL = roomE[i].getDimensionLimit().second;
-
-        diffLimits+= (secL - firstL);
-        double firstL2 = roomE[i+1].getDimensionLimit().first;
-        curTopLimits += firstL;
-        double remaining = (minLimitsSum - curTopLimits - firstL2);
-
-        remaining -= roomE.back().getDimensionLimit().first;
-        remaining += 1.5;
-
-        if (curTopLimits >= remaining)
-        {
-            width = curTopLimits;
-            break;
-        }
-    }
-
-    double newCorridorWidth = 0.0;
-    double curX = 0.0;
-    vector<vector<double>>tempV;
-
-    Room lastTopRoom;
-
-    for (int i = 0; i < n; ++i)
-    {
-        string id = roomE[i].getRoomId();
-        double curWidth = roomE[i].getDimensionLimit().first;
-        double curHeight = roomsArea[id] / curWidth;
-        Room newRoom(id , curX , -curHeight , curX + curWidth , 0);
-        lastTopRoom = newRoom;
-        curX = newRoom.getX2();
-        newCorridorWidth =curX;
-        ans.push_back(newRoom);
-
-        if (newCorridorWidth >= width)
-        {
-            index = i + 1;
-            break;
-        }
-    }
-
-    cout<<"newCorridorWidth = "<<newCorridorWidth<<"\n";
-
-    Room corridor("" , 0 , 0 , newCorridorWidth , height);
-    corridor.addDoor(0 , 0.4 , 0 , 1.6);
-    corridor.addDoor(newCorridorWidth , 0.4 , newCorridorWidth , 1.6);
-
-    ans.push_back(corridor);
-
-    string rightRoomId = roomE[index].getRoomId();
-    double minLimit = dimensionsLimits[rightRoomId].first;
-    double maxLimit = dimensionsLimits[rightRoomId].second;
-
-    double lastTopRoomHeight = lastTopRoom.getHeight();
-
-    double preferHeight = lastTopRoomHeight + height;
-
-    if (preferHeight < minLimit) preferHeight = minLimit;
-    else if (preferHeight > maxLimit) preferHeight = maxLimit;
-
-    double rightRoomWidth = roomsArea[rightRoomId] / preferHeight;
-
-    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - preferHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
-
-
-    ans.push_back(rightRoom);
-    corridorWidth = newCorridorWidth;
-    width = newCorridorWidth;
-
-//    curX = 0.0;
-//
-//    for (int i = index+1; i < n; ++i)
-//    {
-//        string id = roomE[i].getRoomId();
-//        double curWidth = roomE[i].getDimensionLimit().first;
-//        double curHeight = roomsArea[id] / curWidth;
-//
-//        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
-//        curX = newRoom.getX2();
-//        ans.push_back(newRoom);
-//    }
-
-
-    curX = 0.0;
-    tempV.clear();
-
-    vector<RoomEntity> newRoomsE;
-
-    for (int i = index+1; i < n; ++i)
-    {
-        newRoomsE.push_back(roomE[i]);
-        cout<<"id = "<<roomE[i].getRoomId()<<" ---> ";
-        tempV.push_back(values[i]);
-        for(auto &value : values[i])
-        {
-            cout<<"TEMP = "<<value<<" ";
-        }
-
-        cout<<"\n";
-    }
-
-
-    pair<double , vector<double>> res = findClosestSum(width , tempV , newRoomsE);
-    vector<double> out = res.second;
-    std::reverse(out.begin(), out.end());
-    index = n-1;
-    for (int j = 0; j < out.size(); ++j)
-    {
-        string id = roomE[index].getRoomId();
-        double curWidth = out[j];
-        double curHeight = roomsArea[id] / curWidth;
-
-        cout<<"ID = "<<id <<" "<<curWidth <<" "<<curHeight<<"\n";
-
-        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
-        curX = newRoom.getX2();
-        ans.push_back(newRoom);
-        index--;
-    }
-    return ans;
-}
-
-
 //vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom)
 //{
 //    vector<Room> ans;
@@ -401,7 +245,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 //
 //        if (curTopLimits >= remaining)
 //        {
-//            width = curTopLimits + (diffLimits * 0.5);
+//            width = curTopLimits;
 //            break;
 //        }
 //    }
@@ -414,23 +258,18 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 //
 //    for (int i = 0; i < n; ++i)
 //    {
-//        tempV.push_back(values[i]);
-//        pair<double , vector<double>> res = findClosestSum(width , tempV);
-//        if (res.first >= width)
+//        string id = roomE[i].getRoomId();
+//        double curWidth = roomE[i].getDimensionLimit().first;
+//        double curHeight = roomsArea[id] / curWidth;
+//        Room newRoom(id , curX , -curHeight , curX + curWidth , 0);
+//        lastTopRoom = newRoom;
+//        curX = newRoom.getX2();
+//        newCorridorWidth =curX;
+//        ans.push_back(newRoom);
+//
+//        if (newCorridorWidth >= width)
 //        {
 //            index = i + 1;
-//            vector<double> out = res.second;
-//            for (int j = 0; j < out.size(); ++j)
-//            {
-//                string id = roomE[j].getRoomId();
-//                double curWidth = out[j];
-//                double curHeight = roomsArea[id] / curWidth;
-//                newCorridorWidth+=curWidth;
-//                Room newRoom(id , curX , -curHeight , curX + curWidth , 0);
-//                lastTopRoom = newRoom;
-//                curX = newRoom.getX2();
-//                ans.push_back(newRoom);
-//            }
 //            break;
 //        }
 //    }
@@ -463,11 +302,28 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 //    corridorWidth = newCorridorWidth;
 //    width = newCorridorWidth;
 //
+////    curX = 0.0;
+////
+////    for (int i = index+1; i < n; ++i)
+////    {
+////        string id = roomE[i].getRoomId();
+////        double curWidth = roomE[i].getDimensionLimit().first;
+////        double curHeight = roomsArea[id] / curWidth;
+////
+////        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
+////        curX = newRoom.getX2();
+////        ans.push_back(newRoom);
+////    }
+//
+//
 //    curX = 0.0;
 //    tempV.clear();
 //
+//    vector<RoomEntity> newRoomsE;
+//
 //    for (int i = index+1; i < n; ++i)
 //    {
+//        newRoomsE.push_back(roomE[i]);
 //        cout<<"id = "<<roomE[i].getRoomId()<<" ---> ";
 //        tempV.push_back(values[i]);
 //        for(auto &value : values[i])
@@ -478,7 +334,8 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 //        cout<<"\n";
 //    }
 //
-//    pair<double , vector<double>> res = findClosestSum(width + 1.5 , tempV);
+//
+//    pair<double , vector<double>> res = findClosestSum(width , tempV , newRoomsE);
 //    vector<double> out = res.second;
 //    std::reverse(out.begin(), out.end());
 //    index = n-1;
@@ -497,6 +354,151 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 //    }
 //    return ans;
 //}
+
+
+vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom)
+{
+    vector<Room> ans;
+    double width = mainRoom.getWidth();
+    double height = mainRoom.getHeight();
+
+    int n = (int)roomE.size() , index = -1;
+
+    vector<vector<double>> values;
+    vector<double> minLimits;
+    double minLimitsSum = 0.0;
+
+    for(auto &room : roomE)
+    {
+        double firstL = room.getDimensionLimit().first;
+        double secL = room.getDimensionLimit().second;
+        minLimitsSum += firstL;
+        minLimits.push_back(firstL);
+
+        double counter = (secL -firstL) / 5;
+
+        vector<double> val;
+        for (double i = firstL; i <= secL; i+= counter)
+        {
+            val.push_back(i);
+        }
+        values.push_back(val);
+    }
+
+    double curTopLimits = 0.0 , diffLimits = 0.0;
+    for (int i = 0; i < n - 2; ++i)
+    {
+        double firstL = roomE[i].getDimensionLimit().first;
+        double secL = roomE[i].getDimensionLimit().second;
+
+        diffLimits+= (secL - firstL);
+        double firstL2 = roomE[i+1].getDimensionLimit().first;
+        curTopLimits += firstL;
+        double remaining = (minLimitsSum - curTopLimits - firstL2);
+
+        remaining -= roomE.back().getDimensionLimit().first;
+        remaining += 1.5;
+
+        if (curTopLimits >= remaining)
+        {
+            width = curTopLimits + (diffLimits * 0.5);
+            break;
+        }
+    }
+
+    double newCorridorWidth = 0.0;
+    double curX = 0.0;
+    vector<vector<double>>tempV;
+
+    Room lastTopRoom;
+
+    for (int i = 0; i < n; ++i)
+    {
+        tempV.push_back(values[i]);
+        pair<double , vector<double>> res = findClosestSum(width , tempV , roomE);
+        if (res.first >= width)
+        {
+            index = i + 1;
+            vector<double> out = res.second;
+            for (int j = 0; j < out.size(); ++j)
+            {
+                string id = roomE[j].getRoomId();
+                double curWidth = out[j];
+                double curHeight = roomsArea[id] / curWidth;
+                newCorridorWidth+=curWidth;
+                Room newRoom(id , curX , -curHeight , curX + curWidth , 0);
+                lastTopRoom = newRoom;
+                curX = newRoom.getX2();
+                ans.push_back(newRoom);
+            }
+            break;
+        }
+    }
+
+    cout<<"newCorridorWidth = "<<newCorridorWidth<<"\n";
+
+    Room corridor("" , 0 , 0 , newCorridorWidth , height);
+    corridor.addDoor(0 , 0.4 , 0 , 1.6);
+    corridor.addDoor(newCorridorWidth , 0.4 , newCorridorWidth , 1.6);
+
+    ans.push_back(corridor);
+
+    string rightRoomId = roomE[index].getRoomId();
+    double minLimit = dimensionsLimits[rightRoomId].first;
+    double maxLimit = dimensionsLimits[rightRoomId].second;
+
+    double lastTopRoomHeight = lastTopRoom.getHeight();
+
+    double preferHeight = lastTopRoomHeight + height;
+
+    if (preferHeight < minLimit) preferHeight = minLimit;
+    else if (preferHeight > maxLimit) preferHeight = maxLimit;
+
+    double rightRoomWidth = roomsArea[rightRoomId] / preferHeight;
+
+    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - preferHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
+
+
+    ans.push_back(rightRoom);
+    corridorWidth = newCorridorWidth;
+    width = newCorridorWidth;
+
+    curX = 0.0;
+    tempV.clear();
+    vector<RoomEntity> newRoomsE;
+
+    for (int i = index+1; i < n; ++i)
+    {
+        newRoomsE.push_back(roomE[i]);
+        cout<<"id = "<<roomE[i].getRoomId()<<" ---> ";
+        tempV.push_back(values[i]);
+        for(auto &value : values[i])
+        {
+            cout<<"TEMP = "<<value<<" ";
+        }
+
+        cout<<"\n";
+    }
+
+    pair<double , vector<double>> res = findClosestSum(width , tempV , newRoomsE);
+    vector<double> out = res.second;
+    std::reverse(out.begin(), out.end());
+    index = n-1;
+    for (int j = 0; j < out.size(); ++j)
+    {
+        string id = roomE[index].getRoomId();
+        double curWidth = out[j];
+        double curHeight = roomsArea[id] / curWidth;
+
+        cout<<"ID = "<<id <<" "<<curWidth <<" "<<curHeight<<"\n";
+
+        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
+        curX = newRoom.getX2();
+        ans.push_back(newRoom);
+        index--;
+    }
+    return ans;
+}
 
 vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom)
 {
@@ -612,7 +614,6 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
     if (!validSolutions.empty())
     {
         auto valid = validSolutions[0];
-        cout<<"valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0;
         for(auto &v : ans) sum+=v;
