@@ -627,12 +627,27 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         cout<<"Valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0; int index = 0;
+        for (int i = 1; i < ans.size(); ++i) {
+            double width = ans[i];
+            double prevWidth = ans[i-1];
+            string id = roomE[i].getRoomId();
+            string prevId = roomE[i-1].getRoomId();
+
+            double height = roomsArea[id] / width;
+            double height2 = roomsArea[prevId] / prevWidth;
+
+            if (height - height2 <= 0.5)
+            {
+                ans[i] += (height - height2);
+            }
+            else if (height2 - height <= 0.5)
+            {
+                ans[i] -= (height - height2);
+            }
+        }
         for(auto &v : ans)
         {
             sum += v;
-            string id = roomE[index++].getRoomId();
-            double height = roomsArea[id] / v;
-            cout << "V = " << height << "\n";
         }
         return {sum , ans};
     }
