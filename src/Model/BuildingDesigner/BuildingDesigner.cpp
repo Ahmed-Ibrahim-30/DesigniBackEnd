@@ -586,6 +586,7 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
         curY = newRoom.getY1();
         ans.push_back(newRoom);
     }
+    index += roomSize;
 
     curX = mainRoom.getX1();
 
