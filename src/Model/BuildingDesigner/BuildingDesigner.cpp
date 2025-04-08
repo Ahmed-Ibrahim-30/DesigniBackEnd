@@ -531,15 +531,20 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
         values.push_back(val);
     }
 
-    int bottomRoomSize = 0;
+    int bottomRoomSize = 0; double minLimits = 0.0;
+    for (int i = 0; i < n; ++i) {
+        if (minLimits + 1.5 > width)break;
+        minLimits += roomE[i].getDimensionLimit().first;
+        bottomRoomSize++;
+    }
 
     int index = 0;
     double curX = 0;
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < bottomRoomSize; ++i)
     {
         tempV.push_back(values[i]);
         pair<double , vector<double>> res = findClosestSum(width , tempV , roomE);
-        if (res.first >= width)
+        if (i == bottomRoomSize-1)
         {
             index = i+1;
             vector<double> out = res.second;
