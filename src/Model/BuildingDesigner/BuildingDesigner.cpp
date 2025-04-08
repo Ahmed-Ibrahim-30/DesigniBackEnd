@@ -374,7 +374,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double secL = room.getDimensionLimit().second;
         minLimitsSum += firstL;
         minLimits.push_back(firstL);
-        double diff = (secL -firstL) * 10;
+        double diff = (secL -firstL) * 5;
         double counter = (secL -firstL) / diff;
 
         vector<double> val;
@@ -637,10 +637,10 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             double height = roomsArea[id] / width;
             double height2 = roomsArea[prevId] / prevWidth;
 
-            if (height - height2 <= 0.5)
-            {
-                ans[i] += (height - height2);
-            }
+//            if (height - height2 <= 0.5)
+//            {
+//                ans[i] += (height - height2);
+//            }
 //            else if (height2 - height <= 0.5)
 //            {
 //                ans[i] -= (height2 - height);
