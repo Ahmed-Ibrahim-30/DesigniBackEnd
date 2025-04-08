@@ -31,7 +31,7 @@ private:
 
     vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE , Room &mainRoom);
 
-    static pair<double , vector<double>> findClosestSum(double x , const vector<vector<double>> &values);
+    pair<double , vector<double>> findClosestSum(double x , const vector<vector<double>> &values, vector<RoomEntity> &roomE);
 
 public:
     /**

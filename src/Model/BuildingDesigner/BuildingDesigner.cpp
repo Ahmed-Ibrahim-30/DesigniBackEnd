@@ -331,7 +331,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         cout<<"\n";
     }
 
-    pair<double , vector<double>> res = findClosestSum(width , tempV);
+    pair<double , vector<double>> res = findClosestSum(width , tempV , roomE);
     vector<double> out = res.second;
     std::reverse(out.begin(), out.end());
     index = n-1;
@@ -562,7 +562,7 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
     return ans;
 }
 
-pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const vector<vector<double>> &values)
+pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const vector<vector<double>> &values , vector<RoomEntity> &roomE)
 {
     vector<double> output;
 
@@ -594,15 +594,14 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         set<double> repetitions;
         int counter = 0 ; double sum = sol.first - sol.second.back() + 1.5;
         if (sum >x) continue;
-        for(auto &value : sol.second)
+        for (int i = 0; i < sol.second.size(); ++i)
         {
-            if (!repetitions.count(value))
-            {
-                repetitions.insert(value);
-            }
-            else counter++;
+            string id = roomE[i].getRoomId();
+            double width = sol.second[i];
+            double height = roomsArea[id] / width;
+            repetitions.insert(height);
         }
-        validSolutions.emplace_back(counter , sol.second);
+        validSolutions.emplace_back(repetitions.size() , sol.second);
     }
     sort(validSolutions.begin(), validSolutions.end() , greater<>());
 
