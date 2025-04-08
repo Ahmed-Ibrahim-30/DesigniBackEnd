@@ -607,7 +607,13 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             double height = MathUtils::roundingToDecimal(roomsArea[id] / width);
             repetitions.insert(height);
         }
-        validSolutions.emplace_back(repetitions.size() , sol.second);
+        double diff = 0.0 , lastValue = *repetitions.begin();
+        for(auto &val : repetitions)
+        {
+            diff += val - lastValue;
+            lastValue = val;
+        }
+        validSolutions.emplace_back(lastValue , sol.second);
     }
     sort(validSolutions.begin(), validSolutions.end());
 
