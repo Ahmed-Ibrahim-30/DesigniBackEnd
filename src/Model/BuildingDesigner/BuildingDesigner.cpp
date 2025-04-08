@@ -331,7 +331,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         cout<<"\n";
     }
 
-    pair<double , vector<double>> res = findClosestSum(width + 1.5 , tempV);
+    pair<double , vector<double>> res = findClosestSum(width , tempV);
     vector<double> out = res.second;
     std::reverse(out.begin(), out.end());
     index = n-1;
