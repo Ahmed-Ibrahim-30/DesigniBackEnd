@@ -628,7 +628,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         for(auto &v : ans) {
             sum += v;
             string id = roomE[index++].getRoomId();
-            double height = roomsArea[id] / width;
+            double height = roomsArea[id] / v;
             cout << "V = " << height << "\n";
         }
         return {sum , ans};
