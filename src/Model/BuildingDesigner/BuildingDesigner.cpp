@@ -116,7 +116,7 @@ Design BuildingDesigner::generateDesign()
 
     Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
-    Room Living ("Living" , -6 , -2 , 0 , 4);
+    Room Living ("Living" , -6 , -2.5 , 0 , 4.5);
     rooms.push_back(Living);
 
     vector<Room> newRooms = generateLivingLayout(zone2 , Living);
