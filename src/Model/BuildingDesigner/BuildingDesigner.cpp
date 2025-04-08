@@ -592,7 +592,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         dp = newDp;
     }
 
-    vector<pair<int , vector<double>>> validSolutions;
+    vector<pair<double , vector<double>>> validSolutions;
 
     for(auto &sol : dp)
     {
