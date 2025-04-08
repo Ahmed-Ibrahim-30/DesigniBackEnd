@@ -610,7 +610,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         double diff = 0.0 , lastValue = *repetitions.begin();
         for(auto &val : repetitions)
         {
-            cout<<"VAL = "<<val <<" "<<lastValue<<" "<<diff<<"\n";
+//            cout<<"VAL = "<<val <<" "<<lastValue<<" "<<diff<<"\n";
             diff += (val - lastValue);
             lastValue = val;
         }
@@ -624,7 +624,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         cout<<"Valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0;
-        for(auto &v : ans) sum+=v;
+        for(auto &v : ans) sum+=v ,cout<<"V = "<<v<<"\n";
         return {sum , ans};
     }
     cout<<"Not Valid Ans for repetitions\n";
