@@ -620,6 +620,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
     if (!validSolutions.empty())
     {
         auto valid = validSolutions[0];
+        cout<<"Valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0;
         for(auto &v : ans) sum+=v;
