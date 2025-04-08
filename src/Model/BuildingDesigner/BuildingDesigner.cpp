@@ -406,6 +406,8 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         }
     }
 
+    cout<<"Width = "<<width<<"\n";
+
     double newCorridorWidth = 0.0;
     double curX = 0.0;
     vector<vector<double>>tempV;
