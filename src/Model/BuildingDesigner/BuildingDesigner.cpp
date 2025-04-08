@@ -592,11 +592,6 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
 
     vector<pair<int , vector<double>>> validSolutions;
 
-
-    for (int i = 0; i < roomE.size(); ++i) {
-        cout<<"Area = "<<roomsArea[roomE[i].getRoomId()]<<"\n";
-    }
-
     for(auto &sol : dp)
     {
         if (sol.first < x)continue;

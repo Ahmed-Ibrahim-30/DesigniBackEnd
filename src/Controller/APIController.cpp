@@ -140,7 +140,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         areas["Office"] = 20;
         areas["Garage"] = 18;
 
-        areas["Bedroom1"] = 20;
+        areas["Bedroom1"] = 25;
         areas["Bedroom2"] = 20;
         areas["Bedroom3"] = 20;
         areas["Bedroom4"] = 20;
