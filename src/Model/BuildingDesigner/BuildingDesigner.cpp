@@ -425,10 +425,10 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
                 string id = roomE[j].getRoomId();
                 double curWidth = out[j];
                 double curHeight = roomsArea[id] / curWidth;
-                newCorridorWidth+=curWidth;
                 Room newRoom(id , curX , -curHeight , curX + curWidth , 0);
                 lastTopRoom = newRoom;
                 curX = newRoom.getX2();
+                newCorridorWidth = curX;
                 ans.push_back(newRoom);
             }
             break;
