@@ -407,8 +407,6 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         }
     }
 
-    cout<<"Width = "<<width<<"\n";
-
     double newCorridorWidth = 0.0;
     double curX = 0.0;
     vector<vector<double>>tempV;
@@ -506,7 +504,6 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     ans.push_back(rightRoom);
 
-
     return ans;
 }
 
@@ -517,26 +514,66 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
     double height = mainRoom.getHeight();
 
     int n = (int)roomE.size();
+    vector<vector<double>> values , tempV;
 
-    double curX = mainRoom.getX2();
-    int index = 0;
-
-    for (int i = index; i < roomE.size(); ++i)
+    for(auto &room : roomE)
     {
-        string id = roomE[i].getRoomId();
-        double curWidth = roomE[i].getDimensionLimit().first;
-        double curHeight = roomsArea[id] / curWidth;
+        double firstL = room.getDimensionLimit().first;
+        double secL = room.getDimensionLimit().second;
+        double diff = (secL -firstL) * 5;
+        double counter = (secL -firstL) / diff;
 
-        Room newRoom(id , curX - curWidth , mainRoom.getY2() , curX , mainRoom.getY2() + curHeight);
-        curX = newRoom.getX1();
-        ans.push_back(newRoom);
+        vector<double> val;
+        for (double i = firstL; i <= secL; i+= counter)
+        {
+            val.push_back(i);
+        }
+        values.push_back(val);
+    }
 
-        if (curX - mainRoom.getX1() < 1)
+    int bottomRoomSize = 0;
+
+    int index = 0;
+    double curX = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        tempV.push_back(values[i]);
+        pair<double , vector<double>> res = findClosestSum(width , tempV , roomE);
+        if (res.first >= width)
         {
             index = i+1;
+            vector<double> out = res.second;
+            curX = mainRoom.getX2();
+            for (int j = 0; j < out.size(); ++j)
+            {
+                string id = roomE[i].getRoomId();
+                double curWidth = roomE[i].getDimensionLimit().first;
+                double curHeight = roomsArea[id] / curWidth;
+
+                Room newRoom(id , curX - curWidth , mainRoom.getY2() , curX , mainRoom.getY2() + curHeight);
+                curX = newRoom.getX1();
+                ans.push_back(newRoom);
+            }
             break;
         }
     }
+
+//    for (int i = index; i < roomE.size(); ++i)
+//    {
+//        string id = roomE[i].getRoomId();
+//        double curWidth = roomE[i].getDimensionLimit().first;
+//        double curHeight = roomsArea[id] / curWidth;
+//
+//        Room newRoom(id , curX - curWidth , mainRoom.getY2() , curX , mainRoom.getY2() + curHeight);
+//        curX = newRoom.getX1();
+//        ans.push_back(newRoom);
+//
+//        if (curX - mainRoom.getX1() < 1)
+//        {
+//            index = i+1;
+//            break;
+//        }
+//    }
 
     double curY = mainRoom.getY2();
 
