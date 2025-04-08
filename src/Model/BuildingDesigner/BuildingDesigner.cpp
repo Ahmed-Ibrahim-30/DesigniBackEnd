@@ -607,10 +607,11 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             double height = roomsArea[id] / width;
             repetitions.insert(height);
         }
+
+        //3 5 7
         double diff = 0.0 , lastValue = *repetitions.begin();
         for(auto &val : repetitions)
         {
-//            cout<<"VAL = "<<val <<" "<<lastValue<<" "<<diff<<"\n";
             diff += (val - lastValue);
             lastValue = val;
         }
@@ -623,8 +624,13 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         auto valid = validSolutions[0];
         cout<<"Valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
-        double sum = 0.0;
-        for(auto &v : ans) sum+=v ,cout<<"V = "<<v<<"\n";
+        double sum = 0.0; int index = 0;
+        for(auto &v : ans) {
+            sum += v;
+            string id = roomE[index++].getRoomId();
+            double height = roomsArea[id] / width;
+            cout << "V = " << height << "\n";
+        }
         return {sum , ans};
     }
     cout<<"Not Valid Ans for repetitions\n";
