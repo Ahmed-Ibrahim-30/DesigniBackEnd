@@ -673,6 +673,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         auto valid = validSolutions[0];
         vector<double> ans = valid.second;
         double sum = 0.0; int index = 0;
+
         for (int i = 1; i < ans.size(); ++i)
         {
             double width = ans[i];
@@ -695,6 +696,10 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         for(auto &v : ans)
         {
             sum += v;
+        }
+        if(x == 5)
+        {
+            cout<<"Sum = "<<sum<<"\n";
         }
         return {sum , ans};
     }
