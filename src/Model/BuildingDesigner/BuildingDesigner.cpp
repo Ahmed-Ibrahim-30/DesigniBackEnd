@@ -447,22 +447,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     ans.push_back(corridor);
 
     string rightRoomId = roomE[index].getRoomId();
-    double minLimit = dimensionsLimits[rightRoomId].first;
-    double maxLimit = dimensionsLimits[rightRoomId].second;
 
-    double lastTopRoomHeight = lastTopRoom.getHeight();
-
-    double preferHeight = lastTopRoomHeight + height;
-
-    if (preferHeight < minLimit) preferHeight = minLimit;
-    else if (preferHeight > maxLimit) preferHeight = maxLimit;
-
-    double rightRoomWidth = roomsArea[rightRoomId] / preferHeight;
-
-    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - preferHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
-
-
-    ans.push_back(rightRoom);
     corridorWidth = newCorridorWidth;
     width = newCorridorWidth;
 
@@ -473,14 +458,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     for (int i = index+1; i < n; ++i)
     {
         newRoomsE.push_back(roomE[i]);
-        cout<<"id = "<<roomE[i].getRoomId()<<" ---> ";
         tempV.push_back(values[i]);
-        for(auto &value : values[i])
-        {
-            cout<<"TEMP = "<<value<<" ";
-        }
-
-        cout<<"\n";
     }
 
     pair<double , vector<double>> res = findClosestSum(width +1.5, tempV , newRoomsE);
@@ -493,13 +471,42 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double curWidth = out[j];
         double curHeight = roomsArea[id] / curWidth;
 
-        cout<<"ID = "<<id <<" "<<curWidth <<" "<<curHeight<<"\n";
-
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
         index--;
     }
+
+
+    Room lastRoomBottom = ans.back();
+
+
+    double minLimit = dimensionsLimits[rightRoomId].first;
+    double maxLimit = dimensionsLimits[rightRoomId].second;
+
+    double remainingBottomWidth = lastRoomBottom.getX2() - corridor.getX2();
+
+    double lastTopRoomHeight = lastTopRoom.getHeight();
+
+    double preferHeight = lastTopRoomHeight + height;
+
+    if (preferHeight < minLimit) preferHeight = minLimit;
+    else if (preferHeight > maxLimit) preferHeight = maxLimit;
+
+    double rightRoomWidth = roomsArea[rightRoomId] / preferHeight;
+
+    if (preferHeight != lastTopRoomHeight + height && remainingBottomWidth >= minLimit && remainingBottomWidth<= maxLimit)
+    {
+        rightRoomWidth = remainingBottomWidth;
+        preferHeight = roomsArea[rightRoomId] / rightRoomWidth;
+    }
+
+    Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - preferHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
+
+
+    ans.push_back(rightRoom);
+
+
     return ans;
 }
 
@@ -627,7 +634,6 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
     if (!validSolutions.empty())
     {
         auto valid = validSolutions[0];
-        cout<<"Valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0; int index = 0;
         for (int i = 1; i < ans.size(); ++i)
