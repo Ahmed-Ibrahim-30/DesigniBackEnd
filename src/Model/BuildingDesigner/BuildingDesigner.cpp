@@ -598,8 +598,8 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         {
             string id = roomE[i].getRoomId();
             double width = sol.second[i];
-            double height = roomsArea[id] / width;
-            repetitions.insert(width);
+            double height = MathUtils::roundingToDecimal(roomsArea[id] / width);
+            repetitions.insert(height);
         }
         validSolutions.emplace_back(repetitions.size() , sol.second);
     }
