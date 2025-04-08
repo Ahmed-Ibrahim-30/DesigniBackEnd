@@ -604,7 +604,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         {
             string id = roomE[i].getRoomId();
             double width = sol.second[i];
-            double height = MathUtils::roundingToDecimal(roomsArea[id] / width);
+            double height = roomsArea[id] / width;
             repetitions.insert(height);
         }
         double diff = 0.0 , lastValue = *repetitions.begin();
