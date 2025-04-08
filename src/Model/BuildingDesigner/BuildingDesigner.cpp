@@ -699,7 +699,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         }
         if(x == 5)
         {
-            cout<<"Sum = "<<sum<<"\n";
+            cout<<"Sum = "<<sum <<" "<<ans.size()<<"\n";
         }
         return {sum , ans};
     }
