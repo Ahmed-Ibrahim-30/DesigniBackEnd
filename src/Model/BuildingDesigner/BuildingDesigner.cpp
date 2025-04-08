@@ -583,23 +583,20 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
         pair<double , vector<double>> res = findClosestSum(height , tempV , newRooms);
         if (i == index + roomSize-1)
         {
-            index = i+1;
             vector<double> out = res.second;
             curY = mainRoom.getY2();
             int newIndex = index;
             for (int j = 0; j < out.size(); ++j)
             {
                 string id = roomE[newIndex].getRoomId();
-                newIndex++;
-                cout<<"ID = "<<id<<"\n";
-//                double curHeight = out[newIndex++];
-//                cout<<"CUR = "<<curHeight<<"\n";
-//                double curWidth = roomsArea[id] / curHeight;
-//
-//                Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
-//                curY = newRoom.getY1();
-//                ans.push_back(newRoom);
+                double curHeight = out[newIndex++];
+                double curWidth = roomsArea[id] / curHeight;
+
+                Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
+                curY = newRoom.getY1();
+                ans.push_back(newRoom);
             }
+            index = i+1;
             break;
         }
     }
