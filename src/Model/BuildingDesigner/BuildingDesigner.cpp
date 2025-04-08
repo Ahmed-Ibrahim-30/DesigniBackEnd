@@ -698,7 +698,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         }
         return {sum , ans};
     }
-    cout<<"Not Valid Ans for repetitions\n";
+    cout<<"Not Valid Ans for repetitions -- "<<x<<" \n";
 
 
     auto it = dp.upper_bound({x , vector<double>()});
