@@ -302,17 +302,51 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
     corridorWidth = newCorridorWidth;
     width = newCorridorWidth;
 
+//    curX = 0.0;
+//
+//    for (int i = index+1; i < n; ++i)
+//    {
+//        string id = roomE[i].getRoomId();
+//        double curWidth = roomE[i].getDimensionLimit().first;
+//        double curHeight = roomsArea[id] / curWidth;
+//
+//        Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
+//        curX = newRoom.getX2();
+//        ans.push_back(newRoom);
+//    }
+
+
     curX = 0.0;
+    tempV.clear();
 
     for (int i = index+1; i < n; ++i)
     {
-        string id = roomE[i].getRoomId();
-        double curWidth = roomE[i].getDimensionLimit().first;
+        cout<<"id = "<<roomE[i].getRoomId()<<" ---> ";
+        tempV.push_back(values[i]);
+        for(auto &value : values[i])
+        {
+            cout<<"TEMP = "<<value<<" ";
+        }
+
+        cout<<"\n";
+    }
+
+    pair<double , vector<double>> res = findClosestSum(width + 1.5 , tempV);
+    vector<double> out = res.second;
+    std::reverse(out.begin(), out.end());
+    index = n-1;
+    for (int j = 0; j < out.size(); ++j)
+    {
+        string id = roomE[index].getRoomId();
+        double curWidth = out[j];
         double curHeight = roomsArea[id] / curWidth;
+
+        cout<<"ID = "<<id <<" "<<curWidth <<" "<<curHeight<<"\n";
 
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
         curX = newRoom.getX2();
         ans.push_back(newRoom);
+        index--;
     }
     return ans;
 }
@@ -551,6 +585,37 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         }
         dp = newDp;
     }
+
+    vector<pair<int , vector<double>>> validSolutions;
+
+    for(auto &sol : dp)
+    {
+        if (sol.first < x)continue;
+        set<double> repetitions;
+        int counter = 0 ; double sum = sol.first - sol.second.back() + 1.5;
+        if (sum >x) continue;
+        for(auto &value : sol.second)
+        {
+            if (!repetitions.count(value))
+            {
+                repetitions.insert(value);
+            }
+            else counter++;
+        }
+        validSolutions.emplace_back(counter , sol.second);
+    }
+    sort(validSolutions.begin(), validSolutions.end() , greater<>());
+
+    if (!validSolutions.empty())
+    {
+        auto valid = validSolutions[0];
+        vector<double> ans = valid.second;
+        double sum = 0.0;
+        for(auto &v : ans) sum+=v;
+        return {sum , ans};
+    }
+    cout<<"Not Valid Ans for repetitions\n";
+
 
     auto it = dp.upper_bound({x , vector<double>()});
 
