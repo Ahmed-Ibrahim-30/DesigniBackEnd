@@ -375,7 +375,7 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         minLimitsSum += firstL;
         minLimits.push_back(firstL);
 
-        double counter = (secL -firstL) / 5;
+        double counter = (secL -firstL) / 10;
 
         vector<double> val;
         for (double i = firstL; i <= secL; i+= counter)
