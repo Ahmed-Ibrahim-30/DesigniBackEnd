@@ -587,17 +587,17 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
             vector<double> out = res.second;
             curY = mainRoom.getY2();
             int newIndex = index;
-            for (int j = 0; j < out.size(); ++j)
-            {
-                string id = roomE[newIndex].getRoomId();
-                double curHeight = out[newIndex++];
-                cout<<"CUR = "<<curHeight<<"\n";
-                double curWidth = roomsArea[id] / curHeight;
-
-                Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
-                curY = newRoom.getY1();
-                ans.push_back(newRoom);
-            }
+//            for (int j = 0; j < out.size(); ++j)
+//            {
+//                string id = roomE[newIndex].getRoomId();
+//                double curHeight = out[newIndex++];
+//                cout<<"CUR = "<<curHeight<<"\n";
+//                double curWidth = roomsArea[id] / curHeight;
+//
+//                Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
+//                curY = newRoom.getY1();
+//                ans.push_back(newRoom);
+//            }
             break;
         }
     }
