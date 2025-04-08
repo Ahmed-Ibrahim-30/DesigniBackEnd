@@ -125,6 +125,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
                 {"Bedroom1", "Bedroom2"},
                 {"Bath1", "Bedroom2"},
                 {"Bath1", "Bath2"},
+                {"Bath3", "Bath2"},
                 {"Dining", "Bedroom5"},
                 {"Kitchen", "GBath"},
                 {"Family", "Office"},
