@@ -374,8 +374,8 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
         double secL = room.getDimensionLimit().second;
         minLimitsSum += firstL;
         minLimits.push_back(firstL);
-
-        double counter = (secL -firstL) / 10;
+        double diff = (secL -firstL) * 10;
+        double counter = (secL -firstL) / diff;
 
         vector<double> val;
         for (double i = firstL; i <= secL; i+= counter)
@@ -600,6 +600,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         set<double> repetitions;
         double sum = sol.first - sol.second.back() + 1.5;
         if (sum >x) continue;
+
         for (int i = 0; i < sol.second.size(); ++i)
         {
             string id = roomE[i].getRoomId();
@@ -608,15 +609,14 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             repetitions.insert(height);
         }
 
-        //3 3.9
+        map<double , double> mapLimitValues;
+
         double diff = 0.0 , lastValue = *repetitions.begin();
         for(auto &val : repetitions)
         {
             diff += (val - lastValue);
             lastValue = val;
         }
-
-        cout<<"Diff = "<<diff<<"\n";
         validSolutions.emplace_back(diff , sol.second);
     }
     sort(validSolutions.begin(), validSolutions.end());
@@ -627,7 +627,8 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         cout<<"Valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0; int index = 0;
-        for(auto &v : ans) {
+        for(auto &v : ans)
+        {
             sum += v;
             string id = roomE[index++].getRoomId();
             double height = roomsArea[id] / v;
