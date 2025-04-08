@@ -564,10 +564,13 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
     }
 
     roomSize = 0, minLimits = 0.0;
+
+    vector<RoomEntity> newRooms;
     for (int i = index; i < n; ++i) {
         if (minLimits + 1.5 > height)break;
         minLimits += roomE[i].getDimensionLimit().first;
         roomSize++;
+        newRooms.push_back(roomE[i]);
     }
     double curY = mainRoom.getY2();
 
@@ -576,7 +579,7 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
     for (int i = index; i < index + roomSize; ++i)
     {
         tempV.push_back(values[i]);
-        pair<double , vector<double>> res = findClosestSum(height , tempV , roomE);
+        pair<double , vector<double>> res = findClosestSum(height , tempV , newRooms);
         if (i == index + roomSize-1)
         {
             index = i+1;
