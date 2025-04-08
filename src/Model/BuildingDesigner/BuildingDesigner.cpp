@@ -613,7 +613,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             diff += val - lastValue;
             lastValue = val;
         }
-        validSolutions.emplace_back(lastValue , sol.second);
+        validSolutions.emplace_back(diff , sol.second);
     }
     sort(validSolutions.begin(), validSolutions.end());
 
