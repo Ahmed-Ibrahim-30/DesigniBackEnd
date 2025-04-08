@@ -591,6 +591,7 @@ vector<Room> BuildingDesigner::generateLivingLayout(vector<RoomEntity> &roomE, R
             {
                 string id = roomE[newIndex].getRoomId();
                 double curHeight = out[newIndex++];
+                cout<<"CUR = "<<curHeight<<"\n";
                 double curWidth = roomsArea[id] / curHeight;
 
                 Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
