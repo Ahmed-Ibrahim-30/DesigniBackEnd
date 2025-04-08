@@ -627,7 +627,8 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         cout<<"Valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0; int index = 0;
-        for (int i = 1; i < ans.size(); ++i) {
+        for (int i = 1; i < ans.size(); ++i)
+        {
             double width = ans[i];
             double prevWidth = ans[i-1];
             string id = roomE[i].getRoomId();
@@ -642,7 +643,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             }
             else if (height2 - height <= 0.5)
             {
-                ans[i] -= (height - height2);
+                ans[i] -= (height2 - height);
             }
         }
         for(auto &v : ans)
