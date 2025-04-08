@@ -608,13 +608,15 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             repetitions.insert(height);
         }
 
-        //3 5 7
+        //3 3.9
         double diff = 0.0 , lastValue = *repetitions.begin();
         for(auto &val : repetitions)
         {
             diff += (val - lastValue);
             lastValue = val;
         }
+
+        cout<<"Diff = "<<diff<<"\n";
         validSolutions.emplace_back(diff , sol.second);
     }
     sort(validSolutions.begin(), validSolutions.end());
