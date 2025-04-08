@@ -592,7 +592,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
     {
         if (sol.first < x)continue;
         set<double> repetitions;
-        int counter = 0 ; double sum = sol.first - sol.second.back() + 1.5;
+        double sum = sol.first - sol.second.back() + 1.5;
         if (sum >x) continue;
         for (int i = 0; i < sol.second.size(); ++i)
         {
@@ -608,6 +608,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
     if (!validSolutions.empty())
     {
         auto valid = validSolutions[0];
+        cout<<"valid = "<<valid.first<<"\n";
         vector<double> ans = valid.second;
         double sum = 0.0;
         for(auto &v : ans) sum+=v;
