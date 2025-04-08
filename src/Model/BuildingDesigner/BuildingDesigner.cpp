@@ -603,7 +603,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         }
         validSolutions.emplace_back(repetitions.size() , sol.second);
     }
-    sort(validSolutions.begin(), validSolutions.end() , greater<>());
+    sort(validSolutions.begin(), validSolutions.end());
 
     if (!validSolutions.empty())
     {
