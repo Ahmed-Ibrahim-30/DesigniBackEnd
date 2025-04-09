@@ -122,8 +122,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         vector<string> zone2 {"Dining", "Kitchen", "GBath", "Family", "Office"};
 
         vector<pair<string , string>> conn {
-                {"Bedroom1", "Bedroom2"},
-                {"Bath1", "Bedroom2"},
+                {"Bedroom1", "Bedroom5"},
+                {"Bath1", "Bedroom1"},
                 {"Bath1", "Bath2"},
                 {"Bath3", "Bath2"},
                 {"Dining", "Bedroom5"},
