@@ -501,8 +501,23 @@ vector<Room> BuildingDesigner::generateCorridorLayout(vector<RoomEntity> &roomE,
 
     Room rightRoom (roomE[index].getRoomId() , corridor.getX2() , corridor.getY2() - preferHeight , corridor.getX2() + rightRoomWidth , corridor.getY2());
 
-
     ans.push_back(rightRoom);
+
+    int m = ans.size();
+
+    lastRoomBottom = ans[m-2];
+
+    double diff = abs(ans[m-2].getX2() - ans[m-1].getX2());
+
+    //reposition again last Room Bottom and Right Bottom
+    if (ans[m-2].getX2() > ans[m-1].getX2() && diff <= 0.5)
+    {
+        ans[m-1].setX2(ans[m-1].getX2() + diff);
+    }
+    else if (ans[m-1].getX2() > ans[m-2].getX2() && diff <= 0.5)
+    {
+        ans[m-2].setX2(ans[m-2].getX2() + diff);
+    }
 
     return ans;
 }
@@ -686,7 +701,6 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             }
             else if (height2 > height && diff <= 0.5)
             {
-                cout<<"Diff = "<<diff<<"\n";
                 ans[i] -= diff;
             }
         }
