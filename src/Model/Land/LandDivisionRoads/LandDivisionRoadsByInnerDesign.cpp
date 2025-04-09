@@ -132,3 +132,8 @@ void LandDivisionRoadsByInnerDesign::divideLand(const Polygon1 &innerHome1 , vec
     }
 }
 
+LandDivisionRoadsByInnerDesign::LandDivisionRoadsByInnerDesign(double divisionArea, double externalRoad,
+                                                               double centralRoad, double circularStreet,
+                                                               double landDepth, double streetCut) : LandDivisionRoads(
+        divisionArea, externalRoad, centralRoad, circularStreet, landDepth, streetCut) {}
+

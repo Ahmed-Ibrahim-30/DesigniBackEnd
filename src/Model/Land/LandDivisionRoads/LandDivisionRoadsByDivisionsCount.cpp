@@ -95,6 +95,11 @@ void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB,
 
 }
 
+LandDivisionRoadsByDivisionsCount::LandDivisionRoadsByDivisionsCount(double divisionArea, double externalRoad,
+                                                                     double centralRoad, double circularStreet,
+                                                                     double landDepth, double streetCut)
+        : LandDivisionRoads(divisionArea, externalRoad, centralRoad, circularStreet, landDepth, streetCut) {}
+
 
 
 

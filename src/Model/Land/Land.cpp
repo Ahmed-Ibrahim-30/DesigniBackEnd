@@ -7,35 +7,16 @@
 Land::Land(const Polygon1 &land) : land(land) {
 
     landNetwork = new LandNetworkBySpacing();
+}
 
-
-
-    vector<Point>pnt1 = {
-        {418.8, 20},
-        {418.8, 602.5},
-        {492, 749},
-        {537.5, 726.2},
-        {537.5, 20},
-    };
-
-    vector<Point>pnt2 = {
-        {418.8, 20},
-        {418.8, 602.5},
-        {339.6, 444.1},
-        {339.6, 20},
-    };
-
-    Polygon1 p1(pnt1) , p2(pnt2);
-
-    vector<Polygon1> subLands = {p1 , p2};
-
-    // vector<Polygon1> lands = landNetwork->buildLandNetwork(land , subLands);
-
+Land::Land(const Polygon1 &land, double divisionArea, double externalRoad, double centralRoad, double circularStreet,
+           double landDepth, double streetCut) {
+    landNetwork = new LandNetworkBySpacing();
 }
 
 vector<Polygon1> Land::SplitLand(double minSubArea, LandDivisionSortingStrategy  landDivisionStrategy)
 {
-    landDivision = new LandDivisionBasedOnLandArea();
+    landDivision = new LandDivisionBasedOnLandArea(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
 
     vector<vector<Polygon1>>pols = landDivision->divideLand(land , minSubArea , landDivisionStrategy);
@@ -47,7 +28,7 @@ vector<Polygon1> Land::SplitLand(double minSubArea, LandDivisionSortingStrategy 
 
 vector<Polygon1> Land::SplitLand(const Design &design,LandDivisionSortingStrategy  landDivisionStrategy)
 {
-    landDivision = new LandDivisionBasedOnInnerDesign();
+    landDivision = new LandDivisionBasedOnInnerDesign(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
     Design newDesign = design;
     // newDesign.scaleDesign(100);
@@ -69,7 +50,7 @@ vector<Polygon1> Land::SplitLand(const Design &design,LandDivisionSortingStrateg
 
 vector<Polygon1> Land::SplitLand(Polygon1 &innerHome,LandDivisionSortingStrategy  landDivisionStrategy)
 {
-    landDivision = new LandDivisionBasedOnInnerDesign();
+    landDivision = new LandDivisionBasedOnInnerDesign(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
     vector<vector<Polygon1>>pols = landDivision->divideLand(land , innerHome , landDivisionStrategy);
 
@@ -84,9 +65,9 @@ vector<Polygon1> Land::SplitLand(Polygon1 &innerHome,LandDivisionSortingStrategy
 }
 
 vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivisionSortingStrategy  landDivisionStrategy) {
-    landDivision = new LandDivisionBasedOnSidesConvergence();
+    landDivision = new LandDivisionBasedOnSidesConvergence(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
-    landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
+    landDivisionRoads = new LandDivisionRoadsByDivisionsCount(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
     vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratioA , ratioB , divisions , landDivisionStrategy);
 
@@ -94,7 +75,7 @@ vector<Polygon1> Land::SplitLand(int divisions, int ratioA, int ratioB,LandDivis
     return pols[0];
 }
 vector<Polygon1> Land::SplitLand(const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy) {
-    landDivision = new LandDivisionBasedOnRatios();
+    landDivision = new LandDivisionBasedOnRatios(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
     vector<vector<Polygon1>> pols = landDivision->divideLand(land , ratios , landDivisionStrategy);
 
@@ -104,7 +85,7 @@ vector<Polygon1> Land::SplitLand(const vector<double> &ratios,LandDivisionSortin
 
 vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubArea,LandDivisionSortingStrategy  landDivisionStrategy)
 {
-    landDivision = new LandDivisionBasedOnLandArea();
+    landDivision = new LandDivisionBasedOnLandArea(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
     vector<vector<Polygon1>>pols = landDivision->divideLands(curPolygons , minSubArea , landDivisionStrategy);
 
@@ -116,7 +97,7 @@ vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, double minSubAr
 }
 
 vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, const Design &design,LandDivisionSortingStrategy  landDivisionStrategy) {
-    landDivision = new LandDivisionBasedOnInnerDesign();
+    landDivision = new LandDivisionBasedOnInnerDesign(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
     Design newDesign = design;
     // newDesign.scaleDesign(100);
     Polygon1 innerHome (DesignOutlines::getRoofPoints(newDesign));
@@ -136,7 +117,7 @@ vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, const Design &d
 }
 
 vector<Polygon1> Land::SplitLands(vector<Polygon1> &curPolygons, int divisions, int ratioA, int ratioB,LandDivisionSortingStrategy  landDivisionStrategy) {
-    landDivision = new LandDivisionBasedOnSidesConvergence();
+    landDivision = new LandDivisionBasedOnSidesConvergence(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
 
     vector<vector<Polygon1>> pols = landDivision->divideLands(curPolygons , ratioA , ratioB , divisions, landDivisionStrategy);
 
@@ -315,5 +296,7 @@ map<int , map<Point , bool>> Land::storePointsShared(const vector<Polygon1> &pol
 
     return isPointShared;
 }
+
+
 
 

@@ -128,5 +128,9 @@ void LandDivisionBasedOnLandArea::divideLand(double area , vector<Polygon1> &pol
     }
 }
 
+LandDivisionBasedOnLandArea::LandDivisionBasedOnLandArea(double divisionArea, double externalRoad, double centralRoad,
+                                                         double circularStreet, double landDepth, double streetCut)
+        : LandDivision(divisionArea, externalRoad, centralRoad, circularStreet, landDepth, streetCut) {}
+
 
 

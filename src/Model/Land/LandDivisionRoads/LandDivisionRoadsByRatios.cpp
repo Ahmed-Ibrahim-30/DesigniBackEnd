@@ -384,3 +384,7 @@ double LandDivisionRoadsByRatios::getMaxValueForLine(const Line &line, double in
     }
     return ans;
 }
+
+LandDivisionRoadsByRatios::LandDivisionRoadsByRatios(double divisionArea, double externalRoad, double centralRoad,
+                                                     double circularStreet, double landDepth, double streetCut)
+        : LandDivisionRoads(divisionArea, externalRoad, centralRoad, circularStreet, landDepth, streetCut) {}

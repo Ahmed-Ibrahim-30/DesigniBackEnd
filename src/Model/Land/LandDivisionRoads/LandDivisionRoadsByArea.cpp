@@ -119,3 +119,7 @@ void LandDivisionRoadsByArea::divideLand(double area , vector<Polygon1> &pols, v
     }
 }
 
+LandDivisionRoadsByArea::LandDivisionRoadsByArea(double divisionArea, double externalRoad, double centralRoad,
+                                                 double circularStreet, double landDepth, double streetCut)
+        : LandDivisionRoads(divisionArea, externalRoad, centralRoad, circularStreet, landDepth, streetCut) {}
+

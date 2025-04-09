@@ -15,6 +15,14 @@
 
 class LandDivisionRoads{
 protected:
+
+    double divisionArea = 30000;
+    double externalRoad = 20;
+    double centralRoad = 20;
+    double circularStreet = 5;
+    double landDepth = 20;
+    double streetCut = 5; // for circular Streets
+
     Point getIntersectionPoint(const Point &p1, double slope, const Line &line);
     Point getIntersectionPoint(const Line& line1, const Line& line2, const Point& pointOnLine1);
 
@@ -41,6 +49,10 @@ public:
      * @return
      */
     Polygon1 getOuterLand(Polygon1 &mainLand);
+
+    LandDivisionRoads(double divisionArea, double externalRoad, double centralRoad, double circularStreet,
+                      double landDepth, double streetCut);
+
     /**
      * Split Land with Roads Based on number of Divisions
      * @param land

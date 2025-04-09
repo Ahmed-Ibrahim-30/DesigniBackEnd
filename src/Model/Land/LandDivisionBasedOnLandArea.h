@@ -15,6 +15,9 @@ private:
 public:
     vector<vector<Polygon1>> divideLands(vector<Polygon1> &lands, double area,LandDivisionSortingStrategy  landDivisionStrategy ) override;
 
+    LandDivisionBasedOnLandArea(double divisionArea, double externalRoad, double centralRoad, double circularStreet,
+                                double landDepth, double streetCut);
+
     vector<vector<Polygon1>> divideLand(const Polygon1 &land ,double area,LandDivisionSortingStrategy  landDivisionStrategy) override;
 
 };

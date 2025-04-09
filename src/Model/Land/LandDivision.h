@@ -18,12 +18,24 @@
  */
 class LandDivision {
 protected:
+
+    double divisionArea = 30000;
+    double externalRoad = 20;
+    double centralRoad = 20;
+    double circularStreet = 5;
+    double landDepth = 20;
+    double streetCut = 5; // for circular Streets
+
     Point getIntersectionPoint(const Point &p1, double slope, const Line &line);
     Point getIntersectionPoint(const Line& line1, const Line& line2, const Point& pointOnLine1);
 
     vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1);
 
 public:
+
+    LandDivision(double divisionArea, double externalRoad, double centralRoad, double circularStreet, double landDepth,
+                 double streetCut);
+
     /**
      * Split Land Based on number of Divisions
      * @param land

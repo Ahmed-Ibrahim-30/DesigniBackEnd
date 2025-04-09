@@ -278,12 +278,12 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             return crow::response(400, "Invalid JSON format");
         }
 
-        double divisionArea = 0.0;
-        double externalRoad = 0.0;
-        double centralRoad = 0.0;
-        double circularStreet = 0.0;
-        double landDepth = 0.0;
-        double streetCut = 0.0; // for circular Streets
+        double divisionArea = jsonData["dimensions"]["divisionArea"].d();
+        double externalRoad = jsonData["dimensions"]["externalRoad"].d();
+        double centralRoad = jsonData["dimensions"]["centralRoad"].d();
+        double circularStreet = jsonData["dimensions"]["circularStreet"].d();
+        double landDepth = jsonData["dimensions"]["landDepth"].d();
+        double streetCut = jsonData["dimensions"]["streetCut"].d(); // for circular Streets
 
 
         crow::json::wvalue response;
@@ -304,7 +304,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         vector<Polygon1> ans;
         vector<Polygon1> streets;
         LandDivisionRoads * landDivisionRoads;
-        Land land(polygon1);
+        Land land(polygon1 , divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
         auto oldDesign = jsonData.count("design")? jsonData["design"] : jsonData;
 
         Design design1 ;
@@ -402,7 +402,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
 
-            landDivisionRoads = new LandDivisionRoadsByInnerDesign();
+            landDivisionRoads = new LandDivisionRoadsByInnerDesign(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             Polygon1 innerHome (DesignOutlines::getRoofPoints(design1));
             vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , innerHome , static_cast<LandDivisionSortingStrategy>(strategy) );
             if (pols.empty()) streets = land.buildRoads(ans);
@@ -503,7 +503,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             // GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             //  GreenAreaSelector *greenSelector = new ClusteredGreenSelector();
 
-            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
+            landDivisionRoads = new LandDivisionRoadsByDivisionsCount(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
             if (pols.empty()) streets = land.buildRoads(ans);
             else streets = pols[0];
@@ -523,7 +523,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             landSlots += greenAreasCount;
             ans = land.SplitLand(landSlots , 1 , 1 , static_cast<LandDivisionSortingStrategy>(strategy));
 
-            landDivisionRoads = new LandDivisionRoadsByDivisionsCount();
+            landDivisionRoads = new LandDivisionRoadsByDivisionsCount(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , 1 , 1 , landSlots , static_cast<LandDivisionSortingStrategy>(strategy) );
             if (pols.empty()) streets = land.buildRoads(ans);
             else  streets = pols[0];
@@ -545,7 +545,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
-            landDivisionRoads = new LandDivisionRoadsByArea();
+            landDivisionRoads = new LandDivisionRoadsByArea(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , homeArea , static_cast<LandDivisionSortingStrategy>(strategy) );
             if (pols.empty()) streets = land.buildRoads(ans);
             else  streets = pols[0];
@@ -559,7 +559,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
-            landDivisionRoads = new LandDivisionRoadsByArea();
+            landDivisionRoads = new LandDivisionRoadsByArea(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , homeArea , static_cast<LandDivisionSortingStrategy>(strategy) );
             if (pols.empty()) streets = land.buildRoads(ans);
             else  streets = pols[0];
@@ -574,7 +574,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             greenSelector->select(polygon1 , ans , percGreenArea/100 , 0);
 
-            landDivisionRoads = new LandDivisionRoadsByInnerDesign();
+            landDivisionRoads = new LandDivisionRoadsByInnerDesign(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             Polygon1 innerHome (DesignOutlines::getRoofPoints(design1));
             vector<vector<Polygon1>> pols = landDivisionRoads->divideLand(polygon1 , innerHome , static_cast<LandDivisionSortingStrategy>(strategy) );
             if (pols.empty()) streets = land.buildRoads(ans);
@@ -594,7 +594,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
 
             if(landSlots > 0)ans = land.SplitLand(ratios  , static_cast<LandDivisionSortingStrategy>(strategy));
-            else ans = land.SplitLand(30000 , static_cast<LandDivisionSortingStrategy>(strategy)) ;
+            else ans = land.SplitLand(divisionArea , static_cast<LandDivisionSortingStrategy>(strategy)) ;
             GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
@@ -606,13 +606,13 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             if(landSlots > 0)
             {
-                landDivisionRoads = new LandDivisionRoadsByRatios();
+                landDivisionRoads = new LandDivisionRoadsByRatios(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
                 pols = landDivisionRoads->divideLand(polygon1 , ratios , static_cast<LandDivisionSortingStrategy>(strategy) );
             }
             else
             {
-                landDivisionRoads = new LandDivisionRoadsByArea();
-                pols =landDivisionRoads->divideLand(polygon1 , 30000 , static_cast<LandDivisionSortingStrategy>(strategy) );
+                landDivisionRoads = new LandDivisionRoadsByArea(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
+                pols =landDivisionRoads->divideLand(polygon1 , divisionArea , static_cast<LandDivisionSortingStrategy>(strategy) );
             }
 
 
@@ -627,7 +627,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             int landSlots = (int)ratios.size();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
 
-            ans = land.SplitLand(30000 , static_cast<LandDivisionSortingStrategy>(strategy)) ;
+            ans = land.SplitLand(divisionArea , static_cast<LandDivisionSortingStrategy>(strategy)) ;
             GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
             greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
 
@@ -636,8 +636,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             cout<<"landSlots = "<<landSlots<<"\n";
 
-            landDivisionRoads = new LandDivisionRoadsByArea();
-            pols =landDivisionRoads->divideLand(polygon1 , 30000 , static_cast<LandDivisionSortingStrategy>(strategy) );
+            landDivisionRoads = new LandDivisionRoadsByArea(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
+            pols =landDivisionRoads->divideLand(polygon1 , divisionArea , static_cast<LandDivisionSortingStrategy>(strategy) );
 
 
             if (pols.empty()) streets = land.buildRoads(ans);

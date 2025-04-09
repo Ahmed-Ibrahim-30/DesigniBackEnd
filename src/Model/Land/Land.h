@@ -43,12 +43,26 @@ private:
      * Pointer to Land Network to create Roads between SubLands
      */
     LandNetwork * landNetwork;
+
+    double divisionArea;
+    double externalRoad;
+    double centralRoad;
+    double circularStreet;
+    double landDepth;
+    double streetCut;
 public:
     /**
      * Parameterized Constructor
      * @param land
      */
     explicit Land(const Polygon1 &land);
+
+    /**
+     * Parameterized Constructor
+     * @param land
+     */
+    explicit Land(const Polygon1 &land,double divisionArea, double externalRoad, double centralRoad, double circularStreet, double landDepth,
+                  double streetCut);
 
     /**
      * Parameterized Constructor

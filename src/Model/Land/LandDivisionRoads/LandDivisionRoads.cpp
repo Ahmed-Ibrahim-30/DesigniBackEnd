@@ -522,3 +522,10 @@ Polygon1 LandDivisionRoads::getOuterLand(Polygon1 &mainLand)
 {
     return buildOutsideRoads(mainLand);
 }
+
+LandDivisionRoads::LandDivisionRoads(double divisionArea, double externalRoad, double centralRoad,
+                                     double circularStreet, double landDepth, double streetCut) : divisionArea(
+        divisionArea), externalRoad(externalRoad), centralRoad(centralRoad), circularStreet(circularStreet),
+                                                                                                  landDepth(landDepth),
+                                                                                                  streetCut(
+                                                                                                          streetCut) {}

@@ -253,5 +253,11 @@ vector<pair<Polygon1 , Polygon1>> LandDivision::dividePolygons(Polygon1 polygon1
     return ans2;
 }
 
+LandDivision::LandDivision(double divisionArea, double externalRoad, double centralRoad, double circularStreet,
+                           double landDepth, double streetCut) : divisionArea(divisionArea), externalRoad(externalRoad),
+                                                                 centralRoad(centralRoad),
+                                                                 circularStreet(circularStreet), landDepth(landDepth),
+                                                                 streetCut(streetCut) {}
+
 
 
