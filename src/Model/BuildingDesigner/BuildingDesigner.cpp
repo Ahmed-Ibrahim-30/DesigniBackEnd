@@ -4,6 +4,7 @@
 
 #include "BuildingDesigner.h"
 #include "queue"
+#include "src/Model/DesignCompactnessRefactor.h"
 
 BuildingDesigner::BuildingDesigner(const vector<string> &zone1Ids, const vector<string> &zone2Ids, const vector<pair<string, string>> &_connections, map<string, double> &_roomsAreas)
 {
@@ -123,10 +124,14 @@ Design BuildingDesigner::generateDesign()
     rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
 
     Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
+    DesignRefactor *designCompactnessRefactor = new DesignCompactnessRefactor();
+    designCompactnessRefactor->refactorDesign(design);
     design.scaleDesign(105);
 
 //    vector<Room> newRooms;
 //    Design design("" , newRooms , 1 , 0 , 28 , 0 ,36);
+
+
 
     return design;
 }

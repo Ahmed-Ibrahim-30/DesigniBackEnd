@@ -27,7 +27,7 @@ private:
     pair<int , int> getTwoRoomsIndexRelatedToEmptyLine(Design &shape , double x1 , double y1 , double x2 , double y2);
 
     /**
-     * Is Room is sutiable to change X OR Y dimesnions
+     * Is Room is suitable to change X OR Y dimensions
      * @param shape
      * @param room
      * @param xRefactor
