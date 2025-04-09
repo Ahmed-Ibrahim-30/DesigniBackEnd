@@ -16,6 +16,13 @@ private:
 
     double circleStreetWidth = 2.5;
 
+    double divisionArea;
+    double externalRoad;
+    double centralRoad;
+    double circularStreet;
+    double landDepth;
+    double streetCut;
+
     /**
      * Main Land
      */
@@ -87,7 +94,8 @@ private:
      */
     double getAppropriateStep(int divisionsCount , const Line &centerLine,const Line &centerLineInner , Polygon1 &innerPolygon ,double startSearch = 40, bool isTop = true);
 public:
-    void drawStreets(Polygon1 &polygon1);
+    void drawStreets(Polygon1 &polygon1 ,double divisionArea, double externalRoad, double centralRoad, double circularStreet, double landDepth,
+                     double streetCut);
 
     [[nodiscard]] const vector<Line> &getCenterLines() const;
 

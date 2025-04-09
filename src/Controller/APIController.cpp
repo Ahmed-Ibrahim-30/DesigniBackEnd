@@ -687,11 +687,11 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         PolygonHelper::renamePolygonsIds(polygon1 , ans);
 
 
-        Polygon1 outerLand = PolygonHelper::getScalingPolygon(polygon1 , -20);
+        Polygon1 outerLand = PolygonHelper::getScalingPolygon(polygon1 , -externalRoad);
 
         if (outerLand.getArea() < polygon1.getArea())
         {
-            outerLand = PolygonHelper::getScalingPolygon(polygon1 , 20);
+            outerLand = PolygonHelper::getScalingPolygon(polygon1 , externalRoad);
         }
 
 
@@ -730,7 +730,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             if(flag)continue;
 
             DrawStreet drawStreet;
-            drawStreet.drawStreets(pol);
+            drawStreet.drawStreets(pol, divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             vector<Line> centerLines = drawStreet.getCenterLines();
             vector<CityGrid> cities = drawStreet.getCities();
 
@@ -844,6 +844,15 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
             return crow::response(400, "Invalid JSON format");
         }
         crow::json::wvalue response;
+
+        double divisionArea = jsonData["dimensions"]["divisionArea"].d();
+        double externalRoad = jsonData["dimensions"]["externalRoad"].d();
+        double centralRoad = jsonData["dimensions"]["centralRoad"].d();
+        double circularStreet = jsonData["dimensions"]["circularStreet"].d();
+        double landDepth = jsonData["dimensions"]["landDepth"].d();
+        double streetCut = jsonData["dimensions"]["streetCut"].d(); // for circular Streets
+
+
         int strategy = (int)jsonData["strategy"].i();
         auto polygon = jsonData["polygon"];
         vector<Point> points;
@@ -859,7 +868,7 @@ void APIController::landDivisionRoutesStreets(SimpleApp &app)
         cout<<"Area = "<<polygon1.getArea() <<" \n";
 
         DrawStreet drawStreet;
-        drawStreet.drawStreets(polygon1);
+        drawStreet.drawStreets(polygon1, divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
         vector<Line> centerLines = drawStreet.getCenterLines();
         vector<CityGrid> cities = drawStreet.getCities();
 

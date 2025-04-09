@@ -7,8 +7,18 @@
 #include "src/Model/DesignGeometryManager.h"
 #include "Land.h"
 
-void DrawStreet::drawStreets(Polygon1 &polygon1)
+void DrawStreet::drawStreets(Polygon1 &polygon1,double _divisionArea, double _externalRoad, double _centralRoad, double _circularStreet, double _landDepth,
+                             double _streetCut)
 {
+    divisionArea = _divisionArea;
+    externalRoad = _externalRoad;
+    centralRoad = _centralRoad;
+    circularStreet = _circularStreet;
+    landDepth = _landDepth;
+    streetCut = _streetCut;
+
+    circleStreetWidth = circularStreet/2;
+
 //    if (!(polygon1.getId() == "1"))return;
 
     mainLand = polygon1;
@@ -17,7 +27,7 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     /**
      * Get Center Lines for main Polygons
      */
-    centerLines = buildCenterLines(polygon1 , 10 , 20 , 40);
+    centerLines = buildCenterLines(polygon1 , centralRoad/2 , 20 , 40);
 
     vector<Line> centerLinesTop = {centerLines[0]};
     vector<Line> centerLinesBottom = {centerLines[1]};
@@ -25,11 +35,11 @@ void DrawStreet::drawStreets(Polygon1 &polygon1)
     /**
      * Get INNER POLYGON
      */
-    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -20);
+    Polygon1 innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , -landDepth);
 
     if (innerPolygon.getArea() > polygon1.getArea())
     {
-        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , 20);
+        innerPolygon = PolygonHelper::getScalingPolygon(polygon1 , landDepth);
     }
 
     /**

@@ -10,7 +10,10 @@ Land::Land(const Polygon1 &land) : land(land) {
 }
 
 Land::Land(const Polygon1 &land, double divisionArea, double externalRoad, double centralRoad, double circularStreet,
-           double landDepth, double streetCut) {
+           double landDepth, double streetCut) : divisionArea(divisionArea), externalRoad(externalRoad),
+                                                 centralRoad(centralRoad),
+                                                 circularStreet(circularStreet), landDepth(landDepth),
+                                                 streetCut(streetCut){
     landNetwork = new LandNetworkBySpacing();
 }
 
