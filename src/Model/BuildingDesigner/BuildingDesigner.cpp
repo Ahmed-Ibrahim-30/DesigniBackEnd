@@ -561,7 +561,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
 
             if (height > height2 && diff <= 0.5)
             {
-                ans[i] += diff;
+                ans[i]  = prevWidth * (roomsArea[id] / roomsArea[prevId]);
             }
             else if (height2 > height && diff <= 0.5)
             {
