@@ -684,7 +684,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             }
             else if (height2 > height && height2 - height <= 0.5)
             {
-                ans[i] -= (height2 - height);
+//                ans[i] -= (height2 - height);
             }
         }
         for(auto &v : ans)
