@@ -557,6 +557,8 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
 
             double diff = MathUtils::roundingToDecimal(abs(height2 - height));
 
+            cout<<"ID1 = "<<id <<" Prev = "<<prevId<<" Diff = "<<diff<<"\n";
+
             if (height > height2 && diff <= 0.5)
             {
                 ans[i] += diff;
