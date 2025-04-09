@@ -684,6 +684,7 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             }
             else if (height2 > height && height2 - height <= 0.5)
             {
+                cout<<"Diff = "<<height2-height<<"\n";
 //                ans[i] -= (height2 - height);
             }
         }
