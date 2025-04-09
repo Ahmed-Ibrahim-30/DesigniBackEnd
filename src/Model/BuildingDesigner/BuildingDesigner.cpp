@@ -678,14 +678,16 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
             double height = roomsArea[id] / width;
             double height2 = roomsArea[prevId] / prevWidth;
 
-            if (height > height2 && height - height2 <= 0.5)
+            double diff = MathUtils::roundingToDecimal(abs(height2 - height));
+
+            if (height > height2 && diff <= 0.5)
             {
-                ans[i] += (height - height2);
+                ans[i] += diff;
             }
-            else if (height2 > height && height2 - height <= 0.5)
+            else if (height2 > height && diff <= 0.5)
             {
-                cout<<"Diff = "<<height2-height<<"\n";
-//                ans[i] -= (height2 - height);
+                cout<<"Diff = "<<diff<<"\n";
+                ans[i] -= diff;
             }
         }
         for(auto &v : ans)
