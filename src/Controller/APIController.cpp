@@ -118,16 +118,14 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         }
         design1.scaleDesign(105);
 
-        vector<string> zone1 {"Bedroom1", "Bedroom2", "Bedroom3", "Bedroom4", "Bedroom5" , "Bath1" , "Bath2" , "Bath3"};
+        vector<string> zone1 {"Bedroom1", "Bedroom2", "Bedroom3", "Bedroom4" , "Bath1" , "Bath2" };
         vector<string> zone2 {"Dining", "Kitchen", "GBath", "Family", "Office"};
 
         vector<pair<string , string>> conn {
                 {"Bedroom1", "Bedroom2"},
-                {"Bath1", "Bedroom5"},
                 {"Bath1", "Bedroom2"},
-                {"Bedroom1", "Bedroom4"},
-                {"Bedroom3", "Bedroom4"},
-                {"Dining", "Bedroom5"},
+                {"Bath2", "Bedroom3"},
+                {"Dining", "Bedroom4"},
                 {"Kitchen", "GBath"},
                 {"Family", "Office"},
         };
@@ -145,10 +143,10 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         areas["Bedroom2"] = 20;
         areas["Bedroom3"] = 20;
         areas["Bedroom4"] = 20;
-        areas["Bedroom5"] = 20;
+//        areas["Bedroom5"] = 20;
         areas["Bath1"] = 6;
         areas["Bath2"] = 6;
-        areas["Bath3"] = 6;
+//        areas["Bath3"] = 6;
 
 
 //        vector<string> zone1 {"11", "12", "13", "14", "15"};
