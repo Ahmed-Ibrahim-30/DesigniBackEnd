@@ -138,6 +138,10 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
 
     ans.push_back(leftRoom);
 
+    if (index == n)
+    {
+        return ans;
+    }
     string rightRoomID = roomE.back().getRoomId();
     minLimit = dimensionsLimits[rightRoomID].first;
     maxLimit = dimensionsLimits[rightRoomID].second;
