@@ -114,7 +114,7 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
         string id = roomE[index].getRoomId();
         double curWidth = out[j];
         double curHeight = roomsArea[id] / curWidth;
-
+        cout<<"ID = "<<id <<" Cur Width = "<<curWidth<<"\n";
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
         curX = newRoom.getX2();
         if (j==0) firstRoomBottom = newRoom;
