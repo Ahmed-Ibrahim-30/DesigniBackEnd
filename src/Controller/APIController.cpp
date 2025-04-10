@@ -225,7 +225,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
 
 
-        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
+//        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
+        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorAboveLiving(zone1 , zone2 , conn , areas);
         Design resD = buildingDesigner->generateDesign();
         design1 = resD;
 
