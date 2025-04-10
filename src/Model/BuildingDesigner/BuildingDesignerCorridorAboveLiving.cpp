@@ -296,7 +296,7 @@ Design BuildingDesignerCorridorAboveLiving::generateDesign()
 
     zone1.pop_back();
 
-    RoomEntity living ("Living" , {} , {4.8 , 7.3});
+    RoomEntity living ("Living" , {backRoom.getRoomId()} , {4.8 , 7.3});
     zone1.push_back(living);
     zone1.push_back(backRoom);
 
@@ -311,7 +311,7 @@ Design BuildingDesignerCorridorAboveLiving::generateDesign()
     Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
     Room Living ("Living" , -6 , -2.5 , 0 , 4.5);
-    rooms.push_back(Living);
+//    rooms.push_back(Living);
 
 //    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
 //    rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
