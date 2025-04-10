@@ -7,6 +7,20 @@
 #include "BuildingDesigner.h"
 
 class BuildingDesignerCorridorAboveLiving :public BuildingDesigner{
+public:
+    BuildingDesignerCorridorAboveLiving(const vector<string> &zone1Ids, const vector<string> &zone2Ids,
+                                         const vector<pair<string, string>> &connections,
+                                         map<string, double> &roomsAreas);
+
+    BuildingDesignerCorridorAboveLiving(const vector<string> &zone1Ids, const vector<string> &zone2Ids,
+                                         const vector<pair<string, string>> &connections,
+                                         map<string, pair<double, double>> &dimensionsLimits);
+
+    Design generateDesign() override;
+
+protected:
+    vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom) override;
+    vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom) override;
 
 };
 
