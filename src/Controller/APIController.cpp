@@ -262,7 +262,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
                 room3DPrinting
                 );
 
-        BuildingDesigner *buildingDesigner2 = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);;
+        BuildingDesigner *buildingDesigner2 = new BuildingDesignerCorridorAboveLiving(zone1 , zone2 , conn , areas);;
         Design resD2 = buildingDesigner2->generateDesign();
         crow::response res (200 , response);
         res.add_header("Access-Control-Allow-Origin", "*");
