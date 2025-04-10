@@ -8,7 +8,7 @@
 #include "src/Model/DesignGeometryManager.h"
 #include "RoomEntity.h"
 class BuildingDesigner{
-private:
+protected:
     double corridorWidth = 10;
     double corridorHeight = 2;
 
@@ -29,10 +29,11 @@ private:
 
     void sortZoneRoomsDFS(RoomEntity &curRoom, vector<RoomEntity> &ans,set<string>&zonesIds, vector<RoomEntity> &zone,map<string, int> &mapRoomIndex);
 
-    vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE , Room &mainRoom);
-
     pair<double , vector<double>> findClosestSum(double x , const vector<vector<double>> &values, vector<RoomEntity> &roomE);
 
+    virtual vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE , Room &mainRoom) = 0;
+
+    virtual vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom) = 0;
 public:
     /**
      * Parametrized Constructor
@@ -47,9 +48,7 @@ public:
      * Generate Design
      * @return
      */
-    Design generateDesign();
-
-    vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom);
+    virtual Design generateDesign() = 0;
 };
 
 

@@ -1,6 +1,9 @@
 //
 // Created by ahmed Ibrahim on 11-Feb-25.
 //
+#include "src/Model/BuildingDesigner/BuildingDesignerCorridorBesideLiving.h"
+#include "src/Model/BuildingDesigner/BuildingDesignerCorridorAboveLiving.h"
+
 #include "src/Model/BuildingDesigner/BuildingDesigner.h"
 #include "APIController.h"
 #include "HomeDesignController.h"
@@ -222,8 +225,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 
 
 
-        BuildingDesigner buildingDesigner(zone1 , zone2 , conn , areas);
-        Design resD = buildingDesigner.generateDesign();
+        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
+        Design resD = buildingDesigner->generateDesign();
         design1 = resD;
 
         DesignToDoublyLines drawing(design1);
@@ -258,8 +261,8 @@ void APIController::templateRoutes(crow::SimpleApp &app)
                 room3DPrinting
                 );
 
-        BuildingDesigner buildingDesigner2(zone1 , zone2 , conn , areas);
-        Design resD2 = buildingDesigner2.generateDesign();
+        BuildingDesigner *buildingDesigner2 = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);;
+        Design resD2 = buildingDesigner2->generateDesign();
         crow::response res (200 , response);
         res.add_header("Access-Control-Allow-Origin", "*");
         res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
