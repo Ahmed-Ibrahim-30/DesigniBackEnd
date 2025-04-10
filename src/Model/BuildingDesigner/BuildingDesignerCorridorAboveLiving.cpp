@@ -91,7 +91,7 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
     tempV.clear();
     vector<RoomEntity> newRoomsE;
 
-    for (int i = index+1; i < n; ++i)
+    for (int i = index+1; i < n-1; ++i)
     {
         newRoomsE.push_back(roomE[i]);
         tempV.push_back(values[i]);
@@ -106,10 +106,7 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
     vector<double> out = res.second;
 
     reverse(out.begin(), out.end());
-    if (out.size() == otherSize && out.size()>1)
-    {
-        swap(out[out.size()-1] , out[out.size()-2]);
-    }
+
     index ++;
     Room firstRoomBottom ;
     for (int j = 0; j < out.size(); ++j)
@@ -147,11 +144,6 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
     Room leftRoom (leftRoomId , corridor.getX1()  - leftRoomWidth, corridor.getY1() , corridor.getX1() , corridor.getY1() + preferRoomHeight);
 
     ans.push_back(leftRoom);
-
-    if (index == n)
-    {
-        return ans;
-    }
     string rightRoomID = roomE.back().getRoomId();
     minLimit = dimensionsLimits[rightRoomID].first;
     maxLimit = dimensionsLimits[rightRoomID].second;
