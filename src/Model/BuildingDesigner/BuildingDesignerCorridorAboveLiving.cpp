@@ -274,7 +274,7 @@ Design BuildingDesignerCorridorAboveLiving::generateDesign()
 
     Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
-    Room Living = rooms[rooms.size()-2];
+    Room Living = rooms[rooms.size()-3];
 
     vector<Room> newRooms = generateLivingLayout(zone2 , Living);
     rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
