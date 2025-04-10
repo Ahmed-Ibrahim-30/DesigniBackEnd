@@ -114,7 +114,6 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
         string id = roomE[index].getRoomId();
         double curWidth = out[j];
         double curHeight = roomsArea[id] / curWidth;
-        cout<<"ID = "<<id <<" Cur Width = "<<curWidth<<"\n";
         Room newRoom(id , curX , corridor.getY2() , curX + curWidth , corridor.getY2() + curHeight);
         curX = newRoom.getX2();
         if (j==0) firstRoomBottom = newRoom;
@@ -130,18 +129,21 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
 
     double preferRoomWidth = corridor.getX1() - lastTopRoom.getX1();
 
-    if (preferRoomHeight < minLimit) preferRoomHeight = minLimit;
-    else if (preferRoomHeight > maxLimit) preferRoomHeight = maxLimit;
-
-    double leftRoomWidth = roomsArea[leftRoomId] / preferRoomHeight;
-
-    if (preferRoomHeight != firstRoomBottom.getY2() - corridor.getY1() && preferRoomWidth >= minLimit && preferRoomWidth<= maxLimit)
+    if (preferRoomHeight+0.5 >= minLimit && preferRoomHeight<= maxLimit+0.5)
     {
-        leftRoomWidth = preferRoomWidth;
-        preferRoomHeight = roomsArea[leftRoomId] / leftRoomWidth;
+        preferRoomWidth = roomsArea[leftRoomId] / preferRoomHeight;
+    }
+    else if (preferRoomWidth+0.5 >= minLimit && preferRoomWidth<= maxLimit+0.5)
+    {
+        preferRoomHeight = roomsArea[leftRoomId] / preferRoomWidth;
+    }
+    else
+    {
+        preferRoomHeight = minLimit + (maxLimit+minLimit)/2;
+        preferRoomWidth = roomsArea[leftRoomId] / preferRoomHeight;
     }
 
-    Room leftRoom (leftRoomId , corridor.getX1()  - leftRoomWidth, corridor.getY1() , corridor.getX1() , corridor.getY1() + preferRoomHeight);
+    Room leftRoom (leftRoomId , corridor.getX1()  - preferRoomWidth, corridor.getY1() , corridor.getX1() , corridor.getY1() + preferRoomHeight);
 
     ans.push_back(leftRoom);
     string rightRoomID = roomE.back().getRoomId();
