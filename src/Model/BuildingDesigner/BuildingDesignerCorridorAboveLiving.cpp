@@ -97,7 +97,13 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
         tempV.push_back(values[i]);
     }
 
+    int otherSize = n- index+1;
+
     pair<double , vector<double>> res = findClosestSum(width +1.5, tempV , newRoomsE);
+    if (res.second.size() == otherSize && res.second.size()>1)
+    {
+        swap(res.second[res.second.size()-1] , res.second[res.second.size()-2]);
+    }
     vector<double> out = res.second;
     reverse(out.begin(), out.end());
     index ++;
