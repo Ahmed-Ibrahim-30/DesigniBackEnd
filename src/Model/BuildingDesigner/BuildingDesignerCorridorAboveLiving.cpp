@@ -235,6 +235,23 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateLivingLayout(vector<Ro
         ans.push_back(newRoom);
 
         if (curX < mainRoom.getX1() + 1.5)break;
+
+        if (i== index)
+        {
+            int m = ans.size();
+
+            double diff = abs(ans[m-2].getY2() - ans[m-1].getY2());
+
+            //reposition again last Room Bottom and Right Bottom
+            if (ans[m-2].getY2() < ans[m-1].getY2() && diff <= 0.5)
+            {
+                ans[m-2].setY2(ans[m-1].getY2() + diff);
+            }
+            else if (ans[m-2].getY2() > ans[m-1].getY2()  && diff <= 0.5)
+            {
+                ans[m-1].setY2(ans[m-1].getY2() + diff);
+            }
+        }
     }
 
     return ans;
