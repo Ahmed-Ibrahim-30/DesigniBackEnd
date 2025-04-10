@@ -97,7 +97,7 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
         tempV.push_back(values[i]);
     }
 
-    int otherSize = n- index+1;
+    int otherSize = n- (index+1);
 
     cout<<"Other Size = "<<otherSize<<"\n";
 
