@@ -228,9 +228,9 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateLivingLayout(vector<Ro
     {
         string id = roomE[i].getRoomId();
         double curWidth = roomE[i].getDimensionLimit().first;
-        double curHeight = roomsArea[id] / curHeight;
+        double curHeight = roomsArea[id] / curWidth;
 
-        Room newRoom(id , curX - curWidth , mainRoom.getY2() , curX , mainRoom.getY2() + height);
+        Room newRoom(id , curX - curWidth , mainRoom.getY2() , curX , mainRoom.getY2() + curHeight);
         curX = newRoom.getX1();
         ans.push_back(newRoom);
 
