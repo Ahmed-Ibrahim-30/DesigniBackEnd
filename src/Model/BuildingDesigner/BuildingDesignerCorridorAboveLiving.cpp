@@ -313,8 +313,8 @@ Design BuildingDesignerCorridorAboveLiving::generateDesign()
     Room Living ("Living" , -6 , -2.5 , 0 , 4.5);
     rooms.push_back(Living);
 
-    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
-    rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
+//    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
+//    rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
 
     Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
