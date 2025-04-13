@@ -264,7 +264,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
                 );
 
         BuildingDesigner *buildingDesigner2 = new BuildingDesignerCorridorAboveLiving(zone1 , zone2 , conn , areas);;
-        Design resD2 = buildingDesigner2->generateDesign();
+        vector<Design> resD2 = buildingDesigner2->generateDesign();
         crow::response res (200 , response);
         res.add_header("Access-Control-Allow-Origin", "*");
         res.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
