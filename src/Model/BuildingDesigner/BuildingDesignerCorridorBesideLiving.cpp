@@ -358,7 +358,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
     /**
      * Third Design
      */
-    YChanged = Corridor.getY2() - Living.getY2() ;
+    YChanged = Corridor.getY1() - Living.getY2() ;
     cout<< "YChanged = "<<YChanged<<"\n";
     livingCore = Design ("Living Core" , newRooms);
     livingCore.shiftDesignY(YChanged);
