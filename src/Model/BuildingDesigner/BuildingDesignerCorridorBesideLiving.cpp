@@ -343,6 +343,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
     Design livingCore("Living Core" , newRooms);
     livingCore.shiftDesignY(YChanged);
     copyRooms = rooms;
+    copyRooms.pop_back();
     newRooms = livingCore.getRooms();
     copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
 
