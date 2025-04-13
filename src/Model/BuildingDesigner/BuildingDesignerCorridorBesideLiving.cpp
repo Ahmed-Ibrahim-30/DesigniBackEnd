@@ -332,14 +332,22 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
     rooms.push_back(Living);
 
     vector<Room> newRooms = generateLivingLayout(zone2 , Living);
-    rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
+    vector<Room> copyRooms = rooms;
+    copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
 
-    Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
+    Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
 
+    double YChanged = Corridor.getY1() - Living.getY1() ;
+    newRooms.push_back(Living);
+    Design livingCore("Living Core" , newRooms);
+    livingCore.shiftDesignY(YChanged);
+    copyRooms = rooms;
+    newRooms = livingCore.getRooms();
+    copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
 
-
-
+    design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+    design.scaleDesign(105);
 
     return {design};
 }
