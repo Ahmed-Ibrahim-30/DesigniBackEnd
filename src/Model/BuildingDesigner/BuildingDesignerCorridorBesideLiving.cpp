@@ -370,6 +370,6 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
     design.scaleDesign(105);
     designs.push_back(design);
 
-    return {design};
+    return designs;
 }
 
