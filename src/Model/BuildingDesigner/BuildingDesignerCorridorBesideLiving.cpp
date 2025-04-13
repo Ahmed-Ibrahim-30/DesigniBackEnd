@@ -297,11 +297,14 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         }
     }
 
+    ans.push_back(mainRoom);
     return ans;
 }
 
 vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 {
+
+    vector<Design> designs;
 
 //    cout<<"ZONE1 = "<<"\n";
 //    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
@@ -329,7 +332,6 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 
     double livingX = 6 , livingY = 7;
     Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
-    rooms.push_back(Living);
 
     vector<Room> newRooms = generateLivingLayout(zone2 , Living);
     vector<Room> copyRooms = rooms;
@@ -337,18 +339,35 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 
     Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
+    designs.push_back(design);
 
+    /**
+     * Second Design
+     */
     double YChanged = Corridor.getY1() - Living.getY1() ;
-    newRooms.push_back(Living);
     Design livingCore("Living Core" , newRooms);
     livingCore.shiftDesignY(YChanged);
     copyRooms = rooms;
-    copyRooms.pop_back();
     newRooms = livingCore.getRooms();
     copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
 
     design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
+    designs.push_back(design);
+
+    /**
+     * Third Design
+     */
+    YChanged = Corridor.getY2() - Living.getY2() ;
+    livingCore = Design ("Living Core" , newRooms);
+    livingCore.shiftDesignY(YChanged);
+    copyRooms = rooms;
+    newRooms = livingCore.getRooms();
+    copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
+
+    design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+    design.scaleDesign(105);
+    designs.push_back(design);
 
     return {design};
 }
