@@ -348,8 +348,8 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
     Design livingCore("Living Core" , newRooms);
     livingCore.shiftDesignY(YChanged);
     copyRooms = rooms;
-    newRooms = livingCore.getRooms();
-    copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
+    vector<Room> livingRooms = livingCore.getRooms();
+    copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
 
     design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
@@ -358,13 +358,13 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
     /**
      * Third Design
      */
-    YChanged = 2.5;//Corridor.getY1() - Living.getY2() ;
+    YChanged = Corridor.getY2() - Living.getY2() ;
     cout<< "YChanged = "<<YChanged<<"\n";
     livingCore = Design ("Living Core" , newRooms);
     livingCore.shiftDesignY(YChanged);
     copyRooms = rooms;
-    newRooms = livingCore.getRooms();
-    copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
+    livingRooms = livingCore.getRooms();
+    copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
 
     design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
