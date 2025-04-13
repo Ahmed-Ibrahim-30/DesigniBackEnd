@@ -257,7 +257,7 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateLivingLayout(vector<Ro
     return ans;
 }
 
-Design BuildingDesignerCorridorAboveLiving::generateDesign()
+vector<Design> BuildingDesignerCorridorAboveLiving::generateDesign()
 {
 
 //    cout<<"ZONE1 = "<<"\n";
@@ -299,6 +299,6 @@ Design BuildingDesignerCorridorAboveLiving::generateDesign()
     Design design("" , rooms , 1 , 0 , 28 , 0 ,36);
     design.scaleDesign(105);
 
-    return design;
+    return {design};
 }
 

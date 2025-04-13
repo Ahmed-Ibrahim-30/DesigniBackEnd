@@ -300,7 +300,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
     return ans;
 }
 
-Design BuildingDesignerCorridorBesideLiving::generateDesign()
+vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 {
 
 //    cout<<"ZONE1 = "<<"\n";
@@ -340,6 +340,6 @@ Design BuildingDesignerCorridorBesideLiving::generateDesign()
 
 
 
-    return design;
+    return {design};
 }
 

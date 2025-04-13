@@ -16,7 +16,7 @@ public:
                                          const vector<pair<string, string>> &connections,
                                          map<string, pair<double, double>> &dimensionsLimits);
 
-    Design generateDesign() override;
+    vector<Design> generateDesign() override;
 
 protected:
     vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom) override;

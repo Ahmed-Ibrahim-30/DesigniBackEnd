@@ -48,7 +48,7 @@ public:
      * Generate Design
      * @return
      */
-    virtual Design generateDesign() = 0;
+    virtual vector<Design> generateDesign() = 0;
 };
 
 
