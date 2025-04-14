@@ -304,20 +304,127 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
 vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 {
 
-    vector<Design> designs;
-
-//    cout<<"ZONE1 = "<<"\n";
-//    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
-//    cout<<"\n";
-//
-//    cout<<"ZONE2 = "<<"\n";
-//    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
-//    cout<<"\n";
+    vector<Design> designs = generateDiffDesign();
+    return designs;
 
     zone1 = sortZone(zone1);
     zone2 = sortZone(zone2);
 
     reverse(zone1.begin(), zone1.end());
+
+    cout<<"ZONE1 = "<<"\n";
+    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
+    cout<<"\n";
+
+    cout<<"ZONE2 = "<<"\n";
+    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
+    cout<<"\n";
+
+    Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
+    vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
+
+    double livingX = 6 , livingY = 7;
+    Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
+
+    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
+    vector<Room> copyRooms = rooms;
+    copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
+
+    Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+    design.scaleDesign(105);
+    designs.push_back(design);
+
+    /**
+     * Second Design
+     */
+    double YChanged = Corridor.getY1() - Living.getY1() ;
+    Design livingCore("Living Core" , newRooms);
+    livingCore.shiftDesignY(YChanged);
+    copyRooms = rooms;
+    vector<Room> livingRooms = livingCore.getRooms();
+    copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
+
+    design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+    design.scaleDesign(105);
+    designs.push_back(design);
+
+    /**
+     * Third Design
+     */
+    YChanged = Corridor.getY2() - Living.getY2() ;
+    cout<< "YChanged = "<<YChanged<<"\n";
+    livingCore = Design ("Living Core" , newRooms);
+    livingCore.shiftDesignY(YChanged);
+    copyRooms = rooms;
+    livingRooms = livingCore.getRooms();
+    copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
+
+    design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+    design.scaleDesign(105);
+    designs.push_back(design);
+
+    return designs;
+}
+
+vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
+
+    vector<Design> designs;
+
+    zone1 = sortZone(zone1);
+    zone2 = sortZone(zone2);
+
+    reverse(zone1.begin(), zone1.end());
+
+    int index1 = -1 , index2 = -1;
+
+    for (int i = 0; i < zone1.size()-1; ++i)
+    {
+        string curId = zone1[i].getRoomId();
+        string nextId = zone1[i+1].getRoomId();
+        string prevId = i==0 ? "": zone1[i-1].getRoomId();
+
+        if(connections[curId].count(nextId) || connections[curId].count(prevId))continue;
+
+        if (~index1)
+        {
+            index1 = i;
+            continue;
+        }
+
+        if (~index2)
+        {
+            index2 = i;
+            continue;
+        }
+    }
+
+    if (index1 != -1 && index2 != -1) swap(zone1[index1] , zone2[index2]);
+
+
+    index1 = -1 , index2 = -1;
+
+    for (int i = 0; i < zone2.size()-1; ++i)
+    {
+        string curId = zone2[i].getRoomId();
+        string nextId = zone2[i+1].getRoomId();
+        string prevId = i==0 ? "": zone2[i-1].getRoomId();
+
+        if(connections[curId].count(nextId) || connections[curId].count(prevId))continue;
+
+        if (~index1)
+        {
+            index1 = i;
+            continue;
+        }
+
+        if (~index2)
+        {
+            index2 = i;
+            continue;
+        }
+    }
+
+    if (index1 != -1 && index2 != -1) swap(zone2[index1] , zone2[index2]);
 
     cout<<"ZONE1 = "<<"\n";
     for(auto &room : zone1)cout<<room.getRoomId()<<" ";
