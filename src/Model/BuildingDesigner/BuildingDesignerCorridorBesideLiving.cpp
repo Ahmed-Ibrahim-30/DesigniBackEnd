@@ -246,38 +246,80 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         newRooms.push_back(roomE[i]);
     }
     double curY = mainRoom.getY2();
-
     tempV.clear();
 
-    for (int i = index; i < index + roomSize; ++i)
+    for (int i = index; i < n; ++i)
     {
-        string id = roomE[i].getRoomId();
-        double curHeight = roomE[i].getDimensionLimit().first;
-        double curWidth = roomsArea[id] / curHeight;
-
-        Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
-        curY = newRoom.getY1();
-        ans.push_back(newRoom);
-
-
-        if (i==index)
+        tempV.push_back(values[i]);
+        pair<double , vector<double>> res = findClosestSum(height , tempV , roomE);
+        if (res.first >= height)
         {
-            int m = ans.size();
-
-            double diff = abs(ans[m-2].getX1() - ans[m-1].getX1());
-
-            //reposition again last Room Bottom and Right Bottom
-            if (ans[m-2].getX1() < ans[m-1].getX1() && diff <= 0.5)
+            int firstIndex = index;
+            index = i+1;
+            vector<double> out = res.second;
+            curX = mainRoom.getY2();
+            for (int j = firstIndex; j < index; ++j)
             {
-                ans[m-1].setX1(ans[m-1].getX1() - diff);
+                string id = roomE[j].getRoomId();
+                double curHeight = out[j - firstIndex];
+                double curWidth = roomsArea[id] / curHeight;
+
+                Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
+                curY = newRoom.getY1();
+                ans.push_back(newRoom);
+
+                if (i==index)
+                {
+                    int m = ans.size();
+
+                    double diff = abs(ans[m-2].getX1() - ans[m-1].getX1());
+
+                    //reposition again last Room Bottom and Right Bottom
+                    if (ans[m-2].getX1() < ans[m-1].getX1() && diff <= 0.5)
+                    {
+                       ans[m-1].setX1(ans[m-1].getX1() - diff);
+                    }
+                    else if (ans[m-1].getX1() < ans[m-2].getX1() && diff <= 0.5)
+                    {
+                       ans[m-2].setX1(ans[m-2].getX1() - diff);
+                     }
+                 }
             }
-            else if (ans[m-1].getX1() < ans[m-2].getX1() && diff <= 0.5)
-            {
-                ans[m-2].setX1(ans[m-2].getX1() - diff);
-            }
+            break;
         }
     }
-    index += roomSize;
+
+
+//
+//    for (int i = index; i < index + roomSize; ++i)
+//    {
+//        string id = roomE[i].getRoomId();
+//        double curHeight = roomE[i].getDimensionLimit().first;
+//        double curWidth = roomsArea[id] / curHeight;
+//
+//        Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
+//        curY = newRoom.getY1();
+//        ans.push_back(newRoom);
+//
+//
+//        if (i==index)
+//        {
+//            int m = ans.size();
+//
+//            double diff = abs(ans[m-2].getX1() - ans[m-1].getX1());
+//
+//            //reposition again last Room Bottom and Right Bottom
+//            if (ans[m-2].getX1() < ans[m-1].getX1() && diff <= 0.5)
+//            {
+//                ans[m-1].setX1(ans[m-1].getX1() - diff);
+//            }
+//            else if (ans[m-1].getX1() < ans[m-2].getX1() && diff <= 0.5)
+//            {
+//                ans[m-2].setX1(ans[m-2].getX1() - diff);
+//            }
+//        }
+//    }
+//    index += roomSize;
 
     curX = mainRoom.getX1();
 
