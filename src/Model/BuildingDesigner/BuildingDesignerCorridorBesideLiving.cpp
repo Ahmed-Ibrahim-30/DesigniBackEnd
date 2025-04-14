@@ -383,6 +383,13 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
         string nextId = zone1[i+1].getRoomId();
         string prevId = i==0 ? "": zone1[i-1].getRoomId();
 
+        if (i==1 && !connections[curId].count(nextId))
+        {
+            index1 = 0;
+            index1 = 1;
+            break;
+        }
+
         if(connections[curId].count(nextId) || connections[curId].count(prevId))continue;
 
         if (~index1)
@@ -408,6 +415,13 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
         string curId = zone2[i].getRoomId();
         string nextId = zone2[i+1].getRoomId();
         string prevId = i==0 ? "": zone2[i-1].getRoomId();
+
+        if (i==1 && !connections[curId].count(nextId))
+        {
+            index1 = 0;
+            index1 = 1;
+            break;
+        }
 
         if(connections[curId].count(nextId) || connections[curId].count(prevId))continue;
 
