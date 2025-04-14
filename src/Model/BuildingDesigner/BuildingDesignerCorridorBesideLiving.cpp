@@ -410,16 +410,16 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
 
     index1 = -1 , index2 = -1;
 
-    for (int i = 0; i < zone2.size()-1; ++i)
+    for (int i = 1; i < zone2.size(); ++i)
     {
         string curId = zone2[i].getRoomId();
-        string nextId = zone2[i+1].getRoomId();
-        string prevId = i==0 ? "": zone2[i-1].getRoomId();
+        string nextId = i== zone2.size()-1 ? "": zone2[i+1].getRoomId();
+        string prevId = zone2[i-1].getRoomId();
 
-        if (i==1 && !connections[curId].count(nextId))
+        if (i==zone2.size()-2  && !connections[curId].count(prevId))
         {
-            index1 = 0;
-            index2 = 1;
+            index1 = zone2.size()-2;
+            index2 = zone2.size()-1;
             break;
         }
 
