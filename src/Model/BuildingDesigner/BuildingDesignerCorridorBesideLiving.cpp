@@ -383,29 +383,29 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
         string nextId = zone1[i+1].getRoomId();
         string prevId = i==0 ? "": zone1[i-1].getRoomId();
 
-        if (i==1 && !connections[curId].count(nextId))
-        {
-            index1 = 0;
-            index1 = 1;
-            break;
-        }
+//        if (i==1 && !connections[curId].count(nextId))
+//        {
+//            index1 = 0;
+//            index1 = 1;
+//            break;
+//        }
 
         if(connections[curId].count(nextId) || connections[curId].count(prevId))continue;
 
-        if (~index1)
+        if (index1 == -1)
         {
             index1 = i;
             continue;
         }
 
-        if (~index2)
+        if (index2 == -1)
         {
             index2 = i;
             continue;
         }
     }
 
-    if (index1 != -1 && index2 != -1) swap(zone1[index1] , zone2[index2]);
+    if (~index1 && ~index2) swap(zone1[index1] , zone2[index2]);
 
 
     index1 = -1 , index2 = -1;
@@ -416,22 +416,22 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
         string nextId = zone2[i+1].getRoomId();
         string prevId = i==0 ? "": zone2[i-1].getRoomId();
 
-        if (i==1 && !connections[curId].count(nextId))
-        {
-            index1 = 0;
-            index1 = 1;
-            break;
-        }
+//        if (i==1 && !connections[curId].count(nextId))
+//        {
+//            index1 = 0;
+//            index1 = 1;
+//            break;
+//        }
 
         if(connections[curId].count(nextId) || connections[curId].count(prevId))continue;
 
-        if (~index1)
+        if (index1 == -1)
         {
             index1 = i;
             continue;
         }
 
-        if (~index2)
+        if (index2 == -1)
         {
             index2 = i;
             continue;
