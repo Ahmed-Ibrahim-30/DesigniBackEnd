@@ -419,7 +419,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
         if (i==1 && !connections[curId].count(nextId))
         {
             index1 = 0;
-            index1 = 1;
+            index2 = 1;
             break;
         }
 
