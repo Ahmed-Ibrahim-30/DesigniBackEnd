@@ -252,7 +252,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
     for (int i = index; i < index + roomSize; ++i)
     {
         string id = roomE[i].getRoomId();
-        double curHeight = roomE[i].getDimensionLimit().second;
+        double curHeight = roomE[i].getDimensionLimit().first;
         double curWidth = roomsArea[id] / curHeight;
 
         Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
