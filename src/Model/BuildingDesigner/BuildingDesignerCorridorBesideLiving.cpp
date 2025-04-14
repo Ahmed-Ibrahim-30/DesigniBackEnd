@@ -268,7 +268,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
                 curY = newRoom.getY1();
                 ans.push_back(newRoom);
 
-                if (i==firstIndex)
+                if (j==firstIndex)
                 {
                     int m = ans.size();
 
