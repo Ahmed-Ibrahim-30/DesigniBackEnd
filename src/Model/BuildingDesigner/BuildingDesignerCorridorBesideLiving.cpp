@@ -251,7 +251,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
     for (int i = index; i < n; ++i)
     {
         tempV.push_back(values[i]);
-        pair<double , vector<double>> res = findClosestSum(height , tempV , roomE);
+        pair<double , vector<double>> res = findClosestSum(height , tempV , newRooms);
         if (res.first >= height)
         {
             int firstIndex = index;
@@ -289,53 +289,43 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         }
     }
 
-
-//
-//    for (int i = index; i < index + roomSize; ++i)
-//    {
-//        string id = roomE[i].getRoomId();
-//        double curHeight = roomE[i].getDimensionLimit().first;
-//        double curWidth = roomsArea[id] / curHeight;
-//
-//        Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
-//        curY = newRoom.getY1();
-//        ans.push_back(newRoom);
-//
-//
-//        if (i==index)
-//        {
-//            int m = ans.size();
-//
-//            double diff = abs(ans[m-2].getX1() - ans[m-1].getX1());
-//
-//            //reposition again last Room Bottom and Right Bottom
-//            if (ans[m-2].getX1() < ans[m-1].getX1() && diff <= 0.5)
-//            {
-//                ans[m-1].setX1(ans[m-1].getX1() - diff);
-//            }
-//            else if (ans[m-1].getX1() < ans[m-2].getX1() && diff <= 0.5)
-//            {
-//                ans[m-2].setX1(ans[m-2].getX1() - diff);
-//            }
-//        }
-//    }
-//    index += roomSize;
-
     curX = mainRoom.getX1();
+    tempV.clear();
+    roomE.clear();
+    newRooms.clear();
+
+
+
+    for (int i = index; i < n; ++i) {
+        newRooms.push_back(roomE[i]);
+    }
+
 
     for (int i = index; i < n; ++i)
     {
-        string id = roomE[i].getRoomId();
-        double curWidth = roomE[i].getDimensionLimit().first;
-        double curHeight = roomsArea[id] / curWidth;
+        tempV.push_back(values[i]);
+        pair<double , vector<double>> res = findClosestSum(width , tempV , newRooms);
 
-        Room newRoom(id , curX , mainRoom.getY1() -curHeight, curX+curWidth, mainRoom.getY1() );
-        curX = newRoom.getX2();
-        ans.push_back(newRoom);
 
-        if (mainRoom.getX2() - curX  < 1)
+        if (i == n-1)
         {
-            break;
+            vector<double> out = res.second;
+            curX = mainRoom.getX1();
+            for (int j = 0; j < out.size(); ++j)
+            {
+                string id = roomE[index++].getRoomId();
+                double curWidth = out[j];
+                double curHeight = roomsArea[id] / curWidth;
+
+                Room newRoom(id , curX , mainRoom.getY1() -curHeight, curX+curWidth, mainRoom.getY1() );
+                curX = newRoom.getX2();
+                ans.push_back(newRoom);
+
+                if (mainRoom.getX2() - curX  < 1)
+                {
+                    break;
+                }
+            }
         }
     }
 
