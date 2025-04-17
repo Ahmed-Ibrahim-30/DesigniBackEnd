@@ -31,17 +31,6 @@ file(GLOB_RECURSE SRC_FILES
 add_executable(Designi_BackEnd
         main.cpp
         ${SRC_FILES}
-        src/Model/BuildingDesigner/BuildingDesigner.cpp
-        src/Model/BuildingDesigner/BuildingDesigner.h
-        src/Model/BuildingDesigner/RoomEntity.h
-        src/Model/BuildingDesigner/CorridorDesigner.cpp
-        src/Model/BuildingDesigner/CorridorDesigner.h
-        src/Model/BuildingDesigner/BuildingDesignerCorridorBesideLiving.cpp
-        src/Model/BuildingDesigner/BuildingDesignerCorridorBesideLiving.h
-        src/Model/BuildingDesigner/BuildingDesignerCorridorAboveLiving.cpp
-        src/Model/BuildingDesigner/BuildingDesignerCorridorAboveLiving.h
-        src/Model/BuildingDesigner/BuildingSecondFloorDesign.cpp
-        src/Model/BuildingDesigner/BuildingSecondFloorDesign.h
 )
 
 find_package(Threads REQUIRED)
