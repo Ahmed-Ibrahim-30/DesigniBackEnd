@@ -94,19 +94,51 @@ vector <Design> BuildingSecondFloorDesign::generateDesign(Design &firstFloorDesi
     vector<Room> rooms = firstFloorDesigns.getRooms();
 
     //1- remove guestBath Room
-    Room guestBath;
+    Room guestBath , living;
     int guestIndex = -1;
 
     for (int i = 0; i < rooms.size(); ++i) {
         if (rooms[i].getRoomType() == RoomType::GuestBathroom)
         {
             guestBath = rooms[i];
-            guestIndex= i;
-            break;
+        }
+        if (rooms[i].getRoomType() == RoomType::Living)
+        {
+            living = rooms[i];
         }
     }
     auto it = rooms.begin();
     if (~guestIndex)rooms.erase(it + guestIndex);
+
+    for (int i = 0; i < rooms.size(); ++i)
+    {
+        if (rooms[i].getRoomType() == RoomType::Living)continue;
+
+        if (guestBath.getY1() == rooms[i].getY2() && ((guestBath.getX1() == living.getX2() && rooms[i].getX1() == living.getX2()) ||
+                (guestBath.getX2() == living.getX1() && rooms[i].getX2() == living.getX1())))
+        {
+            rooms[i].setY2(guestBath.getY2() );
+            break;
+        }
+        else if (guestBath.getY2() == rooms[i].getY1() && ((guestBath.getX1() == living.getX2() && rooms[i].getX1() == living.getX2()) ||
+                                                           (guestBath.getX2() == living.getX1() && rooms[i].getX2() == living.getX1())))
+        {
+            rooms[i].setY1(guestBath.getY1());
+            break;
+        }
+        else if (guestBath.getX1() == rooms[i].getX2() && ((guestBath.getY1() == living.getY2() && rooms[i].getY1() == living.getY2()) ||
+                                                           (guestBath.getY2() == living.getY1() && rooms[i].getY2() == living.getY1())))
+        {
+            rooms[i].setX2(guestBath.getX2());
+            break;
+        }
+        else if (guestBath.getX2() == rooms[i].getX1()&& ((guestBath.getY1() == living.getY2() && rooms[i].getY1() == living.getY2()) ||
+                                                          (guestBath.getY2() == living.getY1() && rooms[i].getY2() == living.getY1())))
+        {
+            rooms[i].setX1(guestBath.getX1());
+            break;
+        }
+    }
 
     Design newDesign("",rooms);
     secondFloorDesigns.push_back(newDesign);
