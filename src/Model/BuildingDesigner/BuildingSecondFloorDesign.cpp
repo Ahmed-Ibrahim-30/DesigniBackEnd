@@ -101,6 +101,7 @@ vector <Design> BuildingSecondFloorDesign::generateDesign(Design &firstFloorDesi
         if (rooms[i].getRoomType() == RoomType::GuestBathroom)
         {
             guestBath = rooms[i];
+            guestIndex = i;
         }
         if (rooms[i].getRoomType() == RoomType::Living)
         {
