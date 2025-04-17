@@ -348,8 +348,6 @@ public:
 
     void setId(const string &id);
 
-
-
 };
 
 

@@ -107,6 +107,8 @@ vector <Design> BuildingSecondFloorDesign::generateDesign(Design &firstFloorDesi
     }
     auto it = rooms.begin();
     if (~guestIndex)rooms.erase(it + guestIndex);
-    secondFloorDesigns.emplace_back(rooms);
+
+    Design newDesign("",rooms);
+    secondFloorDesigns.push_back(newDesign);
     return secondFloorDesigns;
 }
