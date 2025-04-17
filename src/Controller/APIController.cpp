@@ -3,7 +3,7 @@
 //
 #include "src/Model/BuildingDesigner/BuildingDesignerCorridorBesideLiving.h"
 #include "src/Model/BuildingDesigner/BuildingDesignerCorridorAboveLiving.h"
-
+#include "src/Model/BuildingDesigner/BuildingSecondFloorDesign.h"
 #include "src/Model/BuildingDesigner/BuildingDesigner.h"
 #include "APIController.h"
 #include "HomeDesignController.h"
@@ -147,89 +147,42 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         areas["Bedroom2"] = 20;
         areas["Bedroom3"] = 20;
         areas["Bedroom4"] = 20;
-//        areas["Bedroom5"] = 20;
         areas["Bath1"] = 6;
         areas["Bath2"] = 6;
-//        areas["Bath3"] = 6;
 
 
-//        vector<string> zone1 {"11", "12", "13", "14", "15"};
-//        vector<string> zone2 {"21", "22", "23"};
-//
-//        vector<pair<string , string>> conn {
-//                {"11" , "12"},
-//                {"12" , "14"},
-//                {"14" , "15"},
-//                {"21" , "22"},
-//                {"13" , "23"}
-//        };
-//
-//        map<string , pair<double, double>> limits;
-//
-//        limits["11"] = {4,6};
-//        limits["12"] = {3,7};
-//        limits["13"] = {5,7};
-//        limits["14"] = {2,5};
-//        limits["15"] = {6,7};
-//
-//
-//        limits["21"] = {5,7};
-//        limits["22"] = {6,7};
-//        limits["23"] = {5,7};
+        vector<string> zone3 {"Bedroom1", "Bedroom2", "Bedroom3", "Bedroom4" , "Bath1" , "Bath2" };
+        vector<string> zone4 {"Room1", "Room2", "Room3" , "Room4"};
 
+        vector<pair<string , string>> conn2 {
+                {"Bedroom1", "Bedroom2"},
+                {"Bath1", "Bedroom2"},
+                {"Bath2", "Bedroom3"},
+        };
 
-//        vector<string> zone1 {"31", "32", "33", "34", "35", "36"};
-//        vector<string> zone2 {"41", "42", "43"};
-//
-//        vector<pair<string , string>> conn {
-//                {"31" , "32"},
-//                {"32" , "34"},
-//                {"34" , "35"},
-//                {"41" , "42"},
-//                {"33" , "43"}
-//        };
-//
-//        map<string , pair<double, double>> limits;
-//
-//        limits["31"] = {3,5};
-//        limits["32"] = {4,6};
-//        limits["33"] = {2,5};
-//
-//
-//        limits["34"] = {5,6};
-//        limits["35"] = {5,7};
-//        limits["36"] = {6,7};
-//        limits["41"] = {5,7};
-//        limits["42"] = {5,7};
-//        limits["43"] = {7,7};
+        map<string , double> areas2;
 
-//        vector<string> zone1 {"41", "42", "43", "44", "45", "46"};
-//        vector<string> zone2 {"47", "48", "49", "50"};
-//
-//        vector<pair<string , string>> conn  {{"41" , "42"} , {"43" , "45"}, {"47" , "48"}, {"49" , "50"}, {"42" , "49"}};
-//
-//        map<string , pair<double, double>> limits ;
-//
-//        limits["41"] = {5,7};
-//        limits["42"] = {3,7};
-//        limits["43"] = {4,6};
-//        limits["44"] = {6,8};
-//        limits["45"] = {5,7};
-//        limits["46"] = {5,7};
-//        limits["47"] = {5,7};
-//        limits["48"] = {5,7};
-//        limits["49"] = {7,7};
-//        limits["50"] = {5,7};
+        areas2["Room1"] = 36;
+        areas2["Room2"] = 28;
+        areas2["Room3"] = 20;
+        areas2["Room4"] = 18;
 
-
-
+        areas2["Bedroom1"] = 25;
+        areas2["Bedroom2"] = 20;
+        areas2["Bedroom3"] = 20;
+        areas2["Bedroom4"] = 20;
+        areas2["Bath1"] = 6;
+        areas2["Bath2"] = 6;
 
 
 
 //        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
         BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
-        vector<Design> resD = buildingDesigner->generateDesign();
-        design1 = resD[2];
+        vector<Design> firstFloor = buildingDesigner->generateDesign();
+        design1 = firstFloor[0];
+
+        BuildingSecondFloorDesign *buildingSecondFloorDesign = new BuildingSecondFloorDesign(zone1 , zone2 , conn , areas);
+        vector<Design> secondFloor = buildingSecondFloorDesign->generateDesign(design1);
 
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();

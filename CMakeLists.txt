@@ -40,6 +40,8 @@ add_executable(Designi_BackEnd
         src/Model/BuildingDesigner/BuildingDesignerCorridorBesideLiving.h
         src/Model/BuildingDesigner/BuildingDesignerCorridorAboveLiving.cpp
         src/Model/BuildingDesigner/BuildingDesignerCorridorAboveLiving.h
+        src/Model/BuildingDesigner/BuildingSecondFloorDesign.cpp
+        src/Model/BuildingDesigner/BuildingSecondFloorDesign.h
 )
 
 find_package(Threads REQUIRED)

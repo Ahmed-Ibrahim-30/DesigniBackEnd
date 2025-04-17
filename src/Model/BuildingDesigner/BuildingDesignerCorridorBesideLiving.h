@@ -18,7 +18,6 @@ public:
 
     vector<Design> generateDesign() override;
 
-
 protected:
     vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom) override;
     vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom) override;
