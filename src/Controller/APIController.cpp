@@ -184,6 +184,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         BuildingSecondFloorDesign *buildingSecondFloorDesign = new BuildingSecondFloorDesign(zone1 , zone2 , conn , areas);
         vector<Design> secondFloor = buildingSecondFloorDesign->generateDesign(design1);
 
+        design1 = secondFloor[0];
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();
         vector<Line>innerLines = drawing.getInnerLines();
