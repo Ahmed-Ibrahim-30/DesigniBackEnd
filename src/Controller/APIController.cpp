@@ -179,7 +179,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 //        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
         BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
         vector<Design> firstFloor = buildingDesigner->generateDesign();
-        design1 = firstFloor[1];
+        design1 = firstFloor[2];
 
         BuildingSecondFloorDesign *buildingSecondFloorDesign = new BuildingSecondFloorDesign(zone1 , zone2 , conn , areas);
         vector<Design> secondFloor = buildingSecondFloorDesign->generateDesign(design1);
