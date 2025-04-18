@@ -185,7 +185,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         vector<Design> secondFloor = buildingSecondFloorDesign->generateDesign(design1);
 
         cout<<"Size = "<<secondFloor.size()<<"\n";
-        design1 = secondFloor[6];
+        design1 = secondFloor[7];
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();
         vector<Line>innerLines = drawing.getInnerLines();
