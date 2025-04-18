@@ -94,7 +94,7 @@ vector <Design> BuildingSecondFloorDesign::generateDesign(Design &firstFloorDesi
     vector<Room> rooms = firstFloorDesigns.getRooms();
 
     //1- remove guestBath Room
-    Room guestBath , living;
+    Room guestBath , living , corridor;
     int guestIndex = -1;
 
     for (int i = 0; i < rooms.size(); ++i) {
@@ -107,10 +107,15 @@ vector <Design> BuildingSecondFloorDesign::generateDesign(Design &firstFloorDesi
         {
             living = rooms[i];
         }
+        if (rooms[i].getRoomType() == RoomType::Corridor || rooms[i].getRoomId().empty())
+        {
+            corridor = rooms[i];
+        }
     }
     auto it = rooms.begin();
     if (~guestIndex)rooms.erase(it + guestIndex);
 
+    //stretch Other Rooms beside Guest Bathroom
     for (int i = 0; i < rooms.size(); ++i)
     {
         if (rooms[i].getRoomType() == RoomType::Living)continue;
@@ -142,6 +147,36 @@ vector <Design> BuildingSecondFloorDesign::generateDesign(Design &firstFloorDesi
     }
 
     Design newDesign("",rooms);
-    secondFloorDesigns.push_back(newDesign);
+    vector<Room> newRooms;
+
+    getAllSecondFloorDesign(0 , newDesign , secondFloorDesigns , living , corridor,  newRooms);
+
     return secondFloorDesigns;
+}
+
+void BuildingSecondFloorDesign::getAllSecondFloorDesign(int roomIndex ,Design &mainDesign, vector<Design> &designs , Room &living ,Room &corridor, vector<Room> &newRooms)
+{
+    vector<Room> rooms = mainDesign.getRooms();
+    if (roomIndex == rooms.size())
+    {
+        designs.push_back({"",newRooms});
+        return;
+    }
+
+    Room current = rooms[roomIndex];
+    if (current.getRoomType() == RoomType::Living || current.getRoomId().empty() || current.getX1() == corridor.getX2() ||
+            current.getX2() == corridor.getX1() &&current.getY1() == corridor.getY2() && current.getY2() == corridor.getY1())
+    {
+        newRooms.push_back(current);
+        getAllSecondFloorDesign(roomIndex + 1 , mainDesign , designs , living , corridor  , newRooms);
+        newRooms.pop_back();
+    }
+    else
+    {
+        newRooms.push_back(current);
+        getAllSecondFloorDesign(roomIndex + 1 , mainDesign , designs , living , corridor  , newRooms);
+        newRooms.pop_back();
+
+        getAllSecondFloorDesign(roomIndex + 1 , mainDesign , designs , living , corridor  , newRooms);
+    }
 }

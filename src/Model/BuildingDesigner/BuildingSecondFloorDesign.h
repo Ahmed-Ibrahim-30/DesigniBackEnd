@@ -17,6 +17,9 @@ class BuildingSecondFloorDesign {
     vector<RoomEntity> zone1;
 
     vector<RoomEntity> zone2;
+
+
+    void getAllSecondFloorDesign(int roomIndex ,Design &mainDesign, vector<Design> &designs , Room &living ,Room &corridor, vector<Room> &newRooms);
 public:
     /**
      * Parametrized Constructor
