@@ -409,7 +409,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         for (int i = 0; i < zone1Size; ++i)
         {
             if (i<(zone1Size+1)/2)corridor1Rooms.push_back(zone1[i]);
-            else corridor2Rooms.push_back(zone2[i]);
+            else corridor2Rooms.push_back(zone1[i]);
         }
 
         corridor1Rooms = sortZone(corridor1Rooms);
