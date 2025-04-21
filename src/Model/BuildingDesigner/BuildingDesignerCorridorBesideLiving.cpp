@@ -296,7 +296,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         }
     }
 
-    cout<<"LIVING HERE = "<<corridorCount<<"\n";
+    cout<<"LIVING HERE = "<<index<<"\n";
     //TOP
     curX = mainRoom.getX1();
     tempV.clear();
