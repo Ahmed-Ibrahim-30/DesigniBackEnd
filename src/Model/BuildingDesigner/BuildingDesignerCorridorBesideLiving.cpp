@@ -340,9 +340,10 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
 
 vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 {
-    vector<Design> designs = generateDiffDesign();
+    vector<Design> designs ;//= generateDiffDesign();
     if (zone1.size() <= 5)
     {
+        designs=  generateDiffDesign();
         return designs;
 
         zone1 = sortZone(zone1);
