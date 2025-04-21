@@ -213,7 +213,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         roomSize++;
     }
 
-    cout<<"LIVING HERE\n";
+
     int index = 0;
     double curX = 0;
     for (int i = 0; i < roomSize; ++i)
@@ -239,6 +239,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         }
     }
 
+    cout<<"LIVING HERE\n";
     roomSize = 0, minLimits = 0.0;
 
     vector<RoomEntity> newRooms;
