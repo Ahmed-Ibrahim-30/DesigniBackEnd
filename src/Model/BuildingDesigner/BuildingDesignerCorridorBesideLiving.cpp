@@ -307,6 +307,8 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         newRooms.push_back(roomE[i]);
     }
 
+    cout<<"LivingHere\n";
+
     for (int i = index; i < n; ++i)
     {
         tempV.push_back(values[i]);
