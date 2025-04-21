@@ -151,7 +151,7 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         areas["Bath2"] = 6;
 
 
-        vector<string> zone3 {"Bedroom1", "Bedroom2", "Bedroom3", "Bedroom4" , "Bath1" , "Bath2" };
+        vector<string> zone3 {"Bedroom1","Bath1", "Bedroom2", "Bedroom3","Bath2", "Bedroom4" ,"Bedroom5","Bedroom6" ,"Bath3"  };
         vector<string> zone4 {"Room1", "Room2", "Room3" , "Room4"};
 
         vector<pair<string , string>> conn2 {
@@ -171,10 +171,11 @@ void APIController::templateRoutes(crow::SimpleApp &app)
         areas2["Bedroom2"] = 20;
         areas2["Bedroom3"] = 20;
         areas2["Bedroom4"] = 20;
+        areas2["Bedroom5"] = 25;
+        areas2["Bedroom6"] = 25;
         areas2["Bath1"] = 6;
         areas2["Bath2"] = 6;
-
-
+        areas2["Bath3"] = 6;
 
 //        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
         BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
