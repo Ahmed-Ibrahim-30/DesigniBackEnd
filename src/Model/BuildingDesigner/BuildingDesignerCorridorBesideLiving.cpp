@@ -450,8 +450,21 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 
 //        design.addRoom(Corridor);
         rooms = generateCorridorLayout(corridor2Rooms , Corridor);
+        Design secondCorridor("" , rooms);
+        double dx = 0,dy = 0;
+
 
         for(auto &room : rooms)
+        {
+            if (room.getRoomId().empty())
+            {
+                dx = room.getX1() - Corridor.getX1();
+                dy = room.getY1() - Corridor.getY1();
+                break;
+            }
+        }
+        secondCorridor.moveDesign(dx , dy);
+        for(auto &room : secondCorridor.getRooms())
         {
             design.addRoom(room);
         }
