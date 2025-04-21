@@ -300,20 +300,12 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
     //TOP
     curX = mainRoom.getX1();
     tempV.clear();
-    roomE.clear();
     newRooms.clear();
-
-
-    cout<<"LIVING HERE = "<<roomE.size()<<" --> "<<n<<"\n";
 
     for (int i = index; i < n; ++i)
     {
         newRooms.push_back(roomE[i]);
     }
-
-
-
-
 
     for (int i = index; i < n; ++i)
     {
