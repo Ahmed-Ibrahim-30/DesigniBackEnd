@@ -448,12 +448,13 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         //Second Corridor Design
         Corridor  = Room("" , Living.getX2() , ((Living.getY1() + Living.getY2())/2) - corridorHeight/2 ,Living.getX2() + corridorWidth ,  ((Living.getY1() + Living.getY2())/2) + corridorHeight/2);
 
-        rooms = generateCorridorLayout(corridor2Rooms , Corridor);
-
-        for(auto &room : rooms)
-        {
-            design.addRoom(room);
-        }
+        design.addRoom(Corridor);
+//        rooms = generateCorridorLayout(corridor2Rooms , Corridor);
+//
+//        for(auto &room : rooms)
+//        {
+//            design.addRoom(room);
+//        }
 
         design.scaleDesign(105);
         designs.push_back(design);
