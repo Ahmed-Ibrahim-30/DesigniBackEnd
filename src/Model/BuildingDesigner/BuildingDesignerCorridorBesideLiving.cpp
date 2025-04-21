@@ -304,12 +304,13 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
     newRooms.clear();
 
 
+    cout<<"LIVING HERE = "<<roomE.size()<<" --> "<<n<<"\n";
 
-    for (int i = index; i < n; ++i) {
+    for (int i = index; i < n; ++i)
+    {
         newRooms.push_back(roomE[i]);
     }
 
-    cout<<"LIVING HERE = "<<index<<"\n";
 
 
 
