@@ -433,9 +433,9 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         double livingX = 6 , livingY = 7;
         Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
 
-        vector<Room> newRooms = generateLivingLayout(livingRooms , Living , 2);
+//        vector<Room> newRooms = generateLivingLayout(livingRooms , Living , 2);
         vector<Room> copyRooms = rooms;
-        copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
+//        copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
 
         Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
         design.rotate(180);
