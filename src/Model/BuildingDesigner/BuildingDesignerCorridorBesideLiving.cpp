@@ -458,8 +458,8 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         {
             if (room.getRoomId().empty())
             {
-                dx = room.getX1() - Corridor.getX1();
-                dy = room.getY1() - Corridor.getY1();
+                dx = Corridor.getX1() - room.getX1();
+                dy = Corridor.getY1() - room.getY1();
                 break;
             }
         }
