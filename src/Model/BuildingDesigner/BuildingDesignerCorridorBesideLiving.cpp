@@ -317,8 +317,9 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
 
         if (i == n-1 || res.first >= width)
         {
-//            vector<double> out = res.second;
-//            curX = mainRoom.getX1();
+            vector<double> out = res.second;
+            curX = mainRoom.getX1();
+            cout<<out.size()<<"\n";
 //            for (int j = 0; j < out.size(); ++j)
 //            {
 //                string id = roomE[index++].getRoomId();
