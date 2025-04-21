@@ -317,23 +317,23 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
 
         if (i == n-1 || res.first >= width)
         {
-            vector<double> out = res.second;
-            curX = mainRoom.getX1();
-            for (int j = 0; j < out.size(); ++j)
-            {
-                string id = roomE[index++].getRoomId();
-                double curWidth = out[j];
-                double curHeight = roomsArea[id] / curWidth;
-
-                Room newRoom(id , curX , mainRoom.getY1() -curHeight, curX+curWidth, mainRoom.getY1() );
-                curX = newRoom.getX2();
-                ans.push_back(newRoom);
-
-                if (mainRoom.getX2() - curX  < 1)
-                {
-                    break;
-                }
-            }
+//            vector<double> out = res.second;
+//            curX = mainRoom.getX1();
+//            for (int j = 0; j < out.size(); ++j)
+//            {
+//                string id = roomE[index++].getRoomId();
+//                double curWidth = out[j];
+//                double curHeight = roomsArea[id] / curWidth;
+//
+//                Room newRoom(id , curX , mainRoom.getY1() -curHeight, curX+curWidth, mainRoom.getY1() );
+//                curX = newRoom.getX2();
+//                ans.push_back(newRoom);
+//
+//                if (mainRoom.getX2() - curX  < 1)
+//                {
+//                    break;
+//                }
+//            }
         }
     }
 
