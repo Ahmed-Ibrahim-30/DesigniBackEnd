@@ -20,7 +20,7 @@ public:
 
 protected:
     vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE, Room &mainRoom) override;
-    vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom) override;
+    vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom, int corridorCount) override;
     vector<Design> generateDiffDesign();
 };
 

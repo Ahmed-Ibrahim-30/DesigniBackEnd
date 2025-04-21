@@ -164,7 +164,7 @@ vector<Room> BuildingDesignerCorridorAboveLiving::generateCorridorLayout(vector<
     return ans;
 }
 
-vector<Room> BuildingDesignerCorridorAboveLiving::generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom)
+vector<Room> BuildingDesignerCorridorAboveLiving::generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom, int corridorCount)
 {
     vector<Room> ans;
     double width = mainRoom.getWidth();
@@ -293,7 +293,7 @@ vector<Design> BuildingDesignerCorridorAboveLiving::generateDesign()
     vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
     Room Living = rooms[rooms.size()-3];
 
-    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
+    vector<Room> newRooms = generateLivingLayout(zone2 , Living , 1);
     rooms.insert(rooms.end() , newRooms.begin() , newRooms.end());
 
     Design design("" , rooms , 1 , 0 , 28 , 0 ,36);

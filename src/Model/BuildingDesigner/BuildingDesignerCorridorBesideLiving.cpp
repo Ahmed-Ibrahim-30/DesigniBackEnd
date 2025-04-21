@@ -180,7 +180,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
     return ans;
 }
 
-vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom)
+vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom , int corridorCount)
 {
     vector<Room> ans;
     double width = mainRoom.getWidth();
@@ -245,50 +245,55 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         roomSize++;
         newRooms.push_back(roomE[i]);
     }
-    double curY = mainRoom.getY2();
-    tempV.clear();
 
-    for (int i = index; i < n; ++i)
+    if (corridorCount == 1)
     {
-        tempV.push_back(values[i]);
-        pair<double , vector<double>> res = findClosestSum(height , tempV , newRooms);
-        if (res.first >= height)
+        double curY = mainRoom.getY2();
+        tempV.clear();
+
+        for (int i = index; i < n; ++i)
         {
-            int firstIndex = index;
-            index = i+1;
-            vector<double> out = res.second;
-            curX = mainRoom.getY2();
-            for (int j = firstIndex; j < index; ++j)
+            tempV.push_back(values[i]);
+            pair<double , vector<double>> res = findClosestSum(height , tempV , newRooms);
+            if (res.first >= height)
             {
-                string id = roomE[j].getRoomId();
-                double curHeight = out[j - firstIndex];
-                double curWidth = roomsArea[id] / curHeight;
-
-                Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
-                curY = newRoom.getY1();
-                ans.push_back(newRoom);
-
-                if (j==firstIndex)
+                int firstIndex = index;
+                index = i+1;
+                vector<double> out = res.second;
+                curX = mainRoom.getY2();
+                for (int j = firstIndex; j < index; ++j)
                 {
-                    int m = ans.size();
+                    string id = roomE[j].getRoomId();
+                    double curHeight = out[j - firstIndex];
+                    double curWidth = roomsArea[id] / curHeight;
 
-                    double diff = abs(ans[m-2].getX1() - ans[m-1].getX1());
+                    Room newRoom(id , mainRoom.getX1() - curWidth , curY - curHeight , mainRoom.getX1() , curY);
+                    curY = newRoom.getY1();
+                    ans.push_back(newRoom);
 
-                    //reposition again last Room Bottom and Right Bottom
-                    if (ans[m-2].getX1() < ans[m-1].getX1() && diff <= 0.5)
+                    if (j==firstIndex)
                     {
-                       ans[m-1].setX1(ans[m-1].getX1() - diff);
+                        int m = ans.size();
+
+                        double diff = abs(ans[m-2].getX1() - ans[m-1].getX1());
+
+                        //reposition again last Room Bottom and Right Bottom
+                        if (ans[m-2].getX1() < ans[m-1].getX1() && diff <= 0.5)
+                        {
+                            ans[m-1].setX1(ans[m-1].getX1() - diff);
+                        }
+                        else if (ans[m-1].getX1() < ans[m-2].getX1() && diff <= 0.5)
+                        {
+                            ans[m-2].setX1(ans[m-2].getX1() - diff);
+                        }
                     }
-                    else if (ans[m-1].getX1() < ans[m-2].getX1() && diff <= 0.5)
-                    {
-                       ans[m-2].setX1(ans[m-2].getX1() - diff);
-                     }
-                 }
+                }
+                break;
             }
-            break;
         }
     }
 
+    //TOP
     curX = mainRoom.getX1();
     tempV.clear();
     roomE.clear();
@@ -335,65 +340,113 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
 
 vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 {
-
     vector<Design> designs = generateDiffDesign();
-    return designs;
+    if (zone1.size() <= 5)
+    {
+        return designs;
 
-    zone1 = sortZone(zone1);
-    zone2 = sortZone(zone2);
+        zone1 = sortZone(zone1);
+        zone2 = sortZone(zone2);
 
-    reverse(zone1.begin(), zone1.end());
+        reverse(zone1.begin(), zone1.end());
 
-    cout<<"ZONE1 = "<<"\n";
-    for(auto &room : zone1)cout<<room.getRoomId()<<" ";
-    cout<<"\n";
+        cout<<"ZONE1 = "<<"\n";
+        for(auto &room : zone1)cout<<room.getRoomId()<<" ";
+        cout<<"\n";
 
-    cout<<"ZONE2 = "<<"\n";
-    for(auto &room : zone2)cout<<room.getRoomId()<<" ";
-    cout<<"\n";
+        cout<<"ZONE2 = "<<"\n";
+        for(auto &room : zone2)cout<<room.getRoomId()<<" ";
+        cout<<"\n";
 
-    Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
-    vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
+        Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
+        vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
 
-    double livingX = 6 , livingY = 7;
-    Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
+        double livingX = 6 , livingY = 7;
+        Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
 
-    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
-    vector<Room> copyRooms = rooms;
-    copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
+        vector<Room> newRooms = generateLivingLayout(zone2 , Living , 1);
+        vector<Room> copyRooms = rooms;
+        copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
 
-    Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
-    design.scaleDesign(105);
-    designs.push_back(design);
+        Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+        design.scaleDesign(105);
+        designs.push_back(design);
 
-    /**
-     * Second Design
-     */
-    double YChanged = Corridor.getY1() - Living.getY1() ;
-    Design livingCore("Living Core" , newRooms);
-    livingCore.shiftDesignY(YChanged);
-    copyRooms = rooms;
-    vector<Room> livingRooms = livingCore.getRooms();
-    copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
+        /**
+         * Second Design
+         */
+        double YChanged = Corridor.getY1() - Living.getY1() ;
+        Design livingCore("Living Core" , newRooms);
+        livingCore.shiftDesignY(YChanged);
+        copyRooms = rooms;
+        vector<Room> livingRooms = livingCore.getRooms();
+        copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
 
-    design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
-    design.scaleDesign(105);
-    designs.push_back(design);
+        design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+        design.scaleDesign(105);
+        designs.push_back(design);
 
-    /**
-     * Third Design
-     */
-    YChanged = Corridor.getY2() - Living.getY2() ;
-    cout<< "YChanged = "<<YChanged<<"\n";
-    livingCore = Design ("Living Core" , newRooms);
-    livingCore.shiftDesignY(YChanged);
-    copyRooms = rooms;
-    livingRooms = livingCore.getRooms();
-    copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
+        /**
+         * Third Design
+         */
+        YChanged = Corridor.getY2() - Living.getY2() ;
+        cout<< "YChanged = "<<YChanged<<"\n";
+        livingCore = Design ("Living Core" , newRooms);
+        livingCore.shiftDesignY(YChanged);
+        copyRooms = rooms;
+        livingRooms = livingCore.getRooms();
+        copyRooms.insert(copyRooms.end() , livingRooms.begin() , livingRooms.end());
 
-    design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
-    design.scaleDesign(105);
-    designs.push_back(design);
+        design = Design ("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+        design.scaleDesign(105);
+        designs.push_back(design);
+    }
+    else
+    {
+        vector<RoomEntity> corridor1Rooms , corridor2Rooms , livingRooms = zone2;
+        int zone1Size = (int)zone1.size();
+        for (int i = 0; i < zone1Size; ++i)
+        {
+            if (i<(zone1Size+1)/2)corridor1Rooms.push_back(zone1[i]);
+            else corridor2Rooms.push_back(zone2[i]);
+        }
+
+        corridor1Rooms = sortZone(corridor1Rooms);
+        corridor2Rooms = sortZone(corridor2Rooms);
+        livingRooms = sortZone(livingRooms);
+
+        reverse(corridor1Rooms.begin(), corridor1Rooms.end());
+        reverse(corridor2Rooms.begin(), corridor2Rooms.end());
+
+        Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
+        vector<Room> rooms = generateCorridorLayout(corridor1Rooms , Corridor);
+
+        double livingX = 6 , livingY = 7;
+        Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
+
+        vector<Room> newRooms = generateLivingLayout(livingRooms , Living , 2);
+        vector<Room> copyRooms = rooms;
+        copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
+
+        Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
+        design.rotate(180);
+        Living.rotate(180);
+
+        //Second Corridor Design
+        Corridor  = Room("" , Living.getX2() , ((Living.getY1() + Living.getY2())/2) - corridorHeight/2 ,Living.getX2() + corridorWidth ,  ((Living.getY1() + Living.getY2())/2) + corridorHeight/2);
+
+        rooms = generateCorridorLayout(corridor2Rooms , Corridor);
+
+        for(auto &room : rooms)
+        {
+            design.addRoom(room);
+        }
+
+        design.scaleDesign(105);
+        designs.push_back(design);
+
+    }
+
 
     return designs;
 }
@@ -486,7 +539,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
     double livingX = 6 , livingY = 7;
     Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
 
-    vector<Room> newRooms = generateLivingLayout(zone2 , Living);
+    vector<Room> newRooms = generateLivingLayout(zone2 , Living , 1);
     vector<Room> copyRooms = rooms;
     copyRooms.insert(copyRooms.end() , newRooms.begin() , newRooms.end());
 

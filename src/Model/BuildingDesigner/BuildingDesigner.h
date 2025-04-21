@@ -33,7 +33,7 @@ protected:
 
     virtual vector<Room> generateCorridorLayout(vector<RoomEntity> &roomE , Room &mainRoom) = 0;
 
-    virtual vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom) = 0;
+    virtual vector<Room> generateLivingLayout(vector<RoomEntity> &roomE, Room &mainRoom, int corridorCount) = 0;
 public:
     /**
      * Parametrized Constructor
