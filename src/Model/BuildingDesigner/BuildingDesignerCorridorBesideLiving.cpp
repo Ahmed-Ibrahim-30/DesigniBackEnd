@@ -204,6 +204,8 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         values.push_back(val);
     }
 
+    cout<<"LIVING HERE\n";
+
     int roomSize = 0; double minLimits = 0.0;
     for (int i = 0; i < n; ++i) {
         if (minLimits + 1.5 > width)break;
@@ -305,7 +307,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
         newRooms.push_back(roomE[i]);
     }
 
-    cout<<"LIVING HERE\n";
+
 
 
     for (int i = index; i < n; ++i)
