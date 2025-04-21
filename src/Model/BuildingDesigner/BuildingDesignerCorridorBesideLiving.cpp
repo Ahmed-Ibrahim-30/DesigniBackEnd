@@ -443,7 +443,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
 
         Design design("" , copyRooms , 1 , 0 , 28 , 0 ,36);
         design.rotate(180);
-        Living.rotate(180);
+        Living = design.getRooms().back();
 
         //Second Corridor Design
         Corridor  = Room("" , Living.getX2() , ((Living.getY1() + Living.getY2())/2) - corridorHeight/2 ,Living.getX2() + corridorWidth ,  ((Living.getY1() + Living.getY2())/2) + corridorHeight/2);
