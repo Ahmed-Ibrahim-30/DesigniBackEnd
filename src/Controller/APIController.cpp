@@ -179,13 +179,13 @@ void APIController::templateRoutes(crow::SimpleApp &app)
 //        BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
         BuildingDesigner *buildingDesigner = new BuildingDesignerCorridorBesideLiving(zone1 , zone2 , conn , areas);
         vector<Design> firstFloor = buildingDesigner->generateDesign();
-        design1 = firstFloor[2];
+        design1 = firstFloor[0];
 
-        BuildingSecondFloorDesign *buildingSecondFloorDesign = new BuildingSecondFloorDesign(zone1 , zone2 , conn , areas);
-        vector<Design> secondFloor = buildingSecondFloorDesign->generateDesign(design1);
+//        BuildingSecondFloorDesign *buildingSecondFloorDesign = new BuildingSecondFloorDesign(zone1 , zone2 , conn , areas);
+//        vector<Design> secondFloor = buildingSecondFloorDesign->generateDesign(design1);
 
-        cout<<"Size = "<<secondFloor.size()<<"\n";
-        design1 = secondFloor[7];
+//        cout<<"Size = "<<secondFloor.size()<<"\n";
+//        design1 = secondFloor[7];
         DesignToDoublyLines drawing(design1);
         vector<Line>oldLines = drawing.getRecLines();
         vector<Line>innerLines = drawing.getInnerLines();
