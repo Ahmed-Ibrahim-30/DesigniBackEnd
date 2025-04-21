@@ -419,6 +419,14 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         reverse(corridor1Rooms.begin(), corridor1Rooms.end());
         reverse(corridor2Rooms.begin(), corridor2Rooms.end());
 
+        cout<<"ZONE1 = "<<"\n";
+        for(auto &room : corridor1Rooms)cout<<room.getRoomId()<<" ";
+        cout<<"\n";
+
+        cout<<"ZONE11 = "<<"\n";
+        for(auto &room : corridor2Rooms)cout<<room.getRoomId()<<" ";
+        cout<<"\n";
+
         Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
         vector<Room> rooms = generateCorridorLayout(corridor1Rooms , Corridor);
 
