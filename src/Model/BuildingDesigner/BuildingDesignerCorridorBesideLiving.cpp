@@ -622,7 +622,7 @@ int BuildingDesignerCorridorBesideLiving::fetchSuitableLivingWidth(int roomIndex
 
     int ret = 1e9;
     RoomEntity curRoom = livingRooms[roomIndex];
-    for (int i = curRoom.getDimensionLimit().first; i <= curRoom.getDimensionLimit().second; ++i)
+    for (int i = ceil(curRoom.getDimensionLimit().first); i <= ceil(curRoom.getDimensionLimit().second); ++i)
     {
         ret = min(ret , fetchSuitableLivingWidth(roomIndex + 1 , topWidth + i , bottomWidth , livingRooms));
         ret = min(ret , fetchSuitableLivingWidth(roomIndex + 1 , topWidth , bottomWidth + i, livingRooms));
