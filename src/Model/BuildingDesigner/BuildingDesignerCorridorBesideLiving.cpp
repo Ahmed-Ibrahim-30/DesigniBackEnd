@@ -46,26 +46,39 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
     }
 
     double curTopLimits = 0.0 , diffLimits = 0.0; int topRoomsSize = 0;
-    for (int i = 0; i < n - 2; ++i)
-    {
-        double firstL = roomE[i].getDimensionLimit().first;
-        double secL = roomE[i].getDimensionLimit().second;
-
-        diffLimits+= (secL - firstL);
-        double firstL2 = roomE[i+1].getDimensionLimit().first;
-        curTopLimits += firstL;
-        double remaining = (minLimitsSum - curTopLimits - firstL2);
-
-        remaining -= roomE.back().getDimensionLimit().first;
-        remaining += 1.5;
-        topRoomsSize ++;
-
-        if (curTopLimits >= remaining)
-        {
-            width = curTopLimits + (diffLimits * 0.5);
-            break;
-        }
+    vector<double> prefixDimensions(n , 0);
+    prefixDimensions[0] = roomE[0].getDimensionLimit().first;
+    for (int i = 1; i < n; ++i) {
+        prefixDimensions[i] = prefixDimensions[i-1] + roomE[i].getDimensionLimit().first;
     }
+
+    for (int i = 1; i < n; ++i) {
+        double curPrefix = prefixDimensions[i];
+        double topPrefix = prefixDimensions[i-1];
+        double bottomPrefix = prefixDimensions[n-1] - curPrefix;
+        width = max(width , min(topPrefix , bottomPrefix));
+    }
+
+//    for (int i = 0; i < n - 2; ++i)
+//    {
+//        double firstL = roomE[i].getDimensionLimit().first;
+//        double secL = roomE[i].getDimensionLimit().second;
+//
+//        diffLimits+= (secL - firstL);
+//        double firstL2 = roomE[i+1].getDimensionLimit().first;
+//        curTopLimits += firstL;
+//        double remaining = (minLimitsSum - curTopLimits - firstL2);
+//
+//        remaining -= roomE.back().getDimensionLimit().first;
+//        remaining += 1.5;
+//        topRoomsSize ++;
+//
+//        if (curTopLimits >= remaining)
+//        {
+//            width = curTopLimits + (diffLimits * 0.5);
+//            break;
+//        }
+//    }
 
     double newCorridorWidth = 0.0;
     double curX = 0.0;
