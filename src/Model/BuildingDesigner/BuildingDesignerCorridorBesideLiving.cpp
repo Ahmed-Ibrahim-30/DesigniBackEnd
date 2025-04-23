@@ -51,13 +51,20 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
     for (int i = 1; i < n; ++i) {
         prefixDimensions[i] = prefixDimensions[i-1] + roomE[i].getDimensionLimit().first;
     }
-
+    width = 0;
     for (int i = 1; i < n; ++i) {
         double curPrefix = prefixDimensions[i];
         double topPrefix = prefixDimensions[i-1];
         double bottomPrefix = prefixDimensions[n-1] - curPrefix;
-        width = max(width , min(topPrefix , bottomPrefix));
+        double curW = min(topPrefix , bottomPrefix);
+        if(curW > width)
+        {
+            topRoomsSize = i;
+            width = curW;
+        }
     }
+
+    cout<<"CorridorCurWidth = "<<width<<"\n";
 
 //    for (int i = 0; i < n - 2; ++i)
 //    {
