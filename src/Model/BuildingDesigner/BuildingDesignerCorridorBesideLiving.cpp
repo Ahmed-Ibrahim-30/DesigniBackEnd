@@ -186,6 +186,8 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateLivingLayout(vector<R
     double width = mainRoom.getWidth();
     double height = mainRoom.getHeight();
 
+    if (corridorCount == 2) width--;
+
     int n = (int)roomE.size();
     vector<vector<double>> values , tempV;
 
