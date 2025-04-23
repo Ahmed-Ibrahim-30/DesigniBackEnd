@@ -437,7 +437,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         vector<Room> rooms = generateCorridorLayout(corridor1Rooms , Corridor);
 
         double livingX = 12 , livingY = 7;
-        livingX = fetchSuitableLivingWidth(livingRooms);
+        livingX = fetchSuitableLivingWidth(livingRooms) + 1;
         cout<<"LivingX = "<<livingX<<"\n";
         Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
 
