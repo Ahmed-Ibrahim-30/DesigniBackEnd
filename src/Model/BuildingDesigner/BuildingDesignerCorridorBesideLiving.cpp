@@ -366,7 +366,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
         vector<Room> rooms = generateCorridorLayout(zone1 , Corridor);
 
-        double livingX = 12 , livingY = 7;
+        double livingX = 8 , livingY = 7;
         Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
 
         vector<Room> newRooms = generateLivingLayout(zone2 , Living , 1);
@@ -434,7 +434,7 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         Room Corridor ("" , 0 , 0 ,corridorWidth ,  corridorHeight);
         vector<Room> rooms = generateCorridorLayout(corridor1Rooms , Corridor);
 
-        double livingX = 6 , livingY = 7;
+        double livingX = 8 , livingY = 7;
         Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
 
         vector<Room> newRooms = generateLivingLayout(livingRooms , Living , 2);
