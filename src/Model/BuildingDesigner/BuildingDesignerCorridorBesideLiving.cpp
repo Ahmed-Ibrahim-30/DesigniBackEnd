@@ -52,6 +52,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
         prefixDimensions[i] = prefixDimensions[i-1] + roomE[i].getDimensionLimit().first + ( roomE[0].getDimensionLimit().second -  roomE[0].getDimensionLimit().first)*0.5;
     }
     width = 0;
+    bool isTopGreater = true;
     for (int i = 1; i < n; ++i) {
         double curPrefix = prefixDimensions[i];
         double topPrefix = prefixDimensions[i-1];
@@ -60,6 +61,8 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
         if(curW > width)
         {
             topRoomsSize = i;
+            if (bottomPrefix > topPrefix)isTopGreater = false;
+            else isTopGreater = true;
             width = curW;
         }
     }
@@ -96,7 +99,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
     for (int i = 0; i < topRoomsSize; ++i)
     {
         tempV.push_back(values[i]);
-        pair<double , vector<double>> res = findClosestSum(width, tempV , roomE);
+        pair<double , vector<double>> res = findClosestSum(width - (isTopGreater ?0.5 : 0), tempV , roomE);
         if (i == topRoomsSize-1)
         {
             index = i + 1;
