@@ -49,7 +49,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
     vector<double> prefixDimensions(n , 0);
     prefixDimensions[0] = roomE[0].getDimensionLimit().first;
     for (int i = 1; i < n; ++i) {
-        prefixDimensions[i] = prefixDimensions[i-1] + roomE[i].getDimensionLimit().first + ( roomE[0].getDimensionLimit().second -  roomE[0].getDimensionLimit().first)*0.5;
+        prefixDimensions[i] = prefixDimensions[i-1] + roomE[i].getDimensionLimit().first ;
     }
     width = 0;
     bool isTopGreater = true;
