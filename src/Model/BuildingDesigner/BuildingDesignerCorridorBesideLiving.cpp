@@ -435,6 +435,8 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDesign()
         vector<Room> rooms = generateCorridorLayout(corridor1Rooms , Corridor);
 
         double livingX = 12 , livingY = 7;
+        livingX = fetchSuitableLivingWidth(livingRooms);
+        cout<<"LivingX = "<<livingX<<"\n";
         Room Living ("Living" , Corridor.getX1() - livingX , Corridor.getY1() - ((livingY-corridorHeight)/2), Corridor.getX1() , Corridor.getY2() + ((livingY-corridorHeight)/2)); // 6*7
 
         vector<Room> newRooms = generateLivingLayout(livingRooms , Living , 2);
@@ -604,5 +606,27 @@ vector<Design> BuildingDesignerCorridorBesideLiving::generateDiffDesign() {
     designs.push_back(design);
 
     return designs;
+}
+
+int BuildingDesignerCorridorBesideLiving::fetchSuitableLivingWidth(vector<RoomEntity> &livingRooms)
+{
+    return fetchSuitableLivingWidth(0 , 0 , 0 , livingRooms);
+}
+
+int BuildingDesignerCorridorBesideLiving::fetchSuitableLivingWidth(int roomIndex , int topWidth , int bottomWidth , vector<RoomEntity> &livingRooms)
+{
+    if (roomIndex == livingRooms.size())
+    {
+        return max(topWidth , bottomWidth);
+    }
+
+    int ret = 1e9;
+    RoomEntity curRoom = livingRooms[roomIndex];
+    for (int i = curRoom.getDimensionLimit().first; i <= curRoom.getDimensionLimit().second; ++i)
+    {
+        ret = min(ret , fetchSuitableLivingWidth(roomIndex + 1 , topWidth + i , bottomWidth , livingRooms));
+        ret = min(ret , fetchSuitableLivingWidth(roomIndex + 1 , topWidth , bottomWidth + i, livingRooms));
+    }
+    return ret;
 }
 
