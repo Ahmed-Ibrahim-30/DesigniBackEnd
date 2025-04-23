@@ -240,13 +240,9 @@ pair<double , vector<double>> BuildingDesigner::findClosestSum(double x, const v
         {
             sum += v;
         }
-        if(x == 5)
-        {
-            cout<<"Sum = "<<sum <<" "<<ans.size()<<"   "<<values.size()<<"\n";
-        }
         return {sum , ans};
     }
-    cout<<"Not Valid Ans for repetitions -- "<<x<<" \n";
+//    cout<<"Not Valid Ans for repetitions -- "<<x<<" \n";
 
 
     auto it = dp.upper_bound({x , vector<double>()});
