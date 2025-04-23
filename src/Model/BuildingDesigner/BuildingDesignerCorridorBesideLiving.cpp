@@ -96,7 +96,7 @@ vector<Room> BuildingDesignerCorridorBesideLiving::generateCorridorLayout(vector
     for (int i = 0; i < topRoomsSize; ++i)
     {
         tempV.push_back(values[i]);
-        pair<double , vector<double>> res = findClosestSum(width , tempV , roomE);
+        pair<double , vector<double>> res = findClosestSum(width - 0.5, tempV , roomE);
         if (i == topRoomsSize-1)
         {
             index = i + 1;
