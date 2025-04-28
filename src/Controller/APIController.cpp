@@ -690,7 +690,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
                 };
             }
 
-            if(flag)continue;
+            if(flag || !pol.isDivisible())continue;
 
             DrawStreet drawStreet;
             drawStreet.drawStreets(pol, divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
