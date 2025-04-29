@@ -151,7 +151,7 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdjByCentroids(vector<Polygon1>
             Line lineA1 (cent1 , cent2);
             Line lineA2 (cent1 , cent2);
 
-            double distance = line.getLength() - streetWidth;
+            double distance = line.getLength() ;
 
             for (auto &l : a1Lines)
             {
@@ -176,32 +176,59 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdjByCentroids(vector<Polygon1>
                 }
             }
 
+            distance = distance - (lineA1.getLength() + lineA2.getLength() + streetWidth);
+
             if (a1.getId() == "22" && a2.getId() == "28")
             {
-                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "27") || a1.getId() == "27" && a2.getId() == "22")
             {
-                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "31") || (a1.getId() == "31" && a2.getId() == "22"))
             {
-                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "20") || (a1.getId() == "20" && a2.getId() == "22"))
             {
-                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "11") || (a1.getId() == "11" && a2.getId() == "22"))
             {
-                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
+            }
+            if ((a1.getId() == "16" && a2.getId() == "11") || (a1.getId() == "11" && a2.getId() == "16"))
+            {
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
+            }
+            if ((a1.getId() == "13" && a2.getId() == "18") || (a1.getId() == "18" && a2.getId() == "13"))
+            {
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
+            }
+            if ((a1.getId() == "13" && a2.getId() == "23") || (a1.getId() == "23" && a2.getId() == "13"))
+            {
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
             }
 
-            distance = distance - lineA1.getLength() - lineA2.getLength();
+
+            if ((a1.getId() == "40" && a2.getId() == "45") || (a1.getId() == "45" && a2.getId() == "40"))
+            {
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
+            }
+
+            if ((a1.getId() == "50" && a2.getId() == "46") || (a1.getId() == "46" && a2.getId() == "50"))
+            {
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
+            }
+            if ((a1.getId() == "50" && a2.getId() == "49") || (a1.getId() == "49" && a2.getId() == "50"))
+            {
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
+            }
 
             if (distance <= 5)
             {
