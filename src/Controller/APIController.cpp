@@ -692,6 +692,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
             if(flag || !pol.isDivisible())continue;
 
+            continue;
+
             DrawStreet drawStreet;
             drawStreet.drawStreets(pol, divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
             vector<Line> centerLines = drawStreet.getCenterLines();
