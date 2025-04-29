@@ -492,7 +492,8 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             else  streets = pols[0];
 
 
-            GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
+//            GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
+            GreenAreaSelector *greenSelector = new UniformGreenDistributor();
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
