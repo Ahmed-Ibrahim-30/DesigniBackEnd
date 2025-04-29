@@ -96,10 +96,12 @@
 //    }
 //}
 
-void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage, double totalGreenAreas ) {
+void UniformGreenDistributor::select( Polygon1 &outerLand ,vector<Polygon1> &lands, double greenAreaPercentage, double totalGreenAreas )
+{
     int n = (int)lands.size();
     int greenAreas = n*greenAreaPercentage;
     cout<<"GREEN AREA = "<<greenAreas<<"\n";
+
     vector<vector<int>> landsAdj = PolygonAdjacencyAnalyzer::getAdj(lands);
 
     vector< set<int>> landsAdjS(lands.size());
