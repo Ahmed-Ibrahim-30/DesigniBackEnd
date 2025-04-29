@@ -16,6 +16,7 @@
 #include "src/Model/Land/Green Area/UniformGreenDistributor.h"
 #include "src/Model/Land/Green Area/ClusteredGreenSelector.h"
 #include "src/Model/Land/Green Area/CentralLandGreenSelector.h"
+#include "src/Model/Land/Green Area/AdjGreenArea.h"
 #include "src/Model/Land/Green Area/CentroidLineGreenSelector.h"
 #include "src/Model/Land/LandDivisionRoads/LandDivisionRoadsByInnerDesign.h"
 #include "src/Model/Land/LandDivisionRoads/LandDivisionRoadsByArea.h"
@@ -472,7 +473,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             if (pols.empty()) streets = land.buildRoads(ans);
             else streets = pols[0];
 
-            GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
+            GreenAreaSelector *greenSelector = new AdjGreenArea();
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
@@ -493,7 +494,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             else  streets = pols[0];
 
 
-            GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
+            GreenAreaSelector *greenSelector = new AdjGreenArea();
             cout << "greenAreasCount = "<<greenAreasCount<<"\n";
             cout << "landSlots = "<<landSlots<<"\n";
             percGreenArea = (greenAreasCount*1.0 / landSlots ) * 100.0;
@@ -759,18 +760,6 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
-
-        vector<vector<int>> adj = PolygonAdjacencyAnalyzer::getAdjByCentroids(ans);
-
-        for (int i = 0; i < ans.size(); ++i)
-        {
-            cout<<ans[i].getId()<<" -----> ";
-            for(auto &a : adj[i])
-            {
-                cout<<ans[a].getId()<<" ";
-            }
-            cout<<"\n";
-        }
 
         response[solutionIndex]["Inner"][ans.size()]["id"] =  "";
         response[solutionIndex]["Inner"][ans.size()]["area"] = outerLand.getArea();

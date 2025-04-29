@@ -7,9 +7,10 @@
 #include "GreenAreaSelector.h"
 
 /**
- * Select Green Areas based on most connected Lands with each Adj
+ * Select Green Areas based on most connected Lands with each Adj and area
  */
-class AdjGreenArea : public GreenAreaSelector{
+class AdjGreenArea : public GreenAreaSelector
+        {
 public:
     void select( Polygon1 &outerLand ,vector<Polygon1> &lands , double greenAreaPercentage , double totalGreenAreas ) override;
 };
