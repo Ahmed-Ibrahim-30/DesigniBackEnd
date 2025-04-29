@@ -18,12 +18,24 @@ AdjGreenArea::select(Polygon1 &outerLand, vector<Polygon1> &lands, double greenA
     {
         sortPolygons.emplace_back(adj[i].size() , lands[i].getArea() , i);
     }
-    sort(sortPolygons.begin(), sortPolygons.end() , greater<>());
 
     for (int i = 0; i < greenAreas; ++i)
     {
+        sort(sortPolygons.begin(), sortPolygons.end() , greater<>());
         int adjSize , index; double area;
-        tie(adjSize , area , index) = sortPolygons[i];
+        tie(adjSize , area , index) = sortPolygons[0];
         lands[index].setDivisible(false);
+        set<int> arr;
+
+        for(auto &ne : adj[index])
+        {
+            arr.insert(ne);
+        }
+        for (const auto & sortPolygon : sortPolygons) {
+            int adjSize2 , index2; double area2;
+            tie(adjSize2 , area2 , index2) = sortPolygon;
+            if (arr.count(index))adjSize--;
+            else if (index2 == index)adjSize = 0;
+        }
     }
 }
