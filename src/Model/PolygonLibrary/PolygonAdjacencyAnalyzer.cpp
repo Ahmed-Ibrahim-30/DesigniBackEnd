@@ -178,27 +178,27 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdjByCentroids(vector<Polygon1>
 
             if (a1.getId() == "22" && a2.getId() == "28")
             {
-                cout<<"Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "27") || a1.getId() == "27" && a2.getId() == "22")
             {
-                cout<<"Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "31") || (a1.getId() == "31" && a2.getId() == "22"))
             {
-                cout<<"Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "20") || (a1.getId() == "20" && a2.getId() == "22"))
             {
-                cout<<"Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
             }
 
             if ((a1.getId() == "22" && a2.getId() == "11") || (a1.getId() == "11" && a2.getId() == "22"))
             {
-                cout<<"Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
             }
 
             distance = distance - lineA1.getLength() - lineA2.getLength();
