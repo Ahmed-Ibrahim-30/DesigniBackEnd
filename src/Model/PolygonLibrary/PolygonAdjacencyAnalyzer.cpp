@@ -176,6 +176,11 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdjByCentroids(vector<Polygon1>
                 }
             }
 
+            if (a1.getId() == "22" && a2.getId() == "28")
+            {
+                cout<<"Main Distance = "<<distance +streetWidth <<" Line1 Length = "<<lineA1.getLength()<<"  Line2 Length = "<<lineA2.getLength()<<"\n";
+            }
+
             distance = distance - lineA1.getLength() - lineA2.getLength();
 
             if (distance <= 5)
