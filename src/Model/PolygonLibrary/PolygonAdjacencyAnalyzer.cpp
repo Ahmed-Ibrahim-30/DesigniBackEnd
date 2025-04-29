@@ -177,7 +177,7 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdjByCentroids(vector<Polygon1>
             }
 
             distance = distance - (lineA1.getLength() + lineA2.getLength() + streetWidth);
-            if (distance <= 50)
+            if (distance <= 25)
             {
                 adj[i].push_back(j);
                 adj[j].push_back(i);
