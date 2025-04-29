@@ -261,6 +261,7 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
 
         Polygon1 polygon1(points);
+        polygon1.setId("1");
 
         cout<<"Area = "<<polygon1.getArea() <<" \n";
 
@@ -758,6 +759,18 @@ void APIController::landDivisionRoutes(SimpleApp &app)
         }
 
         cout<<"Polygon Area = "<<polygon1.getArea()<<"\n";
+
+        vector<vector<int>> adj = PolygonAdjacencyAnalyzer::getAdjByCentroids(ans);
+
+        for (int i = 0; i < ans.size(); ++i)
+        {
+            cout<<ans[i].getId()<<" -----> ";
+            for(auto &a : adj[i])
+            {
+                cout<<ans[a].getId()<<" ";
+            }
+            cout<<"\n";
+        }
 
         response[solutionIndex]["Inner"][ans.size()]["id"] =  "";
         response[solutionIndex]["Inner"][ans.size()]["area"] = outerLand.getArea();

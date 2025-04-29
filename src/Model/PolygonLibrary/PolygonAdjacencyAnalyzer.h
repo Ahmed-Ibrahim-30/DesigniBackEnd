@@ -15,6 +15,13 @@ public:
      * @return
      */
     static vector<vector<int>> getAdj(vector<Polygon1> &polygons);
+
+    /**
+     * Get Adjacency between Polygons By Index By Centroids
+     * @param polygons
+     * @return
+     */
+    static vector<vector<int>> getAdjByCentroids(vector<Polygon1> &polygons);
 };
 
 

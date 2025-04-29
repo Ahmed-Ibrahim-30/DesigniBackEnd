@@ -128,3 +128,63 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdj(vector<Polygon1> &polygons)
     }
     return adj;
 }
+
+vector<vector<int>> PolygonAdjacencyAnalyzer::getAdjByCentroids(vector<Polygon1> &polygons)
+{
+    int n = (int)polygons.size();
+    vector<vector<int>> adj(n);
+
+    double streetWidth = 15;
+
+    for (int i = 0; i < n; ++i)
+    {
+        Polygon1 a1 = polygons[i];
+        Point cent1 = a1.calculateCentroid();
+        vector<Line> a1Lines = a1.getLines();
+        for (int j = i+1 ; j < n; ++j)
+        {
+            Polygon1 a2 = polygons[j];
+            Point cent2 = a2.calculateCentroid();
+            vector<Line> a2Lines = a2.getLines();
+
+            Line line (cent1 , cent2);
+            Line lineA1 (cent1 , cent2);
+            Line lineA2 (cent1 , cent2);
+
+            double distance = line.getLength() - streetWidth;
+
+            for (auto &l : a1Lines)
+            {
+                Point intersectedP = PolygonHelper::getIntersectionPoint(lineA1 , l);
+
+                if (intersectedP.getX() != INT_MAX)
+                {
+                    lineA1.setX2(intersectedP.getX());
+                    lineA1.setY2(intersectedP.getY());
+                    break;
+                }
+            }
+            for (auto &l : a2Lines)
+            {
+                Point intersectedP = PolygonHelper::getIntersectionPoint(lineA2 , l);
+
+                if (intersectedP.getX() != INT_MAX)
+                {
+                    lineA2.setX1(intersectedP.getX());
+                    lineA2.setY1(intersectedP.getY());
+                    break;
+                }
+            }
+
+            distance = distance - lineA1.getLength() - lineA2.getLength();
+
+            if (distance <= 5)
+            {
+                adj[i].push_back(j);
+                adj[j].push_back(i);
+            }
+        }
+    }
+
+    return adj;
+}

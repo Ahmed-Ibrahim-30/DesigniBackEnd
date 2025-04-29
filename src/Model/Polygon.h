@@ -22,11 +22,11 @@ private:
      * Polygon ID
      */
     string id;
-public:
-    const string &getId() const;
 
-    void setId(const string &id);
-
+    /**
+     * Polygons Adj
+     */
+    set<string> adj;
 public:
     const vector<Point> &getPoints() const;
 
@@ -130,6 +130,19 @@ public:
      * @return
      */
     int countAcuteAnglesLines();
+
+    const string &getId() const;
+
+    void setId(const string &id);
+
+    /**
+     *
+     * @param adj
+     * @return
+     */
+    void addAdj(const string &adj);
+
+    const set<string> &getAdj() const;
 };
 
 

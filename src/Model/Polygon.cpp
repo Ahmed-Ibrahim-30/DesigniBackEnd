@@ -476,6 +476,14 @@ Line Polygon1::getTallestLine() {
     return tallestLines[0].second;
 }
 
+void Polygon1::addAdj(const string &_adjId) {
+    adj.insert(_adjId);
+}
+
+const set<string> &Polygon1::getAdj() const {
+    return adj;
+}
+
 
 
 

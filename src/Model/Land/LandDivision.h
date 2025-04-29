@@ -29,7 +29,7 @@ protected:
     Point getIntersectionPoint(const Point &p1, double slope, const Line &line);
     Point getIntersectionPoint(const Line& line1, const Line& line2, const Point& pointOnLine1);
 
-    vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1);
+
 
 public:
 
@@ -106,6 +106,8 @@ public:
      * @return
      */
     virtual vector<vector<Polygon1>>divideLands(vector<Polygon1> &lands,const vector<double> &ratios,LandDivisionSortingStrategy  landDivisionStrategy) { vector<vector<Polygon1>> tst; return tst; };
+
+    vector<pair<Polygon1 , Polygon1>> dividePolygons(Polygon1 polygon1);
 };
 
 #endif //DESIGNI_LANDDIVISION_H

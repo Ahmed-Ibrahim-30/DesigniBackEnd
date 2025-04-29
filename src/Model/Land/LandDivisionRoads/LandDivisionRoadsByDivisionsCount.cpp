@@ -58,7 +58,14 @@ void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB,
 
     pols = PolygonHelper::sortPolygonByArea(pols);
 
+    set<string> curIds;
+    for(auto &str : pols)
+    {
+        curIds.insert(str.getId());
+    }
+
     vector<vector<Polygon1>> possibleDivisions;
+    vector<string> newTwoIds {to_string(pols.size()+1), to_string(pols.size()+2)};
     for (int i = 0; i < pols.size(); ++i)
     {
         if(!pols[i].isDivisible()) continue;//if land is green Area
@@ -77,9 +84,11 @@ void LandDivisionRoadsByDivisionsCount::divideLand(double ratioA, double ratioB,
         for (const auto& div : paiPoly)
         {
             newPolygons.push_back(div.first);
+            newPolygons.back().setId(newTwoIds[0]);
             newPolygons.push_back(div.second);
+            newPolygons.back().setId(newTwoIds[1]);
 
-            possibleDivisions.push_back(newPolygons);
+            possibleDivisions.emplace_back(newPolygons);
 
             newPolygons.pop_back();
             newPolygons.pop_back();
