@@ -34,7 +34,7 @@ AdjGreenArea::select(Polygon1 &outerLand, vector<Polygon1> &lands, double greenA
         for (auto & sortPolygon : sortPolygons) {
             int adjSize2 , index2; double area2;
             tie(adjSize2 , area2 , index2) = sortPolygon;
-            if (arr.count(index))get<0>(sortPolygon) --;
+            if (arr.count(index2))get<0>(sortPolygon) --;
             else if (index2 == index)get<0>(sortPolygon) =0;
         }
     }
