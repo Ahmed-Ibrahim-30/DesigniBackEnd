@@ -762,15 +762,15 @@ void APIController::landDivisionRoutes(SimpleApp &app)
 
         vector<vector<int>> adj = PolygonAdjacencyAnalyzer::getAdjByCentroids(ans);
 
-//        for (int i = 0; i < ans.size(); ++i)
-//        {
-//            cout<<ans[i].getId()<<" -----> ";
-//            for(auto &a : adj[i])
-//            {
-//                cout<<ans[a].getId()<<" ";
-//            }
-//            cout<<"\n";
-//        }
+        for (int i = 0; i < ans.size(); ++i)
+        {
+            cout<<ans[i].getId()<<" -----> ";
+            for(auto &a : adj[i])
+            {
+                cout<<ans[a].getId()<<" ";
+            }
+            cout<<"\n";
+        }
 
         response[solutionIndex]["Inner"][ans.size()]["id"] =  "";
         response[solutionIndex]["Inner"][ans.size()]["area"] = outerLand.getArea();
