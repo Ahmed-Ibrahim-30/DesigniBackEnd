@@ -225,10 +225,10 @@ vector<vector<int>> PolygonAdjacencyAnalyzer::getAdjByCentroids(vector<Polygon1>
 //            {
 //                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
 //            }
-//            if ((a1.getId() == "50" && a2.getId() == "49") || (a1.getId() == "49" && a2.getId() == "50"))
-//            {
-//                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
-//            }
+            if ((a1.getId() == "8" && a2.getId() == "5") || (a1.getId() == "5" && a2.getId() == "8"))
+            {
+                cout<<"IDS = "<<a1.getId() <<" "<<a2.getId()<<" Main Distance = "<<distance  <<"\n";
+            }
 
             if (distance <= 25)
             {
