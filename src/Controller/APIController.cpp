@@ -557,12 +557,22 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             int landSlots = (int)ratios.size();
             double percGreenArea = jsonData.count("green_area_percentage")?jsonData["green_area_percentage"].d() : 0;
 
+            vector<double>newRatios;
+            vector<double>greenAreaRatios;
+            for(auto &ratio : ratios)
+            {
+                if (percGreenArea > 0)
+                {
+                    double greenArea = ratio * (percGreenArea/100);
+                    double mLand = ratio - greenArea;
+                    newRatios.push_back(greenArea);
+                    newRatios.push_back(mLand);
+                    greenAreaRatios.push_back(greenArea);
+                }else newRatios.push_back(ratio);
+            }
 
-            if(landSlots > 0)ans = land.SplitLand(ratios  , static_cast<LandDivisionSortingStrategy>(strategy));
+            if(landSlots > 0)ans = land.SplitLand(newRatios  , static_cast<LandDivisionSortingStrategy>(strategy));
             else ans = land.SplitLand(divisionArea , static_cast<LandDivisionSortingStrategy>(strategy)) ;
-            GreenAreaSelector *greenSelector = new CentroidLineGreenSelector();
-            greenSelector->select(polygon1,ans , percGreenArea/100 , 0);
-
 
             vector<vector<Polygon1>> pols ;
 
@@ -573,6 +583,24 @@ void APIController::landDivisionRoutes(SimpleApp &app)
             {
                 landDivisionRoads = new LandDivisionRoadsByRatios(divisionArea , externalRoad , centralRoad , circularStreet , landDepth , streetCut);
                 pols = landDivisionRoads->divideLand(polygon1 , ratios , static_cast<LandDivisionSortingStrategy>(strategy) );
+
+                for(auto &solution : pols)
+                {
+                    for (int i = 0; i < greenAreaRatios.size(); ++i) {
+                        double ratio = greenAreaRatios[i];
+                        for(auto &la : solution)
+                        {
+                            double mainArea = polygon1.getArea();
+                            double otherArea = la.getArea();
+                            if (la.isDivisible() && abs((otherArea / mainArea) - ratio) < 1)
+                            {
+                                la.setDivisible(false);
+                                break;
+                            }
+                        }
+                    }
+
+                }
             }
             else
             {
